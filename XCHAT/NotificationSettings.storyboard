@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vd5-nW-KZO">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <scenes>
+        <!--Notifications Settings View Controller-->
+        <scene sceneID="L8o-Ay-30L">
+            <objects>
+                <viewController storyboardIdentifier="Settings" id="vd5-nW-KZO" customClass="NotificationsSettingsViewController" customModule="XCHAT" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="TiJ-Pw-PMW"/>
+                        <viewControllerLayoutGuide type="bottom" id="Bxg-DG-8fg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Z2o-Hg-zN8">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="MZY-he-HZG">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NTCell" rowHeight="57" id="Zrl-6k-xCn" customClass="NotificationsTableViewCell" customModule="XCHAT" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Zrl-6k-xCn" id="iSx-GQ-eYL">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ae4-EL-Qtj">
+                                                    <rect key="frame" x="16" y="18" width="96" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OgP-aN-vhf">
+                                                    <rect key="frame" x="258" y="13" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="switchChanged:" destination="Zrl-6k-xCn" eventType="valueChanged" id="NjH-Xf-Ao6"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="OgP-aN-vhf" firstAttribute="top" secondItem="iSx-GQ-eYL" secondAttribute="top" constant="13" id="GPw-Fc-PY8"/>
+                                                <constraint firstAttribute="bottom" secondItem="OgP-aN-vhf" secondAttribute="bottom" constant="13" id="NSA-lE-a6L"/>
+                                                <constraint firstItem="ae4-EL-Qtj" firstAttribute="leading" secondItem="iSx-GQ-eYL" secondAttribute="leading" constant="16" id="Pzb-fq-vbz"/>
+                                                <constraint firstAttribute="centerY" secondItem="ae4-EL-Qtj" secondAttribute="centerY" id="Wko-mQ-ciN"/>
+                                                <constraint firstAttribute="trailing" secondItem="OgP-aN-vhf" secondAttribute="trailing" constant="13" id="ZK2-5l-U9e"/>
+                                                <constraint firstAttribute="centerY" secondItem="OgP-aN-vhf" secondAttribute="centerY" id="Ziq-ht-bWI"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="label" destination="ae4-EL-Qtj" id="dGz-AX-vDk"/>
+                                            <outlet property="onSwitch" destination="OgP-aN-vhf" id="Tcd-ch-ueV"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LogoutCell" rowHeight="55" id="UIR-oF-8es" customClass="LogOutTableViewCell" customModule="XCHAT" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UIR-oF-8es" id="HYg-F8-cQ2">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="On0-4y-RCU">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="54.5"/>
+                                                    <color key="backgroundColor" red="1" green="0.33362201470468567" blue="0.29625983909616016" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="54.5" id="dXR-2S-PXj"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                    <state key="normal" title="Log out">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="logoutPressed:" destination="UIR-oF-8es" eventType="touchUpInside" id="XSe-II-eX6"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="On0-4y-RCU" secondAttribute="bottom" id="7JA-tS-Awj"/>
+                                                <constraint firstItem="On0-4y-RCU" firstAttribute="top" secondItem="HYg-F8-cQ2" secondAttribute="top" id="TTJ-Ht-Owm"/>
+                                                <constraint firstItem="On0-4y-RCU" firstAttribute="leading" secondItem="HYg-F8-cQ2" secondAttribute="leading" id="bj7-hO-YQM"/>
+                                                <constraint firstAttribute="trailing" secondItem="On0-4y-RCU" secondAttribute="trailing" id="oSD-iC-IaI"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="MZY-he-HZG" firstAttribute="top" secondItem="Z2o-Hg-zN8" secondAttribute="top" id="Aeu-KK-13r"/>
+                            <constraint firstItem="Bxg-DG-8fg" firstAttribute="top" secondItem="MZY-he-HZG" secondAttribute="bottom" id="MC3-UD-lut"/>
+                            <constraint firstItem="MZY-he-HZG" firstAttribute="leading" secondItem="Z2o-Hg-zN8" secondAttribute="leading" id="ZJV-Vh-tbv"/>
+                            <constraint firstAttribute="trailing" secondItem="MZY-he-HZG" secondAttribute="trailing" id="mNd-MQ-Y6Y"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="MZY-he-HZG" id="wtv-QB-lps"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tc9-xY-kdb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="304" y="381"/>
+        </scene>
+    </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MessageViewController" customModule="xchat_pat" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="500"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wGG-8X-EQ0">
+                    <rect key="frame" x="15" y="200" width="129" height="36"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There doesn't seem to be anything here. Be the first to post!" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kaj-ws-zcg">
+                    <rect key="frame" x="15" y="246" width="290" height="43"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="kaj-ws-zcg" firstAttribute="top" secondItem="wGG-8X-EQ0" secondAttribute="bottom" constant="10" id="boI-pc-Jo9"/>
+                <constraint firstItem="wGG-8X-EQ0" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="200" id="lnW-4P-uw2"/>
+                <constraint firstItem="wGG-8X-EQ0" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="nis-tY-cu9"/>
+                <constraint firstItem="kaj-ws-zcg" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="sXp-nH-UbO"/>
+                <constraint firstAttribute="trailing" secondItem="kaj-ws-zcg" secondAttribute="trailing" constant="15" id="xsc-Xo-QZC"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="425.5" y="219.5"/>
+        </view>
+    </objects>
+</document>
