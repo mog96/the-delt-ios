@@ -11,6 +11,7 @@ import UIKit
 class DateTitleCell: UITableViewCell {
     
     @IBOutlet weak var weekdayLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var artworkImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -50,10 +51,10 @@ class DateTitleCell: UITableViewCell {
         }
         
         var dateFormatter = NSDateFormatter()
+        let calendar = NSCalendar.currentCalendar()
+        
         dateFormatter.AMSymbol = "a"
         dateFormatter.PMSymbol = "p"
-        
-        let calendar = NSCalendar.currentCalendar()
         
         var startTime = event["startTime"] as! NSDate
         var comp = calendar.components((.CalendarUnitHour | .CalendarUnitMinute), fromDate: startTime)
@@ -76,6 +77,9 @@ class DateTitleCell: UITableViewCell {
         var weekday = dateFormatter.stringFromDate(startTime)
         var weekdayLetter = weekday[weekday.startIndex]
         weekdayLabel.text = String(weekdayLetter)
+        
+        dateFormatter.dateFormat = "M/d"
+        dateLabel.text = dateFormatter.stringFromDate(startTime)
         
         titleLabel.text = event["name"] as? String
     }

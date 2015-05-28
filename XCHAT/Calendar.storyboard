@@ -26,14 +26,14 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="d2h-hg-gTU" id="pUW-rv-3hr">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9p-10p" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F3i-Fp-G1p">
-                                                    <rect key="frame" x="141" y="106" width="47" height="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9p-10p" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F3i-Fp-G1p">
+                                                    <rect key="frame" x="142" y="106" width="47" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="M" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b1P-kb-Ge3">
-                                                    <rect key="frame" x="16" y="0.0" width="84" height="108"/>
+                                                    <rect key="frame" x="16" y="0.0" width="83.5" height="108"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="108" id="XtZ-2h-twR"/>
                                                     </constraints>
@@ -55,22 +55,31 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5/25" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ckG-Zt-mDS">
+                                                    <rect key="frame" x="160" y="89" width="29" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="F3i-Fp-G1p" firstAttribute="bottom" secondItem="QiC-54-uun" secondAttribute="bottom" id="6IT-dg-hkQ"/>
                                                 <constraint firstAttribute="trailing" secondItem="QiC-54-uun" secondAttribute="trailing" constant="16" id="6sl-a0-6pn"/>
+                                                <constraint firstItem="F3i-Fp-G1p" firstAttribute="top" secondItem="ckG-Zt-mDS" secondAttribute="bottom" id="Ewu-8w-hTp"/>
                                                 <constraint firstItem="QiC-54-uun" firstAttribute="top" secondItem="pUW-rv-3hr" secondAttribute="top" constant="16" id="Gb1-4f-PUh"/>
-                                                <constraint firstItem="QiC-54-uun" firstAttribute="leading" secondItem="F3i-Fp-G1p" secondAttribute="trailing" constant="9" id="IXf-yj-3QE"/>
+                                                <constraint firstItem="QiC-54-uun" firstAttribute="leading" secondItem="F3i-Fp-G1p" secondAttribute="trailing" constant="8" id="IXf-yj-3QE"/>
                                                 <constraint firstItem="b1P-kb-Ge3" firstAttribute="top" secondItem="pUW-rv-3hr" secondAttribute="top" id="N8k-CD-UR0"/>
                                                 <constraint firstItem="b1P-kb-Ge3" firstAttribute="leading" secondItem="hGN-xL-MBL" secondAttribute="leading" id="WSR-xY-qaq"/>
                                                 <constraint firstItem="QiC-54-uun" firstAttribute="trailing" secondItem="hGN-xL-MBL" secondAttribute="trailing" id="Y7n-3f-P54"/>
                                                 <constraint firstAttribute="bottom" secondItem="hGN-xL-MBL" secondAttribute="bottom" constant="0.5" id="aU9-u5-f2o"/>
+                                                <constraint firstItem="ckG-Zt-mDS" firstAttribute="trailing" secondItem="F3i-Fp-G1p" secondAttribute="trailing" id="k3n-Bd-9X2"/>
                                                 <constraint firstItem="b1P-kb-Ge3" firstAttribute="leading" secondItem="pUW-rv-3hr" secondAttribute="leading" constant="16" id="rYY-Ni-fQ5"/>
                                                 <constraint firstItem="hGN-xL-MBL" firstAttribute="top" secondItem="QiC-54-uun" secondAttribute="bottom" constant="8" id="sqS-eC-jGd"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="artworkImageView" destination="QiC-54-uun" id="RwT-pi-byg"/>
+                                            <outlet property="dateLabel" destination="ckG-Zt-mDS" id="mUD-bR-SQD"/>
                                             <outlet property="timeLabel" destination="F3i-Fp-G1p" id="DDf-m5-dlS"/>
                                             <outlet property="titleLabel" destination="hGN-xL-MBL" id="ct6-6g-3O4"/>
                                             <outlet property="weekdayLabel" destination="b1P-kb-Ge3" id="Jw2-nl-aVw"/>
