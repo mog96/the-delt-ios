@@ -26,7 +26,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
     var profilePicPicker: Bool = false
     
     @IBOutlet weak var realProfilePic: UIImageView!
-    var curProfileObj: PFObject?
+    var currentUser = PFUser.currentUser()
     override func viewDidLoad() {
         super.viewDidLoad()
         nameText.tag = 0
@@ -35,32 +35,47 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
         emailText.tag = 3
         
         var query = PFQuery(className: "User")
-        query.whereKey("email", equalTo: (PFUser.currentUser()?.username)!)
-        query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
-                    var objs = objects as! [PFObject]
-                    if objs.count > 0 {
-                        var profile = objects![0] as! PFObject
-                        self.curProfileObj = profile
-                        self.quote.text = profile["quote"] as? String
-                        self.userName.text = profile["username"] as? String
-                        self.email.text = profile["email"] as? String
-                        self.realName.text = profile["name"] as? String
-                    } else {
-                        self.quote.text = "Tap for your quote"
-                        self.userName.text = "Tap for your Username"
-                        self.email.text = "Tap for your Email"
-                        self.realName.text = "Tap here to change your Name"
-                    }
-                    self.nameText.hidden = true
-                    self.usernameText.hidden = true
-                    self.emailText.hidden = true
-                    self.quoteText.hidden = true
-                    self.quote.hidden = false
-                    self.userName.hidden = false
-                    self.email.hidden = false
-                    self.realName.hidden = false
-            
+        var quote_text = currentUser?.objectForKey("quote") as? String
+        var username_text = currentUser?.objectForKey("username") as? String
+        var email_text = PFUser.currentUser()?.email
+        var realname_text = currentUser?.objectForKey("name") as? String
+        
+        if let _=quote_text{
+            self.quote.text = quote_text
+        }else{
+            self.quote.text = "Tap for your quote"
         }
+        
+        if let _=username_text{
+            self.userName.text = username_text
+        }else{
+            self.userName.text = "Tap for your Username"
+        }
+        
+        if let _=email_text{
+            self.email.text = email_text
+        }else{
+            self.email.text = "Tap for your Email"
+        }
+        
+        if let _=realname_text{
+            self.realName.text = realname_text
+        }else{
+            self.realName.text = "Tap here to change your Name"
+        }
+        
+
+
+        
+        self.nameText.hidden = true
+        self.usernameText.hidden = true
+        self.emailText.hidden = true
+        self.quoteText.hidden = true
+        self.quote.hidden = false
+        self.userName.hidden = false
+        self.email.hidden = false
+        self.realName.hidden = false
+        
         
         if let photo: PFFile = PFUser.currentUser()?.objectForKey("photo") as! PFFile?{
             var pfImageView = PFImageView()
@@ -101,45 +116,38 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
 
     func textFieldDidEndEditing(textField: UITextField) {
         textField.resignFirstResponder()
-        var message: PFObject
-        if curProfileObj==nil{
-            message = PFObject(className:"profile")
-        }
-        else{
-            message = curProfileObj!
-        }
 
         if count(quoteText.text)==0{
-            message["quote"] = quote.text
+            currentUser?.setObject(quote.text!, forKey: "quote")
         }
         else{
-            message["quote"] = quoteText.text
+            currentUser?.setObject(quoteText.text!, forKey: "quote")
         }
         if count(usernameText.text)==0{
-            message["username"] = userName.text
+
+            currentUser?.setObject(userName.text!, forKey: "username")
         }
         else{
-            message["username"] = usernameText.text
+            currentUser?.setObject(usernameText.text!, forKey: "username")
         }
         if count(nameText.text)==0{
-            message["name"] = realName.text
+            
+            currentUser?.setObject(realName.text!, forKey: "name")
         }
         else{
-            message["name"] = nameText.text
+            currentUser?.setObject(nameText.text!, forKey: "name")
         }
-        message["email"] = PFUser.currentUser()?.email
+        
 
-
-        message.saveInBackgroundWithBlock { (result: Bool, error: NSError?) -> Void in
+        currentUser?.saveInBackgroundWithBlock({ (result:Bool, error:NSError?) -> Void in
             if error != nil {
                 // Print some kind of error to clients
                 println("unable to send this message")
                 println(error?.description)
             } else {
                 self.viewDidLoad()
-                }
             }
-    
+        })
 
     }
  
