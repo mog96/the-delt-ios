@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var storyboard = UIStoryboard(name: "Main", bundle: nil)
-    var chat_storyboard = UIStoryboard(name: "Threads", bundle: nil)
+    var chat_storyboard = UIStoryboard(name: "Chat", bundle: nil)
     var hamburgerViewController: HamburgerViewController?
 
 

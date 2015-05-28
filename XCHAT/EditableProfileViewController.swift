@@ -34,7 +34,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
         quoteText.tag = 2
         emailText.tag = 3
         
-        var query = PFQuery(className: "profile")
+        var query = PFQuery(className: "User")
         query.whereKey("email", equalTo: (PFUser.currentUser()?.username)!)
         query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
                     var objs = objects as! [PFObject]
