@@ -16,6 +16,22 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
     let xThreshold = 100
     var contentViewOriginalOrigin: CGPoint!
     
+    
+    // MARK: View Loading
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        configureContentViewController()
+        configureMenuViewController()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    
     // MARK: Observers & Container View Configuration
     
     // Observer method
@@ -29,6 +45,7 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
     // Observer method
     var menuViewController: UIViewController? {
         didSet {
+            
            // println("MENU VIEW CONFIG")
             configureMenuViewController()
         }
@@ -70,34 +87,23 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    // MARK: Required
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        configureContentViewController()
-        configureMenuViewController()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     // MARK: Actions
     
     func showMenu(){
-            UIView.animateWithDuration(0.35, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: nil, animations: { () -> Void in
-                self.contentView.frame.origin = CGPoint(x: 280, y: 0)
-                }, completion: { (finished: Bool) -> Void in
-            })
+        UIView.animateWithDuration(0.35, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: nil, animations: { () -> Void in
+            self.contentView.frame.origin = CGPoint(x: 280, y: 0)
+        }, completion: { (finished: Bool) -> Void in
+            
+        })
     }
     
 
     func hideMenu(){
         UIView.animateWithDuration(0.35, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: nil, animations: { () -> Void in
             self.contentView.frame.origin = CGPoint(x: 0, y: 0)
-            }, completion: { (finished: Bool) -> Void in
+        }, completion: { (finished: Bool) -> Void in
+            UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
         })
     }
     
@@ -105,9 +111,8 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
         var translation = sender.translationInView(view)
         var velocity = sender.velocityInView(view)
         
-        //println("PAN GESTURE DETECTED")
-        
         if sender.state == UIGestureRecognizerState.Began {
+            UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: .Slide)
             contentViewOriginalOrigin = contentView.frame.origin
         } else if sender.state == UIGestureRecognizerState.Changed {
             
@@ -115,24 +120,25 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
             var newx = contentViewOriginalOrigin.x + translation.x
             if newx < 0{
                 contentView.frame.origin.x = 0.01 * newx
-            }
-            else{
+            } else {
                 contentView.frame.origin.x =  newx
             }
             
-
-
         } else if sender.state == UIGestureRecognizerState.Ended {
             if velocity.x > 0 {
                 showMenu()
                 self.view.endEditing(true)
             } else {
                 hideMenu()
-                
-
             }
         }
     }
+    
+    // MARK: Status Bar
+    
+//    override func prefersStatusBarHidden() -> Bool {
+//        return true
+//    }
 
     /*
     // MARK: - Navigation
