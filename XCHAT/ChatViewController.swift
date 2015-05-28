@@ -152,7 +152,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             // Message sent by different user.
             var cell = tableView.dequeueReusableCellWithIdentifier("FirstMessageCell", forIndexPath: indexPath) as! FirstMessageCell
-            cell.setUpCell(message)
+            cell.setUpCellWithPictures(message, pictures: self.pictures)
             return cell
         }
     }
@@ -317,6 +317,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     
                     // get rid of the welcome message
                     // self.messageTableView.tableHeaderView = UIView(frame: CGRectZero)
+                    self.fetchUserPics()
                     self.messageTableView.reloadData()
                     
                     // Scroll to bottom

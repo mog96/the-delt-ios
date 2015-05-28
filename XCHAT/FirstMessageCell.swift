@@ -34,6 +34,50 @@ class FirstMessageCell: UITableViewCell {
         messageLabel.preferredMaxLayoutWidth = messageLabel.frame.width
     }
     
+    func setUpCellWithPictures(message: PFObject, pictures: NSMutableDictionary) {
+        var dateFormatter = NSDateFormatter()
+        let calendar = NSCalendar.currentCalendar()
+        var comp = calendar.components((.CalendarUnitHour | .CalendarUnitMinute), fromDate: message.createdAt!)
+        
+        dateFormatter.AMSymbol = "a"
+        dateFormatter.PMSymbol = "p"
+        dateFormatter.dateFormat = "h:mma"
+        if comp.minute == 0 {
+            dateFormatter.dateFormat = "ha"
+        }
+        
+        usernameLabel.text = (message["authorUsername"] as! String)
+        timestampLabel.text = dateFormatter.stringFromDate(message.createdAt!)
+        messageLabel.text = (message["content"] as! String)
+
+        if let profilePic = pictures[usernameLabel.text!]{
+            self.authorProfileImageView.image = profilePic as! UIImage
+        }
+        
+//        
+//        var query = PFUser.query()
+//        query?.whereKey("username", equalTo: message.valueForKey("authorUsername") as! String)
+//        query?.findObjectsInBackgroundWithBlock({ (users: [AnyObject]?, error: NSError?) -> Void in
+//            if let users = users as? [PFObject] {
+//                var pfImageView = PFImageView()
+//                pfImageView.file = users[0].valueForKey("photo") as? PFFile
+//                if let _=pfImageView.file{
+//                    pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
+//                        if error == nil {
+//                            
+//                            self.authorProfileImageView.image = image
+//                        } else {
+//                            
+//                            // Log details of the failure
+//                            println("Error: \(error!) \(error!.userInfo!)")
+//                        }
+//                    }
+//                }
+//                
+//            }
+//        })
+    }
+    
     func setUpCell(message: PFObject) {
         var dateFormatter = NSDateFormatter()
         let calendar = NSCalendar.currentCalendar()
