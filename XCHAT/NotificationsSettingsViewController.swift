@@ -13,6 +13,7 @@ class NotificationsSettingsViewController: UIViewController, UITableViewDataSour
     var savedSettings = [String: Bool]()
     var window: UIWindow?
     
+    let kHeaderViewHeight = CGFloat(50)
     
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
@@ -37,22 +38,12 @@ class NotificationsSettingsViewController: UIViewController, UITableViewDataSour
         return 4
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 16
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "PUSH NOTIFICATIONS"
     }
     
-    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        var headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 20))
-        headerView.backgroundColor = UIColor(white: 3, alpha: 0.5)
-        
-        var notificationsLabel = UILabel(frame: CGRect(x: 8 , y: 2, width: 200, height: 16))
-        notificationsLabel.text = "PUSH NOTIFICATIONS"
-        notificationsLabel.font = UIFont(name: "HelveticaNeue-Thin", size: 14)
-        notificationsLabel.textColor = UIColor.redColor()
-        notificationsLabel.sizeToFit()
-        
-        headerView.insertSubview(notificationsLabel, atIndex: 0)
-        return headerView
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return kHeaderViewHeight
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

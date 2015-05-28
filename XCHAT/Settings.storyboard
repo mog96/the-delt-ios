@@ -16,35 +16,35 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="MZY-he-HZG">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="MZY-he-HZG">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NTCell" rowHeight="57" id="Zrl-6k-xCn" customClass="NotificationsTableViewCell" customModule="XCHAT" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NTCell" rowHeight="47" id="Zrl-6k-xCn" customClass="NotificationsTableViewCell" customModule="XCHAT" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Zrl-6k-xCn" id="iSx-GQ-eYL">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ae4-EL-Qtj">
-                                                    <rect key="frame" x="16" y="18" width="96" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OgP-aN-vhf">
-                                                    <rect key="frame" x="258" y="13" width="51" height="31"/>
+                                                    <rect key="frame" x="253" y="8" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="switchChanged:" destination="Zrl-6k-xCn" eventType="valueChanged" id="NjH-Xf-Ao6"/>
                                                     </connections>
                                                 </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ae4-EL-Qtj">
+                                                    <rect key="frame" x="15" y="13" width="96" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="OgP-aN-vhf" firstAttribute="top" secondItem="iSx-GQ-eYL" secondAttribute="top" constant="13" id="GPw-Fc-PY8"/>
-                                                <constraint firstAttribute="bottom" secondItem="OgP-aN-vhf" secondAttribute="bottom" constant="13" id="NSA-lE-a6L"/>
-                                                <constraint firstItem="ae4-EL-Qtj" firstAttribute="leading" secondItem="iSx-GQ-eYL" secondAttribute="leading" constant="16" id="Pzb-fq-vbz"/>
+                                                <constraint firstItem="OgP-aN-vhf" firstAttribute="top" secondItem="iSx-GQ-eYL" secondAttribute="top" constant="8" id="GPw-Fc-PY8"/>
+                                                <constraint firstAttribute="bottom" secondItem="OgP-aN-vhf" secondAttribute="bottom" constant="8" id="NSA-lE-a6L"/>
+                                                <constraint firstItem="ae4-EL-Qtj" firstAttribute="leading" secondItem="iSx-GQ-eYL" secondAttribute="leading" constant="15" id="Pzb-fq-vbz"/>
                                                 <constraint firstAttribute="centerY" secondItem="ae4-EL-Qtj" secondAttribute="centerY" id="Wko-mQ-ciN"/>
-                                                <constraint firstAttribute="trailing" secondItem="OgP-aN-vhf" secondAttribute="trailing" constant="13" id="ZK2-5l-U9e"/>
+                                                <constraint firstAttribute="trailing" secondItem="OgP-aN-vhf" secondAttribute="trailing" constant="18" id="ZK2-5l-U9e"/>
                                                 <constraint firstAttribute="centerY" secondItem="OgP-aN-vhf" secondAttribute="centerY" id="Ziq-ht-bWI"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -53,17 +53,17 @@
                                             <outlet property="onSwitch" destination="OgP-aN-vhf" id="Tcd-ch-ueV"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LogoutCell" rowHeight="55" id="UIR-oF-8es" customClass="LogOutTableViewCell" customModule="XCHAT" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LogoutCell" rowHeight="47" id="UIR-oF-8es" customClass="LogOutTableViewCell" customModule="XCHAT" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UIR-oF-8es" id="HYg-F8-cQ2">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="On0-4y-RCU">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="54.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="47"/>
                                                     <color key="backgroundColor" red="1" green="0.33362201470468567" blue="0.29625983909616016" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="54.5" id="dXR-2S-PXj"/>
+                                                        <constraint firstAttribute="height" constant="47" id="dXR-2S-PXj"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                     <state key="normal" title="Log out">

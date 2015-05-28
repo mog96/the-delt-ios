@@ -107,7 +107,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="454"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
-                                            <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MessageLeadingSpaceCell" rowHeight="10" id="Pf6-DH-gxV" customClass="MessageLeadingSpaceCell" customModule="XCHAT" customModuleProvider="target">
+                                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MessageLeadingSpaceCell" rowHeight="10" id="Pf6-DH-gxV" customClass="MessageLeadingSpaceCell" customModule="XCHAT" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pf6-DH-gxV" id="vaI-dY-80p">
@@ -132,7 +132,7 @@
                                                     <outlet property="spaceView" destination="1Vi-Tc-EKe" id="dBB-wr-jAo"/>
                                                 </connections>
                                             </tableViewCell>
-                                            <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1" selectionStyle="none" indentationWidth="10" reuseIdentifier="FirstMessageCell" rowHeight="50" id="QQK-wa-W4m" customClass="FirstMessageCell" customModule="XCHAT" customModuleProvider="target">
+                                            <tableViewCell contentMode="scaleToFill" verticalCompressionResistancePriority="1" selectionStyle="none" indentationWidth="10" reuseIdentifier="FirstMessageCell" rowHeight="50" id="QQK-wa-W4m" customClass="FirstMessageCell" customModule="XCHAT" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QQK-wa-W4m" id="zto-gh-BWT">
@@ -186,7 +186,7 @@
                                                     <outlet property="usernameLabel" destination="J75-XD-o4B" id="bqA-yN-KWj"/>
                                                 </connections>
                                             </tableViewCell>
-                                            <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="18" id="Zfh-5l-qD5" customClass="MessageCell" customModule="XCHAT" customModuleProvider="target">
+                                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="18" id="Zfh-5l-qD5" customClass="MessageCell" customModule="XCHAT" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Zfh-5l-qD5" id="CDt-dj-g3k">
@@ -286,7 +286,6 @@
         <!--Navigation Controller-->
         <scene sceneID="PSS-7u-HxV">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="CeW-YB-iQH" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="ChatNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="EcS-bI-OvR" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="hBp-6z-iuK">
@@ -298,6 +297,7 @@
                         <segue destination="IMO-ne-AW8" kind="relationship" relationship="rootViewController" id="Eup-6B-BFr"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CeW-YB-iQH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="690" y="394"/>
         </scene>
