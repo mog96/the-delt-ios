@@ -57,6 +57,8 @@ class MemberCell: UITableViewCell {
                     println("Error: \(error!) \(error!.userInfo!)")
                 }
             }
+        }else{
+            self.photoImageView.image = UIImage(named: "ROONEY")
         }
     }
 

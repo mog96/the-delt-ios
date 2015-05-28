@@ -35,14 +35,18 @@ class DateTitleCell: UITableViewCell {
         pfImageView.image = UIImage(named: "ROONEY")
         
         pfImageView.file = event.valueForKey("artwork") as? PFFile
-        pfImageView.loadInBackground { (artwork: UIImage?, error: NSError?) -> Void in
-            if error == nil {
-                self.artworkImageView.image = artwork
-            } else {
-                
-                // Log details of the failure
-                println("Error: \(error!) \(error!.userInfo!)")
+        
+        if let _ = pfImageView.file{
+            pfImageView.loadInBackground { (artwork: UIImage?, error: NSError?) -> Void in
+                if error == nil {
+                    self.artworkImageView.image = artwork
+                } else {
+                    
+                    // Log details of the failure
+                    println("Error: \(error!) \(error!.userInfo!)")
+                }
             }
+
         }
         
         var dateFormatter = NSDateFormatter()
