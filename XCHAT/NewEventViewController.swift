@@ -19,11 +19,15 @@ class NewEventViewController: UIViewController, UITextViewDelegate, UIImagePicke
     var artworkImage: UIImage?
     var calendarViewController: CalendarViewController?
     
+    let placeholders = ["What?", "Where?", "Describe"]
+    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var nameTextView: UITextView!
     @IBOutlet weak var nameTextViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var locationTextView: UITextView!
+    @IBOutlet weak var locationTextViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var descriptionTextView: UITextView!
+    @IBOutlet weak var descriptionTextViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var startDatePicker: UIDatePicker!
     @IBOutlet weak var endDatePicker: UIDatePicker!
     @IBOutlet weak var artworkButton: UIButton!
@@ -31,17 +35,17 @@ class NewEventViewController: UIViewController, UITextViewDelegate, UIImagePicke
     @IBOutlet weak var errorView: UIView!
     @IBOutlet weak var errorLabel: UILabel!
     
-    var textViewHeightConstraint = NSLayoutConstraint()
+    // var textViewHeightConstraint = NSLayoutConstraint()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         nameTextView.delegate = self
-        setPlaceholderText(nameTextView, row: 0)
+        setPlaceholderText(nameTextView)
         locationTextView.delegate = self
-        setPlaceholderText(locationTextView, row: 0)
+        setPlaceholderText(locationTextView)
         descriptionTextView.delegate = self
-        setPlaceholderText(descriptionTextView, row: 0)
+        setPlaceholderText(descriptionTextView)
         
         startDatePicker.addTarget(self, action: "onDateChanged", forControlEvents: UIControlEvents.ValueChanged)
         onDateChanged()
@@ -50,8 +54,13 @@ class NewEventViewController: UIViewController, UITextViewDelegate, UIImagePicke
         errorView.clipsToBounds = true
         errorLabel.textColor = UIColor.whiteColor()
         
-//        textViewHeightConstraint = NSLayoutConstraint(item: nameTextView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0.1, constant: 100)
-//        scrollView.addConstraint(textViewHeightConstraint)
+        nameTextView.becomeFirstResponder()
+        
+        /*
+        POTENTIAL TEXT VIEW RESIZING METHOD
+        textViewHeightConstraint = NSLayoutConstraint(item: nameTextView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0.1, constant: 100)
+        scrollView.addConstraint(textViewHeightConstraint)
+        */
     }
     
     override func didReceiveMemoryWarning() {
@@ -60,19 +69,7 @@ class NewEventViewController: UIViewController, UITextViewDelegate, UIImagePicke
     }
     
     
-    // MARK: TextView
-    
-    func setPlaceholderText(textView: UITextView, row: Int) {
-        switch row {
-        case 0:
-            textView.text = "What?"
-        case 1:
-            textView.text = "Where?"
-        default:
-            textView.text = "Describe."
-        }
-        textView.textColor = UIColor.lightGrayColor()
-    }
+    // MARK: TextView Protocol Implementations
     
     func textViewShouldBeginEditing(textView: UITextView) -> Bool {
         if textView.textColor == UIColor.lightGrayColor() {
@@ -82,21 +79,52 @@ class NewEventViewController: UIViewController, UITextViewDelegate, UIImagePicke
         return true
     }
     
+    func textViewShouldEndEditing(textView: UITextView) -> Bool {
+        if textView.text == "" {
+            setPlaceholderText(textView)
+        }
+        return true
+    }
+    
     func textViewDidChange(textView: UITextView) {
+        resizeTextView(textView)
+        
+        // User deletes all text in the TextView.
         if count(textView.text) == 0 {
-            if textView == nameTextView {
-                setPlaceholderText(textView, row: 0)
-                
-            } else if textView == locationTextView {
-                setPlaceholderText(textView, row: 1)
-                
-            } else {
-                setPlaceholderText(textView, row: 2)
-            }
+            setPlaceholderText(textView)
             textView.resignFirstResponder()
         }
+    }
+    
+    
+    // MARK: TextView Helpers
+    
+    func setPlaceholderText(textView: UITextView) {
+        if textView == nameTextView {
+            UIView.animateWithDuration(0.5, animations: { () -> Void in
+                textView.text = self.placeholders[0]
+            })
+            
+        } else if textView == locationTextView {
+            UIView.animateWithDuration(0.5, animations: { () -> Void in
+                textView.text = self.placeholders[1]
+            })
+            
+        } else {
+            UIView.animateWithDuration(0.5, animations: { () -> Void in
+                textView.text = self.placeholders[2]
+            })
+        }
+        textView.textColor = UIColor.lightGrayColor()
+    }
+    
+    func resizeTextView(textView: UITextView) {
         if textView == nameTextView {
             nameTextViewHeightConstraint.constant = nameTextView.contentSize.height
+        } else if textView == locationTextView {
+            locationTextViewHeightConstraint.constant = locationTextView.contentSize.height
+        } else if textView == descriptionTextView {
+            descriptionTextViewHeightConstraint.constant = descriptionTextView.contentSize.height
         }
     }
     
@@ -116,32 +144,34 @@ class NewEventViewController: UIViewController, UITextViewDelegate, UIImagePicke
     // MARK: Actions
     
     @IBAction func onPostButtonTapped(sender: AnyObject) {
-        if count(nameTextView.text) == 0 {
+        
+        // User forgets to enter name.
+        if nameTextView.text == placeholders[0] {
             
             // FIXME: NOT ANIMATIONG PROPERLY
             UIView.animateWithDuration(100, delay: 0, options: nil, animations: { () -> Void in
                 self.errorView.hidden = false
-                }, completion: { (complete: Bool) -> Void in
-                    UIView.animateWithDuration(10, delay: 10, options: nil, animations: { () -> Void in
-                        self.errorView.hidden = true
-                        }, completion: nil)
+            }, completion: { (complete: Bool) -> Void in
+                UIView.animateWithDuration(10, delay: 10, options: nil, animations: { () -> Void in
+                    self.errorView.hidden = true
+                }, completion: nil)
             })
+            
         } else {
             var event = PFObject(className: "Event")
             
             event["name"] = nameTextView.text
-            event["startTime"] = startDatePicker.date
-            event["endTime"] = endDatePicker.date
             
-            if count(locationTextView.text) > 0 {
+            if locationTextView.text != placeholders[1] {
                 event["location"] = locationTextView.text
             }
-            if count(descriptionTextView.text) > 0 {
+            if descriptionTextView.text != placeholders[2] {
                 event["description"] = descriptionTextView.text
             }
             
-            // FIXME: IMPLEMENT CURRNET USER
-            // event["author"] = PFUser.currentUser()?.username!
+            event["startTime"] = startDatePicker.date
+            event["endTime"] = endDatePicker.date
+            event["ceatedBy"] = PFUser.currentUser()?.valueForKey("username")
             
             if artworkImage != nil {
                 let artworkImageData = UIImageJPEGRepresentation(artworkImage, 100)
@@ -166,6 +196,7 @@ class NewEventViewController: UIViewController, UITextViewDelegate, UIImagePicke
     }
     
     @IBAction func onScreenTapped(sender: AnyObject) {
+        println("DETECTED")
         view.endEditing(true)
     }
     
