@@ -56,16 +56,19 @@ class FirstMessageCell: UITableViewCell {
             if let users = users as? [PFObject] {
                 var pfImageView = PFImageView()
                 pfImageView.file = users[0].valueForKey("photo") as? PFFile
-                pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
-                    if error == nil {
-                        
-                        self.authorProfileImageView.image = image
-                    } else {
-                        
-                        // Log details of the failure
-                        println("Error: \(error!) \(error!.userInfo!)")
+                if let _=pfImageView.file{
+                    pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
+                        if error == nil {
+                            
+                            self.authorProfileImageView.image = image
+                        } else {
+                            
+                            // Log details of the failure
+                            println("Error: \(error!) \(error!.userInfo!)")
+                        }
                     }
                 }
+          
             }
         })
     }
