@@ -19,9 +19,11 @@ class NewEventViewController: UIViewController, UITextViewDelegate, UIImagePicke
     var artworkImage: UIImage?
     var calendarViewController: CalendarViewController?
     
-    @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var locationTextField: UITextField!
-    @IBOutlet weak var descriptionTextField: UITextField!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var nameTextView: UITextView!
+    @IBOutlet weak var nameTextViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var locationTextView: UITextView!
+    @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var startDatePicker: UIDatePicker!
     @IBOutlet weak var endDatePicker: UIDatePicker!
     @IBOutlet weak var artworkButton: UIButton!
@@ -29,8 +31,17 @@ class NewEventViewController: UIViewController, UITextViewDelegate, UIImagePicke
     @IBOutlet weak var errorView: UIView!
     @IBOutlet weak var errorLabel: UILabel!
     
+    var textViewHeightConstraint = NSLayoutConstraint()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        nameTextView.delegate = self
+        setPlaceholderText(nameTextView, row: 0)
+        locationTextView.delegate = self
+        setPlaceholderText(locationTextView, row: 0)
+        descriptionTextView.delegate = self
+        setPlaceholderText(descriptionTextView, row: 0)
         
         startDatePicker.addTarget(self, action: "onDateChanged", forControlEvents: UIControlEvents.ValueChanged)
         onDateChanged()
@@ -38,6 +49,9 @@ class NewEventViewController: UIViewController, UITextViewDelegate, UIImagePicke
         errorView.layer.cornerRadius = 60
         errorView.clipsToBounds = true
         errorLabel.textColor = UIColor.whiteColor()
+        
+//        textViewHeightConstraint = NSLayoutConstraint(item: nameTextView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0.1, constant: 100)
+//        scrollView.addConstraint(textViewHeightConstraint)
     }
     
     override func didReceiveMemoryWarning() {
@@ -46,7 +60,48 @@ class NewEventViewController: UIViewController, UITextViewDelegate, UIImagePicke
     }
     
     
-    // Event Handlers
+    // MARK: TextView
+    
+    func setPlaceholderText(textView: UITextView, row: Int) {
+        switch row {
+        case 0:
+            textView.text = "What?"
+        case 1:
+            textView.text = "Where?"
+        default:
+            textView.text = "Describe."
+        }
+        textView.textColor = UIColor.lightGrayColor()
+    }
+    
+    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+        if textView.textColor == UIColor.lightGrayColor() {
+            textView.text = ""
+            textView.textColor = UIColor.blackColor()
+        }
+        return true
+    }
+    
+    func textViewDidChange(textView: UITextView) {
+        if count(textView.text) == 0 {
+            if textView == nameTextView {
+                setPlaceholderText(textView, row: 0)
+                
+            } else if textView == locationTextView {
+                setPlaceholderText(textView, row: 1)
+                
+            } else {
+                setPlaceholderText(textView, row: 2)
+            }
+            textView.resignFirstResponder()
+        }
+        if textView == nameTextView {
+            nameTextViewHeightConstraint.constant = nameTextView.contentSize.height
+        }
+    }
+    
+    
+    // MARK: Event Handlers
     
     func onDateChanged() {
         let calendar = NSCalendar.currentCalendar()
@@ -61,7 +116,7 @@ class NewEventViewController: UIViewController, UITextViewDelegate, UIImagePicke
     // MARK: Actions
     
     @IBAction func onPostButtonTapped(sender: AnyObject) {
-        if count(nameTextField.text) == 0 {
+        if count(nameTextView.text) == 0 {
             
             // FIXME: NOT ANIMATIONG PROPERLY
             UIView.animateWithDuration(100, delay: 0, options: nil, animations: { () -> Void in
@@ -74,21 +129,21 @@ class NewEventViewController: UIViewController, UITextViewDelegate, UIImagePicke
         } else {
             var event = PFObject(className: "Event")
             
-            event["name"] = nameTextField.text
+            event["name"] = nameTextView.text
             event["startTime"] = startDatePicker.date
             event["endTime"] = endDatePicker.date
             
-            if count(locationTextField.text) > 0 {
-                event["location"] = locationTextField.text
+            if count(locationTextView.text) > 0 {
+                event["location"] = locationTextView.text
             }
-            if count(descriptionTextField.text) > 0 {
-                event["description"] = descriptionTextField.text
+            if count(descriptionTextView.text) > 0 {
+                event["description"] = descriptionTextView.text
             }
             
             // FIXME: IMPLEMENT CURRNET USER
             // event["author"] = PFUser.currentUser()?.username!
             
-            if artworkButton.titleLabel?.text == "" {
+            if artworkImage != nil {
                 let artworkImageData = UIImageJPEGRepresentation(artworkImage, 100)
                 let artwork = PFFile(name: "artwork.jpeg", data: artworkImageData)
                 event["artwork"] = artwork
