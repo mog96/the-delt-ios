@@ -29,12 +29,34 @@ class NotificationsSettingsViewController: UIViewController, UITableViewDataSour
         // Dispose of any resources that can be recreated.
     }
     
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 4
     }
     
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 16
+    }
+    
+    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        var headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.mainScreen().bounds.width, height: 20))
+        headerView.backgroundColor = UIColor(white: 3, alpha: 0.5)
+        
+        var notificationsLabel = UILabel(frame: CGRect(x: 8 , y: 2, width: 200, height: 16))
+        notificationsLabel.text = "PUSH NOTIFICATIONS"
+        notificationsLabel.font = UIFont(name: "HelveticaNeue-Thin", size: 14)
+        notificationsLabel.textColor = UIColor.redColor()
+        notificationsLabel.sizeToFit()
+        
+        headerView.insertSubview(notificationsLabel, atIndex: 0)
+        return headerView
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.row < 3{
+        if indexPath.row < 3 {
             var cell = tableView.dequeueReusableCellWithIdentifier("NTCell", forIndexPath: indexPath) as! NotificationsTableViewCell
             cell.delegate = self
 
@@ -45,7 +67,7 @@ class NotificationsSettingsViewController: UIViewController, UITableViewDataSour
                 cell.onSwitch.setOn(true, animated: true)
             }
             return cell
-        }else{
+        } else {
             var cell = tableView.dequeueReusableCellWithIdentifier("LogoutCell", forIndexPath: indexPath) as! LogOutTableViewCell
             cell.delegate = self
             return cell
@@ -56,11 +78,10 @@ class NotificationsSettingsViewController: UIViewController, UITableViewDataSour
         PFUser.logOut()
         var storyboard = UIStoryboard(name: "Main", bundle: nil)
         var loginViewController = storyboard.instantiateViewControllerWithIdentifier("LoginViewController") as? LoginViewController
-        self.view.window?.rootViewController = loginViewController // does exactly the same as arrow in storyboard   ("100% parity" --Tim Lee)
         
+        // Does exactly the same as arrow in storyboard. ("100% parity." --Tim Lee)
+        view.window?.rootViewController = loginViewController
     }
-    
-    
    
     func switchDelegate(switchtableViewCell: NotificationsTableViewCell, switchValue: Bool) {
         savedSettings[switchtableViewCell.label.text!] = switchValue
@@ -71,6 +92,6 @@ class NotificationsSettingsViewController: UIViewController, UITableViewDataSour
             PushHelper.unsubscribeFromChannel(switchtableViewCell.label.text!)
             
         }
-
     }
+    
 }

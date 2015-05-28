@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vd5-nW-KZO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="aCT-5f-GZs">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
-        <!--Notifications Settings View Controller-->
+        <!--SETTINGS-->
         <scene sceneID="L8o-Ay-30L">
             <objects>
                 <viewController storyboardIdentifier="Settings" id="vd5-nW-KZO" customClass="NotificationsSettingsViewController" customModule="XCHAT" customModuleProvider="target" sceneMemberID="viewController">
@@ -94,11 +94,30 @@
                             <constraint firstAttribute="trailing" secondItem="MZY-he-HZG" secondAttribute="trailing" id="mNd-MQ-Y6Y"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="SETTINGS" id="wF8-f1-htP"/>
                     <connections>
                         <outlet property="tableView" destination="MZY-he-HZG" id="wtv-QB-lps"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tc9-xY-kdb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="836" y="381"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="QIn-JL-iW9">
+            <objects>
+                <navigationController storyboardIdentifier="SettingsNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="aCT-5f-GZs" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="j71-MN-L9M">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="vd5-nW-KZO" kind="relationship" relationship="rootViewController" id="Bp6-JV-pw6"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ny1-t4-Rvt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="304" y="381"/>
         </scene>

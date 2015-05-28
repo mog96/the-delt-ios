@@ -36,16 +36,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             hamburgerViewController = storyboard.instantiateViewControllerWithIdentifier("HamburgerViewController") as? HamburgerViewController
             var menuViewController = storyboard.instantiateViewControllerWithIdentifier("MenuViewController") as! MenuViewController
             
-            var chatViewcontroller = chat_storyboard.instantiateViewControllerWithIdentifier("Messages")
-            as! MessageViewController
+            var chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
+            var chatNavigationController = chatStoryboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
+            
+            // TODO: SET START VIEW TO THREADS
+            hamburgerViewController!.contentViewController = chatNavigationController
+            
             hamburgerViewController!.menuViewController = menuViewController
             menuViewController.hamburgerViewController = hamburgerViewController
             
-            // TODO: SET START VIEW TO THREADS
-            //hamburgerViewController!.contentViewController = profileViewController
-            hamburgerViewController!.contentViewController = chatViewcontroller
-            
-            // does exactly the same as arrow in storyboard   ("100% parity" --Tim Lee)
+            // Does exactly the same as arrow in storyboard. ("100% parity." --Tim Lee)
             window?.rootViewController = hamburgerViewController
         }
         

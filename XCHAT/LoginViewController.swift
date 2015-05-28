@@ -74,7 +74,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 self.usernameTextField.resignFirstResponder()
                 self.passwordTextField.resignFirstResponder()
                 
-                self.performSegueWithIdentifier("loginSegue", sender: self)
+                self.performSegueWithIdentifier("loginSeguee", sender: self)
+                println("FUCK")
             } else {
                 println("LOGIN FAILED")
             }
@@ -87,22 +88,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
 
     
-    // MARK: - Navigation
+    // MARK: Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.        
        
-        var hamburgerViewController =  segue.destinationViewController as! HamburgerViewController
+        var hamburgerViewController = segue.destinationViewController as! HamburgerViewController
         var menuViewController = storyboard!.instantiateViewControllerWithIdentifier("MenuViewController") as! MenuViewController
-        
         hamburgerViewController.menuViewController = menuViewController
         menuViewController.hamburgerViewController = hamburgerViewController
         
         // TODO: SET START VIEW TO THREADS
-        var chatNavigationController = storyboard!.instantiateViewControllerWithIdentifier("Messages") as! MessageViewController
-        
+        var chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
+        var chatNavigationController = chatStoryboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
         hamburgerViewController.contentViewController = chatNavigationController
     }
     

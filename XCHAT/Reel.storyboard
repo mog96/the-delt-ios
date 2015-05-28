@@ -175,6 +175,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="REEL" id="3Cu-al-7aF">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="YKZ-WM-F7f">
+                            <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="onAddButtonTapped:" destination="Kv9-UO-DET" id="vlQ-2J-Rdr"/>
                             </connections>
@@ -252,6 +253,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="ADD CAPTION" id="NiO-zE-bfO">
                         <barButtonItem key="rightBarButtonItem" title="POST" id="0Gj-gp-JxO">
+                            <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="onPostButtonTapped:" destination="yp8-zT-D2I" id="WMW-b9-gth"/>
                             </connections>
@@ -316,11 +318,13 @@
                     </view>
                     <navigationItem key="navigationItem" title="ADD COMMENT" id="mh9-ol-itt">
                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="ALH-E5-V8u">
+                            <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="onCancelButtonTapped:" destination="959-bb-wDE" id="bRb-E5-Q0k"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="POST" id="Xyc-Af-NcX">
+                            <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="onPostButtonTapped:" destination="959-bb-wDE" id="kgi-1O-eWb"/>
                             </connections>

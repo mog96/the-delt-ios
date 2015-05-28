@@ -15,12 +15,16 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
     
     let xThreshold = 100
     var contentViewOriginalOrigin: CGPoint!
+    var screenSize: CGRect!
     
     
     // MARK: View Loading
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // FOR SCREEN SIZE-DEPENDENT MENU WIDTH
+        screenSize = UIScreen.mainScreen().bounds
         
         configureContentViewController()
         configureMenuViewController()
@@ -117,11 +121,11 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
         } else if sender.state == UIGestureRecognizerState.Changed {
             
             // enables sliding in both directions (adding negative translation when going to the left)
-            var newx = contentViewOriginalOrigin.x + translation.x
-            if newx < 0{
-                contentView.frame.origin.x = 0.01 * newx
+            var newX = contentViewOriginalOrigin.x + translation.x
+            if newX < 0 {
+                contentView.frame.origin.x = 0.01 * newX
             } else {
-                contentView.frame.origin.x =  newx
+                contentView.frame.origin.x =  newX
             }
             
         } else if sender.state == UIGestureRecognizerState.Ended {

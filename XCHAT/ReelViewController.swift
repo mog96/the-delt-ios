@@ -51,6 +51,12 @@ class ReelViewController: UIViewController, UITableViewDelegate, UITableViewData
         */
     }
     
+    override func viewWillAppear(animated: Bool) {
+        var frame = self.navigationController!.navigationBar.frame
+        frame.origin.y = 20.0
+        self.navigationController!.navigationBar.frame = frame
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -60,7 +66,7 @@ class ReelViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: TableView
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        var photo = photos.objectAtIndex(section) as? NSMutableDictionary
+        var photo = photos.objectAtIndex(section) as! NSMutableDictionary
         
         // Header
         var headerView = UIView(frame: CGRect(x: 0, y: 0, width: kHeaderWidth, height: kHeaderHeight))
@@ -68,29 +74,32 @@ class ReelViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // Profile Image
         var profileImageView = UIImageView(frame: CGRect(x: 8 , y: 8, width: kProfileWidthHeight, height: kProfileWidthHeight))
-        profileImageView.backgroundColor = UIColor.redColor()
+        // profileImageView.backgroundColor = UIColor.redColor()
+        profileImageView.contentMode = UIViewContentMode.ScaleAspectFill
         profileImageView.layer.cornerRadius = 1
         profileImageView.clipsToBounds = true
         
-        profileImageView.image = UIImage(named: "ROONEY")
-        
-        
-        // START HERE: Implement profile pictures
-        var pfImageView = PFImageView()
-        pfImageView.file = photo?.valueForKey("imageFile") as? PFFile
-        pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
-            if error == nil {
-                // profileImageView.image = image  // FIXME: SET PROFILE PICTURE
-            } else {
-                
-                // Log details of the failure
-                println("Error: \(error!) \(error!.userInfo!)")
+        var query = PFUser.query()
+        query?.whereKey("username", equalTo: photo.valueForKey("username") as! String)
+        query?.findObjectsInBackgroundWithBlock({ (users: [AnyObject]?, error: NSError?) -> Void in
+            if let users = users as? [PFObject] {
+                var pfImageView = PFImageView()
+                pfImageView.file = users[0].valueForKey("photo") as? PFFile
+                pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
+                    if error == nil {
+                        profileImageView.image = image
+                    } else {
+                        
+                        // Log details of the failure
+                        println("Error: \(error!) \(error!.userInfo!)")
+                    }
+                }
             }
-        }
+        })
         
         // Username Label
         var usernameLabel = UILabel(frame: CGRect(x: 8 + kProfileWidthHeight + 8, y: 12, width: 200, height: 16))
-        usernameLabel.text = photo?.valueForKey("username") as? String
+        usernameLabel.text = photo.valueForKey("username") as? String
         usernameLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 16.5)
         usernameLabel.textColor = UIColor.redColor()
         usernameLabel.sizeToFit()

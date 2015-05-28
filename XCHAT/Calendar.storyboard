@@ -162,6 +162,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="CALENDAR" id="IYj-Wb-G8j">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="1yE-cQ-lMJ">
+                            <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <segue destination="r7f-ab-6z8" kind="modal" identifier="newEventSegue" id="4sq-zx-ztf"/>
                             </connections>
@@ -301,11 +302,13 @@
                     </view>
                     <navigationItem key="navigationItem" title="ADD EVENT" id="nGN-kI-x0I">
                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="FT0-UN-mhv">
+                            <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="onCancelButtonTapped:" destination="Bv9-gY-TjP" id="T4F-sA-P1u"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="POST" id="Cde-x9-wbZ">
+                            <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="onPostButtonTapped:" destination="Bv9-gY-TjP" id="u2D-PN-w2n"/>
                             </connections>

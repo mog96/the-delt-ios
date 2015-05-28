@@ -10,9 +10,9 @@ import Foundation
 
 class NotificationSettingConstants{
     private struct SubStruct { static var staticVariable: [String] = [
-        "New Threads",
-        "New Replies",
-        "New Photos"
+        "New threads",
+        "New replies",
+        "New photos"
         ]
     }
     class var settingsList: [String]

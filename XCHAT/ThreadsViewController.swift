@@ -93,7 +93,7 @@ class ThreadsViewController: UIViewController, UITableViewDataSource, UITableVie
         // Pass the selected object to the new view controller.
         if segue.identifier == "readThreadSegue" {
             let senderCell = sender as! UITableViewCell
-            let messageVC = segue.destinationViewController as! MessageViewController
+            let messageVC = segue.destinationViewController as! ChatViewController
             let senderIndexPath = threadsTableView.indexPathForCell(senderCell)
             
             // Tell MessageViewController the objectId of the thread to load

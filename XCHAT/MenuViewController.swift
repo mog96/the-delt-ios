@@ -38,7 +38,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             var cell = tableView.dequeueReusableCellWithIdentifier("ProfileCell") as! UITableViewCell
             return cell
         case 1:
-            var cell = tableView.dequeueReusableCellWithIdentifier("ThreadsCell") as! UITableViewCell
+            var cell = tableView.dequeueReusableCellWithIdentifier("ChatCell") as! UITableViewCell
             return cell
         case 2:
             var cell = tableView.dequeueReusableCellWithIdentifier("ReelCell")as! UITableViewCell
@@ -71,7 +71,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             
         case 1: // CHAT
             var chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
-            var chatNavigationController = chatStoryboard.instantiateViewControllerWithIdentifier("Messages") as! MessageViewController
+            var chatNavigationController = chatStoryboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
             hamburgerViewController?.contentViewController = chatNavigationController
             
         case 2: // REEL
@@ -90,9 +90,9 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             hamburgerViewController?.contentViewController = reelNavigationController
             
         default: // SETTINGS
-            var threadsStoryboard = UIStoryboard(name: "NotificationSettings", bundle: nil)
-            var notificationSettingsController = threadsStoryboard.instantiateViewControllerWithIdentifier("Settings") as! NotificationsSettingsViewController
-            hamburgerViewController?.contentViewController = notificationSettingsController
+            var settingsStoryboard = UIStoryboard(name: "Settings", bundle: nil)
+            var settingsNavigationController = settingsStoryboard.instantiateViewControllerWithIdentifier("SettingsNavigationController") as! UINavigationController
+            hamburgerViewController?.contentViewController = settingsNavigationController
         }
     }
     
