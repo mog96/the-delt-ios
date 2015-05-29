@@ -50,9 +50,13 @@ class NewEventViewController: UIViewController, UITextViewDelegate, UIImagePicke
         startDatePicker.addTarget(self, action: "onDateChanged", forControlEvents: UIControlEvents.ValueChanged)
         onDateChanged()
         
+        // Error view, for if user forgets to enter event name.
         errorView.layer.cornerRadius = 60
         errorView.clipsToBounds = true
         errorLabel.textColor = UIColor.whiteColor()
+        
+        artworkButton.layer.cornerRadius = 2
+        artworkButton.clipsToBounds = true
         
         nameTextView.becomeFirstResponder()
         

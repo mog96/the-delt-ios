@@ -27,8 +27,9 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
     @IBOutlet weak var phoneNumberTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     
-    @IBOutlet weak var backgroundPhotoImageView: UIImageView!
     @IBOutlet weak var photoImageView: UIImageView!
+    @IBOutlet weak var backgroundPhotoImageView: UIImageView!
+    @IBOutlet weak var backgroundPhotoImageViewWidthConstraint: NSLayoutConstraint!
     
     /*
     @IBOutlet weak var backgroundPhoto: UIImageView!
@@ -73,6 +74,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
             phoneNumberTextField.text = email
         }
         
+        // Photo.
         if let photo = PFUser.currentUser()?.objectForKey("photo") as? PFFile {
             var pfImageView = PFImageView()
             
@@ -86,7 +88,10 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
                 }
             }
         }
+        photoImageView.layer.cornerRadius = 3
+        photoImageView.clipsToBounds = true
         
+        // Background photo.
         if let backgroundPhoto = PFUser.currentUser()?.objectForKey("backgroundPhoto") as? PFFile {
             var pfImageView = PFImageView()
             
@@ -100,6 +105,11 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
                 }
             }
         }
+        backgroundPhotoImageViewWidthConstraint.constant = UIScreen.mainScreen().bounds.width
+        
+        // Add keyboard observers.
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -187,12 +197,13 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
     // MARK: Actions
     
     @IBAction func onScreenTapped(sender: AnyObject) {
-        println("TRUE")
         view.endEditing(true)
     }
     
     @IBAction func onPhotoTapped(sender: AnyObject) {
         choosingPhoto = true
+        
+        println("TRUTH")
         
         let imageVC = UIImagePickerController()
         imageVC.delegate = self

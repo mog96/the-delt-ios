@@ -67,7 +67,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.query.orderByDescending("createdAt")
         self.fetchMessages()
         
-        // Add keyboard observer.
+        // Add keyboard observers.
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
         
