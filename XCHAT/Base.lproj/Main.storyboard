@@ -192,14 +192,14 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProfileCell" rowHeight="122" id="8fJ-C3-3hi" customClass="ProfileCell" customModule="XCHAT" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ProfileCell" rowHeight="142" id="8fJ-C3-3hi" customClass="ProfileCell" customModule="XCHAT" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8fJ-C3-3hi" id="4Ic-ph-E3H">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mateo Garcia" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LlQ-BC-Pmb">
-                                                    <rect key="frame" x="114" y="16" width="150" height="21.5"/>
+                                                    <rect key="frame" x="114" y="36" width="150" height="21.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="150" id="Xkx-6n-4dX"/>
                                                     </constraints>
@@ -208,33 +208,33 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100 photos" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wks-Ly-4Yk">
-                                                    <rect key="frame" x="114" y="77" width="150" height="14.5"/>
+                                                    <rect key="frame" x="114" y="97" width="150" height="14.5"/>
                                                     <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="12"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@susy100" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J1C-4N-YjI">
-                                                    <rect key="frame" x="114" y="37" width="150" height="16"/>
+                                                    <rect key="frame" x="114" y="57" width="150" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LOGIN BACKGROUND 1" translatesAutoresizingMaskIntoConstraints="NO" id="zSX-FM-Kxq">
-                                                    <rect key="frame" x="16" y="16" width="90" height="90"/>
+                                                    <rect key="frame" x="16" y="36" width="90" height="90"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="90" id="Zf5-w5-Gw2"/>
                                                         <constraint firstAttribute="width" constant="90" id="gwX-8D-yOa"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="300 faves" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hMe-Lp-SdL">
-                                                    <rect key="frame" x="114" y="91" width="150" height="14.5"/>
+                                                    <rect key="frame" x="114" y="111" width="150" height="14.5"/>
                                                     <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="12"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="zSX-FM-Kxq" firstAttribute="top" secondItem="4Ic-ph-E3H" secondAttribute="top" constant="16" id="1Bj-K7-WEw"/>
+                                                <constraint firstItem="zSX-FM-Kxq" firstAttribute="top" secondItem="4Ic-ph-E3H" secondAttribute="top" constant="36" id="1Bj-K7-WEw"/>
                                                 <constraint firstItem="LlQ-BC-Pmb" firstAttribute="top" secondItem="zSX-FM-Kxq" secondAttribute="top" id="2kV-bq-sGz"/>
                                                 <constraint firstItem="hMe-Lp-SdL" firstAttribute="leading" secondItem="J1C-4N-YjI" secondAttribute="leading" id="65e-tg-Om9"/>
                                                 <constraint firstItem="zSX-FM-Kxq" firstAttribute="leading" secondItem="4Ic-ph-E3H" secondAttribute="leading" constant="16" id="9k0-fz-G5O"/>

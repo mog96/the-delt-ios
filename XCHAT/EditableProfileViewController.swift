@@ -163,6 +163,35 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
 
     }
     
+    /*
+    // MARK: TextView Protocol Implementations
+    
+    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+        if textView.textColor == UIColor.lightGrayColor() {
+            textView.text = ""
+            textView.textColor = UIColor.blackColor()
+        }
+        return true
+    }
+    
+    func textViewShouldEndEditing(textView: UITextView) -> Bool {
+        if textView.text == "" {
+            setPlaceholderText(textView)
+        }
+        return true
+    }
+    
+    func textViewDidChange(textView: UITextView) {
+        resizeTextView(textView)
+        
+        // User deletes all text in the TextView.
+        if count(textView.text) == 0 {
+            setPlaceholderText(textView)
+            textView.resignFirstResponder()
+        }
+    }
+    */
+    
     
     // MARK: Keyboard
     
