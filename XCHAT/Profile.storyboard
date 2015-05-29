@@ -16,10 +16,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dfP-G3-YWa">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="dfP-G3-YWa">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.49999999999999961" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OUTER SPACE" translatesAutoresizingMaskIntoConstraints="NO" id="wIh-z0-KBJ">
+                                    <imageView clipsSubviews="YES" alpha="0.49999999999999961" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OUTER SPACE" translatesAutoresizingMaskIntoConstraints="NO" id="wIh-z0-KBJ">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="182"/>
                                         <gestureRecognizers/>
                                         <constraints>
@@ -27,10 +27,10 @@
                                             <constraint firstAttribute="height" constant="182" id="ou2-yX-hEn"/>
                                         </constraints>
                                         <connections>
-                                            <outletCollection property="gestureRecognizers" destination="kQm-Zo-zTw" appends="YES" id="PjH-XJ-zv6"/>
+                                            <outletCollection property="gestureRecognizers" destination="Pde-hd-gSN" appends="YES" id="SuM-xu-nSW"/>
                                         </connections>
                                     </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="INTO THE WILD" translatesAutoresizingMaskIntoConstraints="NO" id="V2U-iU-4YW">
+                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="INTO THE WILD" translatesAutoresizingMaskIntoConstraints="NO" id="V2U-iU-4YW">
                                         <rect key="frame" x="60" y="65" width="200" height="200"/>
                                         <gestureRecognizers/>
                                         <constraints>
@@ -38,7 +38,7 @@
                                             <constraint firstAttribute="height" constant="200" id="Y9V-4e-Qu3"/>
                                         </constraints>
                                         <connections>
-                                            <outletCollection property="gestureRecognizers" destination="9KD-FH-R7j" appends="YES" id="nLK-W9-Seg"/>
+                                            <outletCollection property="gestureRecognizers" destination="Hbi-WL-xwS" appends="YES" id="CPa-id-War"/>
                                         </connections>
                                     </imageView>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Mateo Garcia" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tsv-tX-sYK">
@@ -102,6 +102,9 @@
                                     <constraint firstItem="7MR-wv-vVO" firstAttribute="top" secondItem="OrG-gK-qAW" secondAttribute="bottom" priority="250" constant="8" id="wN7-X4-Pc6"/>
                                     <constraint firstItem="ytx-yl-3lt" firstAttribute="top" secondItem="Tsv-tX-sYK" secondAttribute="bottom" id="xNV-Sp-fpy"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="XfJ-kd-EG5" appends="YES" id="UOs-HP-KHY"/>
+                                </connections>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -114,6 +117,7 @@
                     </view>
                     <connections>
                         <outlet property="backgroundPhotoImageView" destination="wIh-z0-KBJ" id="D1P-eW-6Pk"/>
+                        <outlet property="backgroundPhotoImageViewWidthConstraint" destination="765-Go-lkV" id="fsX-7P-zrF"/>
                         <outlet property="bioTextView" destination="OrG-gK-qAW" id="JN8-0s-5Om"/>
                         <outlet property="emailTextField" destination="eN1-sJ-Pnu" id="CcK-9R-a9f"/>
                         <outlet property="nameTextField" destination="Tsv-tX-sYK" id="yX8-Kc-WZC"/>
@@ -126,19 +130,19 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i0l-es-gJW" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="4tP-eT-rJQ" userLabel="Screen Tap Gesture Recognizer">
+                <tapGestureRecognizer id="XfJ-kd-EG5" userLabel="Screen Tap Gesture Recognizer">
                     <connections>
-                        <action selector="onScreenTapped:" destination="N2P-qZ-R5d" id="W4t-FY-bFj"/>
+                        <action selector="onScreenTapped:" destination="N2P-qZ-R5d" id="xpI-TZ-t1j"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer id="9KD-FH-R7j" userLabel="Photo Tap Gesture Recognizer">
+                <tapGestureRecognizer id="Hbi-WL-xwS" userLabel="Photo Tap Gesture Recognizer">
                     <connections>
-                        <action selector="onPhotoTapped:" destination="N2P-qZ-R5d" id="Rpb-9Q-zqx"/>
+                        <action selector="onPhotoTapped:" destination="N2P-qZ-R5d" id="Adr-Cf-JBF"/>
                     </connections>
                 </tapGestureRecognizer>
-                <tapGestureRecognizer id="kQm-Zo-zTw" userLabel="Background Photo Tap Gesture Recognizer">
+                <tapGestureRecognizer id="Pde-hd-gSN" userLabel="Background Photo Tap Gesture Recognizer">
                     <connections>
-                        <action selector="onBackgroundPhotoTapped:" destination="N2P-qZ-R5d" id="UnH-wX-j0y"/>
+                        <action selector="onBackgroundPhotoTapped:" destination="N2P-qZ-R5d" id="X58-qd-mVi"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
