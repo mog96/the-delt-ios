@@ -109,7 +109,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // NOTE: LoadMessagesCell code commented out.
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messages.count // + 1
+        return messages.count + 1// + 1
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -312,20 +312,15 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
             if objects != nil {
-                if self.messages.count < objects?.count {
+                if self.messages.count - 1 < objects?.count {
                     self.messages = ((objects as! [PFObject]?)!).reverse()
-                    
                     // get rid of the welcome message
                     // self.messageTableView.tableHeaderView = UIView(frame: CGRectZero)
                     self.fetchUserPics()
                     self.messageTableView.reloadData()
-                    
-                    // Scroll to bottom
-                    if self.firstLoad {
-                        self.messageTableView.layoutIfNeeded()
-                        self.scrollToBottom()
-                        self.firstLoad = false
-                    }
+                    self.messageTableView.layoutIfNeeded()
+                    self.scrollToBottom()
+                    self.firstLoad = false
                 }
                 
             } else {
@@ -350,9 +345,11 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // MARK: Auto Scroll
     
     func scrollToBottom(){
+
         let bottomSection = messageTableView.numberOfSections() - 1
         if bottomSection >= 0 {
             let bottomRow = messageTableView.numberOfRowsInSection(bottomSection) - 1
+            let lastIndexPath = NSIndexPath(forRow: bottomRow, inSection: bottomSection)
             if bottomRow >= 1 {
                 
                 let lastIndexPath = NSIndexPath(forRow: bottomRow, inSection: bottomSection)

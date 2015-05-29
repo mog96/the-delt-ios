@@ -84,16 +84,22 @@ class ReelViewController: UIViewController, UITableViewDelegate, UITableViewData
         query?.findObjectsInBackgroundWithBlock({ (users: [AnyObject]?, error: NSError?) -> Void in
             if let users = users as? [PFObject] {
                 var pfImageView = PFImageView()
-                pfImageView.file = users[0].valueForKey("photo") as? PFFile
-                pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
-                    if error == nil {
-                        profileImageView.image = image
-                    } else {
-                        
-                        // Log details of the failure
-                        println("Error: \(error!) \(error!.userInfo!)")
+                if count(users)>0{
+                    if let _ = users[0].valueForKey("photo"){
+                        pfImageView.file = users[0].valueForKey("photo") as? PFFile
+                        pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
+                            if error == nil {
+                                profileImageView.image = image
+                            } else {
+                                
+                                // Log details of the failure
+                                println("Error: \(error!) \(error!.userInfo!)")
+                            }
+                        }
                     }
+
                 }
+
             }
         })
         
