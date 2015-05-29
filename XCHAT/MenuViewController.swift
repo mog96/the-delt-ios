@@ -66,7 +66,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         switch indexPath.row {
         case 0:
             var profileStoryboard = UIStoryboard(name: "Profile", bundle: nil)
-            var profileController = profileStoryboard.instantiateViewControllerWithIdentifier("Editable") as! EditableProfileViewController
+            var profileController = profileStoryboard.instantiateViewControllerWithIdentifier("ProfileViewController") as! UIViewController
             hamburgerViewController?.contentViewController = profileController
             
         case 1: // CHAT
