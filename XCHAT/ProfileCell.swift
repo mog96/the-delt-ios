@@ -51,12 +51,12 @@ class ProfileCell: UITableViewCell {
             usernameLabel.text = username
         }
         
-        if let numPhotos = PFUser.currentUser()?.objectForKey("numPhotos") as? Int {
+        if let numPhotos = PFUser.currentUser()?.objectForKey("numPhotosPosted") as? Int {
             numPhotosLabel.text = "\(numPhotos) photos"
         }
         
-        if let numFaves = PFUser.currentUser()?.objectForKey("numFaves") as? Int {
-            numFavesLabel.text = "\(numFaves) faves"
+        if let numFaves = PFUser.currentUser()?.objectForKey("totalNumFavesReceived") as? Int {
+            numFavesLabel.text = "\(numFaves) faves received"
         }
     }
 

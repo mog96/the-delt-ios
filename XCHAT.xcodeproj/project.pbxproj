@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		254A19AA1B18768E0030F316 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 254A19A91B18768E0030F316 /* Keys.plist */; };
 		25518A3F1B0ECFF200550DE9 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25518A3E1B0ECFF200550DE9 /* ButtonCell.swift */; };
 		25518A411B0ED03B00550DE9 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25518A401B0ED03B00550DE9 /* CommentCell.swift */; };
 		25518A451B0ED06300550DE9 /* FavesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25518A441B0ED06300550DE9 /* FavesCell.swift */; };
@@ -84,6 +85,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		254A19A91B18768E0030F316 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		25518A3E1B0ECFF200550DE9 /* ButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
 		25518A401B0ED03B00550DE9 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		25518A441B0ED06300550DE9 /* FavesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavesCell.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				259FBA411B02F5A5006F1650 /* Info.plist */,
+				254A19A91B18768E0030F316 /* Keys.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -346,12 +349,12 @@
 			isa = PBXGroup;
 			children = (
 				3890A1D21B0B187C00B4FF00 /* Calendar.storyboard */,
+				3890A1D01B0B17F600B4FF00 /* NewEventViewController.swift */,
 				38D9FB8D1B1557F40030B6D9 /* CalendarViewController.swift */,
 				38D9FB8F1B15582E0030B6D9 /* DateTitleCell.swift */,
 				38D9FB911B15583B0030B6D9 /* LocationCell.swift */,
 				38D9FB931B1558490030B6D9 /* DescriptionCell.swift */,
 				38D9FB951B1558530030B6D9 /* SpaceCell.swift */,
-				3890A1D01B0B17F600B4FF00 /* NewEventViewController.swift */,
 			);
 			name = Calendar;
 			sourceTree = "<group>";
@@ -479,6 +482,7 @@
 				255BE9821B170E9C0001B160 /* Chat.storyboard in Resources */,
 				381125B31B0C1DB400DBBAD2 /* Reel.storyboard in Resources */,
 				259FBA4A1B02F5A6006F1650 /* Images.xcassets in Resources */,
+				254A19AA1B18768E0030F316 /* Keys.plist in Resources */,
 				258D498C1B15C69600A632D3 /* WelcomeChatView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -701,13 +705,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jim Cai (NDJN35WHX6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jim Cai (NDJN35WHX6)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = XCHAT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "026e5f1f-48fd-48a7-96f7-97a44f49138b";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XCHAT/XCHAT-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -720,13 +724,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jim Cai (NDJN35WHX6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jim Cai (NDJN35WHX6)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = XCHAT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "026e5f1f-48fd-48a7-96f7-97a44f49138b";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XCHAT/XCHAT-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -750,7 +754,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "026e5f1f-48fd-48a7-96f7-97a44f49138b";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XCHAT.app/XCHAT";
 			};
 			name = Debug;
@@ -769,7 +773,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "026e5f1f-48fd-48a7-96f7-97a44f49138b";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XCHAT.app/XCHAT";
 			};
 			name = Release;

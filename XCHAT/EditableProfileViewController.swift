@@ -18,17 +18,17 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var scrollViewBottomSpaceConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var backgroundPhotoImageView: UIImageView!
+    @IBOutlet weak var photoButton: UIButton!
+    
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var yearTextField: UITextField!
-    
     @IBOutlet weak var bioTextView: UITextView!
     
     @IBOutlet weak var phoneNumberTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     
-    @IBOutlet weak var photoImageView: UIImageView!
-    @IBOutlet weak var backgroundPhotoImageView: UIImageView!
     @IBOutlet weak var backgroundPhotoImageViewWidthConstraint: NSLayoutConstraint!
     
     /*
@@ -71,7 +71,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
         }
         
         if let email = PFUser.currentUser()?.objectForKey("email") as? String {
-            phoneNumberTextField.text = email
+            emailTextField.text = email
         }
         
         // Photo.
@@ -81,15 +81,17 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
             pfImageView.file = photo as PFFile
             pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
                 if error == nil {
-                    self.photoImageView.image = image
+                    self.photoButton.setBackgroundImage(image, forState: UIControlState.Normal)
+                    self.photoButton.setTitle("", forState: UIControlState.Normal)
                 } else {
+                    
                     // Log details of the failure
                     println("Error: \(error!) \(error!.userInfo!)")
                 }
             }
         }
-        photoImageView.layer.cornerRadius = 3
-        photoImageView.clipsToBounds = true
+        photoButton.layer.cornerRadius = 3
+        photoButton.clipsToBounds = true
         
         // Background photo.
         if let backgroundPhoto = PFUser.currentUser()?.objectForKey("backgroundPhoto") as? PFFile {
@@ -110,11 +112,29 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
         // Add keyboard observers.
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        
+        // Set delegates.
+        nameTextField.delegate = self
+        usernameTextField.delegate = self
+        yearTextField.delegate = self
+        phoneNumberTextField.delegate = self
+        emailTextField.delegate = self
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    // MARK: Disable Rotation
+    
+    override func shouldAutorotate() -> Bool {
+        return false
+    }
+    
+    override func supportedInterfaceOrientations() -> Int {
+        return UIInterfaceOrientation.Portrait.rawValue
     }
     
     
@@ -126,41 +146,13 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
         })
         textView.textColor = UIColor.lightGrayColor()
     }
+    
 
     func textFieldDidEndEditing(textField: UITextField) {
+        println("FUCKME")
         textField.resignFirstResponder()
-
-        if count(nameTextField.text) > 0 {
-            PFUser.currentUser()?.setObject(nameTextField.text, forKey: "name")
-        }
-        if count(usernameTextField.text) > 0 {
-            PFUser.currentUser()?.setObject(usernameTextField.text, forKey: "username")
-        }
-        if count(yearTextField.text) > 0 {
-            PFUser.currentUser()?.setObject(yearTextField.text, forKey: "year")
-        }
         
-        if bioTextView.text != bioTextViewPlaceholder {
-            PFUser.currentUser()?.setObject(bioTextView.text, forKey: "quote")
-        }
-        
-        if count(phoneNumberTextField.text) > 0 {
-            PFUser.currentUser()?.setObject(phoneNumberTextField.text, forKey: "phone")
-        }
-        if count(emailTextField.text) > 0 {
-            PFUser.currentUser()?.setObject(emailTextField.text, forKey: "email")
-        }
-
-        PFUser.currentUser()?.saveInBackgroundWithBlock({ (result: Bool, error: NSError?) -> Void in
-            if error != nil {
-                
-                // Print some kind of error to clients
-                println(error?.description)
-            } else {
-                self.viewDidLoad()
-            }
-        })
-
+        saveData()
     }
     
     /*
@@ -229,7 +221,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
         view.endEditing(true)
     }
     
-    @IBAction func onPhotoTapped(sender: AnyObject) {
+    @IBAction func onPhotoButtonTapped(sender: AnyObject) {
         choosingPhoto = true
         
         println("TRUTH")
@@ -266,14 +258,19 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
             let imageData = UIImageJPEGRepresentation(self.uploadPhoto, 100)
             let imageFile = PFFile(name: (PFUser.currentUser()?.email)!+".jpeg", data: imageData)
             if self.choosingPhoto {
-                self.photoImageView.image = self.uploadPhoto
+                self.photoButton.setBackgroundImage(self.uploadPhoto, forState: UIControlState.Normal)
+                self.photoButton.setTitle("", forState: UIControlState.Normal)
                 PFUser.currentUser()?.setObject(imageFile, forKey: "photo")
                 
                 PFUser.currentUser()?.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
                     if error == nil {
                         
                         //println("successfully uploaded photo!")
-                        self.viewDidLoad()
+                        
+                        self.saveData()
+                        
+                        // FIXME: QUESTIONABLE
+                        // self.viewDidLoad()
                     } else {
                         println(error)
                     }
@@ -290,6 +287,43 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
                         println(error)
                     }
                 })
+            }
+        })
+    }
+    
+    
+    // MARK: Save Data
+    
+    func saveData() {
+        
+        if count(nameTextField.text) > 0 {
+            PFUser.currentUser()?.setObject(nameTextField.text, forKey: "name")
+        }
+        if count(usernameTextField.text) > 0 {
+            PFUser.currentUser()?.setObject(usernameTextField.text, forKey: "username")
+        }
+        if count(yearTextField.text) > 0 {
+            PFUser.currentUser()?.setObject(yearTextField.text, forKey: "year")
+        }
+        
+        if bioTextView.text != bioTextViewPlaceholder {
+            PFUser.currentUser()?.setObject(bioTextView.text, forKey: "quote")
+        }
+        
+        if count(phoneNumberTextField.text) > 0 {
+            PFUser.currentUser()?.setObject(phoneNumberTextField.text, forKey: "phone")
+        }
+        if count(emailTextField.text) > 0 {
+            PFUser.currentUser()?.setObject(emailTextField.text, forKey: "email")
+        }
+        
+        PFUser.currentUser()?.saveInBackgroundWithBlock({ (result: Bool, error: NSError?) -> Void in
+            if error != nil {
+                
+                // Print some kind of error to clients
+                println(error?.description)
+            } else {
+                self.viewDidLoad()
             }
         })
     }

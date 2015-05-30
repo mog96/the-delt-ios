@@ -11,8 +11,11 @@ import UIKit
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var loginBoxView: UIView!
+    
+    @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
     
@@ -23,9 +26,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         loginBoxView.layer.cornerRadius = 2
         loginBoxView.layer.masksToBounds = true
         
-        usernameTextField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
+        emailTextField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
+        usernameTextField.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
         passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
         
+        emailTextField.delegate = self
         usernameTextField.delegate = self
         passwordTextField.delegate = self
     }
@@ -33,7 +38,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        usernameTextField.becomeFirstResponder()
+        emailTextField.becomeFirstResponder()
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,11 +49,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: Actions
     
+    // Records login/signup information.
     @IBAction func signupPressed(sender: AnyObject) {
         var user = PFUser()
+        user.email = emailTextField.text
         user.username = usernameTextField.text
         user.password = passwordTextField.text
-        user.email = usernameTextField.text
+        
         // other fields can be set just like with PFObject
         // user["phone"] = "415-392-0202"
         
@@ -71,18 +78,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             if user != nil {
                 println("LOGIN SUCCESSFUL")
                 
+                self.emailTextField.resignFirstResponder()
                 self.usernameTextField.resignFirstResponder()
                 self.passwordTextField.resignFirstResponder()
                 
                 self.performSegueWithIdentifier("loginSeguee", sender: self)
-                println("FUCK")
             } else {
+                
                 println("LOGIN FAILED")
             }
         }
     }
     
     @IBAction func onScreenTapped(sender: AnyObject) {
+        emailTextField.resignFirstResponder()
         usernameTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
     }
