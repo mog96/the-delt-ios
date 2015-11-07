@@ -1,5 +1,5 @@
 # XCHAT
-Members only. Private chat, calendar, and camera reel for the group.
+Members only. Private chat, calendar, and camera reel for your group of friends.
 
 ### Walkthrough
 
