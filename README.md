@@ -1,7 +1,9 @@
 # XCHAT
 Members only. Private chat, calendar, and camera reel for the group.
 
+### Walkthrough
 
+![Video Walkthrough](https://github.com/mog96/XCHAT/blob/master/XCHAT%20User%20Stories.gif)
 
 
 
