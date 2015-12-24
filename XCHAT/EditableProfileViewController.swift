@@ -53,9 +53,16 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
         if let name = PFUser.currentUser()?.objectForKey("name") as? String {
             nameTextField.text = name
         }
+        
+        // FIXME: username at symbol
         if let username = PFUser.currentUser()?.objectForKey("username") as? String {
-            usernameTextField.text = "@" + username
+            if username.hasPrefix("@") {
+                self.usernameTextField.text = username
+            } else {
+                self.usernameTextField.text = "@" + username
+            }
         }
+        
         if let year = PFUser.currentUser()?.objectForKey("class") as? String {
             yearTextField.text = "Class of " + year
         }

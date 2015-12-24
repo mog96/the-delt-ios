@@ -71,7 +71,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
         
-        // Refetch messages every 15 seconds.
+        // SET MESSAGE REFRESH
+        // Refetch messages every 15 seconds. 
         var timer = NSTimer.scheduledTimerWithTimeInterval(15, target: self, selector: "fetchMessages", userInfo: nil, repeats: true)
         
     }
@@ -310,10 +311,12 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         query.limit = numOfMessagesToLoad
         
+        // Server side code that checks whether there are any messages and retrieves them if so.
         query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
             if objects != nil {
                 if self.messages.count - 1 < objects?.count {
                     self.messages = ((objects as! [PFObject]?)!).reverse()
+                    
                     // get rid of the welcome message
                     // self.messageTableView.tableHeaderView = UIView(frame: CGRectZero)
                     self.fetchUserPics()
@@ -332,7 +335,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     // Refreshes messages.
-    func delay(delay:Double, closure:()->()) {
+    func delay(delay: Double, closure: () -> ()) {
         dispatch_after(
             dispatch_time(
                 DISPATCH_TIME_NOW,
@@ -361,10 +364,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     
-    /*
-    DEPRECATED
-
-    */
+    // ENCAPSULATE
     func fetchUserPics(){
         var usernames = NSMutableSet()
         for message in self.messages{
@@ -373,8 +373,10 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         var username_list = usernames.allObjects as! [NSString]
         var userQuery = PFUser.query()
+        
         //userQuery?.whereKey("username", containedIn: username_list)
         userQuery?.whereKey("username", containedIn: username_list)
+        
         //println(userQuery?.getFirstObject())
         userQuery!.findObjectsInBackgroundWithBlock { (objects:[AnyObject]?, error:NSError?) -> Void in
             if objects != nil{

@@ -73,6 +73,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    // Logs in with username (not email) and password.
     @IBAction func loginPressed(sender: AnyObject) {
         PFUser.logInWithUsernameInBackground(usernameTextField.text, password: passwordTextField.text) { (user: PFUser?, error: NSError?) -> Void in
             if user != nil {

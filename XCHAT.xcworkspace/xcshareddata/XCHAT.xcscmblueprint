@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "833CEC6AC226482E7E78C03F37802093E9FD0DC9",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "833CEC6AC226482E7E78C03F37802093E9FD0DC9" : 0,
+    "6ED8BCFC1DEFFD9790CF3BAF71F0B4C530E2F863" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "84FB80E8-3936-46A0-AABD-CEBD2687C3BB",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "833CEC6AC226482E7E78C03F37802093E9FD0DC9" : "XCHAT",
+    "6ED8BCFC1DEFFD9790CF3BAF71F0B4C530E2F863" : "xchat-pat"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "XCHAT",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "XCHAT.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:patboony\/xchat-pat.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6ED8BCFC1DEFFD9790CF3BAF71F0B4C530E2F863"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:mog96\/XCHAT.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "833CEC6AC226482E7E78C03F37802093E9FD0DC9"
+    }
+  ]
+}

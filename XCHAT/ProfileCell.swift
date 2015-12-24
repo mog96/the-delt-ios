@@ -40,6 +40,9 @@ class ProfileCell: UITableViewCell {
             self.photoImageView.image = UIImage(named: "LOGIN BACKGROUND 1")
         }
         
+        photoImageView.layer.cornerRadius = 3
+        photoImageView.clipsToBounds = true
+        
         if let name = PFUser.currentUser()?.objectForKey("name") as? String {
             nameLabel.text = name
             

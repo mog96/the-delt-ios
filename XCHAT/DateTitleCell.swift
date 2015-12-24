@@ -75,8 +75,11 @@ class DateTitleCell: UITableViewCell {
         
         dateFormatter.dateFormat = "E"
         var weekday = dateFormatter.stringFromDate(startTime)
-        var weekdayLetter = weekday[weekday.startIndex]
-        weekdayLabel.text = String(weekdayLetter)
+        if weekday.hasPrefix("Th") {
+            self.weekdayLabel.text = "Th"
+        } else {
+            self.weekdayLabel.text = String(weekday[weekday.startIndex])
+        }
         
         dateFormatter.dateFormat = "M/d"
         dateLabel.text = dateFormatter.stringFromDate(startTime)
