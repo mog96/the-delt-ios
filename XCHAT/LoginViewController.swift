@@ -6,6 +6,15 @@
 //  Copyright (c) 2015 Mateo Garcia. All rights reserved.
 //
 
+/*
+FOR LOGIN VIEW
+- transform from login to signup on signup pressed
+- add email textfield on top #SEXY
+
+- fix logout.
+*/
+
+
 import UIKit
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
@@ -51,7 +60,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     // Records login/signup information.
     @IBAction func signupPressed(sender: AnyObject) {
-        var user = PFUser()
+        let user = PFUser()
         user.email = emailTextField.text
         user.username = usernameTextField.text
         user.password = passwordTextField.text
@@ -61,13 +70,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         user.signUpInBackgroundWithBlock { (succeeded: Bool, error: NSError?) -> Void in
             if let error = error {
-                let errorString = error.userInfo?["error"] as? NSString
-                // Show the errorString somewhere and let the user try again.
+                let errorString = error.userInfo["error"] as? NSString
                 
-                println("SIGNUP FAILED")
+                // Show the errorString somewhere and let the user try again.
+                print("Signup error: \(errorString)")
+                
             } else {
                 // Hooray! Let them use the app now.
-                println("SIGNUP SUCCESSFUL")
+                print("SIGNUP SUCCESSFUL")
 
             }
         }
@@ -75,18 +85,23 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     // Logs in with username (not email) and password.
     @IBAction func loginPressed(sender: AnyObject) {
-        PFUser.logInWithUsernameInBackground(usernameTextField.text, password: passwordTextField.text) { (user: PFUser?, error: NSError?) -> Void in
+        
+        // TODO: Check that text field text is not null.
+        PFUser.logInWithUsernameInBackground(usernameTextField.text!, password: passwordTextField.text!) { (user: PFUser?, error: NSError?) -> Void in
             if user != nil {
-                println("LOGIN SUCCESSFUL")
+                
+                print("LOGIN SUCCESSFUL")
                 
                 self.emailTextField.resignFirstResponder()
                 self.usernameTextField.resignFirstResponder()
                 self.passwordTextField.resignFirstResponder()
                 
-                self.performSegueWithIdentifier("loginSeguee", sender: self)
+                // TODO: Make sure dismiss works.
+                self.dismissViewControllerAnimated(true, completion: nil)
+                
             } else {
                 
-                println("LOGIN FAILED")
+                print("LOGIN FAILED")
             }
         }
     }
@@ -102,14 +117,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
        
-        var hamburgerViewController = segue.destinationViewController as! HamburgerViewController
-        var menuViewController = storyboard!.instantiateViewControllerWithIdentifier("MenuViewController") as! MenuViewController
+        let hamburgerViewController = segue.destinationViewController as! HamburgerViewController
+        let menuViewController = storyboard!.instantiateViewControllerWithIdentifier("MenuViewController") as! MenuViewController
         hamburgerViewController.menuViewController = menuViewController
         menuViewController.hamburgerViewController = hamburgerViewController
         
         // TODO: SET START VIEW TO THREADS
-        var chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
-        var chatNavigationController = chatStoryboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
+        let chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
+        let chatNavigationController = chatStoryboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
         hamburgerViewController.contentViewController = chatNavigationController
     }
     

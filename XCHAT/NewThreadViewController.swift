@@ -18,7 +18,7 @@ class NewThreadViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         // Do we need to load the session?
-        println(PFUser.currentUser())
+        print(PFUser.currentUser())
         
     }
     
@@ -36,12 +36,12 @@ class NewThreadViewController: UIViewController {
     }
     
     @IBAction func cancelAction(sender: AnyObject) {
-        println("CANCEL")
+        print("CANCEL")
         dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func createThreadAction(sender: AnyObject) {
-        println("CREATE THREAD")
+        print("CREATE THREAD")
         var newThread = PFObject(className: "thread")
         
         // Dummy
@@ -49,9 +49,9 @@ class NewThreadViewController: UIViewController {
         newThread["threadName"] = threadTitleTextfield.text
         newThread.saveInBackgroundWithBlock { (result: Bool, error: NSError?) -> Void in
             if error != nil {
-                println(error?.description)
+                print(error?.description)
             } else {
-                println(result)
+                print(result)
                 self.threadTitleTextfield.text = nil
                 self.dismissViewControllerAnimated(true, completion: nil)
             }

@@ -20,19 +20,19 @@ class ProfileCell: UITableViewCell {
         super.awakeFromNib()
         
         if let photo = PFUser.currentUser()?.objectForKey("photo") as? PFFile {
-            var pfImageView = PFImageView()
+            let pfImageView = PFImageView()
             
             pfImageView.image = UIImage(named: "LOGIN BACKGROUND 1")
             
-            println(photo)
+            print(photo)
             pfImageView.file = photo as PFFile
             pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
-                if error == nil {
-                    self.photoImageView.image = image
-                } else {
-                    
+                if let error = error {
                     // Log details of the failure
-                    println("Error: \(error!) \(error!.userInfo!)")
+                    print("Error: \(error) \(error.userInfo)")
+                    
+                } else {
+                    self.photoImageView.image = image
                 }
             }
             

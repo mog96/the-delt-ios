@@ -31,35 +31,37 @@ class ReelGridViewController: UIViewController, UICollectionViewDataSource, UICo
     // MARK: Refresh
     
     func refreshData() {
-        var query = PFQuery(className:"Photo")
+        let query = PFQuery(className:"Photo")
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) -> Void in
             
-            if error == nil {
+            if let error = error {
+                // Log details of the failure
+                print("Error: \(error) \(error.userInfo)")
+                
+            } else {
+                
                 // The find succeeded.
-                println("Successfully retrieved \(objects!.count) photos.")
+                print("Successfully retrieved \(objects!.count) photos.")
                 
                 // Do something with the found objects
                 if let objects = objects as? [PFObject] {
-                    println("Adding photos to array")
+                    print("Adding photos to array")
                     var i = 0
                     for object in objects {
-                        var photo = NSMutableDictionary()
+                        let photo = NSMutableDictionary()
                         if let imageName = object.objectForKey("imageName") as? String {
-                            photo.setObject(object.objectForKey("imageName")!, forKey: "imageName")
+                            photo.setObject(imageName, forKey: "imageName")
                         }
                         if let imageFile = object.objectForKey("imageFile") as? PFFile {
                             photo.setObject(imageFile, forKey: "imageFile")
-                            println("\(i++)")
+                            print("\(i++)")
                         }
                         photo.setObject(object.objectId!, forKey: "objectId")
                         self.photos.addObject(photo)
                     }
                 }
                 self.collectionView.reloadData()
-            } else {
-                // Log details of the failure
-                println("Error: \(error!) \(error!.userInfo!)")
             }
         }
     }
@@ -71,9 +73,9 @@ class ReelGridViewController: UIViewController, UICollectionViewDataSource, UICo
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        var cell = collectionView.dequeueReusableCellWithReuseIdentifier("ReelCell", forIndexPath: indexPath) as! ReelGridCell
-        println("\(photos.count) PHOTOS")
-        var photo = photos.objectAtIndex(indexPath.item) as? NSMutableDictionary
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ReelCell", forIndexPath: indexPath) as! ReelGridCell
+        print("\(photos.count) PHOTOS")
+        let photo = photos.objectAtIndex(indexPath.item) as? NSMutableDictionary
         cell.setUpCell(photo)
         
         return cell
@@ -102,7 +104,7 @@ class ReelGridViewController: UIViewController, UICollectionViewDataSource, UICo
     // image picker view controller.  Once the image picker view controller is
     // dismissed (a.k.a. inside the completion handler) we modally segue to
     // show the "Location selection" screen
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         chosenImage = info[UIImagePickerControllerEditedImage] as? UIImage
         dismissViewControllerAnimated(true, completion: { () -> Void in
             
@@ -110,10 +112,10 @@ class ReelGridViewController: UIViewController, UICollectionViewDataSource, UICo
             
             // then add below code to a protocol implementation for the CaptionViewController's protocol
             
-            let imageData = UIImageJPEGRepresentation(self.chosenImage, 100)
-            let imageFile = PFFile(name: "image.jpeg", data: imageData)
+            let imageData = UIImageJPEGRepresentation(self.chosenImage!, 100)
+            let imageFile = PFFile(name: "image.jpeg", data: imageData!)
             
-            var photo = PFObject(className:"Photo")
+            let photo = PFObject(className:"Photo")
             photo["imageName"] = "Dis a picture!" // set to caption name
             photo["imageFile"] = imageFile
             photo.saveInBackgroundWithBlock(nil)

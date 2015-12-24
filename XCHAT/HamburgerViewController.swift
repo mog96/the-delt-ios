@@ -41,7 +41,7 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
     // Observer method
     var contentViewController: UIViewController? {
         didSet {
-            //println("CONTENT VIEW CONFIG")
+            //print("CONTENT VIEW CONFIG")
             configureContentViewController()
         }
     }
@@ -50,14 +50,14 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
     var menuViewController: UIViewController? {
         didSet {
             
-           // println("MENU VIEW CONFIG")
+           // print("MENU VIEW CONFIG")
             configureMenuViewController()
         }
     }
     
     func configureContentViewController() {
         if contentView != nil {
-            //println("CONTENT SUCCESS")
+            //print("CONTENT SUCCESS")
             contentViewController!.view.frame = contentView.bounds
             for subview in contentView.subviews {
                 subview.removeFromSuperview()
@@ -68,7 +68,7 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.contentView.frame.origin = CGPoint(x: 0, y: 0)
             })
-            var tapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
+            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
             tapGestureRecognizer.numberOfTapsRequired = 2
             tapGestureRecognizer.delegate = self
             self.view.addGestureRecognizer(tapGestureRecognizer)
@@ -82,7 +82,7 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
     
     func configureMenuViewController() {
         if menuView != nil {
-            //println("MENU SUCCESS")
+            //print("MENU SUCCESS")
             menuViewController!.view.frame = menuView.bounds
             for subview in menuView.subviews {
                 subview.removeFromSuperview()
@@ -95,7 +95,7 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
     // MARK: Actions
     
     func showMenu(){
-        UIView.animateWithDuration(0.35, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: nil, animations: { () -> Void in
+        UIView.animateWithDuration(0.35, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: { () -> Void in
             self.contentView.frame.origin = CGPoint(x: 280, y: 0)
         }, completion: { (finished: Bool) -> Void in
             
@@ -104,7 +104,7 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
     
 
     func hideMenu(){
-        UIView.animateWithDuration(0.35, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: nil, animations: { () -> Void in
+        UIView.animateWithDuration(0.35, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: { () -> Void in
             self.contentView.frame.origin = CGPoint(x: 0, y: 0)
         }, completion: { (finished: Bool) -> Void in
             UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
@@ -112,8 +112,8 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @IBAction func onPanGesture(sender: UIPanGestureRecognizer) {
-        var translation = sender.translationInView(view)
-        var velocity = sender.velocityInView(view)
+        let translation = sender.translationInView(view)
+        let velocity = sender.velocityInView(view)
         
         if sender.state == UIGestureRecognizerState.Began {
             UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: .Slide)
@@ -121,7 +121,7 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
         } else if sender.state == UIGestureRecognizerState.Changed {
             
             // enables sliding in both directions (adding negative translation when going to the left)
-            var newX = contentViewOriginalOrigin.x + translation.x
+            let newX = contentViewOriginalOrigin.x + translation.x
             if newX < 0 {
                 contentView.frame.origin.x = 0.01 * newX
             } else {

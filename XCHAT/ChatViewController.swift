@@ -73,7 +73,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         // SET MESSAGE REFRESH
         // Refetch messages every 15 seconds. 
-        var timer = NSTimer.scheduledTimerWithTimeInterval(15, target: self, selector: "fetchMessages", userInfo: nil, repeats: true)
+        _ = NSTimer.scheduledTimerWithTimeInterval(15, target: self, selector: "fetchMessages", userInfo: nil, repeats: true)
         
     }
     
@@ -86,9 +86,9 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // MARK: Welcome
     
     func insertWelcomeHeader(){
-        var nib = UINib(nibName: "WelcomeChatView", bundle: nil)
+        let nib = UINib(nibName: "WelcomeChatView", bundle: nil)
         var objects = nib.instantiateWithOwner(self, options: nil)
-        var headerView = objects[0] as! UIView
+        let headerView = objects[0] as! UIView
         
         messageTableView.tableHeaderView = headerView
     }
@@ -99,7 +99,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func LoadMoreMessages(messageLoadMoreCell: MessageLoadMoreCell) {
         
         // Do we need to impose the limit? Or it doesn't matter b/c parse
-        println("LOAD MORE MESSAGES")
+        print("LOAD MORE MESSAGES")
         
         numOfMessagesToLoad += 10
         fetchMessages()
@@ -117,7 +117,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         switch indexPath.row {
         case 0:
-            var cell = tableView.dequeueReusableCellWithIdentifier("MessageLeadingSpaceCell") as! MessageLeadingSpaceCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("MessageLeadingSpaceCell") as! MessageLeadingSpaceCell
             /*
             var cell = tableView.dequeueReusableCellWithIdentifier("LoadMessagesCell") as! MessageLoadMoreCell
             if numOfTotalMessages <= numOfMessagesToLoad {
@@ -134,7 +134,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         default:
             let index = indexPath.row - 1
             let message = messages[index] as PFObject
-            var username = message["authorUsername"] as! String
+            // var username = message["authorUsername"] as! String
             
             // If not the first message.
             /*
@@ -152,7 +152,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             */
             
             // Message sent by different user.
-            var cell = tableView.dequeueReusableCellWithIdentifier("FirstMessageCell", forIndexPath: indexPath) as! FirstMessageCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("FirstMessageCell", forIndexPath: indexPath) as! FirstMessageCell
             cell.setUpCellWithPictures(message, pictures: self.pictures)
             return cell
         }
@@ -177,10 +177,10 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             */
         
         default:
-            var messageForRow = messages[indexPath.row - 1]
-            var textContent = messageForRow["content"] as! String
-            var textInCell = NSMutableAttributedString(string: textContent)
-            var all = NSMakeRange(0, textInCell.length)
+            let messageForRow = messages[indexPath.row - 1]
+            let textContent = messageForRow["content"] as! String
+            let textInCell = NSMutableAttributedString(string: textContent)
+            let all = NSMakeRange(0, textInCell.length)
             
             textInCell.addAttribute(NSFontAttributeName, value: UIFont(name: "Helvetica Neue", size: 15)!, range: all)
             
@@ -199,7 +199,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func resizeTextField(sender: UITextField) {
         
-        if !validateMessage(sender.text){
+        if !validateMessage(sender.text!){
             sendButton.enabled = false
         } else {
             sendButton.enabled = true
@@ -235,11 +235,11 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func keyboardWillShow(notification: NSNotification){
         let userInfo = notification.userInfo
-        let kbSize = userInfo?[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue()
+        let kbSize = userInfo?[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue
         let newHeight = tableViewContainer.frame.height - kbSize!.height
         
         self.tableViewBottomLayoutConstraint.constant = kbSize!.height
-        println(kbSize!.height)
+        print(kbSize!.height)
         
         UIView.animateWithDuration(0.2, animations: { () -> Void in
             
@@ -275,8 +275,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBAction func sendMessageAction(sender: AnyObject) {
         
-        if validateMessage(messageTextField.text) {
-            var message = PFObject(className: "message")
+        if validateMessage(messageTextField.text!) {
+            let message = PFObject(className: "message")
             // Dummy authorId and threadId
             message["authorUsername"] = PFUser.currentUser()?.valueForKey("username") as! String
             message["threadId"] = threadId
@@ -290,8 +290,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             message.saveInBackgroundWithBlock { (result: Bool, error: NSError?) -> Void in
                 if error != nil {
                     // Print some kind of error to clients
-                    println("unable to send this message")
-                    println(error?.description)
+                    print("unable to send this message")
+                    print(error?.description)
                 } else {
                     // Succeed - reload
                     self.fetchMessages()
@@ -306,8 +306,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func fetchMessages() {
         
         //numOfTotalMessages = query.countObjects()
-        //println(numOfTotalMessages)
-        //println(numOfMessagesToLoad)
+        //print(numOfTotalMessages)
+        //print(numOfMessagesToLoad)
         
         query.limit = numOfMessagesToLoad
         
@@ -329,7 +329,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             } else {
                 
                 // Print error message.
-                println(error?.description)
+                print(error?.description)
             }
         }
     }
@@ -349,7 +349,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func scrollToBottom(){
 
-        let bottomSection = messageTableView.numberOfSections() - 1
+        let bottomSection = messageTableView.numberOfSections - 1
         if bottomSection >= 0 {
             let bottomRow = messageTableView.numberOfRowsInSection(bottomSection) - 1
             let lastIndexPath = NSIndexPath(forRow: bottomRow, inSection: bottomSection)
@@ -366,34 +366,36 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     // ENCAPSULATE
     func fetchUserPics(){
-        var usernames = NSMutableSet()
+        let usernames = NSMutableSet()
         for message in self.messages{
             usernames.addObject((message["authorUsername"] as? String)!)
         }
         
-        var username_list = usernames.allObjects as! [NSString]
-        var userQuery = PFUser.query()
+        let username_list = usernames.allObjects as! [NSString]
+        let userQuery = PFUser.query()
         
         //userQuery?.whereKey("username", containedIn: username_list)
         userQuery?.whereKey("username", containedIn: username_list)
         
-        //println(userQuery?.getFirstObject())
+        //print(userQuery?.getFirstObject())
         userQuery!.findObjectsInBackgroundWithBlock { (objects:[AnyObject]?, error:NSError?) -> Void in
             if objects != nil{
                 var profiles = objects as! [PFUser]
                 for profile in profiles {
                     if  let pic = profile["photo"] as? PFFile {
                         
-                        println("PHOTO FOUND")
+                        print("PHOTO FOUND")
                         var pfImageView = PFImageView()
                         pfImageView.file = pic
                         pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
-                            if error == nil {
-                                self.pictures[profile.username!] = image
-                            } else {
-                                // Log details of the failure
+                            if let error = error {
                                 self.messageTableView.reloadData()
-                                println("Error: \(error!) \(error!.userInfo!)")
+                                
+                                // Log details of the failure
+                                print("Error: \(error) \(error.userInfo)")
+                                
+                            } else {
+                                self.pictures[profile.username!] = image
                             }
                         }
                     }

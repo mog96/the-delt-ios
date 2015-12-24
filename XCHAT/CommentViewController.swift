@@ -29,18 +29,18 @@ class CommentViewController: UIViewController, UITextViewDelegate {
         
         setPlaceholderText()
         
-        var pfImageView = PFImageView()
+        let pfImageView = PFImageView()
         
         pfImageView.image = UIImage(named: "ROONEY")
         
         pfImageView.file = photo?.valueForKey("imageFile") as? PFFile
         pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
-            if error == nil {
-                self.photoImageView.image = image
-            } else {
-                
+            if let error = error {
                 // Log details of the failure
-                println("Error: \(error!) \(error!.userInfo!)")
+                print("Error: \(error) \(error.userInfo)")
+                
+            } else {
+                self.photoImageView.image = image
             }
         }
         
@@ -76,7 +76,7 @@ class CommentViewController: UIViewController, UITextViewDelegate {
     }
     
     func textViewDidChange(textView: UITextView) {
-        if count(commentTextView.text) == 0 {
+        if commentTextView.text!.characters.count == 0 {
             setPlaceholderText()
             commentTextView.resignFirstResponder()
         }

@@ -84,16 +84,16 @@ class ReelViewController: UIViewController, UITableViewDelegate, UITableViewData
         query?.findObjectsInBackgroundWithBlock({ (users: [AnyObject]?, error: NSError?) -> Void in
             if let users = users as? [PFObject] {
                 var pfImageView = PFImageView()
-                if count(users)>0{
+                if users.count > 0 {
                     if let _ = users[0].valueForKey("photo"){
                         pfImageView.file = users[0].valueForKey("photo") as? PFFile
                         pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
-                            if error == nil {
-                                profileImageView.image = image
-                            } else {
-                                
+                            if let error = error {
                                 // Log details of the failure
-                                println("Error: \(error!) \(error!.userInfo!)")
+                                print("Error: \(error) \(error.userInfo)")
+                                
+                            } else {
+                                profileImageView.image = image
                             }
                         }
                     }
@@ -208,8 +208,7 @@ class ReelViewController: UIViewController, UITableViewDelegate, UITableViewData
     // uploadPhoto variable, and dismisses the image picker view controller. Once the image picker
     // view controller is dismissed (a.k.a. inside the completion handler) we modally segue to
     // show the "Location selection" screen. --Nick Troccoli
-    
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         uploadPhoto = info[UIImagePickerControllerEditedImage] as? UIImage
         dismissViewControllerAnimated(true, completion: { () -> Void in
             self.performSegueWithIdentifier("addCaptionSegue", sender: self) // segue to CaptionViewController
@@ -220,10 +219,10 @@ class ReelViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: Protocol Implementations
     
     func captionViewController(didEnterCaption caption: String?) {
-        let imageData = UIImageJPEGRepresentation(self.uploadPhoto, 100)
-        let imageFile = PFFile(name: "image.jpeg", data: imageData)
+        let imageData = UIImageJPEGRepresentation(self.uploadPhoto!, 100)
+        let imageFile = PFFile(name: "image.jpeg", data: imageData!)
         
-        var photo = PFObject(className: "Photo")
+        let photo = PFObject(className: "Photo")
         photo["imageFile"] = imageFile
         photo["username"] = "mateog"                // FIXME: LINK CURRENT USER
         photo["faved"] = false
@@ -233,7 +232,7 @@ class ReelViewController: UIViewController, UITableViewDelegate, UITableViewData
         if let caption = caption {
             photo["numComments"] = 1
             
-            println("CAPTION RECEIVED: \(caption)")
+            print("CAPTION RECEIVED: \(caption)")
             
             comments.append(["mateog", caption])
         } else {
@@ -241,36 +240,36 @@ class ReelViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         photo["comments"] = comments
         photo.saveInBackgroundWithBlock({ (completed: Bool, error: NSError?) -> Void in
-            if error == nil {
-                self.refreshData()
-            } else {
-                
+            if let error = error {
                 // Log details of the failure
-                println("Error: \(error!) \(error!.userInfo!)")
+                print("Error: \(error) \(error.userInfo)")
+                
+            } else {
+                self.refreshData()
             }
         })
     }
 
     func commentViewController(didEnterComment comment: String) {
-        var query = PFQuery(className: "Photo")
-        var objectId = commentPhoto?.valueForKey("objectId") as! String
+        let query = PFQuery(className: "Photo")
+        let objectId = commentPhoto?.valueForKey("objectId") as! String
         query.getObjectInBackgroundWithId(objectId) {
             (photo: PFObject?, error: NSError?) -> Void in
             if error != nil {
-                println(error)
+                print(error)
             } else if let photo = photo {
-                var commentPair = ["mateog", comment]              // FIXME: LINK CURRENT USER
+                let commentPair = ["mateog", comment]              // FIXME: LINK CURRENT USER
                 
                 photo.addObject(commentPair, forKey: "comments")   // Add comment
                 photo.incrementKey("numComments")                  // Increment comment count
                 
                 photo.saveInBackgroundWithBlock({ (completed: Bool, eror: NSError?) -> Void in
-                    if error == nil {
-                        self.refreshData()
-                    } else {
-                        
+                    if let error = error {
                         // Log details of the failure
-                        println("Error: \(error!) \(error!.userInfo!)")
+                        print("Error: \(error) \(error.userInfo)")
+                        
+                    } else {
+                        self.refreshData()
                     }
                 })
             }
@@ -283,12 +282,12 @@ class ReelViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func updateFaved(photo: NSMutableDictionary?, didUpdateFaved faved: Bool) {
-        var query = PFQuery(className: "Photo")
-        var objectId = photo?.valueForKey("objectId") as! String
+        let query = PFQuery(className: "Photo")
+        let objectId = photo?.valueForKey("objectId") as! String
         query.getObjectInBackgroundWithId(objectId) {
             (photo: PFObject?, error: NSError?) -> Void in
             if error != nil {
-                println(error)
+                print(error)
             } else if let photo = photo {
                 
                 // Mark photo as faved.
@@ -302,13 +301,12 @@ class ReelViewController: UIViewController, UITableViewDelegate, UITableViewData
                 }
                 
                 photo.saveInBackgroundWithBlock({ (completed: Bool, eror: NSError?) -> Void in
-                    if error == nil {
-                        
-                        self.refreshData()  // FIXME: Makes for glitchy scrolling.
-                    } else {
-                        
+                    if let error = error {
                         // Log details of the failure
-                        println("Error: \(error!) \(error!.userInfo!)")
+                        print("Error: \(error) \(error.userInfo)")
+                        
+                    } else {
+                        self.refreshData() // FIXME: Makes for glitchy scrolling.
                     }
                 })
             }
@@ -319,22 +317,24 @@ class ReelViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: Refresh
     
     func refreshData() {
-        var query = PFQuery(className:"Photo")
+        let query = PFQuery(className:"Photo")
         query.findObjectsInBackgroundWithBlock {
             (objects: [AnyObject]?, error: NSError?) -> Void in
-            
-            if error == nil {
+            if let error = error {
+                // Log details of the failure
+                print("Error: \(error) \(error.userInfo)")
                 
-                println("Successfully retrieved \(objects!.count) photos.")
+            } else {
+                print("Successfully retrieved \(objects!.count) photos.")
                 
                 if let objects = objects as? [PFObject] {
                     self.photos.removeAllObjects()
                     
-                    println("Adding photos to array")
+                    print("Adding photos to array")
                     var i = 0
                     
                     for object in objects {
-                        var photo = NSMutableDictionary()
+                        let photo = NSMutableDictionary()
                         photo.setObject(object.objectId!, forKey: "objectId")
                         
                         photo.setObject(object.objectForKey("imageFile")!, forKey: "imageFile")
@@ -355,7 +355,7 @@ class ReelViewController: UIViewController, UITableViewDelegate, UITableViewData
                             photo.setObject(comments, forKey: "comments")
                         }
                         
-                        println("\(i++)")
+                        print("\(i++)")
                         
                         self.photos.insertObject(photo, atIndex: 0)
                     }
@@ -364,11 +364,6 @@ class ReelViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.tableView.reloadData()
                 
                 // FIXME: ADD ANIMATION FOR NEW PHOTO BEING ADDED
-                
-            } else {
-                
-                // Log details of the failure
-                println("Error: \(error!) \(error!.userInfo!)")
             }
         }
     }
@@ -393,8 +388,8 @@ class ReelViewController: UIViewController, UITableViewDelegate, UITableViewData
             vc.delegate = self
             vc.photo = commentPhoto
         } else {
-            var vc = segue.destinationViewController as! PhotoDetailsViewController
-            var indexPath = tableView.indexPathForCell(sender as! UITableViewCell)!
+            let vc = segue.destinationViewController as! PhotoDetailsViewController
+            let indexPath = tableView.indexPathForCell(sender as! UITableViewCell)!
             vc.selectedPhoto = photos[indexPath.section] as! NSMutableDictionary
         }
     }

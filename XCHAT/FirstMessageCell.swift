@@ -35,9 +35,9 @@ class FirstMessageCell: UITableViewCell {
     }
     
     func setUpCellWithPictures(message: PFObject, pictures: NSMutableDictionary) {
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         let calendar = NSCalendar.currentCalendar()
-        var comp = calendar.components((.CalendarUnitHour | .CalendarUnitMinute), fromDate: message.createdAt!)
+        let comp = calendar.components([.Hour, .Minute], fromDate: message.createdAt!)
         
         dateFormatter.AMSymbol = "a"
         dateFormatter.PMSymbol = "p"
@@ -51,7 +51,7 @@ class FirstMessageCell: UITableViewCell {
         messageLabel.text = (message["content"] as! String)
 
         if let profilePic = pictures[usernameLabel.text!]{
-            self.authorProfileImageView.image = profilePic as! UIImage
+            self.authorProfileImageView.image = profilePic as? UIImage
         }
         
 //        
@@ -79,9 +79,9 @@ class FirstMessageCell: UITableViewCell {
     }
     
     func setUpCell(message: PFObject) {
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         let calendar = NSCalendar.currentCalendar()
-        var comp = calendar.components((.CalendarUnitHour | .CalendarUnitMinute), fromDate: message.createdAt!)
+        let comp = calendar.components([.Hour, .Minute], fromDate: message.createdAt!)
         
         dateFormatter.AMSymbol = "a"
         dateFormatter.PMSymbol = "p"
@@ -94,21 +94,21 @@ class FirstMessageCell: UITableViewCell {
         timestampLabel.text = dateFormatter.stringFromDate(message.createdAt!)
         messageLabel.text = (message["content"] as! String)
         
-        var query = PFUser.query()
+        let query = PFUser.query()
         query?.whereKey("username", equalTo: message.valueForKey("authorUsername") as! String)
         query?.findObjectsInBackgroundWithBlock({ (users: [AnyObject]?, error: NSError?) -> Void in
             if let users = users as? [PFObject] {
-                var pfImageView = PFImageView()
+                let pfImageView = PFImageView()
                 pfImageView.file = users[0].valueForKey("photo") as? PFFile
                 if let _=pfImageView.file{
                     pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
-                        if error == nil {
-                            
-                            self.authorProfileImageView.image = image
-                        } else {
-                            
+                        if let error = error {
+                        
                             // Log details of the failure
-                            println("Error: \(error!) \(error!.userInfo!)")
+                            print("Error: \(error) \(error.userInfo)")
+                            
+                        } else {
+                            self.authorProfileImageView.image = image
                         }
                     }
                 }

@@ -30,7 +30,7 @@ class DateTitleCell: UITableViewCell {
     }
     
     func setUpCell(event: PFObject) {
-        var pfImageView = PFImageView()
+        let pfImageView = PFImageView()
         
         // JUST FOR LOLZ
         pfImageView.image = UIImage(named: "ROONEY")
@@ -39,33 +39,32 @@ class DateTitleCell: UITableViewCell {
         
         if let _ = pfImageView.file{
             pfImageView.loadInBackground { (artwork: UIImage?, error: NSError?) -> Void in
-                if error == nil {
-                    self.artworkImageView.image = artwork
-                } else {
-                    
+                if let error = error {
                     // Log details of the failure
-                    println("Error: \(error!) \(error!.userInfo!)")
+                    print("Error: \(error) \(error.userInfo)")
+                } else {
+                    self.artworkImageView.image = artwork
                 }
             }
 
         }
         
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         let calendar = NSCalendar.currentCalendar()
         
         dateFormatter.AMSymbol = "a"
         dateFormatter.PMSymbol = "p"
         
-        var startTime = event["startTime"] as! NSDate
-        var comp = calendar.components((.CalendarUnitHour | .CalendarUnitMinute), fromDate: startTime)
+        let startTime = event["startTime"] as! NSDate
+        var comp = calendar.components([.Hour, .Minute], fromDate: startTime)
         dateFormatter.dateFormat = "h:mma"
         if comp.minute == 0 {
             dateFormatter.dateFormat = "ha"
         }
         var date = dateFormatter.stringFromDate(event["startTime"] as! NSDate) + "-"
         
-        var endTime = event["endTime"] as! NSDate
-        comp = calendar.components((.CalendarUnitHour | .CalendarUnitMinute), fromDate: endTime)
+        let endTime = event["endTime"] as! NSDate
+        comp = calendar.components([.Hour, .Minute], fromDate: endTime)
         dateFormatter.dateFormat = "h:mma"
         if comp.minute == 0 {
             dateFormatter.dateFormat = "ha"
@@ -74,7 +73,7 @@ class DateTitleCell: UITableViewCell {
         timeLabel.text = date
         
         dateFormatter.dateFormat = "E"
-        var weekday = dateFormatter.stringFromDate(startTime)
+        let weekday = dateFormatter.stringFromDate(startTime)
         if weekday.hasPrefix("Th") {
             self.weekdayLabel.text = "Th"
         } else {

@@ -17,28 +17,31 @@ class ProfileTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         if let photo: PFFile=PFUser.currentUser()?.objectForKey("photo") as! PFFile?{
-            var pfImageView = PFImageView()
+            let pfImageView = PFImageView()
             pfImageView.image = UIImage(named: "profilePic")
-            println(photo)
-            pfImageView.file = photo as! PFFile
+            print(photo)
+            pfImageView.file = photo
             pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
-                if error == nil {
-                    println("Setting cell photo")
-                    self.profilePic.image = image
-                } else {
+                if let error = error {
+                    
                     // Log details of the failure
-                    println("Error: \(error!) \(error!.userInfo!)")
+                    print("Error: \(error) \(error.userInfo)")
+                } else {
+                    
+                    print("Setting cell photo.")
+                    
+                    self.profilePic.image = image
                 }
             }
 
         }
         
-        var query = PFQuery(className: "profile")
+        let query = PFQuery(className: "profile")
         query.whereKey("email", equalTo: (PFUser.currentUser()?.username)!)
         query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
-            var objs = objects as! [PFObject]
+            let objs = objects as! [PFObject]
             if objs.count > 0 {
-                var profile = objects![0] as! PFObject
+                let profile = objects![0] as! PFObject
                 self.userName.text = profile["username"] as? String
                 self.realName.text = profile["name"] as? String
             } else {

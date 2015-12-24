@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2540A3931C2B9CC7003E4B31 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2540A3921C2B9CC7003E4B31 /* Login.storyboard */; };
+		2540A3951C2B9ED6003E4B31 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2540A3941C2B9ED6003E4B31 /* Main.storyboard */; };
+		2540A3971C2BACFD003E4B31 /* SignupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2540A3961C2BACFD003E4B31 /* SignupView.xib */; };
+		2540A39A1C2BAE59003E4B31 /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2540A3991C2BAE59003E4B31 /* LoginView.xib */; };
 		254A19AA1B18768E0030F316 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 254A19A91B18768E0030F316 /* Keys.plist */; };
 		25518A3F1B0ECFF200550DE9 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25518A3E1B0ECFF200550DE9 /* ButtonCell.swift */; };
 		25518A411B0ED03B00550DE9 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25518A401B0ED03B00550DE9 /* CommentCell.swift */; };
@@ -21,7 +25,7 @@
 		258D498A1B15AEB900A632D3 /* MemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258D49891B15AEB900A632D3 /* MemberCell.swift */; };
 		258D498C1B15C69600A632D3 /* WelcomeChatView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 258D498B1B15C69600A632D3 /* WelcomeChatView.xib */; };
 		259FBA431B02F5A5006F1650 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259FBA421B02F5A5006F1650 /* AppDelegate.swift */; };
-		259FBA481B02F5A5006F1650 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 259FBA461B02F5A5006F1650 /* Main.storyboard */; };
+		259FBA481B02F5A5006F1650 /* Menu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 259FBA461B02F5A5006F1650 /* Menu.storyboard */; };
 		259FBA4A1B02F5A6006F1650 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 259FBA491B02F5A6006F1650 /* Images.xcassets */; };
 		259FBA4D1B02F5A6006F1650 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 259FBA4B1B02F5A6006F1650 /* LaunchScreen.xib */; };
 		259FBA591B02F5A6006F1650 /* XCHATTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259FBA581B02F5A6006F1650 /* XCHATTests.swift */; };
@@ -85,6 +89,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2540A3921C2B9CC7003E4B31 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		2540A3941C2B9ED6003E4B31 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		2540A3961C2BACFD003E4B31 /* SignupView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignupView.xib; sourceTree = "<group>"; };
+		2540A3991C2BAE59003E4B31 /* LoginView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginView.xib; sourceTree = "<group>"; };
 		254A19A91B18768E0030F316 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		25518A3E1B0ECFF200550DE9 /* ButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
 		25518A401B0ED03B00550DE9 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
@@ -101,7 +109,7 @@
 		259FBA3D1B02F5A5006F1650 /* XCHAT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XCHAT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		259FBA411B02F5A5006F1650 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		259FBA421B02F5A5006F1650 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		259FBA471B02F5A5006F1650 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		259FBA471B02F5A5006F1650 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Menu.storyboard; sourceTree = "<group>"; };
 		259FBA491B02F5A6006F1650 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		259FBA4C1B02F5A6006F1650 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		259FBA521B02F5A6006F1650 /* XCHATTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XCHATTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -191,6 +199,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2540A3911C2B9C84003E4B31 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				2540A3981C2BAD04003E4B31 /* Layout */,
+				25F016051B045882004D78F6 /* LoginViewController.swift */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		2540A3981C2BAD04003E4B31 /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				2540A3921C2B9CC7003E4B31 /* Login.storyboard */,
+				2540A3961C2BACFD003E4B31 /* SignupView.xib */,
+				2540A3991C2BAE59003E4B31 /* LoginView.xib */,
+			);
+			name = Layout;
+			sourceTree = "<group>";
+		};
 		258D49861B15AC5700A632D3 /* Threads */ = {
 			isa = PBXGroup;
 			children = (
@@ -224,14 +251,16 @@
 		259FBA3F1B02F5A5006F1650 /* XCHAT */ = {
 			isa = PBXGroup;
 			children = (
+				2540A3911C2B9C84003E4B31 /* Login */,
+				384F23011B0AE90C00A04081 /* Menu */,
 				385C74501B0ECB70009BAC7A /* Profile */,
 				384F22F01B0AE0D500A04081 /* Chat */,
 				381125AB1B0C1CB700DBBAD2 /* Reel */,
 				3890A1CB1B0B17B900B4FF00 /* Calendar */,
 				3830AC891B157D5700CA5C9B /* Members */,
 				384F22EF1B0AE08A00A04081 /* Settings */,
-				384F23011B0AE90C00A04081 /* Menu */,
 				259FBA421B02F5A5006F1650 /* AppDelegate.swift */,
+				2540A3941C2B9ED6003E4B31 /* Main.storyboard */,
 				259FBA491B02F5A6006F1650 /* Images.xcassets */,
 				259FBA4B1B02F5A6006F1650 /* LaunchScreen.xib */,
 				259FBA401B02F5A5006F1650 /* Supporting Files */,
@@ -325,8 +354,7 @@
 		384F23011B0AE90C00A04081 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
-				259FBA461B02F5A5006F1650 /* Main.storyboard */,
-				25F016051B045882004D78F6 /* LoginViewController.swift */,
+				259FBA461B02F5A5006F1650 /* Menu.storyboard */,
 				257A6B711B056D5B00996A56 /* HamburgerViewController.swift */,
 				25F016091B045D83004D78F6 /* MenuViewController.swift */,
 				3881235E1B13E864008AA524 /* ProfileTableViewCell.swift */,
@@ -436,7 +464,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Mateo Garcia";
 				TargetAttributes = {
 					259FBA3C1B02F5A5006F1650 = {
@@ -474,14 +502,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				259FBA481B02F5A5006F1650 /* Main.storyboard in Resources */,
+				259FBA481B02F5A5006F1650 /* Menu.storyboard in Resources */,
 				381BD6C81B158C5F005C6D1C /* Members.storyboard in Resources */,
 				385C74521B0ECB8A009BAC7A /* Profile.storyboard in Resources */,
 				3890A1D31B0B187C00B4FF00 /* Calendar.storyboard in Resources */,
 				259FBA4D1B02F5A6006F1650 /* LaunchScreen.xib in Resources */,
 				387866101B0478C400623BC1 /* Settings.storyboard in Resources */,
 				255BE9821B170E9C0001B160 /* Chat.storyboard in Resources */,
+				2540A3951C2B9ED6003E4B31 /* Main.storyboard in Resources */,
+				2540A39A1C2BAE59003E4B31 /* LoginView.xib in Resources */,
 				381125B31B0C1DB400DBBAD2 /* Reel.storyboard in Resources */,
+				2540A3931C2B9CC7003E4B31 /* Login.storyboard in Resources */,
+				2540A3971C2BACFD003E4B31 /* SignupView.xib in Resources */,
 				259FBA4A1B02F5A6006F1650 /* Images.xcassets in Resources */,
 				254A19AA1B18768E0030F316 /* Keys.plist in Resources */,
 				258D498C1B15C69600A632D3 /* WelcomeChatView.xib in Resources */,
@@ -596,12 +628,12 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		259FBA461B02F5A5006F1650 /* Main.storyboard */ = {
+		259FBA461B02F5A5006F1650 /* Menu.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				259FBA471B02F5A5006F1650 /* Base */,
 			);
-			name = Main.storyboard;
+			name = Menu.storyboard;
 			sourceTree = "<group>";
 		};
 		259FBA4B1B02F5A6006F1650 /* LaunchScreen.xib */ = {
@@ -637,6 +669,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -711,6 +744,7 @@
 				INFOPLIST_FILE = XCHAT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.100.XCHAT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XCHAT/XCHAT-Bridging-Header.h";
@@ -730,6 +764,7 @@
 				INFOPLIST_FILE = XCHAT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.100.XCHAT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XCHAT/XCHAT-Bridging-Header.h";
@@ -754,6 +789,7 @@
 				INFOPLIST_FILE = XCHATTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.codepath.XCHAT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XCHAT.app/XCHAT";
@@ -773,6 +809,7 @@
 				INFOPLIST_FILE = XCHATTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.codepath.XCHAT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XCHAT.app/XCHAT";

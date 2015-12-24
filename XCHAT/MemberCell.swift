@@ -44,17 +44,16 @@ class MemberCell: UITableViewCell {
         emailButton.setTitle(user["email"] as? String, forState: UIControlState.Normal)
         
         if let photo = user["photo"] as? PFFile {
-            var pfImageView = PFImageView()
+            let pfImageView = PFImageView()
             
             pfImageView.file = photo
             pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
-                
-                if error == nil {
-                    self.photoImageView.image = image
-                } else {
-                    
+                if let error = error {
                     // Log details of the failure
-                    println("Error: \(error!) \(error!.userInfo!)")
+                    print("Error: \(error) \(error.userInfo)")
+                    
+                } else {
+                    self.photoImageView.image = image
                 }
             }
         }else{

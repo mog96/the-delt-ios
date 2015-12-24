@@ -31,12 +31,12 @@ class PhotoCell: UITableViewCell {
         
         pfImageView.file = photo?.valueForKey("imageFile") as? PFFile
         pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
-            if error == nil {
-                self.photoImageView.image = image
-            } else {
-                
+            if let error = error {
                 // Log details of the failure
-                println("Error: \(error!) \(error!.userInfo!)")
+                print("Error: \(error) \(error.userInfo)")
+                
+            } else {
+                self.photoImageView.image = image
             }
         }
     }

@@ -12,42 +12,51 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var storyboard = UIStoryboard(name: "Main", bundle: nil)
+    var menuStoryboard = UIStoryboard(name: "Menu", bundle: nil)
     var chat_storyboard = UIStoryboard(name: "Chat", bundle: nil)
     var hamburgerViewController: HamburgerViewController?
-
+    
+    static var allowRotation = false
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         Parse.setApplicationId("cEpg8HAH75eVLcqfp9VfbQIdUJ1lz7XVMwrZ5EYc", clientKey: "Ldbj47H9IXlzbIKkW1W7DkK2YvbeAfdCTVyregTL")
         
         PFUser.enableRevocableSessionInBackgroundWithBlock { (error: NSError?) -> Void in
-            println("IDK")
+            print("IDK")
         }
         
-        // Override point for customization after application launch.
-        // NSNotificationCenter.defaultCenter().addObserver(self, selector: "userDidLogout", name: userDidLogoutNotification, object: nil)
+        // ** SETS START VIEW **
+        self.hamburgerViewController = self.menuStoryboard.instantiateViewControllerWithIdentifier("HamburgerViewController") as? HamburgerViewController
+        let menuViewController = self.menuStoryboard.instantiateViewControllerWithIdentifier("MenuViewController") as! MenuViewController
+        
+        // TODO: SET START VIEW TO THREADS
+        let chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
+        let chatNavigationController = chatStoryboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
+        self.hamburgerViewController!.contentViewController = chatNavigationController
+        
+        self.hamburgerViewController!.menuViewController = menuViewController
+        menuViewController.hamburgerViewController = hamburgerViewController
+        
+        // Does exactly the same as arrow in storyboard. ("100% parity." --Tim Lee)
+        window?.rootViewController = hamburgerViewController
         
         
         // IF USER IS LOGGED IN
-        if PFUser.currentUser() != nil {
+        if PFUser.currentUser() == nil {
             
-            // ** SETS START VIEW **
-            hamburgerViewController = storyboard.instantiateViewControllerWithIdentifier("HamburgerViewController") as? HamburgerViewController
-            var menuViewController = storyboard.instantiateViewControllerWithIdentifier("MenuViewController") as! MenuViewController
+            // START HERE: present login.
             
-            var chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
-            var chatNavigationController = chatStoryboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
+            print("DOOKIE")
             
-            // TODO: SET START VIEW TO THREADS
-            hamburgerViewController!.contentViewController = chatNavigationController
-            
-            hamburgerViewController!.menuViewController = menuViewController
-            menuViewController.hamburgerViewController = hamburgerViewController
-            
-            // Does exactly the same as arrow in storyboard. ("100% parity." --Tim Lee)
-            window?.rootViewController = hamburgerViewController
+            let loginStoryboard = UIStoryboard(name: "Login", bundle: nil)
+            let loginViewController = loginStoryboard.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
+            self.hamburgerViewController?.presentViewController(loginViewController, animated: false, completion: nil)
         }
+        
+        
+        // Override point for customization after application launch.
+        // NSNotificationCenter.defaultCenter().addObserver(self, selector: "userDidLogout", name: userDidLogoutNotification, object: nil)
         
         
         //****** DEPRECATED ******
@@ -113,9 +122,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
         /*
         if error.code == 3010 {
-            println("Push notifications are not supported in the iOS Simulator.")
+            print("Push notifications are not supported in the iOS Simulator.")
         } else {
-            println("application:didFailToRegisterForRemoteNotificationsWithError: %@", error)
+            print("application:didFailToRegisterForRemoteNotificationsWithError: %@", error)
         }
         */
     }
@@ -155,7 +164,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
+    
+    func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask {
+        
+        if AppDelegate.allowRotation {
+            return [UIInterfaceOrientationMask.Portrait, UIInterfaceOrientationMask.LandscapeLeft, UIInterfaceOrientationMask.LandscapeRight]
+        }
+        
+        return UIInterfaceOrientationMask.Portrait
+    }
 }
 

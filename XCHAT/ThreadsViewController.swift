@@ -17,10 +17,10 @@ class ThreadsViewController: UIViewController, UITableViewDataSource, UITableVie
     func loginDummyUser() {
         PFUser.logInWithUsernameInBackground("patboony", password: "123456") { (user: PFUser?, error: NSError?) -> Void in
             if error != nil {
-                println(error?.description)
+                print(error?.description)
             } else {
                 // Done
-                println(user)
+                print(user)
                 self.fetchThreads()
             }
         }
@@ -51,22 +51,22 @@ class ThreadsViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func fetchThreads() {
-        var query = PFQuery(className: "thread")
+        let query = PFQuery(className: "thread")
         query.orderByDescending("updatedAt")
         query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
             if objects != nil {
-                //println(objects)
+                //print(objects)
                 self.threads = (objects as! [PFObject]?)!
                 self.threadsTableView.reloadData()
             } else {
-                println("object is nil")
-                println(error?.description)
+                print("object is nil")
+                print(error?.description)
             }
         }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("ThreadTableViewCell", forIndexPath: indexPath) as! ThreadTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("ThreadTableViewCell", forIndexPath: indexPath) as! ThreadTableViewCell
         
         let threadForRow = threads[indexPath.row] as PFObject
         cell.threadNameLabel.text = threadForRow["threadName"] as? String

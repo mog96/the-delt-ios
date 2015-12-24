@@ -94,7 +94,7 @@ class NewEventViewController: UIViewController, UITextViewDelegate, UIImagePicke
         resizeTextView(textView)
         
         // User deletes all text in the TextView.
-        if count(textView.text) == 0 {
+        if textView.text!.characters.count == 0 {
             setPlaceholderText(textView)
             textView.resignFirstResponder()
         }
@@ -137,10 +137,10 @@ class NewEventViewController: UIViewController, UITextViewDelegate, UIImagePicke
     
     func onDateChanged() {
         let calendar = NSCalendar.currentCalendar()
-        var components = NSDateComponents()
+        let components = NSDateComponents()
         components.hour = 1
         
-        var endDate = calendar.dateByAddingComponents(components, toDate: startDatePicker.date, options: nil)
+        let endDate = calendar.dateByAddingComponents(components, toDate: startDatePicker.date, options: [])
         endDatePicker.setDate(endDate!, animated: true)
     }
     
@@ -153,16 +153,16 @@ class NewEventViewController: UIViewController, UITextViewDelegate, UIImagePicke
         if nameTextView.text == placeholders[0] {
             
             // FIXME: NOT ANIMATIONG PROPERLY
-            UIView.animateWithDuration(100, delay: 0, options: nil, animations: { () -> Void in
+            UIView.animateWithDuration(100, delay: 0, options: [], animations: { () -> Void in
                 self.errorView.hidden = false
             }, completion: { (complete: Bool) -> Void in
-                UIView.animateWithDuration(10, delay: 10, options: nil, animations: { () -> Void in
+                UIView.animateWithDuration(10, delay: 10, options: [], animations: { () -> Void in
                     self.errorView.hidden = true
                 }, completion: nil)
             })
             
         } else {
-            var event = PFObject(className: "Event")
+            let event = PFObject(className: "Event")
             
             event["name"] = nameTextView.text
             
@@ -178,14 +178,14 @@ class NewEventViewController: UIViewController, UITextViewDelegate, UIImagePicke
             event["ceatedBy"] = PFUser.currentUser()?.valueForKey("username")
             
             if artworkImage != nil {
-                let artworkImageData = UIImageJPEGRepresentation(artworkImage, 100)
-                let artwork = PFFile(name: "artwork.jpeg", data: artworkImageData)
+                let artworkImageData = UIImageJPEGRepresentation(artworkImage!, 100)
+                let artwork = PFFile(name: "artwork.jpeg", data: artworkImageData!)
                 event["artwork"] = artwork
             }
             
             event.saveInBackgroundWithBlock { (result: Bool, error: NSError?) -> Void in
                 if error != nil {
-                    println(error?.description)
+                    print(error?.description)
                 } else {
                     self.dismissViewControllerAnimated(true, completion: { () -> Void in
                         self.calendarViewController?.refreshData()
@@ -200,7 +200,7 @@ class NewEventViewController: UIViewController, UITextViewDelegate, UIImagePicke
     }
     
     @IBAction func onScreenTapped(sender: AnyObject) {
-        println("DETECTED")
+        print("DETECTED")
         view.endEditing(true)
     }
     
@@ -220,7 +220,7 @@ class NewEventViewController: UIViewController, UITextViewDelegate, UIImagePicke
     // view controller is dismissed (a.k.a. inside the completion handler) we modally segue to
     // show the "Location selection" screen. --Nick Troccoli
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         artworkImage = info[UIImagePickerControllerEditedImage] as? UIImage
         dismissViewControllerAnimated(true, completion: { () -> Void in
             

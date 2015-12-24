@@ -35,22 +35,22 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         switch indexPath.row {
         case 0:
-            var cell = tableView.dequeueReusableCellWithIdentifier("ProfileCell") as! UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("ProfileCell")!
             return cell
         case 1:
-            var cell = tableView.dequeueReusableCellWithIdentifier("ChatCell") as! UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("ChatCell")!
             return cell
         case 2:
-            var cell = tableView.dequeueReusableCellWithIdentifier("ReelCell")as! UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("ReelCell")!
             return cell
         case 3:
-            var cell = tableView.dequeueReusableCellWithIdentifier("CalendarCell")as! UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("CalendarCell")!
             return cell
         case 4:
-            var cell = tableView.dequeueReusableCellWithIdentifier("MembersCell") as! UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("MembersCell")!
             return cell
         default:
-            var cell = tableView.dequeueReusableCellWithIdentifier("SettingsCell") as! UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("SettingsCell")!
             return cell
         }
     }
@@ -65,33 +65,33 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         print(indexPath.row)
         switch indexPath.row {
         case 0:
-            var profileStoryboard = UIStoryboard(name: "Profile", bundle: nil)
-            var profileController = profileStoryboard.instantiateViewControllerWithIdentifier("ProfileViewController") as! UIViewController
+            let profileStoryboard = UIStoryboard(name: "Profile", bundle: nil)
+            let profileController = profileStoryboard.instantiateViewControllerWithIdentifier("ProfileViewController")
             hamburgerViewController?.contentViewController = profileController
             
         case 1: // CHAT
-            var chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
-            var chatNavigationController = chatStoryboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
+            let chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
+            let chatNavigationController = chatStoryboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
             hamburgerViewController?.contentViewController = chatNavigationController
             
         case 2: // REEL
-            var reelStoryboard = UIStoryboard(name: "Reel", bundle: nil)
-            var reelNavigationController = reelStoryboard.instantiateViewControllerWithIdentifier("Nav") as! UINavigationController
+            let reelStoryboard = UIStoryboard(name: "Reel", bundle: nil)
+            let reelNavigationController = reelStoryboard.instantiateViewControllerWithIdentifier("Nav") as! UINavigationController
             hamburgerViewController?.contentViewController = reelNavigationController
             
         case 3: // CALENDAR
-            var eventsStoryboard = UIStoryboard(name: "Calendar", bundle: nil)
-            var eventsNavigationController = eventsStoryboard.instantiateViewControllerWithIdentifier("Nav") as! UINavigationController
+            let eventsStoryboard = UIStoryboard(name: "Calendar", bundle: nil)
+            let eventsNavigationController = eventsStoryboard.instantiateViewControllerWithIdentifier("Nav") as! UINavigationController
             hamburgerViewController?.contentViewController = eventsNavigationController
             
         case 4: // MEMBERS
-            var reelStoryboard = UIStoryboard(name: "Members", bundle: nil)
-            var reelNavigationController = reelStoryboard.instantiateViewControllerWithIdentifier("Members") as! UINavigationController
+            let reelStoryboard = UIStoryboard(name: "Members", bundle: nil)
+            let reelNavigationController = reelStoryboard.instantiateViewControllerWithIdentifier("Members") as! UINavigationController
             hamburgerViewController?.contentViewController = reelNavigationController
             
         default: // SETTINGS
-            var settingsStoryboard = UIStoryboard(name: "Settings", bundle: nil)
-            var settingsNavigationController = settingsStoryboard.instantiateViewControllerWithIdentifier("SettingsNavigationController") as! UINavigationController
+            let settingsStoryboard = UIStoryboard(name: "Settings", bundle: nil)
+            let settingsNavigationController = settingsStoryboard.instantiateViewControllerWithIdentifier("SettingsNavigationController") as! UINavigationController
             hamburgerViewController?.contentViewController = settingsNavigationController
         }
     }

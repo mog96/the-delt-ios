@@ -37,8 +37,8 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
         DEFAULT (no events, tap '+' to add) VIEW
         if events.count == 0 {
         defaultView.hidden = false
-        println(defaultView.hidden)
-        println("SHOW DEFAULT")
+        print(defaultView.hidden)
+        print("SHOW DEFAULT")
         }
         */
     }
@@ -126,8 +126,8 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
                 self.events = objects as! [PFObject]
                 self.tableView.reloadData()
             } else {
-                println("object is nil")
-                println(error?.description)
+                print("object is nil")
+                print(error?.description)
             }
         }
     }

@@ -65,10 +65,10 @@ class MembersViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("MemberCell", forIndexPath: indexPath) as! MemberCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("MemberCell", forIndexPath: indexPath) as! MemberCell
         
-        var user = usersToDisplay[indexPath.row]
-        var photo = photos[indexPath.row] as? UIImage
+        let user = usersToDisplay[indexPath.row]
+        let photo = photos[indexPath.row] as? UIImage
         cell.setUpCell(user, photo: photo)
         return cell
     }
@@ -84,14 +84,14 @@ class MembersViewController: UIViewController, UITableViewDelegate, UITableViewD
         Stores users in [PFObject] and photos separately in NSMutableDictionary().
     */
     func fetchUsers(){
-        var userQuery = PFUser.query()
+        let userQuery = PFUser.query()
         
         userQuery!.findObjectsInBackgroundWithBlock { (objects:[AnyObject]?, error:NSError?) -> Void in
             if objects != nil {
                 self.users = objects as! [PFUser]
                 self.usersToDisplay = self.users
                 
-                println(self.users)
+                print(self.users)
                 self.tableView.reloadData()
             }
         }
@@ -110,7 +110,7 @@ class MembersViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.navigationItem.rightBarButtonItem = nil
             self.searchBar.frame = self.searchBarFrame
         }) { (completed: Bool) -> Void in
-            searchBar.becomeFirstResponder()
+            self.searchBar.becomeFirstResponder()
         }
         
     }
@@ -130,11 +130,11 @@ class MembersViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func sortUsers(searchText: String) {
-        var text = searchText.lowercaseString
+        let text = searchText.lowercaseString
         for var i = usersToDisplay.count - 1; i >= 0; i-- {
             var name = usersToDisplay[i]["name"] as! String
             name = name.lowercaseString
-            if name.rangeOfString(text, options: nil, range: nil, locale: nil) == nil {
+            if name.rangeOfString(text, options: [], range: nil, locale: nil) == nil {
                 usersToDisplay.removeAtIndex(i)
             }
         }

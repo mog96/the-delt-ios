@@ -62,7 +62,7 @@ class CaptionViewController: UIViewController, UITextViewDelegate {
     }
     
     func textViewDidChange(textView: UITextView) {
-        if count(captionTextView.text) == 0 {
+        if captionTextView.text!.characters.count == 0 {
             setPlaceholderText()
             captionTextView.resignFirstResponder()
         }
@@ -75,7 +75,7 @@ class CaptionViewController: UIViewController, UITextViewDelegate {
         captionTextView.resignFirstResponder()
         
         // Avoids sending delegate placeholder text.
-        if count(captionTextView.text) > 0 {
+        if captionTextView.text.characters.count > 0 {
             delegate?.captionViewController(didEnterCaption: captionTextView.text)
         } else {
             delegate?.captionViewController(didEnterCaption: nil)
