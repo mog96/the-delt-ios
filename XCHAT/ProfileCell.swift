@@ -19,6 +19,25 @@ class ProfileCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        self.setUpCell()
+    }
+    
+    override func prepareForReuse() {
+        
+        print("PREPARING CELL")
+        
+        self.setUpCell()
+    }
+
+    override func setSelected(selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
+    
+    // MARK: - Helpers
+    
+    func setUpCell() {
         if let photo = PFUser.currentUser()?.objectForKey("photo") as? PFFile {
             let pfImageView = PFImageView()
             
@@ -61,12 +80,6 @@ class ProfileCell: UITableViewCell {
         if let numFaves = PFUser.currentUser()?.objectForKey("totalNumFavesReceived") as? Int {
             numFavesLabel.text = "\(numFaves) faves received"
         }
-    }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
 }

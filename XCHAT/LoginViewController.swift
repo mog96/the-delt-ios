@@ -96,8 +96,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 self.usernameTextField.resignFirstResponder()
                 self.passwordTextField.resignFirstResponder()
                 
-                // TODO: Make sure dismiss works.
-                self.dismissViewControllerAnimated(true, completion: nil)
+                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                
+                UIView.transitionWithView(self.view.window!, duration: 0.5, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
+                    self.view.window!.rootViewController = appDelegate.hamburgerViewController
+                }, completion: nil)
                 
             } else {
                 

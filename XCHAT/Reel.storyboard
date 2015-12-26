@@ -199,7 +199,7 @@
         <!--Navigation Controller-->
         <scene sceneID="IvA-6C-LBv">
             <objects>
-                <navigationController storyboardIdentifier="Nav" automaticallyAdjustsScrollViewInsets="NO" id="Gw2-BU-AmS" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ReelNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="Gw2-BU-AmS" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="fKj-BH-2NQ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

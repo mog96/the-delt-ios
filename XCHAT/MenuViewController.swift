@@ -76,7 +76,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             
         case 2: // REEL
             let reelStoryboard = UIStoryboard(name: "Reel", bundle: nil)
-            let reelNavigationController = reelStoryboard.instantiateViewControllerWithIdentifier("Nav") as! UINavigationController
+            let reelNavigationController = reelStoryboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
             hamburgerViewController?.contentViewController = reelNavigationController
             
         case 3: // CALENDAR

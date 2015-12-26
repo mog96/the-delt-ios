@@ -11,10 +11,6 @@ import UIKit
 
 class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    var uploadPhoto: UIImage?
-    var choosingPhoto = false
-    let bioTextViewPlaceholder = "Tell your crew a little bit about yourself."
-    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var scrollViewBottomSpaceConstraint: NSLayoutConstraint!
     
@@ -25,7 +21,6 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var yearTextField: UITextField!
     @IBOutlet weak var bioTextView: UITextView!
-    
     @IBOutlet weak var phoneNumberTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     
@@ -45,6 +40,13 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
     @IBOutlet weak var realName: UILabel!
     */
     
+    var uploadPhoto: UIImage?
+    var choosingPhoto = false
+    let yearPrefix = "Class of "
+    let bioTextViewPlaceholder = "Tell your crew a little bit about yourself."
+    
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,11 +58,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
         
         // FIXME: username at symbol
         if let username = PFUser.currentUser()?.objectForKey("username") as? String {
-            if username.hasPrefix("@") {
-                self.usernameTextField.text = username
-            } else {
-                self.usernameTextField.text = "@" + username
-            }
+            self.usernameTextField.text = "@" + username
         }
         
         if let year = PFUser.currentUser()?.objectForKey("class") as? String {
@@ -262,7 +260,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
             
             // TODO: Handle case where upload photo is nil.
             let imageData = UIImageJPEGRepresentation(self.uploadPhoto!, 100)
-            let imageFile = PFFile(name: (PFUser.currentUser()?.email)!+".jpeg", data: imageData!)
+            let imageFile = PFFile(name: (PFUser.currentUser()?.username)! + ".jpeg", data: imageData!)
             if self.choosingPhoto {
                 self.photoButton.setBackgroundImage(self.uploadPhoto, forState: UIControlState.Normal)
                 self.photoButton.setTitle("", forState: UIControlState.Normal)
@@ -300,29 +298,44 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
     
     // MARK: Save Data
     
+    let kYearLength = 4
     func saveData() {
         
-        if nameTextField.text!.characters.count > 0 {
-            PFUser.currentUser()?.setObject(nameTextField.text!, forKey: "name")
-        }
-        if usernameTextField.text!.characters.count > 0 {
-            PFUser.currentUser()?.setObject(usernameTextField.text!, forKey: "username")
-        }
-        if yearTextField.text!.characters.count > 0 {
-            PFUser.currentUser()?.setObject(yearTextField.text!, forKey: "year")
+        // Set name.
+        if self.nameTextField.text!.characters.count > 0 {
+            PFUser.currentUser()?.setObject(self.nameTextField.text!, forKey: "name")
         }
         
+        // Set username.
+        if self.usernameTextField.text!.characters.count > 0 && self.usernameTextField.text! != "@" {
+            let username = self.usernameTextField.text!.substringFromIndex(self.usernameTextField.text!.startIndex.advancedBy(1))
+            PFUser.currentUser()?.setObject(username, forKey: "username")
+        }
+        
+        // Set year.
+        if self.yearTextField.text!.hasPrefix(self.yearPrefix) && self.yearTextField.text!.characters.count == self.yearPrefix.characters.count + kYearLength {
+            if let year = Int(self.yearTextField.text!.substringFromIndex(self.yearTextField.text!.startIndex.advancedBy(self.yearPrefix.characters.count))) {
+                
+                PFUser.currentUser()?.setObject(year, forKey: "year")
+            }
+        }
+        
+        // Set bio.
         if bioTextView.text != bioTextViewPlaceholder {
             PFUser.currentUser()?.setObject(bioTextView.text, forKey: "quote")
         }
         
+        // Set phone number.
         if phoneNumberTextField.text!.characters.count > 0 {
             PFUser.currentUser()?.setObject(phoneNumberTextField.text!, forKey: "phone")
         }
+        
+        // Set email.
         if emailTextField.text!.characters.count > 0 {
             PFUser.currentUser()?.setObject(emailTextField.text!, forKey: "email")
         }
         
+        // Save data.
         PFUser.currentUser()?.saveInBackgroundWithBlock({ (result: Bool, error: NSError?) -> Void in
             if error != nil {
                 
@@ -330,6 +343,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
                 print(error?.description)
             } else {
                 self.viewDidLoad()
+                self.appDelegate.menuViewController.tableView.reloadData()
             }
         })
     }

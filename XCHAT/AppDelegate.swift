@@ -12,9 +12,8 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var menuStoryboard = UIStoryboard(name: "Menu", bundle: nil)
-    var chat_storyboard = UIStoryboard(name: "Chat", bundle: nil)
-    var hamburgerViewController: HamburgerViewController?
+    var hamburgerViewController: HamburgerViewController!
+    var menuViewController: MenuViewController!
     
     static var allowRotation = false
 
@@ -26,23 +25,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("IDK")
         }
         
+        // Set up hamburger menu.
+        let menuStoryboard = UIStoryboard(name: "Menu", bundle: nil)
+        self.hamburgerViewController = menuStoryboard.instantiateViewControllerWithIdentifier("HamburgerViewController") as! HamburgerViewController
+        self.menuViewController = menuStoryboard.instantiateViewControllerWithIdentifier("MenuViewController") as! MenuViewController
+        self.hamburgerViewController!.menuViewController = self.menuViewController
+        self.menuViewController.hamburgerViewController = hamburgerViewController
+        
         // ** SETS START VIEW **
-        self.hamburgerViewController = self.menuStoryboard.instantiateViewControllerWithIdentifier("HamburgerViewController") as? HamburgerViewController
-        let menuViewController = self.menuStoryboard.instantiateViewControllerWithIdentifier("MenuViewController") as! MenuViewController
+        // Set up initial view (REEL).
+        let initialStoryboard = UIStoryboard(name: "Reel", bundle: nil)
+        let initialNavigationController = initialStoryboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
+        self.hamburgerViewController!.contentViewController = initialNavigationController
         
-        // TODO: SET START VIEW TO THREADS
-        let chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
-        let chatNavigationController = chatStoryboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
-        self.hamburgerViewController!.contentViewController = chatNavigationController
-        
-        self.hamburgerViewController!.menuViewController = menuViewController
-        menuViewController.hamburgerViewController = hamburgerViewController
-        
-        // Does exactly the same as arrow in storyboard. ("100% parity." --Tim Lee)
-        window?.rootViewController = hamburgerViewController
-        
-        
-        // IF USER IS LOGGED IN
+        // Check if user is logged in.
         if PFUser.currentUser() == nil {
             
             // START HERE: present login.
@@ -51,8 +47,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             let loginStoryboard = UIStoryboard(name: "Login", bundle: nil)
             let loginViewController = loginStoryboard.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
-            self.hamburgerViewController?.presentViewController(loginViewController, animated: false, completion: nil)
+            
+            // Does exactly the same as arrow in storyboard. ("100% parity." --Tim Lee)
+            window?.rootViewController = loginViewController
+            
+        } else {
+            
+            // Does exactly the same as arrow in storyboard. ("100% parity." --Tim Lee)
+            window?.rootViewController = self.hamburgerViewController
         }
+        
+        
+        
         
         
         // Override point for customization after application launch.

@@ -36,8 +36,28 @@ class ProfileTableViewCell: UITableViewCell {
 
         }
         
-        let query = PFQuery(className: "profile")
-        query.whereKey("email", equalTo: (PFUser.currentUser()?.username)!)
+        PFUser.currentUser()?.fetchInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
+            if let error = error {
+                self.setDefaults()
+                
+                // Log failure.
+                print("Error refreshing current user: \(error.description)")
+            } else {
+                
+                print("LALALALALALALABANANANANANANA")
+                
+                if let object = object {
+                    self.userName.text = object["username"] as? String
+                    self.realName.text = object["name"] as? String
+                } else {
+                    self.setDefaults()
+                }
+            }
+        })
+        
+        /*
+        let query = PFQuery(className: "User")
+        query.whereKey("username", equalTo: (PFUser.currentUser()?.username)!)
         query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
             let objs = objects as! [PFObject]
             if objs.count > 0 {
@@ -47,8 +67,14 @@ class ProfileTableViewCell: UITableViewCell {
             } else {
                 self.userName.text = "Please Set Your Name by Tapping"
                 self.realName.text = ""
-            }            
+            }
         }
+        */
+    }
+    
+    func setDefaults() {
+        self.userName.text = "Please Set Your Name by Tapping"
+        self.realName.text = ""
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

@@ -48,7 +48,7 @@ class NotificationsSettingsViewController: UIViewController, UITableViewDataSour
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row < 3 {
-            var cell = tableView.dequeueReusableCellWithIdentifier("NTCell", forIndexPath: indexPath) as! NotificationsTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("NTCell", forIndexPath: indexPath) as! NotificationsTableViewCell
             cell.delegate = self
 
             cell.label.text =  NotificationSettingConstants.settingsList[indexPath.row]
@@ -59,7 +59,7 @@ class NotificationsSettingsViewController: UIViewController, UITableViewDataSour
             }
             return cell
         } else {
-            var cell = tableView.dequeueReusableCellWithIdentifier("LogoutCell", forIndexPath: indexPath) as! LogOutTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("LogoutCell", forIndexPath: indexPath) as! LogOutTableViewCell
             cell.delegate = self
             return cell
         }
@@ -67,11 +67,12 @@ class NotificationsSettingsViewController: UIViewController, UITableViewDataSour
     
     func loggedOutDelegate(logoutTableViewCell: LogOutTableViewCell) {
         PFUser.logOut()
-        var storyboard = UIStoryboard(name: "Main", bundle: nil)
-        var loginViewController = storyboard.instantiateViewControllerWithIdentifier("LoginViewController") as? LoginViewController
+        let loginStoryboard = UIStoryboard(name: "Login", bundle: nil)
+        let loginViewController = loginStoryboard.instantiateViewControllerWithIdentifier("LoginViewController") as? LoginViewController
         
-        // Does exactly the same as arrow in storyboard. ("100% parity." --Tim Lee)
-        view.window?.rootViewController = loginViewController
+        UIView.transitionWithView(self.view.window!, duration: 0.5, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
+            self.view.window!.rootViewController = loginViewController
+        }, completion: nil)
     }
    
     func switchDelegate(switchtableViewCell: NotificationsTableViewCell, switchValue: Bool) {
