@@ -60,9 +60,10 @@
                                                         <constraint firstAttribute="height" constant="30" id="Svv-C0-nQA"/>
                                                         <constraint firstAttribute="width" constant="30" id="ndN-jt-ePP"/>
                                                     </constraints>
-                                                    <state key="normal" image="FAVE">
+                                                    <state key="normal" backgroundImage="FAVE">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <state key="highlighted" backgroundImage="FAVE_ON"/>
                                                     <connections>
                                                         <action selector="onFaveButtonTapped:" destination="8fU-es-WRF" eventType="touchUpInside" id="3Zj-Rx-Md0"/>
                                                     </connections>
@@ -73,7 +74,7 @@
                                                         <constraint firstAttribute="height" constant="30" id="gVp-b5-rRL"/>
                                                         <constraint firstAttribute="width" constant="30" id="rYZ-mC-niK"/>
                                                     </constraints>
-                                                    <state key="normal" image="COMMENT">
+                                                    <state key="normal" backgroundImage="COMMENT">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
@@ -390,5 +391,6 @@
     <resources>
         <image name="COMMENT" width="600" height="600"/>
         <image name="FAVE" width="500" height="500"/>
+        <image name="FAVE_ON" width="500" height="500"/>
     </resources>
 </document>

@@ -96,8 +96,8 @@ class FirstMessageCell: UITableViewCell {
         
         let query = PFUser.query()
         query?.whereKey("username", equalTo: message.valueForKey("authorUsername") as! String)
-        query?.findObjectsInBackgroundWithBlock({ (users: [AnyObject]?, error: NSError?) -> Void in
-            if let users = users as? [PFObject] {
+        query?.findObjectsInBackgroundWithBlock({ (users: [PFObject]?, error: NSError?) -> Void in
+            if let users = users {
                 let pfImageView = PFImageView()
                 pfImageView.file = users[0].valueForKey("photo") as? PFFile
                 if let _=pfImageView.file{

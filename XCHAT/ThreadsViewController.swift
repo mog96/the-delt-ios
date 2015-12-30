@@ -53,10 +53,11 @@ class ThreadsViewController: UIViewController, UITableViewDataSource, UITableVie
     func fetchThreads() {
         let query = PFQuery(className: "thread")
         query.orderByDescending("updatedAt")
-        query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
-            if objects != nil {
-                //print(objects)
-                self.threads = (objects as! [PFObject]?)!
+        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
+            if let objects = objects {
+                
+                // print(objects)
+                self.threads = objects
                 self.threadsTableView.reloadData()
             } else {
                 print("object is nil")

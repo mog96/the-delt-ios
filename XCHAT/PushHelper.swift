@@ -31,8 +31,8 @@ class PushHelper{
         })
     }
     
-    class func subscribedChannels()->([NSString]){
-        return PFInstallation.currentInstallation().channels as! [NSString]
+    class func subscribedChannels() -> [String] {
+        return PFInstallation.currentInstallation().channels!
     }
     
     func pushToChannel(message: NSString, channel:NSString){
@@ -43,7 +43,7 @@ class PushHelper{
         }
     }
     
-    class func pushToChannels(message: NSString, channels:[NSString]){
+    class func pushToChannels(message: NSString, channels:[String]){
         let push = PFPush()
         push.setChannels(channels)
         push.setMessage(message as String)

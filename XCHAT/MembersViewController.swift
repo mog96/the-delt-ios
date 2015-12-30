@@ -86,8 +86,8 @@ class MembersViewController: UIViewController, UITableViewDelegate, UITableViewD
     func fetchUsers(){
         let userQuery = PFUser.query()
         
-        userQuery!.findObjectsInBackgroundWithBlock { (objects:[AnyObject]?, error:NSError?) -> Void in
-            if objects != nil {
+        userQuery!.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
+            if let objects = objects {
                 self.users = objects as! [PFUser]
                 self.usersToDisplay = self.users
                 

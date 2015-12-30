@@ -2,9 +2,6 @@
 * IMPROVEMENTS *
 ****************
 
-	PROFILE
-	- CHECK at symbols in username
-
 	CHAT
 	- FIX profile photo loading
 	- stylize:
@@ -38,8 +35,6 @@
 	- add member detail view (same look as profile)
 		- member quote
 		- background photo?
-
-	SETTINGS
 
 	MENU
 	- implement numfaves and numphotos in menu

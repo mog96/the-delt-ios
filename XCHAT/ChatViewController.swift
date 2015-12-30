@@ -312,10 +312,10 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         query.limit = numOfMessagesToLoad
         
         // Server side code that checks whether there are any messages and retrieves them if so.
-        query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
-            if objects != nil {
-                if self.messages.count - 1 < objects?.count {
-                    self.messages = ((objects as! [PFObject]?)!).reverse()
+        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
+            if let objects = objects {
+                if self.messages.count - 1 < objects.count {
+                    self.messages = objects.reverse()
                     
                     // get rid of the welcome message
                     // self.messageTableView.tableHeaderView = UIView(frame: CGRectZero)
@@ -378,14 +378,14 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         userQuery?.whereKey("username", containedIn: username_list)
         
         //print(userQuery?.getFirstObject())
-        userQuery!.findObjectsInBackgroundWithBlock { (objects:[AnyObject]?, error:NSError?) -> Void in
-            if objects != nil{
-                var profiles = objects as! [PFUser]
+        userQuery!.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
+            if let objects = objects {
+                let profiles = objects as! [PFUser]
                 for profile in profiles {
                     if  let pic = profile["photo"] as? PFFile {
                         
                         print("PHOTO FOUND")
-                        var pfImageView = PFImageView()
+                        let pfImageView = PFImageView()
                         pfImageView.file = pic
                         pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
                             if let error = error {

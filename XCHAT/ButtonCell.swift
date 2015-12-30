@@ -36,11 +36,7 @@ class ButtonCell: UITableViewCell {
         self.photo = photo
         if let faved = photo?.valueForKey("faved") as? Bool {
             self.faved = faved
-            if faved {
-                faveButton.setImage(UIImage(named: "FAVE_ON"), forState: UIControlState.Normal)
-            } else {
-                faveButton.setImage(UIImage(named: "FAVE"), forState: UIControlState.Normal)
-            }
+            self.faveButton.highlighted = self.faved
         }
     }
     
@@ -48,14 +44,8 @@ class ButtonCell: UITableViewCell {
     // MARK: Actions
 
     @IBAction func onFaveButtonTapped(sender: AnyObject) {
-        if (!faved) {
-            faveButton.setImage(UIImage(named: "FAVE_ON"), forState: UIControlState.Normal)
-            delegate?.updateFaved(photo, didUpdateFaved: true)
-        } else {
-            faveButton.setImage(UIImage(named: "FAVE"), forState: UIControlState.Normal)
-            delegate?.updateFaved(photo, didUpdateFaved: false)
-        }
-        
+        self.faveButton.highlighted = !self.faved
+        delegate?.updateFaved(photo, didUpdateFaved: !self.faved)
     }
     
     @IBAction func onCommentButtonTapped(sender: AnyObject) {

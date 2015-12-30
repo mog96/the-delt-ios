@@ -32,8 +32,7 @@ class ReelGridViewController: UIViewController, UICollectionViewDataSource, UICo
     
     func refreshData() {
         let query = PFQuery(className:"Photo")
-        query.findObjectsInBackgroundWithBlock {
-            (objects: [AnyObject]?, error: NSError?) -> Void in
+        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
             
             if let error = error {
                 // Log details of the failure
@@ -45,7 +44,7 @@ class ReelGridViewController: UIViewController, UICollectionViewDataSource, UICo
                 print("Successfully retrieved \(objects!.count) photos.")
                 
                 // Do something with the found objects
-                if let objects = objects as? [PFObject] {
+                if let objects = objects {
                     print("Adding photos to array")
                     var i = 0
                     for object in objects {

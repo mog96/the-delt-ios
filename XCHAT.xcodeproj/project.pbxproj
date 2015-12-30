@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		14C801B6419E71880852882E /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A6357E7A4BC3485E3BE98A7 /* libPods.a */; };
 		2540A3931C2B9CC7003E4B31 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2540A3921C2B9CC7003E4B31 /* Login.storyboard */; };
 		2540A3951C2B9ED6003E4B31 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2540A3941C2B9ED6003E4B31 /* Main.storyboard */; };
 		2540A3971C2BACFD003E4B31 /* SignupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2540A3961C2BACFD003E4B31 /* SignupView.xib */; };
@@ -31,6 +32,7 @@
 		259FBA591B02F5A6006F1650 /* XCHATTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259FBA581B02F5A6006F1650 /* XCHATTests.swift */; };
 		25C6CCDA1B1290C200EADB5B /* CaptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C6CCD91B1290C200EADB5B /* CaptionViewController.swift */; };
 		25C6CCDC1B12FF1600EADB5B /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C6CCDB1B12FF1600EADB5B /* CommentViewController.swift */; };
+		25DE9B7F1C33D6C400C4D647 /* EmailTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25DE9B7E1C33D6C400C4D647 /* EmailTextField.xib */; };
 		25F016061B045882004D78F6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F016051B045882004D78F6 /* LoginViewController.swift */; };
 		25F0160A1B045D83004D78F6 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F016091B045D83004D78F6 /* MenuViewController.swift */; };
 		381125AD1B0C1CD200DBBAD2 /* ReelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381125AC1B0C1CD200DBBAD2 /* ReelViewController.swift */; };
@@ -75,7 +77,6 @@
 		38F655E11B0D235700C5586A /* ReelGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F655E01B0D235700C5586A /* ReelGridViewController.swift */; };
 		38F655E31B0D236900C5586A /* ReelGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F655E21B0D236900C5586A /* ReelGridCell.swift */; };
 		38F655E51B0D521200C5586A /* LogOutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F655E41B0D521200C5586A /* LogOutTableViewCell.swift */; };
-		8277069B6158641E38C18072 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 77568E524011CF02E88AD2C4 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +118,7 @@
 		259FBA581B02F5A6006F1650 /* XCHATTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCHATTests.swift; sourceTree = "<group>"; };
 		25C6CCD91B1290C200EADB5B /* CaptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptionViewController.swift; sourceTree = "<group>"; };
 		25C6CCDB1B12FF1600EADB5B /* CommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
+		25DE9B7E1C33D6C400C4D647 /* EmailTextField.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmailTextField.xib; sourceTree = "<group>"; };
 		25F016051B045882004D78F6 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		25F016091B045D83004D78F6 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		381125AC1B0C1CD200DBBAD2 /* ReelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReelViewController.swift; sourceTree = "<group>"; };
@@ -162,8 +164,8 @@
 		38F655E01B0D235700C5586A /* ReelGridViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReelGridViewController.swift; sourceTree = "<group>"; };
 		38F655E21B0D236900C5586A /* ReelGridCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReelGridCell.swift; sourceTree = "<group>"; };
 		38F655E41B0D521200C5586A /* LogOutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogOutTableViewCell.swift; sourceTree = "<group>"; };
+		4A6357E7A4BC3485E3BE98A7 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		665469A4E8500E356B430164 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		77568E524011CF02E88AD2C4 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0CB94052FC1EB451EC27E96 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -185,7 +187,7 @@
 				3887E9F41B043AC400D16CF6 /* CoreGraphics.framework in Frameworks */,
 				3887E9F21B043ABE00D16CF6 /* CFNetwork.framework in Frameworks */,
 				3887E9F01B043AB900D16CF6 /* AudioToolbox.framework in Frameworks */,
-				8277069B6158641E38C18072 /* libPods.a in Frameworks */,
+				14C801B6419E71880852882E /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,8 +214,9 @@
 			isa = PBXGroup;
 			children = (
 				2540A3921C2B9CC7003E4B31 /* Login.storyboard */,
-				2540A3961C2BACFD003E4B31 /* SignupView.xib */,
 				2540A3991C2BAE59003E4B31 /* LoginView.xib */,
+				25DE9B7E1C33D6C400C4D647 /* EmailTextField.xib */,
+				2540A3961C2BACFD003E4B31 /* SignupView.xib */,
 			);
 			name = Layout;
 			sourceTree = "<group>";
@@ -403,7 +406,7 @@
 				3887E9F31B043AC400D16CF6 /* CoreGraphics.framework */,
 				3887E9F11B043ABE00D16CF6 /* CFNetwork.framework */,
 				3887E9EF1B043AB900D16CF6 /* AudioToolbox.framework */,
-				77568E524011CF02E88AD2C4 /* libPods.a */,
+				4A6357E7A4BC3485E3BE98A7 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -429,6 +432,7 @@
 				259FBA3A1B02F5A5006F1650 /* Frameworks */,
 				259FBA3B1B02F5A5006F1650 /* Resources */,
 				3A1F6930D8833A4794ABDE3B /* Copy Pods Resources */,
+				35E5E0912296BCF4D9084C75 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -506,6 +510,7 @@
 				381BD6C81B158C5F005C6D1C /* Members.storyboard in Resources */,
 				385C74521B0ECB8A009BAC7A /* Profile.storyboard in Resources */,
 				3890A1D31B0B187C00B4FF00 /* Calendar.storyboard in Resources */,
+				25DE9B7F1C33D6C400C4D647 /* EmailTextField.xib in Resources */,
 				259FBA4D1B02F5A6006F1650 /* LaunchScreen.xib in Resources */,
 				387866101B0478C400623BC1 /* Settings.storyboard in Resources */,
 				255BE9821B170E9C0001B160 /* Chat.storyboard in Resources */,
@@ -543,6 +548,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		35E5E0912296BCF4D9084C75 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		3A1F6930D8833A4794ABDE3B /* Copy Pods Resources */ = {
@@ -744,7 +764,7 @@
 				INFOPLIST_FILE = XCHAT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.100.XCHAT;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tdx.THEDELT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XCHAT/XCHAT-Bridging-Header.h";
@@ -764,7 +784,7 @@
 				INFOPLIST_FILE = XCHAT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.100.XCHAT;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tdx.THEDELT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XCHAT/XCHAT-Bridging-Header.h";

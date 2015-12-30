@@ -264,7 +264,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
             if self.choosingPhoto {
                 self.photoButton.setBackgroundImage(self.uploadPhoto, forState: UIControlState.Normal)
                 self.photoButton.setTitle("", forState: UIControlState.Normal)
-                PFUser.currentUser()?.setObject(imageFile, forKey: "photo")
+                PFUser.currentUser()?.setObject(imageFile!, forKey: "photo")
                 
                 PFUser.currentUser()?.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
                     if error == nil {
@@ -281,7 +281,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
                 })
             } else {
                 self.backgroundPhotoImageView.image = self.uploadPhoto
-                PFUser.currentUser()?.setObject(imageFile, forKey: "backgroundPhoto")
+                PFUser.currentUser()?.setObject(imageFile!, forKey: "backgroundPhoto")
                 PFUser.currentUser()?.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
                     if error == nil {
                         

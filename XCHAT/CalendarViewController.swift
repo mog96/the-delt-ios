@@ -121,9 +121,9 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
     func refreshData() {
         var query = PFQuery(className: "Event")
         query.orderByAscending("startTime")
-        query.findObjectsInBackgroundWithBlock { (objects: [AnyObject]?, error: NSError?) -> Void in
-            if objects != nil {
-                self.events = objects as! [PFObject]
+        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
+            if let objects = objects {
+                self.events = objects
                 self.tableView.reloadData()
             } else {
                 print("object is nil")

@@ -81,8 +81,8 @@ class ReelViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         var query = PFUser.query()
         query?.whereKey("username", equalTo: photo.valueForKey("username") as! String)
-        query?.findObjectsInBackgroundWithBlock({ (users: [AnyObject]?, error: NSError?) -> Void in
-            if let users = users as? [PFObject] {
+        query?.findObjectsInBackgroundWithBlock({ (users: [PFObject]?, error: NSError?) -> Void in
+            if let users = users {
                 var pfImageView = PFImageView()
                 if users.count > 0 {
                     if let _ = users[0].valueForKey("photo"){
@@ -318,8 +318,7 @@ class ReelViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func refreshData() {
         let query = PFQuery(className:"Photo")
-        query.findObjectsInBackgroundWithBlock {
-            (objects: [AnyObject]?, error: NSError?) -> Void in
+        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
             if let error = error {
                 // Log details of the failure
                 print("Error: \(error) \(error.userInfo)")
@@ -327,7 +326,7 @@ class ReelViewController: UIViewController, UITableViewDelegate, UITableViewData
             } else {
                 print("Successfully retrieved \(objects!.count) photos.")
                 
-                if let objects = objects as? [PFObject] {
+                if let objects = objects {
                     self.photos.removeAllObjects()
                     
                     print("Adding photos to array")
