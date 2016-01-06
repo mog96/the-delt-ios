@@ -12,6 +12,7 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var menuView: UIView!
     @IBOutlet weak var contentView: UIView!
+    @IBOutlet var panGestureRecognizer: UIPanGestureRecognizer!
     
     let xThreshold = 100
     var contentViewOriginalOrigin: CGPoint!
@@ -56,9 +57,8 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     func configureContentViewController() {
-        if contentView != nil {
-            //print("CONTENT SUCCESS")
-            contentViewController!.view.frame = contentView.bounds
+        if self.contentView != nil {
+            self.contentViewController!.view.frame = contentView.bounds
             for subview in contentView.subviews {
                 subview.removeFromSuperview()
             }
@@ -68,17 +68,21 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.contentView.frame.origin = CGPoint(x: 0, y: 0)
             })
+            /*
             let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
             tapGestureRecognizer.numberOfTapsRequired = 2
             tapGestureRecognizer.delegate = self
             self.view.addGestureRecognizer(tapGestureRecognizer)
+            */
             
         }
     }
     
+    /*
     func handleTap(recognizer: UITapGestureRecognizer){
         hideMenu()
     }
+    */
     
     func configureMenuViewController() {
         if menuView != nil {
@@ -107,7 +111,9 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
         UIView.animateWithDuration(0.35, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: { () -> Void in
             self.contentView.frame.origin = CGPoint(x: 0, y: 0)
         }, completion: { (finished: Bool) -> Void in
-            UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
+            if !self.contentViewController!.isKindOfClass(EditableProfileViewController) {
+                UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
+            }
         })
     }
     

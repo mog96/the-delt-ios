@@ -9,78 +9,108 @@
 
 import UIKit
 
-class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var scrollViewBottomSpaceConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var backgroundPhotoImageView: UIImageView!
+    @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var photoButton: UIButton!
-    
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var yearTextField: UITextField!
     @IBOutlet weak var bioTextView: UITextView!
     @IBOutlet weak var phoneNumberTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
-    
     @IBOutlet weak var backgroundPhotoImageViewWidthConstraint: NSLayoutConstraint!
-    
-    /*
-    @IBOutlet weak var backgroundPhoto: UIImageView!
-    @IBOutlet var backGround: UIView!
-    @IBOutlet weak var nameText: UITextField!
-    @IBOutlet weak var usernameText: UITextField!
-    @IBOutlet weak var quoteText: UITextField!
-    @IBOutlet weak var emailText: UITextField!
-    @IBOutlet weak var email: UILabel!
-    @IBOutlet weak var quote: UILabel!
-    @IBOutlet weak var profilePicView: UIView!
-    @IBOutlet weak var username: UILabel!
-    @IBOutlet weak var realName: UILabel!
-    */
+    @IBOutlet var backgroundPhotoTapGestureRecognizer: UITapGestureRecognizer!
     
     var uploadPhoto: UIImage?
-    var choosingPhoto = false
+    var choosingBackgroundPhoto = false
     let yearPrefix = "Class of "
-    let bioTextViewPlaceholder = "Tell your crew a little bit about yourself."
+    let bioTextViewPlaceholder = "Tell the house a little bit about yourself."
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    
+    var editable = true
+    var user: PFUser?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // let query = PFQuery(className: "User")
+        self.setupView(editable ? PFUser.currentUser() : self.user)
         
-        if let name = PFUser.currentUser()?.objectForKey("name") as? String {
-            nameTextField.text = name
+        // Add keyboard observers.
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        
+        // Set delegates.
+        self.nameTextField.delegate = self
+        self.usernameTextField.delegate = self
+        self.yearTextField.delegate = self
+        self.bioTextView.delegate = self
+        self.phoneNumberTextField.delegate = self
+        self.emailTextField.delegate = self
+        
+        if !editable {
+            self.backgroundPhotoTapGestureRecognizer.enabled = false
+            self.photoButton.enabled = false
+            self.nameTextField.enabled = false
+            self.usernameTextField.enabled = false
+            self.yearTextField.enabled = false
+            self.phoneNumberTextField.enabled = false
+            self.emailTextField.enabled = false
+            
+            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+            self.navigationController?.navigationBar.shadowImage = UIImage()
+            self.navigationController?.navigationBar.translucent = true
+            self.navigationController?.view.backgroundColor = UIColor.clearColor()
+        }
+    }
+    
+    func setupView(user: PFUser?) {
+        if let name = user?.objectForKey("name") as? String {
+            self.nameTextField.text = name
+        } else if !self.editable {
+            self.nameTextField.text = " "
         }
         
-        // FIXME: username at symbol
-        if let username = PFUser.currentUser()?.objectForKey("username") as? String {
+        if let username = user?.objectForKey("username") as? String {
             self.usernameTextField.text = "@" + username
+        } else if !self.editable {
+            self.usernameTextField.text = " "
         }
         
-        if let year = PFUser.currentUser()?.objectForKey("class") as? String {
-            yearTextField.text = "Class of " + year
+        if let year = user?.objectForKey("class") as? String {
+            self.yearTextField.text = "Class of " + year
+        } else if !self.editable {
+            self.yearTextField.text = " "
         }
         
-        if let bio = PFUser.currentUser()?.objectForKey("quote") as? String {
-            self.bioTextView.text = bio
-        } else {
-            setPlaceholderText(bioTextView)
+        if let bio = user?.objectForKey("quote") as? String {
+            if bio == "" {
+                self.bioTextView.text = self.bioTextViewPlaceholder
+            } else {
+                self.bioTextView.text = bio
+            }
+        } else if self.editable {
+            self.bioTextView.text = self.bioTextViewPlaceholder
         }
         
-        if let phoneNumber = PFUser.currentUser()?.objectForKey("phone") as? String {
-            phoneNumberTextField.text = "Class of " + phoneNumber
+        if let phoneNumber = user?.objectForKey("phone") as? String {
+            self.phoneNumberTextField.text = "Class of " + phoneNumber
+        } else if !self.editable {
+            self.phoneNumberTextField.text = " "
         }
         
-        if let email = PFUser.currentUser()?.objectForKey("email") as? String {
+        if let email = user?.objectForKey("email") as? String {
             emailTextField.text = email
+        } else if !self.editable {
+            self.emailTextField.text = " "
         }
         
         // Photo.
-        if let photo = PFUser.currentUser()?.objectForKey("photo") as? PFFile {
+        if let photo = user?.objectForKey("photo") as? PFFile {
             let pfImageView = PFImageView()
             
             pfImageView.file = photo as PFFile
@@ -90,16 +120,20 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
                     print("Error: \(error) \(error.userInfo)")
                     
                 } else {
-                    self.photoButton.setBackgroundImage(image, forState: UIControlState.Normal)
+                    self.photoImageView.image = image
+                    self.photoButton.backgroundColor = UIColor.clearColor()
                     self.photoButton.setTitle("", forState: UIControlState.Normal)
                 }
             }
+        } else if !self.editable {
+            self.photoButton.backgroundColor = UIColor.clearColor()
+            self.photoButton.setTitle("", forState: UIControlState.Normal)
         }
         photoButton.layer.cornerRadius = 3
         photoButton.clipsToBounds = true
         
         // Background photo.
-        if let backgroundPhoto = PFUser.currentUser()?.objectForKey("backgroundPhoto") as? PFFile {
+        if let backgroundPhoto = user?.objectForKey("backgroundPhoto") as? PFFile {
             let pfImageView = PFImageView()
             
             pfImageView.file = backgroundPhoto as PFFile
@@ -114,17 +148,6 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
             }
         }
         backgroundPhotoImageViewWidthConstraint.constant = UIScreen.mainScreen().bounds.width
-        
-        // Add keyboard observers.
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
-        
-        // Set delegates.
-        nameTextField.delegate = self
-        usernameTextField.delegate = self
-        yearTextField.delegate = self
-        phoneNumberTextField.delegate = self
-        emailTextField.delegate = self
     }
     
     override func didReceiveMemoryWarning() {
@@ -142,62 +165,43 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
     
     // MARK: TextField
     
-    func setPlaceholderText(textView: UITextView) {
-        UIView.animateWithDuration(0.5, animations: { () -> Void in
-            textView.text = self.bioTextViewPlaceholder
-        })
-        textView.textColor = UIColor.lightGrayColor()
-    }
-    
 
     func textFieldDidEndEditing(textField: UITextField) {
-        
-        print("FUCKME")
+        if !(self.yearTextField.text!.hasPrefix(self.yearPrefix) && self.yearTextField.text!.characters.count == self.yearPrefix.characters.count + kYearLength) {
+            self.yearTextField.text = ""
+        }
         
         textField.resignFirstResponder()
         self.saveData()
     }
     
-    /*
+    
     // MARK: TextView Protocol Implementations
     
     func textViewShouldBeginEditing(textView: UITextView) -> Bool {
-        if textView.textColor == UIColor.lightGrayColor() {
-            textView.text = ""
-            textView.textColor = UIColor.blackColor()
-        }
-        return true
-    }
-    
-    func textViewShouldEndEditing(textView: UITextView) -> Bool {
-        if textView.text == "" {
-            setPlaceholderText(textView)
+        if self.bioTextView.text == self.bioTextViewPlaceholder {
+            self.bioTextView.text = ""
         }
         return true
     }
     
     func textViewDidChange(textView: UITextView) {
-        resizeTextView(textView)
         
         // User deletes all text in the TextView.
-        if textView.text!.characters.count == 0 {
-            setPlaceholderText(textView)
-            textView.resignFirstResponder()
+        if self.bioTextView.text!.characters.count == 0 && self.editable {
+            self.bioTextView.text = self.bioTextViewPlaceholder
+            self.bioTextView.resignFirstResponder()
         }
+        self.saveData()
     }
-    */
     
     
     // MARK: Keyboard
     
     func keyboardWillShow(notification: NSNotification){
         let userInfo = notification.userInfo
-        let kbSize = userInfo?[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue
-        // let newHeight = scrollView.frame.height - kbSize!.height
         
-        scrollViewBottomSpaceConstraint.constant = kbSize!.height
-        
-        print("KEYBOARD HEIGHT \(kbSize!.height)")
+        self.scrollViewBottomSpaceConstraint.constant = (userInfo?[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue.height)!
         
         UIView.animateWithDuration(0.2, animations: { () -> Void in
             self.view.layoutIfNeeded()
@@ -225,10 +229,6 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
     }
     
     @IBAction func onPhotoButtonTapped(sender: AnyObject) {
-        choosingPhoto = true
-        
-        print("TRUTH")
-        
         let imageVC = UIImagePickerController()
         imageVC.delegate = self
         imageVC.allowsEditing = true
@@ -237,12 +237,14 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
     }
     
     @IBAction func onBackgroundPhotoTapped(sender: AnyObject) {
-        choosingPhoto = false
+        self.choosingBackgroundPhoto = true
         
         let imageVC = UIImagePickerController()
         imageVC.delegate = self
-        imageVC.allowsEditing = false
+        imageVC.allowsEditing = true
         imageVC.sourceType = .PhotoLibrary
+        
+        // UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
         presentViewController(imageVC, animated: true, completion: nil) // FIXME: Causes warning 'Presenting view controllers on detached view controllers is discouraged'
     }
     
@@ -255,22 +257,21 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
     // dismissed (a.k.a. inside the completion handler) we modally segue to
     // show the "Location selection" screen (WRITTEN BY NICK TROCCOLI)
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        uploadPhoto = info[UIImagePickerControllerOriginalImage] as? UIImage
+        // UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: .Slide)
+        
+        self.uploadPhoto = info[UIImagePickerControllerEditedImage] as? UIImage
         dismissViewControllerAnimated(true, completion: { () -> Void in
             
             // TODO: Handle case where upload photo is nil.
             let imageData = UIImageJPEGRepresentation(self.uploadPhoto!, 100)
             let imageFile = PFFile(name: (PFUser.currentUser()?.username)! + ".jpeg", data: imageData!)
-            if self.choosingPhoto {
-                self.photoButton.setBackgroundImage(self.uploadPhoto, forState: UIControlState.Normal)
+            
+            if !self.choosingBackgroundPhoto {
+                self.photoImageView.image = self.uploadPhoto
                 self.photoButton.setTitle("", forState: UIControlState.Normal)
                 PFUser.currentUser()?.setObject(imageFile!, forKey: "photo")
-                
                 PFUser.currentUser()?.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
                     if error == nil {
-                        
-                        //print("successfully uploaded photo!")
-                        
                         self.saveData()
                         
                         // FIXME: QUESTIONABLE
@@ -284,9 +285,9 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
                 PFUser.currentUser()?.setObject(imageFile!, forKey: "backgroundPhoto")
                 PFUser.currentUser()?.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
                     if error == nil {
+                        self.saveData()
+                        // self.viewDidLoad()
                         
-                        //print("successfully uploaded photo!")
-                        self.viewDidLoad()
                     } else {
                         print(error)
                     }
@@ -301,51 +302,56 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UIIm
     let kYearLength = 4
     func saveData() {
         
-        // Set name.
-        if self.nameTextField.text!.characters.count > 0 {
-            PFUser.currentUser()?.setObject(self.nameTextField.text!, forKey: "name")
-        }
-        
-        // Set username.
-        if self.usernameTextField.text!.characters.count > 0 && self.usernameTextField.text! != "@" {
-            let username = self.usernameTextField.text!.substringFromIndex(self.usernameTextField.text!.startIndex.advancedBy(1))
-            PFUser.currentUser()?.setObject(username, forKey: "username")
-        }
-        
-        // Set year.
-        if self.yearTextField.text!.hasPrefix(self.yearPrefix) && self.yearTextField.text!.characters.count == self.yearPrefix.characters.count + kYearLength {
-            if let year = Int(self.yearTextField.text!.substringFromIndex(self.yearTextField.text!.startIndex.advancedBy(self.yearPrefix.characters.count))) {
-                
-                PFUser.currentUser()?.setObject(year, forKey: "year")
+        if editable {
+            // Set name.
+            if self.nameTextField.text!.characters.count > 0 {
+                PFUser.currentUser()?.setObject(self.nameTextField.text!, forKey: "name")
             }
-        }
-        
-        // Set bio.
-        if bioTextView.text != bioTextViewPlaceholder {
-            PFUser.currentUser()?.setObject(bioTextView.text, forKey: "quote")
-        }
-        
-        // Set phone number.
-        if phoneNumberTextField.text!.characters.count > 0 {
-            PFUser.currentUser()?.setObject(phoneNumberTextField.text!, forKey: "phone")
-        }
-        
-        // Set email.
-        if emailTextField.text!.characters.count > 0 {
-            PFUser.currentUser()?.setObject(emailTextField.text!, forKey: "email")
-        }
-        
-        // Save data.
-        PFUser.currentUser()?.saveInBackgroundWithBlock({ (result: Bool, error: NSError?) -> Void in
-            if error != nil {
-                
-                // Print some kind of error to clients
-                print(error?.description)
-            } else {
-                self.viewDidLoad()
-                self.appDelegate.menuViewController.tableView.reloadData()
+            
+            // Set username.
+            if self.usernameTextField.text!.characters.count > 0 && self.usernameTextField.text! != "@" {
+                let username = self.usernameTextField.text!.substringFromIndex(self.usernameTextField.text!.startIndex.advancedBy(1))
+                PFUser.currentUser()?.setObject(username, forKey: "username")
             }
-        })
+            
+            // Set year.
+            if self.yearTextField.text!.hasPrefix(self.yearPrefix) && self.yearTextField.text!.characters.count == self.yearPrefix.characters.count + kYearLength {
+                if let year = Int(self.yearTextField.text!.substringFromIndex(self.yearTextField.text!.startIndex.advancedBy(self.yearPrefix.characters.count))) {
+                    
+                    PFUser.currentUser()?.setObject(year, forKey: "year")
+                }
+            }
+            
+            // Set bio.
+            if bioTextView.text != bioTextViewPlaceholder {
+                PFUser.currentUser()?.setObject(bioTextView.text, forKey: "quote")
+            }
+            
+            // Set phone number.
+            if phoneNumberTextField.text!.characters.count > 0 {
+                PFUser.currentUser()?.setObject(phoneNumberTextField.text!, forKey: "phone")
+            }
+            
+            // Set email.
+            if emailTextField.text!.characters.count > 0 {
+                PFUser.currentUser()?.setObject(emailTextField.text!, forKey: "email")
+            }
+            
+            // Save data.
+            PFUser.currentUser()?.saveInBackgroundWithBlock({ (result: Bool, error: NSError?) -> Void in
+                if error != nil {
+                    
+                    // Print some kind of error to clients
+                    print(error?.description)
+                } else {
+                    self.viewDidLoad()
+                    self.appDelegate.menuViewController.tableView.reloadData()
+                }
+            })
+        } else {
+            user?.setObject(self.bioTextView.text, forKey: "quote")
+            user?.saveInBackground()
+        }
     }
     
 

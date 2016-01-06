@@ -16,6 +16,7 @@ class NotificationsSettingsViewController: UIViewController, UITableViewDataSour
     let kHeaderViewHeight = CGFloat(50)
     
     @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,11 +24,18 @@ class NotificationsSettingsViewController: UIViewController, UITableViewDataSour
         tableView.delegate = self
         tableView.estimatedRowHeight = 44
         tableView.rowHeight = UITableViewAutomaticDimension
+        
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.BlackTranslucent
+        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

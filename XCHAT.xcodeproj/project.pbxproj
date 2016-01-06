@@ -304,6 +304,7 @@
 			children = (
 				381125B21B0C1DB400DBBAD2 /* Reel.storyboard */,
 				381125AC1B0C1CD200DBBAD2 /* ReelViewController.swift */,
+				38F655E21B0D236900C5586A /* ReelGridCell.swift */,
 				38F655DC1B0D231B00C5586A /* PhotoCell.swift */,
 				25518A3E1B0ECFF200550DE9 /* ButtonCell.swift */,
 				25518A441B0ED06300550DE9 /* FavesCell.swift */,
@@ -312,7 +313,6 @@
 				25C6CCDB1B12FF1600EADB5B /* CommentViewController.swift */,
 				38F655DE1B0D233400C5586A /* PhotoDetailsViewController.swift */,
 				38F655E01B0D235700C5586A /* ReelGridViewController.swift */,
-				38F655E21B0D236900C5586A /* ReelGridCell.swift */,
 			);
 			name = Reel;
 			sourceTree = "<group>";

@@ -22,6 +22,8 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.tableView.estimatedRowHeight = 44.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
+        
+        self.tableView.canCancelContentTouches = false
     }
     
     override func didReceiveMemoryWarning() {
@@ -64,34 +66,47 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         print(indexPath.row)
         switch indexPath.row {
-        case 0:
+        case 0: // PROFILE
             let profileStoryboard = UIStoryboard(name: "Profile", bundle: nil)
-            let profileController = profileStoryboard.instantiateViewControllerWithIdentifier("ProfileViewController")
+            let profileController = profileStoryboard.instantiateViewControllerWithIdentifier("ProfileNavigationController") as! UINavigationController
+            
             hamburgerViewController?.contentViewController = profileController
             
         case 1: // CHAT
             let chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
             let chatNavigationController = chatStoryboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
+            
+            UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
             hamburgerViewController?.contentViewController = chatNavigationController
             
         case 2: // REEL
             let reelStoryboard = UIStoryboard(name: "Reel", bundle: nil)
             let reelNavigationController = reelStoryboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
+            
+            UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
             hamburgerViewController?.contentViewController = reelNavigationController
             
         case 3: // CALENDAR
             let eventsStoryboard = UIStoryboard(name: "Calendar", bundle: nil)
             let eventsNavigationController = eventsStoryboard.instantiateViewControllerWithIdentifier("Nav") as! UINavigationController
+            
+            UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
             hamburgerViewController?.contentViewController = eventsNavigationController
             
         case 4: // MEMBERS
-            let reelStoryboard = UIStoryboard(name: "Members", bundle: nil)
-            let reelNavigationController = reelStoryboard.instantiateViewControllerWithIdentifier("Members") as! UINavigationController
-            hamburgerViewController?.contentViewController = reelNavigationController
+            let storyboard = UIStoryboard(name: "Members", bundle: nil)
+            let nc = storyboard.instantiateViewControllerWithIdentifier("Members") as! UINavigationController
+            let membersViewController = nc.viewControllers.first as! MembersViewController
+            membersViewController.hamburgerViewController = self.hamburgerViewController
+            
+            UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
+            hamburgerViewController?.contentViewController = nc
             
         default: // SETTINGS
             let settingsStoryboard = UIStoryboard(name: "Settings", bundle: nil)
             let settingsNavigationController = settingsStoryboard.instantiateViewControllerWithIdentifier("SettingsNavigationController") as! UINavigationController
+            
+            UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
             hamburgerViewController?.contentViewController = settingsNavigationController
         }
     }

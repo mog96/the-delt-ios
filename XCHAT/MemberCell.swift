@@ -60,12 +60,4 @@ class MemberCell: UITableViewCell {
             self.photoImageView.image = UIImage(named: "ROONEY")
         }
     }
-
-    @IBAction func onPhoneNumberTapped(sender: AnyObject) {
-        
-    }
-    
-    @IBAction func onEmailTapped(sender: AnyObject) {
-        
-    }
 }

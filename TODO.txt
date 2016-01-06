@@ -10,7 +10,7 @@
 	- use refresh control to load earlier messages
 
 	REEL
-	- allow going back to ImagePicker from ADD CAPTION (ATTACK)
+	- allow going back to ImagePicker from ADD CAPTION (EASY)
 
 	* photo posting
 	- debug ADD CAPTION text editor (placeholder text)

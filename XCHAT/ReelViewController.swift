@@ -25,6 +25,8 @@ class ReelViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var tableView: UITableView!
     
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -51,12 +53,6 @@ class ReelViewController: UIViewController, UITableViewDelegate, UITableViewData
         */
     }
     
-    override func viewWillAppear(animated: Bool) {
-        var frame = self.navigationController!.navigationBar.frame
-        frame.origin.y = 20.0
-        self.navigationController!.navigationBar.frame = frame
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -78,6 +74,8 @@ class ReelViewController: UIViewController, UITableViewDelegate, UITableViewData
         profileImageView.contentMode = UIViewContentMode.ScaleAspectFill
         profileImageView.layer.cornerRadius = 1
         profileImageView.clipsToBounds = true
+        
+        profileImageView.backgroundColor = UIColor.redColor()
         
         var query = PFUser.query()
         query?.whereKey("username", equalTo: photo.valueForKey("username") as! String)
@@ -224,7 +222,7 @@ class ReelViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let photo = PFObject(className: "Photo")
         photo["imageFile"] = imageFile
-        photo["username"] = "mateog"                // FIXME: LINK CURRENT USER
+        photo["username"] = PFUser.currentUser()?.username
         photo["faved"] = false
         photo["numFaves"] = 0
         
@@ -232,9 +230,7 @@ class ReelViewController: UIViewController, UITableViewDelegate, UITableViewData
         if let caption = caption {
             photo["numComments"] = 1
             
-            print("CAPTION RECEIVED: \(caption)")
-            
-            comments.append(["mateog", caption])
+            comments.append([PFUser.currentUser()!.username!, caption])
         } else {
             photo["numComments"] = 0
         }
@@ -248,6 +244,13 @@ class ReelViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.refreshData()
             }
         })
+        
+        if let numPhotosPosted = PFUser.currentUser()!.objectForKey("numPhotosPosted") as? Int {
+            PFUser.currentUser()?.setObject(numPhotosPosted + 1, forKey: "numPhotosPosted")
+        } else {
+            PFUser.currentUser()?.setObject(1, forKey: "numPhotosPosted")
+        }
+        PFUser.currentUser()?.saveInBackground()
     }
 
     func commentViewController(didEnterComment comment: String) {
@@ -258,7 +261,12 @@ class ReelViewController: UIViewController, UITableViewDelegate, UITableViewData
             if error != nil {
                 print(error)
             } else if let photo = photo {
-                let commentPair = ["mateog", comment]              // FIXME: LINK CURRENT USER
+                var commentPair: [String]
+                if let username = PFUser.currentUser()!.username {
+                    commentPair = [username, comment]
+                } else {
+                    commentPair = ["", comment]
+                }
                 
                 photo.addObject(commentPair, forKey: "comments")   // Add comment
                 photo.incrementKey("numComments")                  // Increment comment count

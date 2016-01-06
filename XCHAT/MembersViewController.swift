@@ -32,6 +32,10 @@ class MembersViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     @IBOutlet weak var tableView: UITableView!
     
+    var member: PFUser!
+    
+    var hamburgerViewController: HamburgerViewController!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,19 +46,29 @@ class MembersViewController: UIViewController, UITableViewDelegate, UITableViewD
         searchBarFrame = CGRect(x: 16, y: 0, width: screenSize.width - 32, height: 44)
         searchBarHiddenFrame = CGRect(x: screenSize.width - 16, y: 0, width: 1, height: 44)
         
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.estimatedRowHeight = 44
-        tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.estimatedRowHeight = 44
+        self.tableView.rowHeight = UITableViewAutomaticDimension
 
-        navigationController?.navigationBar.barStyle = UIBarStyle.BlackTranslucent
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.BlackTranslucent
         
         fetchUsers()
+        
+        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.hamburgerViewController.panGestureRecognizer.enabled = true
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
     }
     
     
@@ -75,23 +89,23 @@ class MembersViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        self.member = usersToDisplay[indexPath.row]
+        self.performSegueWithIdentifier("detailSegue", sender: self)
     }
     
     
     // MARK: Fetch
     
-    /**
-        Stores users in [PFObject] and photos separately in NSMutableDictionary().
-    */
+    // Stores users in [PFObject] and photos separately in NSMutableDictionary().
     func fetchUsers(){
-        let userQuery = PFUser.query()
-        
-        userQuery!.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
+        let query = PFUser.query()
+        query!.orderByAscending("name")
+        query!.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
             if let objects = objects {
                 self.users = objects as! [PFUser]
                 self.usersToDisplay = self.users
                 
-                print(self.users)
                 self.tableView.reloadData()
             }
         }
@@ -115,9 +129,6 @@ class MembersViewController: UIViewController, UITableViewDelegate, UITableViewD
         
     }
     
-    @IBAction func onScreenTapped(sender: AnyObject) {
-        searchBar.resignFirstResponder()
-    }
     
     // MARK: Search Bar
     
@@ -155,14 +166,15 @@ class MembersViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        self.hamburgerViewController.panGestureRecognizer.enabled = false
+        
+        let profileViewController = segue.destinationViewController as! EditableProfileViewController
+        profileViewController.editable = false
+        profileViewController.user = self.member
     }
-    */
 
 }

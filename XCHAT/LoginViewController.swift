@@ -80,6 +80,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             user.email = emailTextField.text
             user.username = usernameTextField.text
             user.password = passwordTextField.text
+            user["totalNumFavesReceived"] = 0
+            user["totalNumPhotosPosted"] = 0
             
             // other fields can be set just like with PFObject
             // user["phone"] = "415-392-0202"
@@ -171,6 +173,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         UIView.transitionWithView(self.view.window!, duration: 0.5, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
             self.view.window!.rootViewController = appDelegate.hamburgerViewController
+            let reelStoryboard = UIStoryboard(name: "Reel", bundle: nil)
+            let reelNavigationController = reelStoryboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
+            
+            appDelegate.hamburgerViewController?.contentViewController = reelNavigationController
+            appDelegate.menuViewController.tableView.reloadData()
+            
             }, completion: nil)
     }
 

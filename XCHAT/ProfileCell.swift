@@ -59,26 +59,50 @@ class ProfileCell: UITableViewCell {
             self.photoImageView.image = UIImage(named: "LOGIN BACKGROUND 1")
         }
         
-        photoImageView.layer.cornerRadius = 3
-        photoImageView.clipsToBounds = true
+        self.photoImageView.layer.cornerRadius = 3
+        self.photoImageView.clipsToBounds = true
         
         if let name = PFUser.currentUser()?.objectForKey("name") as? String {
-            nameLabel.text = name
+            self.nameLabel.text = name
             
         } else {
-            nameLabel.text = "Tap here to setup profile"
+            self.nameLabel.text = "Tap here to setup profile"
         }
         
         if let username = PFUser.currentUser()?.objectForKey("username") as? String {
-            usernameLabel.text = username
+            self.usernameLabel.text = username
         }
         
         if let numPhotos = PFUser.currentUser()?.objectForKey("numPhotosPosted") as? Int {
-            numPhotosLabel.text = "\(numPhotos) photos"
+            self.numPhotosLabel.text = "\(numPhotos) photos"
+        } else {
+            self.numPhotosLabel.text = "0 photos"
+        }
+        
+        let query = PFQuery(className: "Photo")
+        query.whereKey("username", equalTo: PFUser.currentUser()!.username!)
+        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
+            if let error = error {
+                print(error)
+            } else {
+                if let objects = objects {
+                    var totalFaves = 0
+                    for object in objects {
+                        totalFaves += object["numFaves"] as! Int
+                    }
+                    if totalFaves == 1 {
+                        self.numFavesLabel.text = "1 fave received"
+                    } else {
+                        self.numFavesLabel.text = "\(totalFaves) faves received"
+                    }
+                }
+            }
         }
         
         if let numFaves = PFUser.currentUser()?.objectForKey("totalNumFavesReceived") as? Int {
             numFavesLabel.text = "\(numFaves) faves received"
+        } else {
+            self.numFavesLabel.text = "0 faves received"
         }
     }
 
