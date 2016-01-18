@@ -27,7 +27,7 @@ class CommentViewController: UIViewController, UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setPlaceholderText()
+        self.setPlaceholderText()
         
         let pfImageView = PFImageView()
         
@@ -44,7 +44,8 @@ class CommentViewController: UIViewController, UITextViewDelegate {
             }
         }
         
-        commentTextView.delegate = self
+        self.photoImageView.clipsToBounds = true
+        self.commentTextView.delegate = self
     }
     
     override func viewDidAppear(animated: Bool) {

@@ -17,7 +17,7 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
     let xThreshold = 100
     var contentViewOriginalOrigin: CGPoint!
     var screenSize: CGRect!
-    
+    var menuShown = false
     
     // MARK: View Loading
     
@@ -67,6 +67,8 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
             // animates menu closing when new contentView set
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.contentView.frame.origin = CGPoint(x: 0, y: 0)
+                
+                print("CLOSING")
             })
             /*
             let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
@@ -102,7 +104,7 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
         UIView.animateWithDuration(0.35, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: { () -> Void in
             self.contentView.frame.origin = CGPoint(x: 280, y: 0)
         }, completion: { (finished: Bool) -> Void in
-            
+            self.menuShown = true
         })
     }
     
@@ -114,7 +116,16 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
             if !self.contentViewController!.isKindOfClass(EditableProfileViewController) {
                 UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
             }
+            self.menuShown = false
         })
+    }
+    
+    func showOrHideMenu() {
+        if self.menuShown {
+            self.hideMenu()
+        } else {
+            self.showMenu()
+        }
     }
     
     @IBAction func onPanGesture(sender: UIPanGestureRecognizer) {

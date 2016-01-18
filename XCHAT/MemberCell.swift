@@ -60,4 +60,20 @@ class MemberCell: UITableViewCell {
             self.photoImageView.image = UIImage(named: "ROONEY")
         }
     }
+    
+    
+    // MARK: - Actions
+    
+    @IBAction func onPhoneNumberTapped(sender: AnyObject) {
+        let phoneNumber = self.phoneNumberButton.titleLabel!.text!
+        print(phoneNumber)
+        
+        // TODO: strip number down to numbers.
+        // UIApplication.sharedApplication().openURL(NSURL(string: "tel://" + phoneNumber)!)
+    }
+    
+    @IBAction func onEmailButtonTapped(sender: AnyObject) {
+        
+        // TODO: Present mail view.
+    }
 }

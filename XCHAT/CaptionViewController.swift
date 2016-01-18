@@ -30,8 +30,9 @@ class CaptionViewController: UIViewController, UITextViewDelegate {
         super.viewDidLoad()
         
         setPlaceholderText()
-        photoImageView.image = photo
-        captionTextView.delegate = self
+        self.photoImageView.image = self.photo
+        self.photoImageView.clipsToBounds = true
+        self.captionTextView.delegate = self
     }
     
     override func viewDidAppear(animated: Bool) {

@@ -37,6 +37,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let initialStoryboard = UIStoryboard(name: "Reel", bundle: nil)
         let initialNavigationController = initialStoryboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
         self.hamburgerViewController!.contentViewController = initialNavigationController
+        let reelViewController = initialNavigationController.viewControllers[0] as! ReelViewController
+        reelViewController.menuDelegate = self.menuViewController
         
         // Check if user is logged in.
         if PFUser.currentUser() == nil {

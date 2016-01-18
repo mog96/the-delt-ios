@@ -14,25 +14,28 @@ PODS:
   - AFNetworking/Serialization (3.0.4)
   - AFNetworking/UIKit (3.0.4):
     - AFNetworking/NSURLSession
-  - Bolts/Tasks (1.5.1)
-  - Parse (1.11.0):
+  - Bolts/Tasks (1.6.0)
+  - Parse (1.12.0):
     - Bolts/Tasks (~> 1.5)
-  - ParseUI (1.1.7):
+  - ParseUI (1.2.0):
     - Bolts/Tasks (~> 1.3)
     - Parse (~> 1.9)
+  - PureLayout (3.0.1)
   - SVProgressHUD (1.1.3)
 
 DEPENDENCIES:
   - AFNetworking
   - Parse
   - ParseUI
+  - PureLayout
   - SVProgressHUD
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
-  Bolts: a12663244b1d3351c738882e71902fc74db54f64
-  Parse: 886af46a0a677402f6374bb97ac212e795f70afe
-  ParseUI: c2bcdfbb00330e464b5b773266ae221697a3bb7b
+  Bolts: f52a250053bb517ca874523c3913776359ab3def
+  Parse: de2c52a9a1421b91ae7594ab8ce191afd184f19b
+  ParseUI: af2eba584799da4a9fbdac0e178662d7438b502e
+  PureLayout: f35f5384c9c4e4479df041dbe33ad7577b71ddfb
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
 
 COCOAPODS: 0.39.0

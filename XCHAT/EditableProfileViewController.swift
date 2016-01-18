@@ -66,6 +66,15 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
             self.navigationController?.navigationBar.translucent = true
             self.navigationController?.view.backgroundColor = UIColor.clearColor()
         }
+        
+        self.photoImageView.layer.cornerRadius = 3
+        self.photoImageView.clipsToBounds = true
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
+        self.navigationController?.navigationBar.shadowImage = nil
+        // self.navigationController?.view.backgroundColor = UIColor.clearColor()
     }
     
     func setupView(user: PFUser?) {
@@ -98,7 +107,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
         }
         
         if let phoneNumber = user?.objectForKey("phone") as? String {
-            self.phoneNumberTextField.text = "Class of " + phoneNumber
+            self.phoneNumberTextField.text = phoneNumber
         } else if !self.editable {
             self.phoneNumberTextField.text = " "
         }

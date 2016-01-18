@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="72d-Bt-eek" customClass="MessageView" customModule="XCHAT" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cma-KL-Cho">
+                    <rect key="frame" x="272" y="11" width="32" height="28"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="28" id="rLF-Ii-U4U"/>
+                        <constraint firstAttribute="width" constant="32" id="z6v-iN-fIm"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                    <state key="normal" title="Send">
+                        <color key="titleColor" red="0.40709350649999998" green="0.54860040290000001" blue="0.81752539700000004" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="disabled">
+                        <color key="titleColor" red="0.87058823529999996" green="0.64705882349999999" blue="0.84705882349999995" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <state key="highlighted">
+                        <color key="titleColor" red="0.87058823529999996" green="0.20392156859999999" blue="0.73725490199999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="onSendButtonTapped:" destination="72d-Bt-eek" eventType="touchUpInside" id="csv-9O-bg6"/>
+                    </connections>
+                </button>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" text="Holler at your brothers." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="7q6-Tk-JVi">
+                    <rect key="frame" x="13" y="7" width="241" height="36"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="textColor" red="0.52156862745098043" green="0.52156862745098043" blue="0.52156862745098043" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+            </subviews>
+            <color key="backgroundColor" red="0.94901960784313721" green="0.94901960784313721" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="7q6-Tk-JVi" firstAttribute="leading" secondItem="72d-Bt-eek" secondAttribute="leading" constant="13" id="18G-rf-aIr"/>
+                <constraint firstItem="7q6-Tk-JVi" firstAttribute="top" secondItem="72d-Bt-eek" secondAttribute="top" constant="7" id="6x9-VF-EeO"/>
+                <constraint firstItem="Cma-KL-Cho" firstAttribute="leading" secondItem="7q6-Tk-JVi" secondAttribute="trailing" constant="18" id="JMk-rs-47D"/>
+                <constraint firstAttribute="trailing" secondItem="Cma-KL-Cho" secondAttribute="trailing" constant="16" id="MJH-yR-B8m"/>
+                <constraint firstAttribute="bottom" secondItem="Cma-KL-Cho" secondAttribute="bottom" constant="11" id="TaU-Q9-HWS"/>
+                <constraint firstAttribute="height" constant="50" id="qEB-8P-x0Q"/>
+                <constraint firstAttribute="bottom" secondItem="7q6-Tk-JVi" secondAttribute="bottom" constant="7.5" id="suh-1l-yib"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="messageTextView" destination="7q6-Tk-JVi" id="lZz-dL-brn"/>
+                <outlet property="messageViewHeight" destination="qEB-8P-x0Q" id="lgg-Y4-74D"/>
+                <outlet property="sendButton" destination="Cma-KL-Cho" id="6JQ-NQ-a4W"/>
+            </connections>
+        </view>
+    </objects>
+</document>

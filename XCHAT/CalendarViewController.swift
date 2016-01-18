@@ -11,7 +11,7 @@ import UIKit
 // TODO:
 // - SET EVENT COLOR FOR DAY OF WEEK
 
-class CalendarViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class CalendarViewController: ContentViewController, UITableViewDelegate, UITableViewDataSource {
     
     var events: [PFObject] = [PFObject]()
     var refreshControl: UIRefreshControl!
@@ -21,6 +21,7 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setMenuButton(withColor: "red")
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -120,6 +121,7 @@ class CalendarViewController: UIViewController, UITableViewDelegate, UITableView
     
     func refreshData() {
         var query = PFQuery(className: "Event")
+        query.whereKey("startTime", greaterThan: NSDate())
         query.orderByAscending("startTime")
         query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
             if let objects = objects {

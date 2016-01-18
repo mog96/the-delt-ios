@@ -8,10 +8,10 @@
 
 import UIKit
 protocol SwitchDelegate{
-    func switchDelegate(switchtableViewCell: NotificationsTableViewCell, switchValue:Bool)
+    func switchDelegate(switchtableViewCell: NotificationTableViewCell, switchValue:Bool)
 }
 
-class NotificationsTableViewCell: UITableViewCell{
+class NotificationTableViewCell: UITableViewCell{
 
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var onSwitch: UISwitch!
@@ -19,8 +19,10 @@ class NotificationsTableViewCell: UITableViewCell{
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        self.onSwitch.tintColor = UIColor(red: 104/256, green: 140/256, blue: 208/256, alpha: 1)
     }
+    
     @IBAction func switchChanged(sender: AnyObject) {
         delegate?.switchDelegate(self, switchValue: onSwitch.on)
     }

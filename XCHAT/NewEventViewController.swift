@@ -14,57 +14,29 @@ import UIKit
 // - Add check that endDate succeed startDate
 // - Reverse animate startDatePicker on endDatePicker changed?
 
-class NewEventViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class NewEventViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, NewEventDelegate {
     
     var artworkImage: UIImage?
     var calendarViewController: CalendarViewController?
     
-    let placeholders = ["What?", "Where?", "Describe"]
-    
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var nameTextView: UITextView!
-    @IBOutlet weak var nameTextViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var locationTextView: UITextView!
-    @IBOutlet weak var locationTextViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var descriptionTextView: UITextView!
-    @IBOutlet weak var descriptionTextViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var startDatePicker: UIDatePicker!
-    @IBOutlet weak var endDatePicker: UIDatePicker!
-    @IBOutlet weak var artworkButton: UIButton!
-    
-    @IBOutlet weak var errorView: UIView!
-    @IBOutlet weak var errorLabel: UILabel!
-    
-    // var textViewHeightConstraint = NSLayoutConstraint()
+    @IBOutlet weak var tableView: UITableView!
+    var eventDescriptionCell: EventDescriptionTableViewCell!
+    var startDatePickerCell: StartDatePickerTableViewCell!
+    var endDatePickerCell: EndDatePickerTableViewCell!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        nameTextView.delegate = self
-        setPlaceholderText(nameTextView)
-        locationTextView.delegate = self
-        setPlaceholderText(locationTextView)
-        descriptionTextView.delegate = self
-        setPlaceholderText(descriptionTextView)
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.estimatedRowHeight = 126
+        self.tableView.rowHeight = UITableViewAutomaticDimension
         
-        startDatePicker.addTarget(self, action: "onDateChanged", forControlEvents: UIControlEvents.ValueChanged)
-        onDateChanged()
-        
-        // Error view, for if user forgets to enter event name.
-        errorView.layer.cornerRadius = 60
-        errorView.clipsToBounds = true
-        errorLabel.textColor = UIColor.whiteColor()
-        
-        artworkButton.layer.cornerRadius = 2
-        artworkButton.clipsToBounds = true
-        
-        nameTextView.becomeFirstResponder()
-        
-        /*
-        POTENTIAL TEXT VIEW RESIZING METHOD
-        textViewHeightConstraint = NSLayoutConstraint(item: nameTextView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 0.1, constant: 100)
-        scrollView.addConstraint(textViewHeightConstraint)
-        */
+        self.eventDescriptionCell = self.tableView.dequeueReusableCellWithIdentifier("EventDescriptionCell") as! EventDescriptionTableViewCell
+        self.eventDescriptionCell.newEventDelegate = self
+        self.startDatePickerCell = self.tableView.dequeueReusableCellWithIdentifier("StartDatePickerCell") as! StartDatePickerTableViewCell
+        self.endDatePickerCell = self.tableView.dequeueReusableCellWithIdentifier("EndDatePickerCell") as! EndDatePickerTableViewCell
+        self.startDatePickerCell.startDateDelegate = self.endDatePickerCell
     }
     
     override func didReceiveMemoryWarning() {
@@ -73,75 +45,21 @@ class NewEventViewController: UIViewController, UITextViewDelegate, UIImagePicke
     }
     
     
-    // MARK: TextView Protocol Implementations
+    // MARK: Table View
     
-    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
-        if textView.textColor == UIColor.lightGrayColor() {
-            textView.text = ""
-            textView.textColor = UIColor.blackColor()
-        }
-        return true
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
     }
     
-    func textViewShouldEndEditing(textView: UITextView) -> Bool {
-        if textView.text == "" {
-            setPlaceholderText(textView)
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        switch indexPath.row {
+        case 0:
+            return self.eventDescriptionCell
+        case 1:
+            return self.startDatePickerCell
+        default:
+            return self.endDatePickerCell
         }
-        return true
-    }
-    
-    func textViewDidChange(textView: UITextView) {
-        resizeTextView(textView)
-        
-        // User deletes all text in the TextView.
-        if textView.text!.characters.count == 0 {
-            setPlaceholderText(textView)
-            textView.resignFirstResponder()
-        }
-    }
-    
-    
-    // MARK: TextView Helpers
-    
-    func setPlaceholderText(textView: UITextView) {
-        if textView == nameTextView {
-            UIView.animateWithDuration(0.5, animations: { () -> Void in
-                textView.text = self.placeholders[0]
-            })
-            
-        } else if textView == locationTextView {
-            UIView.animateWithDuration(0.5, animations: { () -> Void in
-                textView.text = self.placeholders[1]
-            })
-            
-        } else {
-            UIView.animateWithDuration(0.5, animations: { () -> Void in
-                textView.text = self.placeholders[2]
-            })
-        }
-        textView.textColor = UIColor.lightGrayColor()
-    }
-    
-    func resizeTextView(textView: UITextView) {
-        if textView == nameTextView {
-            nameTextViewHeightConstraint.constant = nameTextView.contentSize.height
-        } else if textView == locationTextView {
-            locationTextViewHeightConstraint.constant = locationTextView.contentSize.height
-        } else if textView == descriptionTextView {
-            descriptionTextViewHeightConstraint.constant = descriptionTextView.contentSize.height
-        }
-    }
-    
-    
-    // MARK: Event Handlers
-    
-    func onDateChanged() {
-        let calendar = NSCalendar.currentCalendar()
-        let components = NSDateComponents()
-        components.hour = 1
-        
-        let endDate = calendar.dateByAddingComponents(components, toDate: startDatePicker.date, options: [])
-        endDatePicker.setDate(endDate!, animated: true)
     }
     
     
@@ -149,32 +67,27 @@ class NewEventViewController: UIViewController, UITextViewDelegate, UIImagePicke
     
     @IBAction func onPostButtonTapped(sender: AnyObject) {
         
+        print("POSTING")
+        
         // User forgets to enter name.
-        if nameTextView.text == placeholders[0] {
+        if self.eventDescriptionCell.nameTextField.text == "" {
             
-            // FIXME: NOT ANIMATIONG PROPERLY
-            UIView.animateWithDuration(100, delay: 0, options: [], animations: { () -> Void in
-                self.errorView.hidden = false
-            }, completion: { (complete: Bool) -> Void in
-                UIView.animateWithDuration(10, delay: 10, options: [], animations: { () -> Void in
-                    self.errorView.hidden = true
-                }, completion: nil)
-            })
+            // TODO: Present alert.
             
         } else {
             let event = PFObject(className: "Event")
             
-            event["name"] = nameTextView.text
+            event["name"] = self.eventDescriptionCell.nameTextField.text
             
-            if locationTextView.text != placeholders[1] {
-                event["location"] = locationTextView.text
+            if self.eventDescriptionCell.locationTextField.text != "" {
+                event["location"] = self.eventDescriptionCell.locationTextField.text
             }
-            if descriptionTextView.text != placeholders[2] {
-                event["description"] = descriptionTextView.text
+            if self.eventDescriptionCell.descriptionTextView.text != self.eventDescriptionCell.descriptionTextViewPlaceholder {
+                event["description"] = self.eventDescriptionCell.descriptionTextView.text
             }
             
-            event["startTime"] = startDatePicker.date
-            event["endTime"] = endDatePicker.date
+            event["startTime"] = self.startDatePickerCell.eventDatePicker.date
+            event["endTime"] = self.endDatePickerCell.eventDatePicker.date
             event["ceatedBy"] = PFUser.currentUser()?.valueForKey("username")
             
             if artworkImage != nil {
@@ -200,11 +113,10 @@ class NewEventViewController: UIViewController, UITextViewDelegate, UIImagePicke
     }
     
     @IBAction func onScreenTapped(sender: AnyObject) {
-        print("DETECTED")
-        view.endEditing(true)
+        self.view.endEditing(true)
     }
     
-    @IBAction func onArtworkButtonTapped(sender: AnyObject) {
+    func onArtworkButtonTapped() {
         let imageVC = UIImagePickerController()
         imageVC.delegate = self
         imageVC.allowsEditing = true
@@ -221,11 +133,11 @@ class NewEventViewController: UIViewController, UITextViewDelegate, UIImagePicke
     // show the "Location selection" screen. --Nick Troccoli
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        artworkImage = info[UIImagePickerControllerEditedImage] as? UIImage
+        self.artworkImage = info[UIImagePickerControllerEditedImage] as? UIImage
         dismissViewControllerAnimated(true, completion: { () -> Void in
             
-            self.artworkButton.setBackgroundImage(self.artworkImage, forState: UIControlState.Normal)
-            self.artworkButton.setTitle("", forState: UIControlState.Normal)
+            self.eventDescriptionCell.artworkButton.setBackgroundImage(self.artworkImage, forState: UIControlState.Normal)
+            self.eventDescriptionCell.artworkButton.setTitle("", forState: UIControlState.Normal)
         })
     }
     

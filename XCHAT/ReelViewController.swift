@@ -11,7 +11,7 @@ import UIKit
 // FIXME: Not too important, but could just use a [PFObject]() instead of serializing data
 //        into NSMutableDictionary()
 
-class ReelViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CaptionViewControllerDelegate, CommentViewControllerDelegate, ButtonCellDelegate {
+class ReelViewController: ContentViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CaptionViewControllerDelegate, CommentViewControllerDelegate, ButtonCellDelegate {
     
     var photos = NSMutableArray()
     var uploadPhoto: UIImage?
@@ -25,10 +25,9 @@ class ReelViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var tableView: UITableView!
     
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setMenuButton(withColor: "red")
         
         refreshData()
         

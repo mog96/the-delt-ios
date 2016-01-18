@@ -9,17 +9,11 @@
 import UIKit
 import Darwin
 
-class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, LoadMoreMessagesDelegate {
+class ChatViewController: ContentViewController, UITableViewDataSource, UITableViewDelegate, LoadMoreMessagesDelegate, MessageViewDelegate {
     
     @IBOutlet weak var messageTableView: UITableView!
-    @IBOutlet weak var messageTextField: UITextField!
-    
-    @IBOutlet weak var tableViewContainer: UIView!
-    @IBOutlet weak var tableViewBottomLayoutConstraint: NSLayoutConstraint!
-    
-    @IBOutlet weak var sendButton: UIButton!
-    @IBOutlet weak var messageTextFieldTrailingSpace: NSLayoutConstraint!
-    
+    var messageView: MessageView!
+    var messageViewBottomConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var welcomeLabel: UILabel!
     @IBOutlet weak var subWelcomeLabel: UILabel!
@@ -46,6 +40,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setMenuButton(withColor: "red")
         
         // Setup TableView.
         messageTableView.delegate = self
@@ -56,10 +51,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         messageTableView.tableFooterView = UIView(frame: CGRectZero)
         
-        originalWidth = messageTableView.frame.width
-        originalHeight = messageTableView.frame.height
-        
-        sendButton.setTitleColor(UIColor.grayColor(), forState: UIControlState.Disabled)
+        self.originalWidth = messageTableView.frame.width
+        self.originalHeight = messageTableView.frame.height
         
         // Fetch messages.
         self.query = PFQuery(className: "message")
@@ -75,6 +68,18 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // Refetch messages every 15 seconds. 
         _ = NSTimer.scheduledTimerWithTimeInterval(15, target: self, selector: "fetchMessages", userInfo: nil, repeats: true)
         
+        // Setup message view.
+        self.messageView = NSBundle.mainBundle().loadNibNamed("MessageView", owner: self, options: nil)[0] as! MessageView
+        self.messageView.frame = CGRectMake(0, UIScreen.mainScreen().bounds.height - self.messageView.frame.height, self.messageView.frame.height, UIScreen.mainScreen().bounds.width)
+        let placeholder = "Holler at your brothers."
+        self.messageView.placeholder = placeholder
+        self.messageView.messageTextView.text = placeholder
+        self.messageView.delegate = self
+        self.view.addSubview(self.messageView)
+        self.messageView.autoPinEdgeToSuperviewEdge(.Left)
+        self.messageView.autoPinEdgeToSuperviewEdge(.Right)
+        self.messageViewBottomConstraint = self.messageView.autoPinEdgeToSuperviewEdge(.Bottom)
+        self.messageView.autoPinEdge(.Top, toEdge: .Bottom, ofView: self.messageTableView)
     }
     
     override func didReceiveMemoryWarning() {
@@ -195,35 +200,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     
-    // MARK: Text Field
-    
-    func resizeTextField(sender: UITextField) {
-        
-        if !validateMessage(sender.text!){
-            sendButton.enabled = false
-        } else {
-            sendButton.enabled = true
-        }
-        
-        if sender.text != "" {
-            self.messageTextFieldTrailingSpace.constant = 52
-            UIView.animateWithDuration(0.2, animations: { () -> Void in
-                self.view.layoutIfNeeded()
-                }, completion: { (completed: Bool) -> Void in
-                    self.sendButton.alpha = 1
-            })
-            
-        } else {
-            self.sendButton.alpha = 0
-            self.messageTextFieldTrailingSpace.constant = 8
-            
-            UIView.animateWithDuration(0.2, animations: { () -> Void in
-                self.view.layoutIfNeeded()
-                }, completion: { (completed: Bool) -> Void in
-                    
-            })
-        }
-    }
+    // MARK: Message View
     
     func validateMessage(string: String) -> Bool {
         let whitespaceSet = NSCharacterSet.whitespaceCharacterSet()
@@ -236,10 +213,9 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func keyboardWillShow(notification: NSNotification){
         let userInfo = notification.userInfo
         let kbSize = userInfo?[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue
-        let newHeight = tableViewContainer.frame.height - kbSize!.height
         
-        self.tableViewBottomLayoutConstraint.constant = kbSize!.height
-        print(kbSize!.height)
+        self.messageViewBottomConstraint.constant = -kbSize!.height
+        print("MESSAGEVIEW FRAME: \(self.messageView.frame)")
         
         UIView.animateWithDuration(0.2, animations: { () -> Void in
             
@@ -247,45 +223,41 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }, completion: { (Bool) -> Void in
                 self.scrollToBottom()
         })
-        
     }
     
     func keyboardWillHide(notification: NSNotification){
         
-        self.tableViewBottomLayoutConstraint.constant = 0
+        self.messageViewBottomConstraint.constant = 0
         
+        /*
         UIView.animateWithDuration(0.2, animations: { () -> Void in
             
             self.view.layoutIfNeeded()
             }, completion: { (Bool) -> Void in
                 self.scrollToBottom()
         })
+        */
     }
     
     
     // MARK: Actions
     
-    @IBAction func onTableViewTap(sender: UITapGestureRecognizer) {
+    @IBAction func onScreenTapped(sender: AnyObject) {
         self.view.endEditing(true)
+        self.messageView.resetMessageTextView()
     }
     
-    @IBAction func onMessageTextFieldEdit(sender: UITextField) {
-        resizeTextField(sender)
-    }
-    
-    @IBAction func sendMessageAction(sender: AnyObject) {
-        
-        if validateMessage(messageTextField.text!) {
+    func onSendButtonTapped() {
+        if validateMessage(self.messageView.messageTextView.text!) {
             let message = PFObject(className: "message")
             // Dummy authorId and threadId
             message["authorUsername"] = PFUser.currentUser()?.valueForKey("username") as! String
             message["threadId"] = threadId
-            message["content"] = messageTextField.text
+            message["content"] = self.messageView.messageTextView.text
             
             
             // Clear the text field
-            messageTextField.text = ""
-            resizeTextField(messageTextField)
+            self.messageView.messageTextView.text = ""
             
             message.saveInBackgroundWithBlock { (result: Bool, error: NSError?) -> Void in
                 if error != nil {
@@ -352,7 +324,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let bottomSection = messageTableView.numberOfSections - 1
         if bottomSection >= 0 {
             let bottomRow = messageTableView.numberOfRowsInSection(bottomSection) - 1
-            let lastIndexPath = NSIndexPath(forRow: bottomRow, inSection: bottomSection)
+            // let lastIndexPath = NSIndexPath(forRow: bottomRow, inSection: bottomSection)
             if bottomRow >= 1 {
                 
                 let lastIndexPath = NSIndexPath(forRow: bottomRow, inSection: bottomSection)

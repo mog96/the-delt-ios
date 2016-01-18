@@ -8,7 +8,7 @@
         <!--SETTINGS-->
         <scene sceneID="L8o-Ay-30L">
             <objects>
-                <viewController storyboardIdentifier="Settings" id="vd5-nW-KZO" customClass="NotificationsSettingsViewController" customModule="XCHAT" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Settings" id="vd5-nW-KZO" customClass="SettingsViewController" customModule="XCHAT" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="TiJ-Pw-PMW"/>
                         <viewControllerLayoutGuide type="bottom" id="Bxg-DG-8fg"/>
@@ -21,8 +21,34 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NTCell" rowHeight="47" id="Zrl-6k-xCn" customClass="NotificationsTableViewCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="113.5" width="320" height="47"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SettingsDescriptionCell" rowHeight="48" id="vre-qF-Zle" customClass="SettingsDescriptionTableViewCell" customModule="XCHAT" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="113.5" width="320" height="48"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vre-qF-Zle" id="FFF-ai-aa6">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="48"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select when you'd like to receive push notifications from THE DELT." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I1B-qb-SI4">
+                                                    <rect key="frame" x="15" y="6" width="290" height="29"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="I1B-qb-SI4" firstAttribute="top" secondItem="FFF-ai-aa6" secondAttribute="top" constant="6" id="ERr-df-Hps"/>
+                                                <constraint firstAttribute="trailing" secondItem="I1B-qb-SI4" secondAttribute="trailing" constant="15" id="GWN-NX-unx"/>
+                                                <constraint firstAttribute="bottom" secondItem="I1B-qb-SI4" secondAttribute="bottom" constant="13" id="Sv2-So-dER"/>
+                                                <constraint firstItem="I1B-qb-SI4" firstAttribute="leading" secondItem="FFF-ai-aa6" secondAttribute="leading" constant="15" id="iyh-Le-IDI"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="descriptionLabel" destination="I1B-qb-SI4" id="qfA-GV-9cM"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NotificationCell" rowHeight="47" id="Zrl-6k-xCn" customClass="NotificationTableViewCell" customModule="XCHAT" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="161.5" width="320" height="47"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Zrl-6k-xCn" id="iSx-GQ-eYL">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="47"/>
@@ -34,8 +60,8 @@
                                                         <action selector="switchChanged:" destination="Zrl-6k-xCn" eventType="valueChanged" id="NjH-Xf-Ao6"/>
                                                     </connections>
                                                 </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ae4-EL-Qtj">
-                                                    <rect key="frame" x="15" y="13" width="97" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notification name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ae4-EL-Qtj">
+                                                    <rect key="frame" x="15" y="13" width="135" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -57,7 +83,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LogoutCell" rowHeight="47" id="UIR-oF-8es" customClass="LogOutTableViewCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="160.5" width="320" height="47"/>
+                                        <rect key="frame" x="0.0" y="208.5" width="320" height="47"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UIR-oF-8es" id="HYg-F8-cQ2">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="47"/>

@@ -16,7 +16,7 @@ import UIKit
 // TODO
 // - If USER's cell is tapped, go to profile edit view
 
-class MembersViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+class MembersViewController: ContentViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     var users = [PFUser]()
     var usersToDisplay = [PFUser]()
@@ -36,8 +36,11 @@ class MembersViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var hamburgerViewController: HamburgerViewController!
     
+    var navigationBar: UINavigationBar!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setMenuButton(withColor: "white")
         
         screenSize = UIScreen.mainScreen().bounds
         
@@ -52,6 +55,7 @@ class MembersViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.tableView.rowHeight = UITableViewAutomaticDimension
 
         self.navigationController?.navigationBar.barStyle = UIBarStyle.BlackTranslucent
+        self.navigationBar = self.navigationController?.navigationBar
         
         fetchUsers()
         

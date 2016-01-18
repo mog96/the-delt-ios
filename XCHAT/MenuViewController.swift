@@ -8,7 +8,11 @@
 
 import UIKit
 
-class MenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+protocol MenuDelegate {
+    func menuButtonTapped()
+}
+
+class MenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MenuDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -69,12 +73,15 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         case 0: // PROFILE
             let profileStoryboard = UIStoryboard(name: "Profile", bundle: nil)
             let profileController = profileStoryboard.instantiateViewControllerWithIdentifier("ProfileNavigationController") as! UINavigationController
+            PFUser.currentUser()?.fetchInBackground()
             
             hamburgerViewController?.contentViewController = profileController
             
         case 1: // CHAT
             let chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
             let chatNavigationController = chatStoryboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
+            let firstViewController = chatNavigationController.viewControllers[0] as! ChatViewController
+            firstViewController.menuDelegate = self
             
             UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
             hamburgerViewController?.contentViewController = chatNavigationController
@@ -82,22 +89,27 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         case 2: // REEL
             let reelStoryboard = UIStoryboard(name: "Reel", bundle: nil)
             let reelNavigationController = reelStoryboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
+            let firstViewController = reelNavigationController.viewControllers[0] as! ReelViewController
+            firstViewController.menuDelegate = self
             
             UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
             hamburgerViewController?.contentViewController = reelNavigationController
             
         case 3: // CALENDAR
-            let eventsStoryboard = UIStoryboard(name: "Calendar", bundle: nil)
-            let eventsNavigationController = eventsStoryboard.instantiateViewControllerWithIdentifier("Nav") as! UINavigationController
+            let calendarStoryboard = UIStoryboard(name: "Calendar", bundle: nil)
+            let calendarNavigationController = calendarStoryboard.instantiateViewControllerWithIdentifier("Nav") as! UINavigationController
+            let firstViewController = calendarNavigationController.viewControllers[0] as! CalendarViewController
+            firstViewController.menuDelegate = self
             
             UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
-            hamburgerViewController?.contentViewController = eventsNavigationController
+            hamburgerViewController?.contentViewController = calendarNavigationController
             
         case 4: // MEMBERS
             let storyboard = UIStoryboard(name: "Members", bundle: nil)
             let nc = storyboard.instantiateViewControllerWithIdentifier("Members") as! UINavigationController
-            let membersViewController = nc.viewControllers.first as! MembersViewController
-            membersViewController.hamburgerViewController = self.hamburgerViewController
+            let firstViewController = nc.viewControllers[0] as! MembersViewController
+            firstViewController.menuDelegate = self
+            firstViewController.hamburgerViewController = self.hamburgerViewController
             
             UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
             hamburgerViewController?.contentViewController = nc
@@ -105,10 +117,19 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         default: // SETTINGS
             let settingsStoryboard = UIStoryboard(name: "Settings", bundle: nil)
             let settingsNavigationController = settingsStoryboard.instantiateViewControllerWithIdentifier("SettingsNavigationController") as! UINavigationController
+            let firstViewController = settingsNavigationController.viewControllers[0] as! SettingsViewController
+            firstViewController.menuDelegate = self
             
             UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
             hamburgerViewController?.contentViewController = settingsNavigationController
         }
+    }
+    
+    
+    // MARK: - Menu Delegate
+    
+    func menuButtonTapped() {
+        self.hamburgerViewController?.showOrHideMenu()
     }
     
 
