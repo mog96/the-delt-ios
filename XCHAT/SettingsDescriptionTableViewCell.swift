@@ -20,7 +20,7 @@ class SettingsDescriptionTableViewCell: UITableViewCell {
     func setDescription(description: String) {
         let text = NSMutableAttributedString(string: description)
         let labelStyle = NSMutableParagraphStyle()
-        labelStyle.lineSpacing = 6
+        labelStyle.lineSpacing = 3
         labelStyle.alignment = NSTextAlignment.Left
         text.addAttribute(NSParagraphStyleAttributeName, value: labelStyle, range: NSMakeRange(0, text.length))
         self.descriptionLabel.attributedText = text

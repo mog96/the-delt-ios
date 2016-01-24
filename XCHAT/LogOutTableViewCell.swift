@@ -11,6 +11,7 @@ import UIKit
 protocol LoggedOutDelegate{
     func loggedOutDelegate(logoutTableViewCell : LogOutTableViewCell)
 }
+
 class LogOutTableViewCell: UITableViewCell {
     var delegate: LoggedOutDelegate?
     

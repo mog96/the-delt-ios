@@ -42,6 +42,8 @@ class CalendarViewController: ContentViewController, UITableViewDelegate, UITabl
         print("SHOW DEFAULT")
         }
         */
+        
+        UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
     }
     
     override func viewWillAppear(animated: Bool) {

@@ -80,6 +80,8 @@ class ChatViewController: ContentViewController, UITableViewDataSource, UITableV
         self.messageView.autoPinEdgeToSuperviewEdge(.Right)
         self.messageViewBottomConstraint = self.messageView.autoPinEdgeToSuperviewEdge(.Bottom)
         self.messageView.autoPinEdge(.Top, toEdge: .Bottom, ofView: self.messageTableView)
+        
+        UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
     }
     
     override func didReceiveMemoryWarning() {

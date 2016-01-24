@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MessageUI
 
-class SettingsViewController: ContentViewController, UITableViewDataSource, UITableViewDelegate, SwitchDelegate, LoggedOutDelegate {
+class SettingsViewController: ContentViewController, UITableViewDataSource, UITableViewDelegate, SwitchDelegate, FeedbackDelegate, LoggedOutDelegate, MFMailComposeViewControllerDelegate {
 
     var savedSettings = [String: Bool]()
     var window: UIWindow?
@@ -40,13 +41,17 @@ class SettingsViewController: ContentViewController, UITableViewDataSource, UITa
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return 4
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
             return 3
+        case 1:
+            return 1
+        case 2:
+            return 2
         default:
             return 2
         }
@@ -57,24 +62,16 @@ class SettingsViewController: ContentViewController, UITableViewDataSource, UITa
         switch section {
         case 0:
             headerView.headerLabel.text = "PUSH NOTIFICATIONS"
+        case 1:
+            headerView.headerLabel.text = "FEEDBACK"
+        case 2:
+            headerView.headerLabel.text = "REPORT USER"
         default:
             headerView.headerLabel.text = "LOG OUT"
         }
         headerView.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, headerView.frame.height)
         return headerView
     }
-    
-    
-    /*
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0:
-            return "PUSH NOTIFICATIONS"
-        default:
-            return "LOG OUT"
-        }
-    }
-    */
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return kHeaderViewHeight
@@ -97,6 +94,21 @@ class SettingsViewController: ContentViewController, UITableViewDataSource, UITa
                 } else {
                     cell.onSwitch.setOn(false, animated: true)
                 }
+                return cell
+            }
+        case 1:
+            let cell = self.tableView.dequeueReusableCellWithIdentifier("SettingsDescriptionCell") as! SettingsDescriptionTableViewCell
+            cell.setDescription("Submit any comments or suggestions you may have to mateog@stanford.edu.")
+            return cell
+        case 2:
+            if indexPath.row == 0 {
+                let cell = self.tableView.dequeueReusableCellWithIdentifier("SettingsDescriptionCell") as! SettingsDescriptionTableViewCell
+                cell.setDescription("Report any content you feel is inappropriate, or users you feel are abusing this service and should be blocked from THE DELT.")
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCellWithIdentifier("FeedbackCell", forIndexPath: indexPath) as! FeedbackTableViewCell
+                cell.feedbackButton.titleLabel?.text = "Report User"
+                cell.delegate = self
                 return cell
             }
         default:
@@ -130,6 +142,50 @@ class SettingsViewController: ContentViewController, UITableViewDataSource, UITa
         else{
             PushHelper.unsubscribeFromChannel(switchtableViewCell.label.text!)
             
+        }
+    }
+    
+    
+    // MARK: - Feedback Mail Compose
+    
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        
+        // TODO: Handle each mail case? i.e. sent, not sent, etc.
+        
+        controller.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func presentReportUserMailCompose() {
+        if MFMailComposeViewController.canSendMail() {
+            let subject = "THE DELT: Report User"
+            let recipient = "mateog@stanford.edu"
+            var body = "Name: "
+            if let name = PFUser.currentUser()?.objectForKey("name") as? String {
+                body += "\n" + name
+            }
+            if let username = PFUser.currentUser()?.username {
+                body += "\n" + "Username: " + username
+            }
+            body += "\n\nUser in question: [enter username]"
+            body += "\nComment: [optional]"
+            
+            let mailComposeVC = MFMailComposeViewController()
+            mailComposeVC.mailComposeDelegate = self
+            mailComposeVC.setSubject(subject)
+            mailComposeVC.setToRecipients([recipient])
+            mailComposeVC.setMessageBody(body, isHTML: false)
+            
+            
+            // mailComposeVC.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.blackColor()]
+            // UINavigationBar.appearance().barStyle = .Black
+            
+            self.presentViewController(mailComposeVC, animated: true, completion: nil)
+            
+        } else {
+            let alert = UIAlertController(title: "Mail Not Enabled", message: "Could not send message. Set up a mail account for your device and try again.", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
         }
     }
     

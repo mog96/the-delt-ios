@@ -50,6 +50,8 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
         titleView.text = "REEL"
         self.navigationItem.titleView = titleView
         */
+        
+        UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
     }
     
     override func didReceiveMemoryWarning() {

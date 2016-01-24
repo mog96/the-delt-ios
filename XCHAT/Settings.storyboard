@@ -82,8 +82,42 @@
                                             <outlet property="onSwitch" destination="OgP-aN-vhf" id="Tcd-ch-ueV"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LogoutCell" rowHeight="47" id="UIR-oF-8es" customClass="LogOutTableViewCell" customModule="XCHAT" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedbackCell" rowHeight="47" id="GvW-fs-Uv9" customClass="FeedbackTableViewCell" customModule="XCHAT" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="208.5" width="320" height="47"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GvW-fs-Uv9" id="7oC-AB-Ciw">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="47"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q5P-Df-uh3">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="47"/>
+                                                    <color key="backgroundColor" red="0.40709350649999998" green="0.54860040290000001" blue="0.81752539700000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="47" id="1ZJ-Vf-R0q"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                    <state key="normal" title="Feedback">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="onFeedbackButtonTapped:" destination="GvW-fs-Uv9" eventType="touchUpInside" id="kZ2-ty-JVO"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="Q5P-Df-uh3" secondAttribute="trailing" id="Eq9-6k-tMF"/>
+                                                <constraint firstItem="Q5P-Df-uh3" firstAttribute="top" secondItem="7oC-AB-Ciw" secondAttribute="top" id="RmQ-rm-04S"/>
+                                                <constraint firstItem="Q5P-Df-uh3" firstAttribute="leading" secondItem="7oC-AB-Ciw" secondAttribute="leading" id="izB-MC-fo9"/>
+                                                <constraint firstAttribute="bottom" secondItem="Q5P-Df-uh3" secondAttribute="bottom" id="jVy-hf-T2i"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="feedbackButton" destination="Q5P-Df-uh3" id="HBn-EP-jxl"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LogoutCell" rowHeight="47" id="UIR-oF-8es" customClass="LogOutTableViewCell" customModule="XCHAT" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="255.5" width="320" height="47"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UIR-oF-8es" id="HYg-F8-cQ2">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="47"/>
