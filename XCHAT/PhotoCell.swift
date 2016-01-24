@@ -23,8 +23,12 @@ class PhotoCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    override func prepareForReuse() {
+        self.photoImageView.image = nil
+    }
+    
     func setUpCell(photo: NSMutableDictionary?) {
-        var pfImageView = PFImageView()
+        let pfImageView = PFImageView()
         
         // JUST FOR LOLZ
         pfImageView.image = UIImage(named: "ROONEY")

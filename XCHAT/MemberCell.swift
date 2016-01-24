@@ -29,6 +29,10 @@ class MemberCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    override func prepareForReuse() {
+        self.photoImageView.image = nil
+    }
+    
     // MARK: Setup
     
     func setUpCell(user: PFUser, photo: UIImage?) {
@@ -56,8 +60,6 @@ class MemberCell: UITableViewCell {
                     self.photoImageView.image = image
                 }
             }
-        }else{
-            self.photoImageView.image = UIImage(named: "ROONEY")
         }
     }
     
@@ -65,11 +67,13 @@ class MemberCell: UITableViewCell {
     // MARK: - Actions
     
     @IBAction func onPhoneNumberTapped(sender: AnyObject) {
+        /*
         let phoneNumber = self.phoneNumberButton.titleLabel!.text!
         print(phoneNumber)
         
         // TODO: strip number down to numbers.
-        // UIApplication.sharedApplication().openURL(NSURL(string: "tel://" + phoneNumber)!)
+        UIApplication.sharedApplication().openURL(NSURL(string: "tel://" + phoneNumber)!)
+        */
     }
     
     @IBAction func onEmailButtonTapped(sender: AnyObject) {

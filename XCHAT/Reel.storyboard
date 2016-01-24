@@ -63,6 +63,7 @@
                                                     <state key="normal" backgroundImage="FAVE">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <state key="selected" backgroundImage="FAVE_ON"/>
                                                     <state key="highlighted" backgroundImage="FAVE_ON"/>
                                                     <connections>
                                                         <action selector="onFaveButtonTapped:" destination="8fU-es-WRF" eventType="touchUpInside" id="3Zj-Rx-Md0"/>
@@ -81,16 +82,32 @@
                                                         <action selector="onCommentButtonTapped:" destination="8fU-es-WRF" eventType="touchUpInside" id="hF9-cf-pom"/>
                                                     </connections>
                                                 </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uV4-7M-ZnR">
+                                                    <rect key="frame" x="291" y="8" width="21" height="24"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="21" id="Fqm-He-mPi"/>
+                                                        <constraint firstAttribute="height" constant="24" id="aCd-Yz-0Cs"/>
+                                                    </constraints>
+                                                    <state key="normal" image="flag_icon_black"/>
+                                                    <state key="selected" image="flag_icon_red"/>
+                                                    <state key="highlighted" image="flag_icon_red"/>
+                                                    <connections>
+                                                        <action selector="onFlagButtonTapped:" destination="8fU-es-WRF" eventType="touchUpInside" id="m8x-Zx-Q2h"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Ump-f9-urg" firstAttribute="top" secondItem="oXL-h3-BA6" secondAttribute="top" constant="5" id="HK4-eK-3JU"/>
                                                 <constraint firstItem="Ump-f9-urg" firstAttribute="leading" secondItem="oXL-h3-BA6" secondAttribute="leading" constant="1" id="RFQ-jA-KMJ"/>
                                                 <constraint firstItem="Ump-f9-urg" firstAttribute="top" secondItem="HlV-gO-9Mc" secondAttribute="top" id="U31-fY-yG7"/>
+                                                <constraint firstAttribute="trailing" secondItem="uV4-7M-ZnR" secondAttribute="trailing" constant="8" id="kGS-oW-mRy"/>
                                                 <constraint firstItem="HlV-gO-9Mc" firstAttribute="leading" secondItem="Ump-f9-urg" secondAttribute="trailing" constant="8" id="vt3-4o-6A4"/>
+                                                <constraint firstItem="uV4-7M-ZnR" firstAttribute="top" secondItem="oXL-h3-BA6" secondAttribute="top" constant="8" id="zP4-M4-NUa"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="faveButton" destination="Ump-f9-urg" id="Hri-Dv-CRU"/>
+                                            <outlet property="flagButton" destination="uV4-7M-ZnR" id="h7B-Yx-pz6"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FavesCell" rowHeight="24" id="5t0-qc-vHO" customClass="FavesCell" customModule="XCHAT" customModuleProvider="target">
@@ -392,5 +409,7 @@
         <image name="COMMENT" width="600" height="600"/>
         <image name="FAVE" width="500" height="500"/>
         <image name="FAVE_ON" width="500" height="500"/>
+        <image name="flag_icon_black" width="114" height="128"/>
+        <image name="flag_icon_red" width="114" height="128"/>
     </resources>
 </document>

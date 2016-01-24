@@ -29,6 +29,10 @@ class FirstMessageCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    override func prepareForReuse() {
+        self.authorProfileImageView.image = nil
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         messageLabel.preferredMaxLayoutWidth = messageLabel.frame.width

@@ -67,6 +67,7 @@ class MessageView: UIView, UITextViewDelegate {
     @IBAction func onSendButtonTapped(sender: AnyObject) {
         delegate?.onSendButtonTapped()
         self.messageTextView.text = ""
+        self.messageViewHeight.constant = self.defaultMessageViewHeight
     }
     
     

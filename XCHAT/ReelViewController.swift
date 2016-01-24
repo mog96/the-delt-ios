@@ -224,6 +224,8 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
         photo["username"] = PFUser.currentUser()?.username
         photo["faved"] = false
         photo["numFaves"] = 0
+        photo["flagged"] = false
+        photo["numFlags"] = 0
         
         var comments = [[String]]()
         if let caption = caption {
@@ -261,7 +263,7 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
                 print(error)
             } else if let photo = photo {
                 var commentPair: [String]
-                if let username = PFUser.currentUser()!.username {
+                if let username = PFUser.currentUser()?.username {
                     commentPair = [username, comment]
                 } else {
                     commentPair = ["", comment]
@@ -297,14 +299,55 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
                 print(error)
             } else if let photo = photo {
                 
-                // Mark photo as faved.
-                photo["faved"] = faved
+                if let username = PFUser.currentUser()?.username {
+                    // Increment or decrement fave count accordingly.
+                    if faved {
+                        photo.addObject(username, forKey: "favedBy")
+                        photo.incrementKey("numFaves")
+                    } else {
+                        photo.removeObject(username, forKey: "favedBy")
+                        photo.incrementKey("numFaves", byAmount: -1)
+                    }
+                }
                 
-                // Increment or decrement fave count accordingly.
-                if faved {
-                    photo.incrementKey("numFaves")
+                photo.saveInBackgroundWithBlock({ (completed: Bool, eror: NSError?) -> Void in
+                    if let error = error {
+                        // Log details of the failure
+                        print("Error: \(error) \(error.userInfo)")
+                        
+                    } else {
+                        self.refreshData() // FIXME: Makes for glitchy scrolling.
+                    }
+                })
+            }
+        }
+    }
+    
+    func updateFlagged(photo: NSMutableDictionary?, flagged: Bool) {
+        if flagged {
+            let alert = UIAlertController(title: "Post Flagged", message: "Administrators will be notified and this post will be reviewed.", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+        
+        let query = PFQuery(className: "Photo")
+        let objectId = photo?.valueForKey("objectId") as! String
+        query.getObjectInBackgroundWithId(objectId) {
+            (photo: PFObject?, error: NSError?) -> Void in
+            if error != nil {
+                print(error)
+            } else if let photo = photo {
+                
+                // Mark photo as flagged.
+                photo["flagged"] = flagged
+                
+                print("PHOTO FLAGGED: \(photo["flagged"])")
+                
+                // Increment or decrement flag count accordingly.
+                if flagged {
+                    photo.incrementKey("numFlags")
                 } else {
-                    photo.incrementKey("numFaves", byAmount: -1)
+                    photo.incrementKey("numFlags", byAmount: -1)
                 }
                 
                 photo.saveInBackgroundWithBlock({ (completed: Bool, eror: NSError?) -> Void in
@@ -323,8 +366,9 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
     
     // MARK: Refresh
     
+    // TODO: Just pass around PFObject, no need to deserialize...
     func refreshData() {
-        let query = PFQuery(className:"Photo")
+        let query = PFQuery(className: "Photo")
         query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
             if let error = error {
                 // Log details of the failure
@@ -348,11 +392,17 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
                         if let username = object.objectForKey("username") as? String {
                             photo.setObject(username, forKey: "username")
                         }
-                        if let faved = object.objectForKey("faved") as? Bool {
-                            photo.setObject(faved, forKey: "faved")
+                        if let favedBy = object.objectForKey("favedBy") as? [String] {
+                            photo.setObject(favedBy, forKey: "favedBy")
                         }
                         if let numFaves = object.objectForKey("numFaves") as? Int {
                             photo.setObject(numFaves, forKey: "numFaves")
+                        }
+                        if let flagged = object.objectForKey("flagged") as? Bool {
+                            photo.setObject(flagged, forKey: "flagged")
+                        }
+                        if let numFlags = object.objectForKey("numFlags") as? Int {
+                            photo.setObject(numFlags, forKey: "numFlags")
                         }
                         if let numComments = object.objectForKey("numComments") as? Int {
                             photo.setObject(numComments, forKey: "numComments")
