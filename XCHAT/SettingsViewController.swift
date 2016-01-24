@@ -65,7 +65,7 @@ class SettingsViewController: ContentViewController, UITableViewDataSource, UITa
         case 1:
             headerView.headerLabel.text = "FEEDBACK"
         case 2:
-            headerView.headerLabel.text = "REPORT USER"
+            headerView.headerLabel.text = "REPORT CONTENT OR USER"
         default:
             headerView.headerLabel.text = "LOG OUT"
         }
@@ -107,7 +107,7 @@ class SettingsViewController: ContentViewController, UITableViewDataSource, UITa
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCellWithIdentifier("FeedbackCell", forIndexPath: indexPath) as! FeedbackTableViewCell
-                cell.feedbackButton.titleLabel?.text = "Report User"
+                cell.feedbackButton.setTitle("Report Content or User", forState: .Normal)
                 cell.delegate = self
                 return cell
             }
