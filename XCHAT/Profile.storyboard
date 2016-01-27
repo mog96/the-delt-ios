@@ -22,12 +22,12 @@
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7MR-wv-vVO">
                                         <rect key="frame" x="60" y="515" width="200" height="17"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eN1-sJ-Pnu">
                                         <rect key="frame" x="60" y="532" width="200" height="16"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <imageView clipsSubviews="YES" alpha="0.49999999999999961" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OUTER SPACE" translatesAutoresizingMaskIntoConstraints="NO" id="wIh-z0-KBJ">
@@ -46,18 +46,18 @@
                                         <fontDescription key="fontDescription" type="system" weight="thin" pointSize="28"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Class of XXXX" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hss-q8-sA2">
-                                        <rect key="frame" x="60" y="366" width="200" height="16"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Class of XXXX" placeholder="Class of XXXX" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hss-q8-sA2">
+                                        <rect key="frame" x="60" y="370" width="200" height="16"/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OrG-gK-qAW">
-                                        <rect key="frame" x="57" y="382" width="206" height="121"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Tell us about yourself." translatesAutoresizingMaskIntoConstraints="NO" id="OrG-gK-qAW">
+                                        <rect key="frame" x="55" y="395" width="211" height="108"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="121" id="Fhd-vs-vSx"/>
-                                            <constraint firstAttribute="width" constant="206" id="R6g-Qi-vmE"/>
+                                            <constraint firstAttribute="height" constant="108" id="Fhd-vs-vSx"/>
+                                            <constraint firstAttribute="width" constant="211" id="R6g-Qi-vmE"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
                                     </textView>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ytx-yl-3lt">
@@ -95,7 +95,7 @@
                                     <constraint firstItem="eN1-sJ-Pnu" firstAttribute="top" secondItem="7MR-wv-vVO" secondAttribute="bottom" id="4VA-Cd-5Eh"/>
                                     <constraint firstItem="eN1-sJ-Pnu" firstAttribute="trailing" secondItem="Hss-q8-sA2" secondAttribute="trailing" id="4cC-sw-Cxl"/>
                                     <constraint firstItem="eN1-sJ-Pnu" firstAttribute="trailing" secondItem="Tsv-tX-sYK" secondAttribute="trailing" id="8LA-vs-aad"/>
-                                    <constraint firstItem="Hss-q8-sA2" firstAttribute="top" secondItem="ytx-yl-3lt" secondAttribute="bottom" id="8g1-qc-V3x"/>
+                                    <constraint firstItem="Hss-q8-sA2" firstAttribute="top" secondItem="ytx-yl-3lt" secondAttribute="bottom" constant="4" id="8g1-qc-V3x"/>
                                     <constraint firstItem="7MR-wv-vVO" firstAttribute="trailing" secondItem="eN1-sJ-Pnu" secondAttribute="trailing" id="9mp-fN-RHE"/>
                                     <constraint firstItem="eN1-sJ-Pnu" firstAttribute="leading" secondItem="Hss-q8-sA2" secondAttribute="leading" id="HL0-aB-fgf"/>
                                     <constraint firstAttribute="centerX" secondItem="sVv-yp-3bR" secondAttribute="centerX" id="IeS-Xe-v1r"/>
@@ -121,7 +121,7 @@
                                     <constraint firstItem="7MR-wv-vVO" firstAttribute="leading" secondItem="ytx-yl-3lt" secondAttribute="leading" id="vEP-WF-MnN"/>
                                     <constraint firstItem="7MR-wv-vVO" firstAttribute="top" secondItem="OrG-gK-qAW" secondAttribute="bottom" priority="250" constant="12" id="wN7-X4-Pc6"/>
                                     <constraint firstItem="ytx-yl-3lt" firstAttribute="top" secondItem="Tsv-tX-sYK" secondAttribute="bottom" id="xNV-Sp-fpy"/>
-                                    <constraint firstItem="OrG-gK-qAW" firstAttribute="top" secondItem="Hss-q8-sA2" secondAttribute="bottom" id="yxR-fA-H0v"/>
+                                    <constraint firstItem="OrG-gK-qAW" firstAttribute="top" secondItem="Hss-q8-sA2" secondAttribute="bottom" constant="9" id="yxR-fA-H0v"/>
                                     <constraint firstItem="sVv-yp-3bR" firstAttribute="centerX" secondItem="q9C-vN-F9p" secondAttribute="centerX" id="zzL-yX-VJn"/>
                                 </constraints>
                                 <connections>

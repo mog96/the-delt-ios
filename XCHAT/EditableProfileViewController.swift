@@ -35,6 +35,8 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
     var editable = true
     var user: PFUser?
     
+    let kYearLength = 4
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -71,51 +73,36 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
         self.photoImageView.clipsToBounds = true
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
-        self.navigationController?.navigationBar.shadowImage = nil
-        // self.navigationController?.view.backgroundColor = UIColor.clearColor()
-    }
-    
     func setupView(user: PFUser?) {
         if let name = user?.objectForKey("name") as? String {
             self.nameTextField.text = name
-        } else if !self.editable {
-            self.nameTextField.text = " "
         }
         
         if let username = user?.objectForKey("username") as? String {
             self.usernameTextField.text = "@" + username
-        } else if !self.editable {
-            self.usernameTextField.text = " "
         }
         
         if let year = user?.objectForKey("class") as? String {
             self.yearTextField.text = "Class of " + year
-        } else if !self.editable {
-            self.yearTextField.text = " "
         }
         
+        let hintString = "Hint: You can write something here if you want..."
         if let bio = user?.objectForKey("quote") as? String {
-            if bio == "" {
-                self.bioTextView.text = self.bioTextViewPlaceholder
+            if bio == "EMPTY" {
+                self.bioTextView.text = self.editable ? self.bioTextViewPlaceholder : hintString
             } else {
                 self.bioTextView.text = bio
             }
         } else if self.editable {
-            self.bioTextView.text = self.bioTextViewPlaceholder
+            self.bioTextView.text = hintString
         }
         
         if let phoneNumber = user?.objectForKey("phone") as? String {
             self.phoneNumberTextField.text = phoneNumber
-        } else if !self.editable {
-            self.phoneNumberTextField.text = " "
         }
         
         if let email = user?.objectForKey("email") as? String {
             emailTextField.text = email
-        } else if !self.editable {
-            self.emailTextField.text = " "
         }
         
         // Photo.
@@ -130,8 +117,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
                     
                 } else {
                     self.photoImageView.image = image
-                    self.photoButton.backgroundColor = UIColor.clearColor()
-                    self.photoButton.setTitle("", forState: UIControlState.Normal)
+                    self.photoButton.hidden = true
                 }
             }
         } else if !self.editable {
@@ -162,6 +148,12 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
+        self.navigationController?.navigationBar.shadowImage = nil
+        // self.navigationController?.view.backgroundColor = UIColor.clearColor()
     }
     
     
@@ -275,28 +267,37 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
             let imageData = UIImageJPEGRepresentation(self.uploadPhoto!, 100)
             let imageFile = PFFile(name: (PFUser.currentUser()?.username)! + ".jpeg", data: imageData!)
             
-            if !self.choosingBackgroundPhoto {
-                self.photoImageView.image = self.uploadPhoto
-                self.photoButton.setTitle("", forState: UIControlState.Normal)
-                PFUser.currentUser()?.setObject(imageFile!, forKey: "photo")
+            if self.choosingBackgroundPhoto {
+                
+                // Set background photo before uploading.
+                UIView.transitionWithView(self.backgroundPhotoImageView, duration: 0.2, options: .TransitionCrossDissolve, animations: {
+                    self.backgroundPhotoImageView.image = self.uploadPhoto
+                    }, completion: nil)
+                
+                // Save current user.
+                PFUser.currentUser()?.setObject(imageFile!, forKey: "backgroundPhoto")
                 PFUser.currentUser()?.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
                     if error == nil {
                         self.saveData()
-                        
-                        // FIXME: QUESTIONABLE
-                        // self.viewDidLoad()
                     } else {
                         print(error)
                     }
                 })
             } else {
-                self.backgroundPhotoImageView.image = self.uploadPhoto
-                PFUser.currentUser()?.setObject(imageFile!, forKey: "backgroundPhoto")
+                
+                print("SAVING PROFILE PHOTO")
+                
+                // Set profile image before uploading.
+                self.photoImageView.image = self.uploadPhoto
+                UIView.transitionWithView(self.photoButton, duration: 0.5, options: .TransitionCrossDissolve, animations: {
+                        self.photoButton.hidden = true
+                    }, completion: nil)
+                
+                // Save current user.
+                PFUser.currentUser()?.setObject(imageFile!, forKey: "photo")
                 PFUser.currentUser()?.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
                     if error == nil {
                         self.saveData()
-                        // self.viewDidLoad()
-                        
                     } else {
                         print(error)
                     }
@@ -308,7 +309,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
     
     // MARK: Save Data
     
-    let kYearLength = 4
+    // Saves data and updates view.
     func saveData() {
         
         if editable {
@@ -323,17 +324,21 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
                 PFUser.currentUser()?.setObject(username, forKey: "username")
             }
             
-            // Set year.
+            // Set year. Strictly requires Class of XXXX format.
             if self.yearTextField.text!.hasPrefix(self.yearPrefix) && self.yearTextField.text!.characters.count == self.yearPrefix.characters.count + kYearLength {
                 if let year = Int(self.yearTextField.text!.substringFromIndex(self.yearTextField.text!.startIndex.advancedBy(self.yearPrefix.characters.count))) {
                     
                     PFUser.currentUser()?.setObject(year, forKey: "year")
                 }
+            } else {
+                PFUser.currentUser()?.setObject(6969, forKey: "year")
             }
             
             // Set bio.
             if bioTextView.text != bioTextViewPlaceholder {
                 PFUser.currentUser()?.setObject(bioTextView.text, forKey: "quote")
+            } else {
+                PFUser.currentUser()?.setObject("EMPTY", forKey: "quote")
             }
             
             // Set phone number.
@@ -346,21 +351,34 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
                 PFUser.currentUser()?.setObject(emailTextField.text!, forKey: "email")
             }
             
-            // Save data.
-            PFUser.currentUser()?.saveInBackgroundWithBlock({ (result: Bool, error: NSError?) -> Void in
-                if error != nil {
-                    
-                    // Print some kind of error to clients
-                    print(error?.description)
-                } else {
-                    self.viewDidLoad()
-                    self.appDelegate.menuViewController.tableView.reloadData()
-                }
-            })
         } else {
+            // Other users can write whatever they want in a user's bio.
             user?.setObject(self.bioTextView.text, forKey: "quote")
-            user?.saveInBackground()
         }
+        
+        // Save data.
+        PFUser.currentUser()?.saveInBackgroundWithBlock({ (result: Bool, error: NSError?) -> Void in
+            if error != nil {
+                print(error?.description)
+                
+            } else {
+                PFUser.currentUser()?.fetchIfNeededInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
+                    if error == nil {
+                        
+                        // Reload profile view.
+                        self.viewDidLoad()
+                        self.view.setNeedsLayout()
+                        self.view.layoutIfNeeded()
+                        
+                        // Reload menu.
+                        self.appDelegate.menuViewController.tableView.reloadData()
+                        
+                    } else {
+                        print(error)
+                    }
+                })
+            }
+        })
     }
     
 

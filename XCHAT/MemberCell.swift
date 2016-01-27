@@ -36,12 +36,16 @@ class MemberCell: UITableViewCell {
     // MARK: Setup
     
     func setUpCell(user: PFUser, photo: UIImage?) {
-        nameLabel.text = user["name"] as? String
+        if let name = user["name"] as? String {
+            self.nameLabel.text = name
+        } else {
+            self.nameLabel.text = "NONAME"
+        }
         
         if let year = user["class"] as? String {
             yearLabel.text = "Class of " + year
         } else {
-            yearLabel.text = ""
+            yearLabel.text = "Class of 6969"
         }
         
         phoneNumberButton.setTitle(user["phone"] as? String, forState: UIControlState.Normal)

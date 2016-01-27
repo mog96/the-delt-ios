@@ -82,6 +82,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             user.password = passwordTextField.text
             user["totalNumFavesReceived"] = 0
             user["totalNumPhotosPosted"] = 0
+            user["quote"] = LayoutUtils.quotePlaceholder
             
             // other fields can be set just like with PFObject
             // user["phone"] = "415-392-0202"

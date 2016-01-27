@@ -18,14 +18,10 @@ class ProfileCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         self.setUpCell()
     }
     
     override func prepareForReuse() {
-        
-        print("PREPARING CELL")
-        
         self.setUpCell()
     }
 
@@ -35,15 +31,16 @@ class ProfileCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    
     // MARK: - Helpers
     
     func setUpCell() {
         if let photo = PFUser.currentUser()?.objectForKey("photo") as? PFFile {
             let pfImageView = PFImageView()
-            
             pfImageView.image = UIImage(named: "LOGIN BACKGROUND 1")
             
             print(photo)
+            
             pfImageView.file = photo as PFFile
             pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
                 if let error = error {
@@ -54,19 +51,19 @@ class ProfileCell: UITableViewCell {
                     self.photoImageView.image = image
                 }
             }
-            
         } else {
             self.photoImageView.image = UIImage(named: "LOGIN BACKGROUND 1")
         }
-        
         self.photoImageView.layer.cornerRadius = 3
         self.photoImageView.clipsToBounds = true
         
+        // Set name/prompt to set up profile.
         if let name = PFUser.currentUser()?.objectForKey("name") as? String {
             self.nameLabel.text = name
-            
+            self.nameLabel.textColor = LayoutUtils.blueColor
         } else {
             self.nameLabel.text = "Tap here to setup profile"
+            self.nameLabel.textColor = UIColor.redColor()
         }
         
         if let username = PFUser.currentUser()?.objectForKey("username") as? String {
