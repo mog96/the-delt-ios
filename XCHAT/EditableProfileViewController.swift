@@ -20,6 +20,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var yearTextField: UITextField!
     @IBOutlet weak var bioTextView: UITextView!
+    var bioTextViewPlaceholder: String!
     @IBOutlet weak var phoneNumberTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var backgroundPhotoImageViewWidthConstraint: NSLayoutConstraint!
@@ -28,7 +29,8 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
     var uploadPhoto: UIImage?
     var choosingBackgroundPhoto = false
     let yearPrefix = "Class of "
-    let bioTextViewPlaceholder = "Tell the house a little bit about yourself."
+    let descriptionString = "Tell the house a little bit about yourself."
+    let membersViewDescriptionString = "Nothing interesting about me."
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
@@ -40,7 +42,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.setupView(editable ? PFUser.currentUser() : self.user)
+        self.automaticallyAdjustsScrollViewInsets = false
         
         // Add keyboard observers.
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
@@ -54,7 +56,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
         self.phoneNumberTextField.delegate = self
         self.emailTextField.delegate = self
         
-        if !editable {
+        if !self.editable {
             self.backgroundPhotoTapGestureRecognizer.enabled = false
             self.photoButton.enabled = false
             self.nameTextField.enabled = false
@@ -62,16 +64,44 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
             self.yearTextField.enabled = false
             self.phoneNumberTextField.enabled = false
             self.emailTextField.enabled = false
-            
+            self.bioTextView.editable = false
+        }
+        
+        self.photoImageView.layer.cornerRadius = 3
+        self.photoImageView.clipsToBounds = true
+        self.photoButton.layer.cornerRadius = 3
+        self.photoButton.clipsToBounds = true
+        
+        self.bioTextViewPlaceholder = self.editable ? self.descriptionString : self.membersViewDescriptionString
+        self.setupView(editable ? PFUser.currentUser() : self.user)
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        if !self.editable {
             self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
             self.navigationController?.navigationBar.shadowImage = UIImage()
             self.navigationController?.navigationBar.translucent = true
             self.navigationController?.view.backgroundColor = UIColor.clearColor()
         }
-        
-        self.photoImageView.layer.cornerRadius = 3
-        self.photoImageView.clipsToBounds = true
     }
+    
+    override func viewDidDisappear(animated: Bool) {
+        self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
+        self.navigationController?.navigationBar.shadowImage = nil
+        // self.navigationController?.view.backgroundColor = UIColor.clearColor()
+        
+        self.editable = true
+        self.photoImageView.image = nil
+        self.backgroundPhotoImageView.image = nil
+    }
+    
+    
+    // MARK: - Setup Helpers
     
     func setupView(user: PFUser?) {
         if let name = user?.objectForKey("name") as? String {
@@ -84,17 +114,14 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
         
         if let year = user?.objectForKey("class") as? String {
             self.yearTextField.text = "Class of " + year
+        } else if !self.editable {
+            self.yearTextField.text = "Class of 6969"
         }
         
-        let hintString = "Hint: You can write something here if you want..."
         if let bio = user?.objectForKey("quote") as? String {
-            if bio == "EMPTY" {
-                self.bioTextView.text = self.editable ? self.bioTextViewPlaceholder : hintString
-            } else {
-                self.bioTextView.text = bio
-            }
-        } else if self.editable {
-            self.bioTextView.text = hintString
+            self.bioTextView.text = bio
+        } else {
+            self.bioTextView.text = self.bioTextViewPlaceholder
         }
         
         if let phoneNumber = user?.objectForKey("phone") as? String {
@@ -117,15 +144,12 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
                     
                 } else {
                     self.photoImageView.image = image
-                    self.photoButton.hidden = true
+                    self.photoButton.setTitle("", forState: .Normal)
                 }
             }
         } else if !self.editable {
-            self.photoButton.backgroundColor = UIColor.clearColor()
-            self.photoButton.setTitle("", forState: UIControlState.Normal)
+            self.photoButton.setTitle("", forState: .Normal)
         }
-        photoButton.layer.cornerRadius = 3
-        photoButton.clipsToBounds = true
         
         // Background photo.
         if let backgroundPhoto = user?.objectForKey("backgroundPhoto") as? PFFile {
@@ -145,17 +169,6 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
         backgroundPhotoImageViewWidthConstraint.constant = UIScreen.mainScreen().bounds.width
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
-        self.navigationController?.navigationBar.shadowImage = nil
-        // self.navigationController?.view.backgroundColor = UIColor.clearColor()
-    }
-    
     
     // MARK: Disable Rotation
     
@@ -164,35 +177,33 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
     }
     
     
-    // MARK: TextField
-    
+    // MARK: TextField Delegate
 
     func textFieldDidEndEditing(textField: UITextField) {
         if !(self.yearTextField.text!.hasPrefix(self.yearPrefix) && self.yearTextField.text!.characters.count == self.yearPrefix.characters.count + kYearLength) {
             self.yearTextField.text = ""
         }
-        
         textField.resignFirstResponder()
         self.saveData()
     }
     
     
-    // MARK: TextView Protocol Implementations
+    // MARK: TextView Delegate
     
-    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+    func textViewDidBeginEditing(textView: UITextView) {
         if self.bioTextView.text == self.bioTextViewPlaceholder {
             self.bioTextView.text = ""
         }
-        return true
+        self.bioTextView.becomeFirstResponder()
     }
     
-    func textViewDidChange(textView: UITextView) {
+    func textViewDidEndEditing(textView: UITextView) {
         
-        // User deletes all text in the TextView.
+        // User deletes all text in the text view.
         if self.bioTextView.text!.characters.count == 0 && self.editable {
             self.bioTextView.text = self.bioTextViewPlaceholder
-            self.bioTextView.resignFirstResponder()
         }
+        self.bioTextView.resignFirstResponder()
         self.saveData()
     }
     
@@ -288,10 +299,10 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
                 print("SAVING PROFILE PHOTO")
                 
                 // Set profile image before uploading.
-                self.photoImageView.image = self.uploadPhoto
-                UIView.transitionWithView(self.photoButton, duration: 0.5, options: .TransitionCrossDissolve, animations: {
-                        self.photoButton.hidden = true
-                    }, completion: nil)
+                UIView.transitionWithView(self.photoImageView, duration: 0.5, options: .TransitionCrossDissolve, animations: {
+                    self.photoImageView.image = self.uploadPhoto
+                    self.photoButton.setTitle("", forState: .Normal)
+                }, completion: nil)
                 
                 // Save current user.
                 PFUser.currentUser()?.setObject(imageFile!, forKey: "photo")
@@ -309,19 +320,24 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
     
     // MARK: Save Data
     
-    // Saves data and updates view.
+    // TODO: Save user bios to a separate table, so that people can change other people's bios.
+    
+    // Saves data (not photos) and updates view.
     func saveData() {
-        
-        if editable {
+        if self.editable {
             // Set name.
             if self.nameTextField.text!.characters.count > 0 {
                 PFUser.currentUser()?.setObject(self.nameTextField.text!, forKey: "name")
+            } else {
+                PFUser.currentUser()?.removeObjectForKey("name")
             }
             
             // Set username.
             if self.usernameTextField.text!.characters.count > 0 && self.usernameTextField.text! != "@" {
                 let username = self.usernameTextField.text!.substringFromIndex(self.usernameTextField.text!.startIndex.advancedBy(1))
                 PFUser.currentUser()?.setObject(username, forKey: "username")
+            } else {
+                PFUser.currentUser()?.removeObjectForKey("username")
             }
             
             // Set year. Strictly requires Class of XXXX format.
@@ -334,26 +350,26 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
                 PFUser.currentUser()?.setObject(6969, forKey: "year")
             }
             
-            // Set bio.
-            if bioTextView.text != bioTextViewPlaceholder {
-                PFUser.currentUser()?.setObject(bioTextView.text, forKey: "quote")
-            } else {
-                PFUser.currentUser()?.setObject("EMPTY", forKey: "quote")
-            }
-            
             // Set phone number.
             if phoneNumberTextField.text!.characters.count > 0 {
                 PFUser.currentUser()?.setObject(phoneNumberTextField.text!, forKey: "phone")
+            } else {
+                PFUser.currentUser()?.removeObjectForKey("phone")
             }
             
             // Set email.
             if emailTextField.text!.characters.count > 0 {
                 PFUser.currentUser()?.setObject(emailTextField.text!, forKey: "email")
+            } else {
+                PFUser.currentUser()?.removeObjectForKey("email")
             }
             
-        } else {
-            // Other users can write whatever they want in a user's bio.
-            user?.setObject(self.bioTextView.text, forKey: "quote")
+            // Set bio.
+            if self.bioTextView.text.characters.count > 0 && bioTextView.text != self.bioTextViewPlaceholder {
+                PFUser.currentUser()?.setObject(bioTextView.text, forKey: "quote")
+            } else {
+                PFUser.currentUser()?.removeObjectForKey("quote")
+            }
         }
         
         // Save data.

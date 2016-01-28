@@ -67,6 +67,7 @@
                                     </textField>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="q9C-vN-F9p">
                                         <rect key="frame" x="60" y="103" width="200" height="200"/>
+                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="200" id="7kh-k5-m1J"/>
                                             <constraint firstAttribute="width" constant="200" id="app-sN-nLJ"/>
@@ -74,7 +75,6 @@
                                     </imageView>
                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sVv-yp-3bR">
                                         <rect key="frame" x="60" y="103" width="200" height="200"/>
-                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="K6q-6g-wnk"/>
                                             <constraint firstAttribute="height" constant="200" id="P4v-5k-63T"/>

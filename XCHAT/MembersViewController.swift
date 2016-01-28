@@ -68,6 +68,9 @@ class MembersViewController: ContentViewController, UITableViewDelegate, UITable
     }
     
     override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
+        self.navigationController?.navigationBar.shadowImage = nil
+        
         self.hamburgerViewController.panGestureRecognizer.enabled = true
     }
     

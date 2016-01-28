@@ -76,6 +76,7 @@ class ProfileCell: UITableViewCell {
             self.numPhotosLabel.text = "0 photos"
         }
         
+        // Update user's total num faves by fetching from server, summing, and saving to user's table entry.
         let query = PFQuery(className: "Photo")
         query.whereKey("username", equalTo: PFUser.currentUser()!.username!)
         query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
@@ -87,19 +88,26 @@ class ProfileCell: UITableViewCell {
                     for object in objects {
                         totalFaves += object["numFaves"] as! Int
                     }
-                    if totalFaves == 1 {
-                        self.numFavesLabel.text = "1 fave received"
-                    } else {
-                        self.numFavesLabel.text = "\(totalFaves) faves received"
-                    }
+                    
+                    // Save current user's total num faves.
+                    PFUser.currentUser()?.setObject(totalFaves, forKey: "totalNumFavesReceived")
+                    PFUser.currentUser()?.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
+                        if error == nil {
+                            if let numFaves = PFUser.currentUser()?.objectForKey("totalNumFavesReceived") as? Int {
+                                if numFaves == 1 {
+                                    self.numFavesLabel.text = "1 fave received"
+                                } else {
+                                    self.numFavesLabel.text = "\(numFaves) faves received"
+                                }
+                            } else {
+                                self.numFavesLabel.text = "0 faves received"
+                            }
+                        } else {
+                            print(error)
+                        }
+                    })
                 }
             }
-        }
-        
-        if let numFaves = PFUser.currentUser()?.objectForKey("totalNumFavesReceived") as? Int {
-            numFavesLabel.text = "\(numFaves) faves received"
-        } else {
-            self.numFavesLabel.text = "0 faves received"
         }
     }
 
