@@ -13,11 +13,12 @@ import UIKit
 
 class CalendarViewController: ContentViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var tableView: UITableView!
+    
     var events: [PFObject] = [PFObject]()
     var refreshControl: UIRefreshControl!
     
-    // @IBOutlet weak var defaultView: UIView!
-    @IBOutlet weak var tableView: UITableView!
+    var showsAllEvents = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +44,10 @@ class CalendarViewController: ContentViewController, UITableViewDelegate, UITabl
         }
         */
         
+        if !self.showsAllEvents {
+            self.tableView.contentInset = UIEdgeInsetsMake(-47, 0, 0, 0)
+        }
+        
         UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
     }
     
@@ -60,56 +65,83 @@ class CalendarViewController: ContentViewController, UITableViewDelegate, UITabl
     // MARK: Table View
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return events.count
+        print("NUM SECTIONS: \(events.count + 1)")
+        
+        if self.events.count > 0 {
+            self.tableView.reloadData()
+        }
+        return self.events.count + 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        // Two required components: DateTitleCell and SpaceCell.
-        var numEventComponents = 2
-        
-        var event = events[section] as PFObject
-        if let location = event["location"] as? String {
-            numEventComponents++
+        switch section {
+        case 0:
+            if !self.showsAllEvents {
+                return 1
+            }
+            fallthrough
+        default:
+            // Two required components: DateTitleCell and SpaceCell.
+            var numEventComponents = 2
+            
+            let event = events[section] as PFObject
+            if let _ = event["location"] as? String {
+                numEventComponents++
+            }
+            if let _ = event["description"] as? String {
+                numEventComponents++
+            }
+            
+            print("NUM EVENTS")
+            
+            return numEventComponents
         }
-        if let description = event["description"] as? String {
-            numEventComponents++
-        }
-        
-        return numEventComponents
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let event = events[indexPath.section] as PFObject
         
-        var hasLocation = false
-        if let location = event["location"] as? String {
-            hasLocation = true
-        }
-        var hasDescription = false
-        if let description = event["description"] as? String {
-            hasDescription = true
-        }
+        print("SHOWS ALL EVENTS: \(self.showsAllEvents)")
         
-        switch indexPath.row {
+        switch indexPath.section {
         case 0:
-            var cell = tableView.dequeueReusableCellWithIdentifier("DateTitleCell", forIndexPath: indexPath) as! DateTitleCell
-            cell.setUpCell(event)
-            return cell
+            if !self.showsAllEvents {
+                return tableView.dequeueReusableCellWithIdentifier("PastEventsCell")!
+            }
+            fallthrough
         default:
-            if indexPath.row == 1 && hasLocation {
-                var cell = tableView.dequeueReusableCellWithIdentifier("LocationCell", forIndexPath: indexPath) as! LocationCell
-                cell.locationLabel.text = event["location"] as? String
+            print("SHOWING FUTURE EVENTS")
+            
+            let event = events[indexPath.section] as PFObject
+            
+            var hasLocation = false
+            if let _ = event["location"] as? String {
+                hasLocation = true
+            }
+            var hasDescription = false
+            if let _ = event["description"] as? String {
+                hasDescription = true
+            }
+            
+            switch indexPath.row {
+            case 0:
+                let cell = tableView.dequeueReusableCellWithIdentifier("DateTitleCell", forIndexPath: indexPath) as! DateTitleCell
+                cell.setUpCell(event)
                 return cell
-                
-            } else if (indexPath.row == 1 && hasDescription) || (indexPath.row == 2 && hasDescription) {
-                var cell = tableView.dequeueReusableCellWithIdentifier("DescriptionCell", forIndexPath: indexPath) as! DescriptionCell
-                cell.descriptionLabel.text = event["description"] as? String
-                return cell
-                
-            } else {
-                var cell = tableView.dequeueReusableCellWithIdentifier("SpaceCell", forIndexPath: indexPath) as! SpaceCell
-                return cell
+            default:
+                if indexPath.row == 1 && hasLocation {
+                    let cell = tableView.dequeueReusableCellWithIdentifier("LocationCell", forIndexPath: indexPath) as! LocationCell
+                    cell.locationLabel.text = event["location"] as? String
+                    return cell
+                    
+                } else if (indexPath.row == 1 && hasDescription) || (indexPath.row == 2 && hasDescription) {
+                    let cell = tableView.dequeueReusableCellWithIdentifier("DescriptionCell", forIndexPath: indexPath) as! DescriptionCell
+                    cell.descriptionLabel.text = event["description"] as? String
+                    return cell
+                    
+                } else {
+                    let cell = tableView.dequeueReusableCellWithIdentifier("SpaceCell", forIndexPath: indexPath) as! SpaceCell
+                    return cell
+                }
             }
         }
     }
@@ -122,8 +154,10 @@ class CalendarViewController: ContentViewController, UITableViewDelegate, UITabl
     // MARK: Refresh
     
     func refreshData() {
-        var query = PFQuery(className: "Event")
-        query.whereKey("startTime", greaterThan: NSDate())
+        let query = PFQuery(className: "Event")
+        if !self.showsAllEvents {
+            query.whereKey("startTime", greaterThan: NSDate())
+        }
         query.orderByAscending("startTime")
         query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
             if let objects = objects {
