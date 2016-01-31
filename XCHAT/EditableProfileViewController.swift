@@ -87,6 +87,8 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
             self.navigationController?.navigationBar.shadowImage = UIImage()
             self.navigationController?.navigationBar.translucent = true
             self.navigationController?.view.backgroundColor = UIColor.clearColor()
+            
+            self.appDelegate.hamburgerViewController.panGestureRecognizer.enabled = false
         }
     }
     
@@ -95,9 +97,11 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
         self.navigationController?.navigationBar.shadowImage = nil
         // self.navigationController?.view.backgroundColor = UIColor.clearColor()
         
-        self.editable = true
-        self.photoImageView.image = nil
-        self.backgroundPhotoImageView.image = nil
+        if !self.editable {
+            self.photoImageView.image = nil
+            self.backgroundPhotoImageView.image = nil
+            self.appDelegate.hamburgerViewController.panGestureRecognizer.enabled = true
+        }
     }
     
     
@@ -253,7 +257,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
         
         let imageVC = UIImagePickerController()
         imageVC.delegate = self
-        imageVC.allowsEditing = true
+        imageVC.allowsEditing = false
         imageVC.sourceType = .PhotoLibrary
         
         // UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
@@ -271,7 +275,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         // UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: .Slide)
         
-        self.uploadPhoto = info[UIImagePickerControllerEditedImage] as? UIImage
+        self.uploadPhoto = info[self.choosingBackgroundPhoto ? UIImagePickerControllerOriginalImage : UIImagePickerControllerEditedImage] as? UIImage
         dismissViewControllerAnimated(true, completion: { () -> Void in
             
             // TODO: Handle case where upload photo is nil.

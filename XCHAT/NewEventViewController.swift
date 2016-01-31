@@ -71,8 +71,9 @@ class NewEventViewController: UIViewController, UITableViewDelegate, UITableView
         
         // User forgets to enter name.
         if self.eventDescriptionCell.nameTextField.text == "" {
-            
-            // TODO: Present alert.
+            let alert = UIAlertController(title: "Add Event Title", message: "Give your event a name!", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
             
         } else {
             let event = PFObject(className: "Event")

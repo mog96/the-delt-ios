@@ -45,12 +45,14 @@ class EventDescriptionTableViewCell: UITableViewCell, UITextViewDelegate {
     func textViewDidBeginEditing(textView: UITextView) {
         if textView.text == self.descriptionTextViewPlaceholder {
             textView.text = ""
+            textView.textColor = UIColor.blackColor()
         }
     }
     
     func textViewDidEndEditing(textView: UITextView) {
         if textView.text == "" {
             textView.text = self.descriptionTextViewPlaceholder
+            textView.textColor = UIColor.lightGrayColor()
         }
     }
     

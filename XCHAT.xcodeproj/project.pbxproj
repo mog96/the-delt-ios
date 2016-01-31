@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2515CDDB1C58BDD40008A2B2 /* LayoutUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2515CDDA1C58BDD40008A2B2 /* LayoutUtils.swift */; };
+		252208991C5DF532004FAE9A /* CalendarCells.xib in Resources */ = {isa = PBXBuildFile; fileRef = 252208981C5DF532004FAE9A /* CalendarCells.xib */; };
 		252A6B401C4C950500FA1F75 /* SettingsDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252A6B3F1C4C950500FA1F75 /* SettingsDescriptionTableViewCell.swift */; };
 		252A6B431C4C9BAE00FA1F75 /* SettingsHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 252A6B421C4C9BAE00FA1F75 /* SettingsHeaderView.xib */; };
 		252A6B451C4C9EF500FA1F75 /* SettingsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252A6B441C4C9EF500FA1F75 /* SettingsHeaderView.swift */; };
@@ -102,6 +103,7 @@
 
 /* Begin PBXFileReference section */
 		2515CDDA1C58BDD40008A2B2 /* LayoutUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutUtils.swift; sourceTree = "<group>"; };
+		252208981C5DF532004FAE9A /* CalendarCells.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalendarCells.xib; sourceTree = "<group>"; };
 		252A6B3F1C4C950500FA1F75 /* SettingsDescriptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		252A6B421C4C9BAE00FA1F75 /* SettingsHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsHeaderView.xib; sourceTree = "<group>"; };
 		252A6B441C4C9EF500FA1F75 /* SettingsHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsHeaderView.swift; sourceTree = "<group>"; };
@@ -223,6 +225,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2522089A1C5DF618004FAE9A /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				3890A1D21B0B187C00B4FF00 /* Calendar.storyboard */,
+				252208981C5DF532004FAE9A /* CalendarCells.xib */,
+			);
+			name = Layout;
+			sourceTree = "<group>";
+		};
 		252A6B411C4C9B7F00FA1F75 /* Layout */ = {
 			isa = PBXGroup;
 			children = (
@@ -444,13 +455,13 @@
 		3890A1CB1B0B17B900B4FF00 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
-				3890A1D21B0B187C00B4FF00 /* Calendar.storyboard */,
+				2522089A1C5DF618004FAE9A /* Layout */,
 				38D9FB8D1B1557F40030B6D9 /* CalendarViewController.swift */,
-				252A6B571C4CF18E00FA1F75 /* New Event */,
 				38D9FB8F1B15582E0030B6D9 /* DateTitleCell.swift */,
 				38D9FB911B15583B0030B6D9 /* LocationCell.swift */,
 				38D9FB931B1558490030B6D9 /* DescriptionCell.swift */,
 				38D9FB951B1558530030B6D9 /* SpaceCell.swift */,
+				252A6B571C4CF18E00FA1F75 /* New Event */,
 			);
 			name = Calendar;
 			sourceTree = "<group>";
@@ -586,6 +597,7 @@
 				252A6B481C4CA98F00FA1F75 /* MessageView.xib in Resources */,
 				2540A3971C2BACFD003E4B31 /* SignupView.xib in Resources */,
 				259FBA4A1B02F5A6006F1650 /* Images.xcassets in Resources */,
+				252208991C5DF532004FAE9A /* CalendarCells.xib in Resources */,
 				252A6B431C4C9BAE00FA1F75 /* SettingsHeaderView.xib in Resources */,
 				254A19AA1B18768E0030F316 /* Keys.plist in Resources */,
 				258D498C1B15C69600A632D3 /* WelcomeChatView.xib in Resources */,
@@ -843,7 +855,7 @@
 				INFOPLIST_FILE = XCHAT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tdx.THEDELT;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tdx.thedelt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XCHAT/XCHAT-Bridging-Header.h";
@@ -864,7 +876,7 @@
 				INFOPLIST_FILE = XCHAT/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.tdx.THEDELT;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tdx.thedelt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XCHAT/XCHAT-Bridging-Header.h";

@@ -8,7 +8,7 @@
         <!--Editable Profile View Controller-->
         <scene sceneID="o54-R2-dxP">
             <objects>
-                <viewController storyboardIdentifier="ProfileViewController" id="N2P-qZ-R5d" customClass="EditableProfileViewController" customModule="XCHAT" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EditableProfileViewController" id="N2P-qZ-R5d" customClass="EditableProfileViewController" customModule="XCHAT" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="BkV-ZU-jgD"/>
                         <viewControllerLayoutGuide type="bottom" id="ls1-mI-1ZX"/>

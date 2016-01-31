@@ -69,9 +69,7 @@ class MembersViewController: ContentViewController, UITableViewDelegate, UITable
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
-        self.navigationController?.navigationBar.shadowImage = nil
-        
-        self.hamburgerViewController.panGestureRecognizer.enabled = true
+        self.navigationController?.navigationBar.shadowImage = nil        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -98,7 +96,11 @@ class MembersViewController: ContentViewController, UITableViewDelegate, UITable
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         self.member = usersToDisplay[indexPath.row]
-        self.performSegueWithIdentifier("detailSegue", sender: self)
+        let profileStoryboard = UIStoryboard(name: "Profile", bundle: nil)
+        let profileViewController = profileStoryboard.instantiateViewControllerWithIdentifier("EditableProfileViewController") as! EditableProfileViewController
+        profileViewController.editable = false
+        profileViewController.user = self.member
+        self.navigationController?.pushViewController(profileViewController, animated: true)
     }
     
     
@@ -171,8 +173,9 @@ class MembersViewController: ContentViewController, UITableViewDelegate, UITable
             self.tableView.reloadData()
         }
     }
-    
 
+
+    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -183,5 +186,6 @@ class MembersViewController: ContentViewController, UITableViewDelegate, UITable
         profileViewController.editable = false
         profileViewController.user = self.member
     }
+    */
 
 }
