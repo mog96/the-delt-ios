@@ -30,7 +30,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="148"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="9ACC7905-B109-4896-9DC5-DEA9B53A5CE5" translatesAutoresizingMaskIntoConstraints="NO" id="GNb-Np-vu0">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="E10E1C09-4833-44CB-AA93-96570DBF14D1" translatesAutoresizingMaskIntoConstraints="NO" id="GNb-Np-vu0">
                                                     <rect key="frame" x="16" y="16" width="116" height="116"/>
                                                     <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
@@ -101,10 +101,10 @@
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <outlet property="emailButton" destination="OlD-gR-vKx" id="VF4-Qn-79R"/>
-                                            <outlet property="nameLabel" destination="l5U-kI-DqX" id="A05-KJ-nQ2"/>
+                                            <outlet property="nameAndYearLabel" destination="Ms5-nS-vyk" id="9Cb-UO-arv"/>
                                             <outlet property="phoneNumberButton" destination="PRT-lm-y4o" id="3Iz-yx-iGv"/>
                                             <outlet property="photoImageView" destination="GNb-Np-vu0" id="0es-w9-t2m"/>
-                                            <outlet property="yearLabel" destination="Ms5-nS-vyk" id="R5T-ds-AL2"/>
+                                            <outlet property="usernameLabel" destination="l5U-kI-DqX" id="cBy-hl-mjz"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -175,7 +175,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="9ACC7905-B109-4896-9DC5-DEA9B53A5CE5" width="160" height="160">
+        <image name="E10E1C09-4833-44CB-AA93-96570DBF14D1" width="160" height="160">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOzxYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISksLzU4VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA

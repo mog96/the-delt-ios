@@ -10,8 +10,8 @@ import UIKit
 
 class MemberCell: UITableViewCell {
 
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var yearLabel: UILabel!
+    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var nameAndYearLabel: UILabel!
     @IBOutlet weak var phoneNumberButton: UIButton!
     @IBOutlet weak var emailButton: UIButton!
     @IBOutlet weak var photoImageView: UIImageView!
@@ -36,17 +36,28 @@ class MemberCell: UITableViewCell {
     // MARK: Setup
     
     func setUpCell(user: PFUser, photo: UIImage?) {
-        if let name = user["name"] as? String {
-            self.nameLabel.text = name
-        } else {
-            self.nameLabel.text = "NONAME"
+        if let username = user["username"] as? String {
+            self.usernameLabel.text = "@" + username
         }
         
-        if let year = user["class"] as? String {
-            yearLabel.text = "Class of " + year
-        } else {
-            yearLabel.text = "Class of 6969"
+        var hasName = false
+        var nameAndYearString = ""
+        if let name = user["name"] as? String {
+            nameAndYearString = name
+            hasName = true
         }
+        if let year = user["class"] as? String {
+            if hasName {
+                nameAndYearString += ", '" + year.substringFromIndex(year.startIndex.advancedBy(2))
+            } else {
+                nameAndYearString = "Class of " + year
+            }
+        } else {
+            if !hasName {
+                nameAndYearString = "Class of 6969"
+            }
+        }
+        self.nameAndYearLabel.text = nameAndYearString
         
         phoneNumberButton.setTitle(user["phone"] as? String, forState: UIControlState.Normal)
         emailButton.setTitle(user["email"] as? String, forState: UIControlState.Normal)

@@ -28,6 +28,7 @@ class MembersViewController: ContentViewController, UITableViewDelegate, UITable
     var searchBarHiddenFrame: CGRect!
     
     @IBOutlet weak var rightBarButtonItem: UIBarButtonItem!
+    var leftBarButtonItemCopy: UIBarButtonItem!
     var rightBarButtonItemCopy: UIBarButtonItem!
 
     @IBOutlet weak var tableView: UITableView!
@@ -127,10 +128,12 @@ class MembersViewController: ContentViewController, UITableViewDelegate, UITable
     @IBAction func onSearchButtonTapped(sender: AnyObject) {
         searchBar.frame = searchBarHiddenFrame
         self.navigationController?.navigationBar.addSubview(self.searchBar)
-        rightBarButtonItemCopy = rightBarButtonItem
+        self.leftBarButtonItemCopy = self.navigationItem.leftBarButtonItem
+        self.rightBarButtonItemCopy = rightBarButtonItem
         
         UIView.animateWithDuration(0.2, animations: { () -> Void in
             self.navigationItem.rightBarButtonItem = nil
+            self.navigationItem.leftBarButtonItem = nil
             self.searchBar.frame = self.searchBarFrame
         }) { (completed: Bool) -> Void in
             self.searchBar.becomeFirstResponder()
@@ -142,7 +145,7 @@ class MembersViewController: ContentViewController, UITableViewDelegate, UITable
     // MARK: Search Bar
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        usersToDisplay = users
+        usersToDisplay = self.users
         if searchText != "" {
             sortUsers(searchText)
         }
@@ -151,10 +154,17 @@ class MembersViewController: ContentViewController, UITableViewDelegate, UITable
     
     func sortUsers(searchText: String) {
         let text = searchText.lowercaseString
-        for var i = usersToDisplay.count - 1; i >= 0; i-- {
-            var name = usersToDisplay[i]["name"] as! String
-            name = name.lowercaseString
-            if name.rangeOfString(text, options: [], range: nil, locale: nil) == nil {
+        for var i = self.usersToDisplay.count - 1; i >= 0; i-- {
+            var shouldIncludeUser = false
+            if var name = usersToDisplay[i]["name"] as? String {
+                name = name.lowercaseString
+                shouldIncludeUser = name.rangeOfString(text, options: [], range: nil, locale: nil) != nil
+            }
+            if var username = usersToDisplay[i]["username"] as? String {
+                username = username.lowercaseString
+                shouldIncludeUser = username.rangeOfString(text, options: [], range: nil, locale: nil) != nil
+            }
+            if !shouldIncludeUser {
                 usersToDisplay.removeAtIndex(i)
             }
         }
@@ -163,14 +173,15 @@ class MembersViewController: ContentViewController, UITableViewDelegate, UITable
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         self.searchBar.resignFirstResponder()
         
-        UIView.animateWithDuration(0.9, animations: { () -> Void in
-            self.searchBar.frame = self.searchBarHiddenFrame
-        }) { (completed: Bool) -> Void in
-            self.navigationItem.setRightBarButtonItem(self.rightBarButtonItemCopy, animated: true)
-            self.searchBar.removeFromSuperview()
-            
-            self.usersToDisplay = self.users
-            self.tableView.reloadData()
+        UIView.transitionWithView(self.searchBar, duration: 0.2, options: .TransitionCrossDissolve, animations: { () -> Void in
+            //
+            }) { _ in
+                self.navigationItem.setRightBarButtonItem(self.rightBarButtonItemCopy, animated: true)
+                self.navigationItem.setLeftBarButtonItem(self.leftBarButtonItemCopy, animated: true)
+                self.searchBar.removeFromSuperview()
+                
+                self.usersToDisplay = self.users
+                self.tableView.reloadData()
         }
     }
 
