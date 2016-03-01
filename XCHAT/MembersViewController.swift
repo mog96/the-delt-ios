@@ -110,7 +110,7 @@ class MembersViewController: ContentViewController, UITableViewDelegate, UITable
     // Stores users in [PFObject] and photos separately in NSMutableDictionary().
     func fetchUsers(){
         let query = PFUser.query()
-        query!.orderByAscending("name")
+        query!.orderByAscending("username")
         query!.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
             if let objects = objects {
                 self.users = objects as! [PFUser]

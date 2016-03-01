@@ -39,8 +39,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.loginView.layer.masksToBounds = true
         
         self.emailTextField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
+        self.emailTextField.keyboardAppearance = UIKeyboardAppearance.Dark
         self.usernameTextField.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
+        self.usernameTextField.keyboardAppearance = UIKeyboardAppearance.Dark
         self.passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
+        self.passwordTextField.keyboardAppearance = UIKeyboardAppearance.Dark
         
         // emailTextField.delegate = self
         usernameTextField.delegate = self
@@ -140,11 +143,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    @IBAction func onScreenTapped(sender: AnyObject) {
-        emailTextField.resignFirstResponder()
-        usernameTextField.resignFirstResponder()
-        passwordTextField.resignFirstResponder()
+    @IBAction func onBackgroundTapped(sender: AnyObject) {
+        self.view.endEditing(true)
+        
+        print("BACKGORUND TAPPED")
     }
+    
     
     // MARK: - Helpers
     

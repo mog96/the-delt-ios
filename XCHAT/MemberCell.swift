@@ -52,10 +52,6 @@ class MemberCell: UITableViewCell {
             } else {
                 nameAndYearString = "Class of " + year
             }
-        } else {
-            if !hasName {
-                nameAndYearString = "Class of 6969"
-            }
         }
         self.nameAndYearLabel.text = nameAndYearString
         

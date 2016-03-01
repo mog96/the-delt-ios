@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="a7e-my-ce2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="a7e-my-ce2">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
@@ -18,14 +18,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LOGIN BACKGROUND 1" translatesAutoresizingMaskIntoConstraints="NO" id="Z2s-wZ-ZQ6">
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LOGIN BACKGROUND 1" translatesAutoresizingMaskIntoConstraints="NO" id="Z2s-wZ-ZQ6">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Z2s-wZ-ZQ6" secondAttribute="height" multiplier="40:71" id="Gax-0C-mrz"/>
                                 </constraints>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="Qhv-bg-EhR" appends="YES" id="5xk-sS-py2"/>
+                                    <outletCollection property="gestureRecognizers" destination="wt4-8K-ncZ" appends="YES" id="LzZ-4m-Sen"/>
                                 </connections>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BaS-R6-wbi">
@@ -123,9 +123,9 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xeG-YH-sa0" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="Qhv-bg-EhR">
+                <tapGestureRecognizer id="wt4-8K-ncZ" userLabel="Background Tap Gesture Recognizer">
                     <connections>
-                        <action selector="onScreenTapped:" destination="a7e-my-ce2" id="0Mw-oU-Tea"/>
+                        <action selector="onBackgroundTapped:" destination="a7e-my-ce2" id="xqh-8e-3yv"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
