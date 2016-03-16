@@ -188,17 +188,7 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        if let file = (self.photos.objectAtIndex(indexPath.section) as! NSMutableDictionary).valueForKey("videoFile") as? PFFile {
-            print("NO WAY")
-            let storyboard = UIStoryboard(name: "Reel", bundle: nil)
-            let videoDetailVC = storyboard.instantiateViewControllerWithIdentifier("VideoDetailViewController") as! VideoDetailViewController
-            videoDetailVC.file = file
-            self.presentViewController(videoDetailVC, animated: true, completion: nil)
-            
-        } else {
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        }
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
