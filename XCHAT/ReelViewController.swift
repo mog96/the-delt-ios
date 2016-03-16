@@ -228,6 +228,8 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
     // show the "Location selection" screen. --Nick Troccoli
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
+        // TODO: CHECK FILE SIZE. TOO LARGE CAUSES CRASH.
+        
         // Photo.
         if info[UIImagePickerControllerMediaType] as! String == kUTTypeImage as String {
             self.uploadPhoto = info[UIImagePickerControllerEditedImage] as? UIImage
