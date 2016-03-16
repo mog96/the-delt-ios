@@ -17,6 +17,7 @@ import MediaPlayer
 class PhotoVideoCell: UITableViewCell {
     
     @IBOutlet weak var controlsView: UIView!
+    @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var videoPlayerView: UIView!
     
@@ -67,9 +68,10 @@ class PhotoVideoCell: UITableViewCell {
                 
                 self.videoUrl = NSURL(string: file.url!)!
                 
-                // Enable cell tap.
+                // Enable cell tap and play button.
                 let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "onControlsViewTapped")
                 self.controlsView.addGestureRecognizer(tapGestureRecognizer)
+                self.playButton.hidden = false
                 
             // Photo.
             } else {
@@ -101,6 +103,10 @@ class PhotoVideoCell: UITableViewCell {
     
     // MARK: - Actions
     
+    @IBAction func onPlayButtonTapped(sender: AnyObject) {
+        self.onControlsViewTapped()
+    }
+    
     func onControlsViewTapped() {
         if self.photoImageView.hidden {
             self.videoFinished()
@@ -111,6 +117,7 @@ class PhotoVideoCell: UITableViewCell {
             }
             self.videoPlayer?.play()
             self.photoImageView.hidden = true
+            self.playButton.hidden = true
         }
     }
     
@@ -162,6 +169,7 @@ class PhotoVideoCell: UITableViewCell {
     
     func videoFinished() {
         self.photoImageView.hidden = false
+        self.playButton.hidden = false
         self.videoPlayer?.stop()
         self.videoPlayer?.currentPlaybackTime = 0
     }

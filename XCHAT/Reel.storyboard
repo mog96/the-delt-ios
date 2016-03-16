@@ -31,7 +31,7 @@
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GQA-8z-5kG">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
-                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="O7w-iR-YT1">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
@@ -41,8 +41,26 @@
                                                 </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IiW-Zw-dyW">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
+                                                    <subviews>
+                                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lei-JW-Wa8">
+                                                            <rect key="frame" x="0.0" y="280" width="40" height="40"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="40" id="9Ct-bb-Ewy"/>
+                                                                <constraint firstAttribute="width" constant="40" id="BHf-W5-0LD"/>
+                                                            </constraints>
+                                                            <state key="normal" image="play_button_icon_red"/>
+                                                            <state key="highlighted" image="play_button_icon_black"/>
+                                                            <connections>
+                                                                <action selector="onPlayButtonTapped:" destination="KRZ-8Z-g9B" eventType="touchUpInside" id="cAj-2z-Ce9"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <gestureRecognizers/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="bottom" secondItem="lei-JW-Wa8" secondAttribute="bottom" id="7tw-do-Sbn"/>
+                                                        <constraint firstItem="lei-JW-Wa8" firstAttribute="leading" secondItem="IiW-Zw-dyW" secondAttribute="leading" id="Wjn-HI-K57"/>
+                                                    </constraints>
                                                 </view>
                                             </subviews>
                                             <constraints>
@@ -63,6 +81,7 @@
                                         <connections>
                                             <outlet property="controlsView" destination="IiW-Zw-dyW" id="s8N-su-hGU"/>
                                             <outlet property="photoImageView" destination="O7w-iR-YT1" id="pFa-yy-z70"/>
+                                            <outlet property="playButton" destination="lei-JW-Wa8" id="VHG-sd-bgx"/>
                                             <outlet property="videoPlayerView" destination="GQA-8z-5kG" id="5eK-ab-MCb"/>
                                         </connections>
                                     </tableViewCell>
@@ -74,7 +93,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ump-f9-urg">
-                                                    <rect key="frame" x="1" y="5" width="30" height="30"/>
+                                                    <rect key="frame" x="6" y="5" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="Svv-C0-nQA"/>
                                                         <constraint firstAttribute="width" constant="30" id="ndN-jt-ePP"/>
@@ -89,7 +108,7 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HlV-gO-9Mc">
-                                                    <rect key="frame" x="39" y="5" width="30" height="30"/>
+                                                    <rect key="frame" x="44" y="5" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="gVp-b5-rRL"/>
                                                         <constraint firstAttribute="width" constant="30" id="rYZ-mC-niK"/>
@@ -102,7 +121,7 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uV4-7M-ZnR">
-                                                    <rect key="frame" x="291" y="8" width="21" height="24"/>
+                                                    <rect key="frame" x="286" y="8" width="21" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="21" id="Fqm-He-mPi"/>
                                                         <constraint firstAttribute="height" constant="24" id="aCd-Yz-0Cs"/>
@@ -117,9 +136,9 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Ump-f9-urg" firstAttribute="top" secondItem="oXL-h3-BA6" secondAttribute="top" constant="5" id="HK4-eK-3JU"/>
-                                                <constraint firstItem="Ump-f9-urg" firstAttribute="leading" secondItem="oXL-h3-BA6" secondAttribute="leading" constant="1" id="RFQ-jA-KMJ"/>
+                                                <constraint firstItem="Ump-f9-urg" firstAttribute="leading" secondItem="oXL-h3-BA6" secondAttribute="leading" constant="6" id="RFQ-jA-KMJ"/>
                                                 <constraint firstItem="Ump-f9-urg" firstAttribute="top" secondItem="HlV-gO-9Mc" secondAttribute="top" id="U31-fY-yG7"/>
-                                                <constraint firstAttribute="trailing" secondItem="uV4-7M-ZnR" secondAttribute="trailing" constant="8" id="kGS-oW-mRy"/>
+                                                <constraint firstAttribute="trailing" secondItem="uV4-7M-ZnR" secondAttribute="trailing" constant="13" id="kGS-oW-mRy"/>
                                                 <constraint firstItem="HlV-gO-9Mc" firstAttribute="leading" secondItem="Ump-f9-urg" secondAttribute="trailing" constant="8" id="vt3-4o-6A4"/>
                                                 <constraint firstItem="uV4-7M-ZnR" firstAttribute="top" secondItem="oXL-h3-BA6" secondAttribute="top" constant="8" id="zP4-M4-NUa"/>
                                             </constraints>
@@ -261,7 +280,6 @@
         <!--Video Detail View Controller-->
         <scene sceneID="O9L-O3-vWO">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9kb-hF-6NP" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="VideoDetailViewController" id="fV5-DK-yZw" customClass="VideoDetailViewController" customModule="XCHAT" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JqG-FW-ma8"/>
@@ -297,6 +315,7 @@
                         <outlet property="videoPlayerView" destination="2SI-fb-EQB" id="QOz-qn-Q2X"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9kb-hF-6NP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2224" y="1054"/>
         </scene>
@@ -497,5 +516,7 @@
         <image name="FAVE_ON" width="500" height="500"/>
         <image name="flag_icon_black" width="114" height="128"/>
         <image name="flag_icon_red" width="114" height="128"/>
+        <image name="play_button_icon_black" width="128" height="128"/>
+        <image name="play_button_icon_red" width="128" height="128"/>
     </resources>
 </document>
