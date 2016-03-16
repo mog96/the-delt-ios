@@ -195,6 +195,15 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
         return photos.count
     }
     
+    func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if let cell = cell as? PhotoVideoCell {
+            let photo = self.photos.objectAtIndex(indexPath.section) as! NSMutableDictionary
+            if let _ = photo.valueForKey("videoFile") as? PFFile {
+                cell.removeVideoPlayer()
+            }
+        }
+    }
+    
     
     // MARK: Actions
     

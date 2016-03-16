@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVKit
 import MediaPlayer
 
 @objc protocol PhotoVideoCellDelegate {
@@ -56,16 +57,15 @@ class PhotoVideoCell: UITableViewCell {
             // Video.
             if let file = photo.valueForKey("videoFile") as? PFFile {
                 
-                // print("file", file)
-                
                 print("VIDEO!")
                 
+                /*
                 let pfImageView = PFImageView()
                 
-                // JUST FOR LOLZ
+                // Temp image.
                 pfImageView.image = UIImage(named: "ROONEY")
                 
-                // Load thumbnail image.
+                // Load server thumbnail image.
                 pfImageView.file = photo.valueForKey("imageFile") as? PFFile
                 pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
                     if let error = error {
@@ -76,11 +76,22 @@ class PhotoVideoCell: UITableViewCell {
                         self.photoImageView.image = image
                     }
                 }
+                */
                 
+                // Setup video.
+                let videoUrl = NSURL(string: file.url!)!
+                self.addVideoPlayer(contentUrl: videoUrl, containerView: self.videoPlayerView, preview: self.photoImageView)
+                
+                // Set video thumbnail image.
+                let asset = AVAsset(URL: videoUrl)
+                let generator: AVAssetImageGenerator = AVAssetImageGenerator(asset: asset)
+                let time = CMTimeMake(1, 1)
+                let imageRef = try! generator.copyCGImageAtTime(time, actualTime: nil)
+                self.photoImageView.image = UIImage(CGImage: imageRef)
+                
+                // Enable cell tap.
                 let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "onControlsViewTapped")
                 self.controlsView.addGestureRecognizer(tapGestureRecognizer)
-                self.addVideoPlayer(contentUrl: NSURL(string: file.url!)!, containerView: self.videoPlayerView, preview: self.photoImageView)
-                
                 
             // Photo.
             } else {
