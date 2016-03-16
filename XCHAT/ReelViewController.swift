@@ -25,6 +25,8 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
     
     @IBOutlet weak var tableView: UITableView!
     
+    let transition = SwipeAnimator()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setMenuButton(withColor: "red")
@@ -128,7 +130,10 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var photo = photos.objectAtIndex(indexPath.section) as? NSMutableDictionary
+        
+        print("CELL")
+        
+        let photo = self.photos.objectAtIndex(indexPath.section) as? NSMutableDictionary
         var commentOffset = 2
         var hasFaves = false
         if let numFaves = photo?.valueForKey("numFaves") as? Int {
@@ -139,9 +144,10 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
         }
         switch indexPath.row {
         case 0:
-            var cell = tableView.dequeueReusableCellWithIdentifier("PhotoCell", forIndexPath: indexPath) as! PhotoCell
+            var cell = tableView.dequeueReusableCellWithIdentifier("PhotoVideoCell", forIndexPath: indexPath) as! PhotoVideoCell
             
             cell.setUpCell(photo)
+            cell.delegate = self
             return cell
         case 1:
             var cell = tableView.dequeueReusableCellWithIdentifier("ButtonCell", forIndexPath: indexPath) as! ButtonCell
@@ -169,7 +175,7 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var numRows = 2
-        var photo = photos.objectAtIndex(section) as? NSMutableDictionary
+        let photo = photos.objectAtIndex(section) as? NSMutableDictionary
         if let numFaves = photo?.valueForKey("numFaves") as? Int {
             if numFaves > 0 {
                 numRows++
@@ -182,7 +188,17 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        if let file = (self.photos.objectAtIndex(indexPath.section) as! NSMutableDictionary).valueForKey("videoFile") as? PFFile {
+            print("NO WAY")
+            let storyboard = UIStoryboard(name: "Reel", bundle: nil)
+            let videoDetailVC = storyboard.instantiateViewControllerWithIdentifier("VideoDetailViewController") as! VideoDetailViewController
+            videoDetailVC.file = file
+            self.presentViewController(videoDetailVC, animated: true, completion: nil)
+            
+        } else {
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -391,6 +407,11 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
                         
                         photo.setObject(object.objectForKey("imageFile")!, forKey: "imageFile")
                         
+                        // VIDEO
+                        if let videoFile = object.objectForKey("videoFile") {
+                            photo.setObject(videoFile, forKey: "videoFile")
+                        }
+                        
                         if let username = object.objectForKey("username") as? String {
                             photo.setObject(username, forKey: "username")
                         }
@@ -452,4 +473,33 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
         }
     }
     
+}
+
+
+extension ReelViewController: PhotoVideoCellDelegate {
+    func presentVideoDetailViewController(videoFile file: PFFile) {
+        print("COOL")
+    }
+}
+
+
+extension ReelViewController: UIViewControllerTransitioningDelegate {
+    
+    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        
+        /*
+        if presented.isKindOfClass(PhotoDetailViewController) || presented.isKindOfClass(VideoDetailViewController) {
+        self.transition.originFrame = self.transitioningCellFrame
+        self.transition.presenting = true
+        return self.transition
+        }
+        */
+        
+        return nil
+    }
+    
+    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        self.transition.presenting = false
+        return self.transition
+    }
 }
