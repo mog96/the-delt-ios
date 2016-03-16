@@ -19,7 +19,9 @@ class PhotoVideoCell: UITableViewCell {
     @IBOutlet weak var controlsView: UIView!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var videoPlayerView: UIView!
-    var videoPlayer: MPMoviePlayerController!
+    
+    var videoPlayer: MPMoviePlayerController?
+    var videoUrl: NSURL?
     
     weak var delegate: PhotoVideoCellDelegate?
     
@@ -40,32 +42,18 @@ class PhotoVideoCell: UITableViewCell {
     }
     
     func setUpCell(photo: NSMutableDictionary?) {
-        
-        print("SETTING UP")
-        
-        if let recognizers = self.controlsView.gestureRecognizers {
-            var i = 0
-            for recognizer in recognizers {
-                print("RECOGNIZER ", ++i)
-            }
-        }
-        
-        self.videoPlayer = MPMoviePlayerController()
+        self.videoPlayer = nil
         
         if let photo = photo {
             
             // Video.
             if let file = photo.valueForKey("videoFile") as? PFFile {
-                
-                print("VIDEO!")
-                
-                /*
                 let pfImageView = PFImageView()
                 
                 // Temp image.
                 pfImageView.image = UIImage(named: "ROONEY")
                 
-                // Load server thumbnail image.
+                // Load thumbnail image.
                 pfImageView.file = photo.valueForKey("imageFile") as? PFFile
                 pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
                     if let error = error {
@@ -76,18 +64,8 @@ class PhotoVideoCell: UITableViewCell {
                         self.photoImageView.image = image
                     }
                 }
-                */
                 
-                // Setup video.
-                let videoUrl = NSURL(string: file.url!)!
-                self.addVideoPlayer(contentUrl: videoUrl, containerView: self.videoPlayerView, preview: self.photoImageView)
-                
-                // Set video thumbnail image.
-                let asset = AVAsset(URL: videoUrl)
-                let generator: AVAssetImageGenerator = AVAssetImageGenerator(asset: asset)
-                let time = CMTimeMake(1, 1)
-                let imageRef = try! generator.copyCGImageAtTime(time, actualTime: nil)
-                self.photoImageView.image = UIImage(CGImage: imageRef)
+                self.videoUrl = NSURL(string: file.url!)!
                 
                 // Enable cell tap.
                 let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "onControlsViewTapped")
@@ -124,14 +102,14 @@ class PhotoVideoCell: UITableViewCell {
     // MARK: - Actions
     
     func onControlsViewTapped() {
-        
-        print("TAPPED")
-        
         if self.photoImageView.hidden {
             self.videoFinished()
             
         } else {
-            self.videoPlayer.play()
+            if self.videoPlayer == nil {
+                self.addVideoPlayer(contentUrl: self.videoUrl!, containerView: self.videoPlayerView, preview: self.photoImageView)
+            }
+            self.videoPlayer?.play()
             self.photoImageView.hidden = true
         }
     }
@@ -141,24 +119,22 @@ class PhotoVideoCell: UITableViewCell {
     
     func addVideoPlayer(contentUrl contentUrl: NSURL, containerView: UIView, preview: UIImageView?) {
         self.videoPlayer = MPMoviePlayerController(contentURL: contentUrl)
-        self.videoPlayer.view.frame = CGRectMake(0, 0, containerView.frame.width, containerView.frame.height)
+        self.videoPlayer!.view.frame = CGRectMake(0, 0, containerView.frame.width, containerView.frame.height)
         
-        self.videoPlayer.controlStyle = .None
-        self.videoPlayer.scalingMode = MPMovieScalingMode.AspectFit
-        self.videoPlayer.contentURL = contentUrl
-        self.videoPlayer.backgroundView.backgroundColor = UIColor.clearColor()
-        self.videoPlayer.shouldAutoplay = true
-        
-        print("ADDING PLAYER")
+        self.videoPlayer!.controlStyle = .None
+        self.videoPlayer!.scalingMode = MPMovieScalingMode.AspectFit
+        self.videoPlayer!.contentURL = contentUrl
+        self.videoPlayer!.backgroundView.backgroundColor = UIColor.clearColor()
+        self.videoPlayer!.shouldAutoplay = true
         
         // NSNotificationCenter.defaultCenter().addObserver(self, selector: "videoSizeAvailable", name: MPMovieNaturalSizeAvailableNotification, object: self.videoPlayer)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "videoFinished", name: MPMoviePlayerPlaybackDidFinishNotification, object: self.videoPlayer)
         
-        containerView.addSubview(self.videoPlayer.view)
-        self.videoPlayer.view.autoPinEdgesToSuperviewEdges()
+        containerView.addSubview(self.videoPlayer!.view)
+        self.videoPlayer!.view.autoPinEdgesToSuperviewEdges()
         
         // Disable pinch gesture.
-        for view in self.videoPlayer.view.subviews {
+        for view in self.videoPlayer!.view.subviews {
             for gestureRecognizer in view.gestureRecognizers! {
                 if gestureRecognizer.isKindOfClass(UIPinchGestureRecognizer) {
                     view.removeGestureRecognizer(gestureRecognizer)
@@ -176,7 +152,7 @@ class PhotoVideoCell: UITableViewCell {
         print("REMOVING PLAYER")
         
         self.videoFinished()
-        self.videoPlayer = MPMoviePlayerController()
+        self.videoPlayer = nil
         if let recognizers = self.controlsView.gestureRecognizers {
             for recognizer in recognizers {
                 controlsView.removeGestureRecognizer(recognizer)
@@ -186,8 +162,8 @@ class PhotoVideoCell: UITableViewCell {
     
     func videoFinished() {
         self.photoImageView.hidden = false
-        self.videoPlayer.stop()
-        self.videoPlayer.currentPlaybackTime = 0
+        self.videoPlayer?.stop()
+        self.videoPlayer?.currentPlaybackTime = 0
     }
     
 }

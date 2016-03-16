@@ -7,6 +7,10 @@
 //
 
 import UIKit
+import AVKit
+import MediaPlayer
+import MobileCoreServices
+import Foundation
 
 // FIXME: Not too important, but could just use a [PFObject]() instead of serializing data
 //        into NSMutableDictionary()
@@ -15,6 +19,7 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
     
     var photos = NSMutableArray()
     var uploadPhoto: UIImage?
+    var uploadVideo: PFFile?
     var commentPhoto: NSMutableDictionary?
     
     var refreshControl: UIRefreshControl!
@@ -130,9 +135,6 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        print("CELL")
-        
         let photo = self.photos.objectAtIndex(indexPath.section) as? NSMutableDictionary
         var commentOffset = 2
         var hasFaves = false
@@ -207,12 +209,14 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
     
     // MARK: Actions
     
+    // TODO: imagePickerVC.sourceType = .Camera
     @IBAction func onAddButtonTapped(sender: AnyObject) {
-        let imageVC = UIImagePickerController()
-        imageVC.delegate = self
-        imageVC.allowsEditing = true
-        imageVC.sourceType = .PhotoLibrary
-        presentViewController(imageVC, animated: true, completion: nil)  // FIXME: Causes warning 'Presenting view controllers on detached view controllers is discouraged'
+        let imagePickerVC = UIImagePickerController()
+        imagePickerVC.delegate = self
+        imagePickerVC.allowsEditing = true
+        imagePickerVC.sourceType = .PhotoLibrary
+        imagePickerVC.mediaTypes = [kUTTypeImage as String, kUTTypeMovie as String]
+        presentViewController(imagePickerVC, animated: true, completion: nil)  // FIXME: Causes warning 'Presenting view controllers on detached view controllers is discouraged'
     }
     
     
@@ -223,7 +227,25 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
     // view controller is dismissed (a.k.a. inside the completion handler) we modally segue to
     // show the "Location selection" screen. --Nick Troccoli
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        uploadPhoto = info[UIImagePickerControllerEditedImage] as? UIImage
+        
+        // Photo.
+        if info[UIImagePickerControllerMediaType] as! String == kUTTypeImage as String {
+            self.uploadPhoto = info[UIImagePickerControllerEditedImage] as? UIImage
+        
+        // Video.
+        } else {
+            let videoUrl = info[UIImagePickerControllerMediaURL] as! NSURL
+            let videoData = NSData(contentsOfURL: videoUrl)
+            self.uploadVideo = PFFile(name: "video.mp4", data: videoData!)
+            
+            // Set video thumbnail image.
+            let asset = AVAsset(URL: videoUrl)
+            let generator: AVAssetImageGenerator = AVAssetImageGenerator(asset: asset)
+            let time = CMTimeMake(1, 1)
+            let imageRef = try! generator.copyCGImageAtTime(time, actualTime: nil)
+            self.uploadPhoto = UIImage(CGImage: imageRef)
+        }
+        
         dismissViewControllerAnimated(true, completion: { () -> Void in
             self.performSegueWithIdentifier("addCaptionSegue", sender: self) // segue to CaptionViewController
         })
@@ -233,11 +255,16 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
     // MARK: Protocol Implementations
     
     func captionViewController(didEnterCaption caption: String?) {
+        let photo = PFObject(className: "Photo")
+        
         let imageData = UIImageJPEGRepresentation(self.uploadPhoto!, 100)
         let imageFile = PFFile(name: "image.jpeg", data: imageData!)
-        
-        let photo = PFObject(className: "Photo")
         photo["imageFile"] = imageFile
+        
+        if let uploadVideo = self.uploadVideo {
+            photo["videoFile"] = self.uploadVideo
+        }
+        
         photo["username"] = PFUser.currentUser()?.username
         photo["faved"] = false
         photo["numFaves"] = 0
@@ -459,16 +486,16 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
             let nc = segue.destinationViewController as! UINavigationController
             let vc = nc.viewControllers.first as! CaptionViewController
             vc.delegate = self
-            vc.photo = uploadPhoto!
+            vc.photo = self.uploadPhoto!
         } else if segue.identifier == "addCommentSegue" {
             let nc = segue.destinationViewController as! UINavigationController
             let vc = nc.viewControllers.first as! CommentViewController
             vc.delegate = self
-            vc.photo = commentPhoto
+            vc.photo = self.commentPhoto
         } else {
             let vc = segue.destinationViewController as! PhotoDetailsViewController
-            let indexPath = tableView.indexPathForCell(sender as! UITableViewCell)!
-            vc.selectedPhoto = photos[indexPath.section] as! NSMutableDictionary
+            let indexPath = self.tableView.indexPathForCell(sender as! UITableViewCell)!
+            vc.selectedPhoto = self.photos[indexPath.section] as! NSMutableDictionary
         }
     }
     
@@ -477,7 +504,7 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
 
 extension ReelViewController: PhotoVideoCellDelegate {
     func presentVideoDetailViewController(videoFile file: PFFile) {
-        print("COOL")
+        print("PRESENTING VIDEO DETAIL")
     }
 }
 

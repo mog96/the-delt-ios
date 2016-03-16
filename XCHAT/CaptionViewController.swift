@@ -50,7 +50,7 @@ class CaptionViewController: UIViewController, UITextViewDelegate {
     // MARK: TextView
     
     func setPlaceholderText() {
-        captionTextView.text = "Why is this photo dope?"
+        captionTextView.text = "Why is this dope?"
         captionTextView.textColor = UIColor.lightGrayColor()
     }
     

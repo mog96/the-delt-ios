@@ -261,6 +261,7 @@
         <!--Video Detail View Controller-->
         <scene sceneID="O9L-O3-vWO">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9kb-hF-6NP" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="VideoDetailViewController" id="fV5-DK-yZw" customClass="VideoDetailViewController" customModule="XCHAT" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JqG-FW-ma8"/>
@@ -296,7 +297,6 @@
                         <outlet property="videoPlayerView" destination="2SI-fb-EQB" id="QOz-qn-Q2X"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9kb-hF-6NP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2224" y="1054"/>
         </scene>
