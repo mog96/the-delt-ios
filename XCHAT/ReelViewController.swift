@@ -238,19 +238,18 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
         } else {
             let videoUrl = info[UIImagePickerControllerMediaURL] as! NSURL
             
-            /*
             // Check video file size.
             do {
-                let attibutes = NSFileManager.defaultManager().attributesOfItemAtPath(String(videoUrl))
-                let size = attributes.fileSize()
+                let attributes = try NSFileManager.defaultManager().attributesOfItemAtPath(String(videoUrl))
+                let size = attributes[NSFileSize]
                 print("SIZE:", size)
                 
             } catch {
                 print("Error getting video file size.")
             }
             
-            
-            // COMPRESS VIDEO.
+            /*
+            // Compress video.
             let asset = AVAsset(URL: videoUrl)
             do {
                 let reader = AVAssetReader(asset: asset)
