@@ -239,25 +239,29 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
             let videoUrl = info[UIImagePickerControllerMediaURL] as! NSURL
             
             // Check video file size.
-            do {
-                let attributes = try NSFileManager.defaultManager().attributesOfItemAtPath(String(videoUrl))
-                let size = attributes[NSFileSize]
-                print("SIZE:", size)
-                
-            } catch {
-                print("Error getting video file size.")
-            }
+            let attributes = try! NSFileManager.defaultManager().attributesOfItemAtPath(String(videoUrl))
+            let size = Int(attributes[NSFileSize] as! NSNumber)
+            let megabytes = size / (1024 * 1024)
+            
+            print("SIZE:", size)
             
             /*
             // Compress video.
             let asset = AVAsset(URL: videoUrl)
             do {
-                let reader = AVAssetReader(asset: asset)
-                
+            let reader = AVAssetReader(asset: asset)
+            
             } catch {
-                print("Error compressing video.")
+            print("Error compressing video.")
             }
             */
+            
+            // If Parse 10MB file size limit exceeded.
+            if megabytes > 10 {
+                let alertController = UIAlertController(title: "Video Too Large", message: "Please edit the video to make it shorter or choose a smaller one.", preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }
             
             let videoData = NSData(contentsOfURL: videoUrl)
             self.uploadVideo = PFFile(name: "video.mp4", data: videoData!)
