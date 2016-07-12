@@ -9,6 +9,8 @@
 import UIKit
 import AVKit
 import MediaPlayer
+import Parse
+import ParseUI
 
 @objc protocol PhotoVideoCellDelegate {
     func presentVideoDetailViewController(videoFile file: PFFile)

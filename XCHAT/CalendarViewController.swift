@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 // TODO:
 // - SET EVENT COLOR FOR DAY OF WEEK

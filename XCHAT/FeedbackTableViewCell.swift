@@ -6,6 +6,8 @@
 //  Copyright © 2016 Mateo Garcia. All rights reserved.
 //
 
+import UIKit
+
 protocol FeedbackDelegate {
     func presentReportUserMailCompose()
 }

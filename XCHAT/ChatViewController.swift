@@ -8,6 +8,8 @@
 
 import UIKit
 import Darwin
+import Parse
+import ParseUI
 
 class ChatViewController: ContentViewController, UITableViewDataSource, UITableViewDelegate, LoadMoreMessagesDelegate, MessageViewDelegate {
     

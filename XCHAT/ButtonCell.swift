@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 protocol ButtonCellDelegate {
     func addComment(photo: NSMutableDictionary?)

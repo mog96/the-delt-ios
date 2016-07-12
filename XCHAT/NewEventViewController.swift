@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 // FIXME: ADD EVENT SCROLL VIEW NOT WORKING
 

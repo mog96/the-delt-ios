@@ -16,6 +16,7 @@ FOR LOGIN VIEW
 
 
 import UIKit
+import Parse
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     

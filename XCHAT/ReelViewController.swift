@@ -11,6 +11,8 @@ import AVKit
 import MediaPlayer
 import MobileCoreServices
 import Foundation
+import Parse
+import ParseUI
 
 // FIXME: Not too important, but could just use a [PFObject]() instead of serializing data
 //        into NSMutableDictionary()

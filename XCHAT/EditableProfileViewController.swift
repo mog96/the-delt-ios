@@ -8,6 +8,8 @@
 //
 
 import UIKit
+import Parse
+import ParseUI
 
 class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     

@@ -8,6 +8,7 @@
 
 import UIKit
 import MessageUI
+import Parse
 
 class SettingsViewController: ContentViewController, UITableViewDataSource, UITableViewDelegate, SwitchDelegate, FeedbackDelegate, LoggedOutDelegate, MFMailComposeViewControllerDelegate {
 

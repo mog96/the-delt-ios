@@ -9,6 +9,8 @@
 import UIKit
 import AVKit
 import MediaPlayer
+import Parse
+import PureLayout
 
 class VideoDetailViewController: UIViewController {
     

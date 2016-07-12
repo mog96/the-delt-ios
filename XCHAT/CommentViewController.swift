@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Parse
+import ParseUI
 
 // Communicates to presenter the comment entered for the given photo.
 protocol CommentViewControllerDelegate {

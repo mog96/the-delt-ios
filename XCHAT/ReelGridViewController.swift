@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class ReelGridViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
