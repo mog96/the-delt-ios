@@ -1,0 +1,10 @@
+the delt.
+
+- find working build of delt
+- double check functionality, make gif
+- submit for app store review
+
+
+mac setup.
+
+- copy .bashrc shortcuts from old macbook
