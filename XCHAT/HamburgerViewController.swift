@@ -64,19 +64,14 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
             }
             contentView.addSubview(contentViewController!.view)
             
-            // animates menu closing when new contentView set
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
-                self.contentView.frame.origin = CGPoint(x: 0, y: 0)
-                
-                print("CLOSING")
-            })
+            self.hideMenu()
+            
             /*
             let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
             tapGestureRecognizer.numberOfTapsRequired = 2
             tapGestureRecognizer.delegate = self
             self.view.addGestureRecognizer(tapGestureRecognizer)
             */
-            
         }
     }
     
@@ -147,28 +142,11 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
             
         } else if sender.state == UIGestureRecognizerState.Ended {
             if velocity.x > 0 {
-                showMenu()
+                self.showMenu()
                 self.view.endEditing(true)
             } else {
-                hideMenu()
+                self.hideMenu()
             }
         }
     }
-    
-    // MARK: Status Bar
-    
-//    override func prefersStatusBarHidden() -> Bool {
-//        return true
-//    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

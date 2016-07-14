@@ -32,7 +32,7 @@ class ContentViewController: UIViewController {
     
     func menuTapped() {
         
-        print("VIEW TAPPED")
+        print("MENU TAPPED")
         
         self.menuDelegate.menuButtonTapped()
     }

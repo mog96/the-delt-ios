@@ -124,12 +124,15 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
             hamburgerViewController?.contentViewController = settingsNavigationController
         }
+        
     }
     
     
     // MARK: - Menu Delegate
     
     func menuButtonTapped() {
+        print("SHOW HIDE MENU")
+        
         self.hamburgerViewController?.showOrHideMenu()
     }
     

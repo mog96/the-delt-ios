@@ -1,0 +1,10 @@
+the delt.
+
+- fix menu button
+- general test
+- submit for app store review
+
+
+mac setup.
+
+- copy .bashrc shortcuts from old macbook
