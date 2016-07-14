@@ -31,8 +31,8 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
     var uploadPhoto: UIImage?
     var choosingBackgroundPhoto = false
     let yearPrefix = "Class of "
-    let descriptionString = "Tell the house a little bit about yourself."
-    let membersViewDescriptionString = "Nothing interesting about me."
+    
+    let kBioDescriptionString = "Tell the house a little bit about yourself."
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
@@ -74,8 +74,8 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
         self.photoButton.layer.cornerRadius = 3
         self.photoButton.clipsToBounds = true
         
-        self.bioTextViewPlaceholder = self.editable ? self.descriptionString : self.membersViewDescriptionString
-        self.setupView(editable ? PFUser.currentUser() : self.user)
+        self.bioTextViewPlaceholder = self.kBioDescriptionString
+        self.setupView(self.editable ? PFUser.currentUser() : self.user)
     }
     
     override func didReceiveMemoryWarning() {
@@ -127,7 +127,9 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
         if let bio = user?.objectForKey("quote") as? String {
             self.bioTextView.text = bio
         } else {
-            self.bioTextView.text = self.bioTextViewPlaceholder
+            if self.editable {
+                self.bioTextView.text = self.bioTextViewPlaceholder
+            }
         }
         
         if let phoneNumber = user?.objectForKey("phone") as? String {
@@ -172,7 +174,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
                 }
             }
         }
-        backgroundPhotoImageViewWidthConstraint.constant = UIScreen.mainScreen().bounds.width
+        self.backgroundPhotoImageViewWidthConstraint.constant = UIScreen.mainScreen().bounds.width
     }
     
     
@@ -326,7 +328,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
     
     // MARK: Save Data
     
-    // TODO: Save user bios to a separate table, so that people can change other people's bios.
+    // TODO: Save user bios to a separate table, so that people can change other people's bios...
     
     // Saves data (not photos) and updates view.
     func saveData() {
