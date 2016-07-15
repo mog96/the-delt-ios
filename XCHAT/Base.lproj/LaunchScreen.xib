@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -12,11 +12,8 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="THETA DELT" translatesAutoresizingMaskIntoConstraints="NO" id="fle-9C-dzQ">
-                    <rect key="frame" x="-361" y="0.0" width="1042" height="568"/>
-                    <constraints>
-                        <constraint firstAttribute="width" secondItem="fle-9C-dzQ" secondAttribute="height" multiplier="147:80" constant="-1.7000000000000455" id="yRz-bm-Ju6"/>
-                    </constraints>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="THETA DELT" translatesAutoresizingMaskIntoConstraints="NO" id="fle-9C-dzQ">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                 </imageView>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  members only." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
                     <rect key="frame" x="77" y="520" width="166" height="29"/>
@@ -41,14 +38,15 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="19" id="1wS-5E-63W"/>
-                <constraint firstAttribute="bottom" secondItem="fle-9C-dzQ" secondAttribute="bottom" id="6Tm-Qh-kLT"/>
+                <constraint firstItem="fle-9C-dzQ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="4LR-rq-x3b"/>
                 <constraint firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="SVE-xg-h4U"/>
+                <constraint firstItem="fle-9C-dzQ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="V20-2f-bkp"/>
                 <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="8" id="XrG-a9-dc5"/>
-                <constraint firstItem="fle-9C-dzQ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="cEg-sf-Nur"/>
+                <constraint firstAttribute="trailing" secondItem="fle-9C-dzQ" secondAttribute="trailing" id="bNz-Ge-a2r"/>
                 <constraint firstAttribute="centerX" secondItem="kId-c2-rCX" secondAttribute="centerX" id="e83-Py-OQH"/>
                 <constraint firstItem="8ie-xW-0ye" firstAttribute="top" secondItem="kId-c2-rCX" secondAttribute="bottom" constant="296" id="gQl-CQ-38u"/>
+                <constraint firstAttribute="bottom" secondItem="fle-9C-dzQ" secondAttribute="bottom" id="iaM-oY-oRF"/>
                 <constraint firstItem="kId-c2-rCX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="76" id="jSe-7V-NFH"/>
-                <constraint firstAttribute="centerX" secondItem="fle-9C-dzQ" secondAttribute="centerX" id="yW5-hX-gI3"/>
                 <constraint firstItem="8ie-xW-0ye" firstAttribute="top" secondItem="kId-c2-rCX" secondAttribute="bottom" constant="296" id="yzB-oJ-Lpq"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>

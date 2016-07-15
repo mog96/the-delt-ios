@@ -534,6 +534,7 @@
 				259FBA3B1B02F5A5006F1650 /* Resources */,
 				BB1CFC6A0494DCE374FF4960 /* [CP] Embed Pods Frameworks */,
 				79E2EC0BEDCF2CD30DDE9FAA /* [CP] Copy Pods Resources */,
+				E4398FBE751E3546EF1E4CB8 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -677,6 +678,21 @@
 			inputPaths = (
 			);
 			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XCHAT/Pods-XCHAT-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E4398FBE751E3546EF1E4CB8 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
