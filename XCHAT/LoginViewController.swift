@@ -22,8 +22,6 @@ import MessageUI
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var loginView: UIView!
-    @IBOutlet weak var loginViewHeightConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var nameTextFieldHeight: NSLayoutConstraint!
     @IBOutlet weak var nameTextFieldBottomSpacing: NSLayoutConstraint!
@@ -35,17 +33,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var passwordTextFieldHeight: NSLayoutConstraint!
     @IBOutlet weak var passwordTextFieldBottomSpacing: NSLayoutConstraint!
-    
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
     
     var loginButtonOriginalColor: UIColor!
     var signupButtonOriginalColor: UIColor!
     
-    var loginViewOriginalHeight: CGFloat!
+    var loginViewLoginHeight: CGFloat!
     
     var textFieldOriginalHeight: CGFloat!
     
+    var textFields: [UITextField]!
     var signupTextFieldConstraints: [NSLayoutConstraint]!
     var loginTextFieldConstraints: [NSLayoutConstraint]!
     
@@ -68,22 +66,24 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.passwordTextField.keyboardAppearance = UIKeyboardAppearance.Dark
         passwordTextField.delegate = self
         
-        self.loginView.layer.cornerRadius = 2
-        self.loginView.layer.masksToBounds = true
-        self.loginView.setNeedsLayout()
-        self.loginView.layoutIfNeeded()
-        self.loginViewOriginalHeight = self.loginView.frame.height
-        
         self.loginButtonOriginalColor = self.loginButton.titleColorForState(.Normal)
         self.signupButtonOriginalColor = self.signupButton.titleColorForState(.Normal)
         
         self.textFieldOriginalHeight = self.nameTextFieldHeight.constant
         
+        self.textFields = [self.nameTextField, self.emailTextField, self.usernameTextField, self.passwordTextField]
         self.signupTextFieldConstraints = [self.nameTextFieldHeight, self.nameTextFieldBottomSpacing, self.emailTextFieldHeight, self.emailTextFieldBottomSpacing]
         self.loginTextFieldConstraints = [self.passwordTextFieldHeight, self.passwordTextFieldBottomSpacing]
         
         // Show login text fields on load.
         self.showSignup(false)
+        
+        // Must come after above line to ensure login view is proper height
+        self.loginView.layer.cornerRadius = 2
+        self.loginView.layer.masksToBounds = true
+        self.loginView.setNeedsLayout()
+        self.loginView.layoutIfNeeded()
+        self.loginViewLoginHeight = self.loginView.frame.height
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -103,6 +103,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
 extension LoginViewController {
     func showSignup(show: Bool) {
+        self.view.endEditing(true)
+        
+        let animationDuration = 0.35
+        
         if show {
             self.signupTextFieldConstraints.forEach({ $0.constant = self.textFieldOriginalHeight })
             self.loginTextFieldConstraints.forEach({ $0.constant = 0 })
@@ -111,6 +115,26 @@ extension LoginViewController {
             self.signupTextFieldConstraints.forEach({ $0.constant = 0 })
             self.loginTextFieldConstraints.forEach({ $0.constant = self.textFieldOriginalHeight })
         }
+        
+        self.loginView.setNeedsLayout()
+        self.textFields.forEach({ $0.setNeedsLayout() })
+        UIView.animateWithDuration(animationDuration, animations: { () -> Void in
+            self.loginView.layoutIfNeeded()
+            self.textFields.forEach({ $0.layoutIfNeeded() })
+            self.loginButton.setTitleColor(show ? UIColor.darkGrayColor() : self.loginButtonOriginalColor, forState: .Normal)
+            self.signupButton.setTitleColor(show ? self.loginButtonOriginalColor : self.signupButtonOriginalColor, forState: .Normal)
+            
+            }, completion: nil)
+        
+        [self.nameTextField, self.emailTextField].forEach { (textField: UITextField) in
+            UIView.transitionWithView(textField, duration: animationDuration - 1, options: .TransitionCrossDissolve, animations: {
+                textField.hidden = !show
+                }, completion: nil)
+            }
+        
+        UIView.transitionWithView(self.passwordTextField, duration: animationDuration - 1, options: .TransitionCrossDissolve, animations: {
+            self.passwordTextField.hidden = show
+            }, completion: nil)
     }
     
     func transitionToApp() {
@@ -134,12 +158,13 @@ extension LoginViewController {
 extension LoginViewController {
     // Records login/signup information.
     @IBAction func signupPressed(sender: AnyObject) {
+        self.view.endEditing(true)
         
-        if self.loginView.frame.height == self.loginViewOriginalHeight {
+        if self.loginView.frame.height == self.loginViewLoginHeight {
             self.showSignup(true)
             
         } else {
-            
+            self.presentSignupRequestMailCompose()
             
             /*
             let user = PFUser()
@@ -177,8 +202,7 @@ extension LoginViewController {
     
     // Logs in with username (not email) and password.
     @IBAction func loginPressed(sender: AnyObject) {
-        
-        if self.loginView.frame.height == self.loginViewOriginalHeight {
+        if self.loginView.frame.height == self.loginViewLoginHeight {
             
             // TODO: Check that text field text is not null.
             PFUser.logInWithUsernameInBackground(usernameTextField.text!, password: passwordTextField.text!) { (user: PFUser?, error: NSError?) -> Void in
@@ -222,25 +246,33 @@ extension LoginViewController: MFMailComposeViewControllerDelegate {
         
         // TODO: Handle each mail case? i.e. sent, not sent, etc.
         
-        controller.dismissViewControllerAnimated(true, completion: nil)
+        controller.dismissViewControllerAnimated(true) {
+            if result == MFMailComposeResultSent {
+                let alert = UIAlertController(title: "Thanks for Signing Up!", message: "If your charge has already been added to The Delt, you'll be added immediately. If your charge is not yet using The Delt, we'll be in touch as soon as possible about signing your charge up for The Delt.", preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        }
     }
     
-    func presentReportUserMailCompose() {
+    func presentSignupRequestMailCompose() {
         if MFMailComposeViewController.canSendMail() {
-            let subject = "THE DELT: User Signup Request"
+            let subject = "THE DELT: Signup Request"
             let recipient = "thedeltusa@gmail.com"
-            var body = "Name: "
+            var body = "Please sign me up for The Delt:"
+            body += "\nName: "
             if let name = self.nameTextField.text {
                 body += name
             }
-            body += "\nEmail:"
+            body += "\nEmail: "
             if let email = self.emailTextField.text {
                 body += email
             }
-            body += "\nUsername:"
+            body += "\nUsername: "
             if let username = self.usernameTextField.text {
                 body += username
             }
+            body += "\nTheta Delta Chi Charge: "
             
             let mailComposeVC = MFMailComposeViewController()
             mailComposeVC.mailComposeDelegate = self
