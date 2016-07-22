@@ -25,10 +25,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var loginViewHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var nameTextFieldHeight: NSLayoutConstraint!
+    @IBOutlet weak var nameTextFieldBottomSpacing: NSLayoutConstraint!
     @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var emailTextFieldHeight: NSLayoutConstraint!
+    @IBOutlet weak var emailTextFieldBottomSpacing: NSLayoutConstraint!
     @IBOutlet weak var usernameTextField: UITextField!
+    @IBOutlet weak var usernameTextFieldBottomSpacing: NSLayoutConstraint!
     @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var loginTextFieldSpacingHeight: NSLayoutConstraint!
+    @IBOutlet weak var passwordTextFieldHeight: NSLayoutConstraint!
+    @IBOutlet weak var passwordTextFieldBottomSpacing: NSLayoutConstraint!
     
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
@@ -37,36 +43,47 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     var signupButtonOriginalColor: UIColor!
     
     var loginViewOriginalHeight: CGFloat!
-    var signupHeightChange: CGFloat!
+    
+    var textFieldOriginalHeight: CGFloat!
+    
+    var signupTextFieldConstraints: [NSLayoutConstraint]!
+    var loginTextFieldConstraints: [NSLayoutConstraint]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.loginView.layer.cornerRadius = 2
-        self.loginView.layer.masksToBounds = true
         
         self.nameTextField.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
         self.nameTextField.keyboardAppearance = UIKeyboardAppearance.Dark
+        self.nameTextField.delegate = self
+        
         self.emailTextField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
         self.emailTextField.keyboardAppearance = UIKeyboardAppearance.Dark
+        self.emailTextField.delegate = self
+        
         self.usernameTextField.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
         self.usernameTextField.keyboardAppearance = UIKeyboardAppearance.Dark
+        usernameTextField.delegate = self
+        
         self.passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
         self.passwordTextField.keyboardAppearance = UIKeyboardAppearance.Dark
-        
-        // emailTextField.delegate = self
-        usernameTextField.delegate = self
         passwordTextField.delegate = self
         
+        self.loginView.layer.cornerRadius = 2
+        self.loginView.layer.masksToBounds = true
         self.loginView.setNeedsLayout()
         self.loginView.layoutIfNeeded()
         self.loginViewOriginalHeight = self.loginView.frame.height
         
-        // Height change accounts for name and email textfield heights, plus spacing between, and below email text field.
-        self.signupHeightChange = self.nameTextField.frame.height * 2 + self.loginTextFieldSpacingHeight.constant * 2
-        
         self.loginButtonOriginalColor = self.loginButton.titleColorForState(.Normal)
         self.signupButtonOriginalColor = self.signupButton.titleColorForState(.Normal)
+        
+        self.textFieldOriginalHeight = self.nameTextFieldHeight.constant
+        
+        self.signupTextFieldConstraints = [self.nameTextFieldHeight, self.nameTextFieldBottomSpacing, self.emailTextFieldHeight, self.emailTextFieldBottomSpacing]
+        self.loginTextFieldConstraints = [self.passwordTextFieldHeight, self.passwordTextFieldBottomSpacing]
+        
+        // Show login text fields on load.
+        self.showSignup(false)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -79,10 +96,42 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+}
+
+
+// MARK: - Helpers
+
+extension LoginViewController {
+    func showSignup(show: Bool) {
+        if show {
+            self.signupTextFieldConstraints.forEach({ $0.constant = self.textFieldOriginalHeight })
+            self.loginTextFieldConstraints.forEach({ $0.constant = 0 })
+            
+        } else {
+            self.signupTextFieldConstraints.forEach({ $0.constant = 0 })
+            self.loginTextFieldConstraints.forEach({ $0.constant = self.textFieldOriginalHeight })
+        }
+    }
     
-    
-    // MARK: Actions
-    
+    func transitionToApp() {
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        UIView.transitionWithView(self.view.window!, duration: 0.5, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
+            self.view.window!.rootViewController = appDelegate.hamburgerViewController
+            let reelStoryboard = UIStoryboard(name: "Reel", bundle: nil)
+            let reelNavigationController = reelStoryboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
+            
+            appDelegate.hamburgerViewController?.contentViewController = reelNavigationController
+            appDelegate.menuViewController.tableView.reloadData()
+            
+            }, completion: nil)
+    }
+}
+
+
+// MARK: Actions
+
+extension LoginViewController {
     // Records login/signup information.
     @IBAction func signupPressed(sender: AnyObject) {
         
@@ -90,6 +139,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             self.showSignup(true)
             
         } else {
+            
+            
+            /*
             let user = PFUser()
             user.email = emailTextField.text
             user.username = usernameTextField.text
@@ -119,6 +171,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     self.transitionToApp()
                 }
             }
+            */
         }
     }
     
@@ -126,7 +179,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBAction func loginPressed(sender: AnyObject) {
         
         if self.loginView.frame.height == self.loginViewOriginalHeight {
-        
+            
             // TODO: Check that text field text is not null.
             PFUser.logInWithUsernameInBackground(usernameTextField.text!, password: passwordTextField.text!) { (user: PFUser?, error: NSError?) -> Void in
                 if user != nil {
@@ -159,66 +212,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         print("BACKGROUND TAPPED")
     }
-    
-    
-    // MARK: - Helpers
-    
-    func showSignup(show: Bool) {
-        self.loginViewHeightConstraint.constant = self.loginViewOriginalHeight + (show ? self.signupHeightChange : 0)
-        self.nameTextField.alpha = show ? 0 : 1
-        self.emailTextField.alpha = show ? 0 : 1
-        
-        if show {
-            self.nameTextField.hidden = false
-            self.emailTextField.hidden = false
-        }
-        UIView.animateWithDuration(0.35, animations: { () -> Void in
-            self.loginView.layoutIfNeeded()
-            self.nameTextField.alpha = show ? 1 : 0
-            self.emailTextField.alpha = show ? 1 : 0
-            self.loginButton.setTitleColor(show ? UIColor.darkGrayColor() : self.loginButtonOriginalColor, forState: .Normal)
-            self.signupButton.setTitleColor(show ? self.loginButtonOriginalColor : self.signupButtonOriginalColor, forState: .Normal)
-            
-            }) { _ in
-                if !show {
-                    self.nameTextField.hidden = true
-                    self.emailTextField.hidden = true
-                }
-        }
-    }
-    
-    func transitionToApp() {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        UIView.transitionWithView(self.view.window!, duration: 0.5, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
-            self.view.window!.rootViewController = appDelegate.hamburgerViewController
-            let reelStoryboard = UIStoryboard(name: "Reel", bundle: nil)
-            let reelNavigationController = reelStoryboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
-            
-            appDelegate.hamburgerViewController?.contentViewController = reelNavigationController
-            appDelegate.menuViewController.tableView.reloadData()
-            
-            }, completion: nil)
-    }
-
-    
-    /*
-    // MARK: Navigation
-
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-       
-        let hamburgerViewController = segue.destinationViewController as! HamburgerViewController
-        let menuViewController = storyboard!.instantiateViewControllerWithIdentifier("MenuViewController") as! MenuViewController
-        hamburgerViewController.menuViewController = menuViewController
-        menuViewController.hamburgerViewController = hamburgerViewController
-        
-        // TODO: SET START VIEW TO THREADS
-        let chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
-        let chatNavigationController = chatStoryboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
-        hamburgerViewController.contentViewController = chatNavigationController
-    }
-    */
-    
 }
 
 
@@ -237,14 +230,17 @@ extension LoginViewController: MFMailComposeViewControllerDelegate {
             let subject = "THE DELT: User Signup Request"
             let recipient = "thedeltusa@gmail.com"
             var body = "Name: "
-            if let name = PFUser.currentUser()?.objectForKey("name") as? String {
-                body += "\n" + name
+            if let name = self.nameTextField.text {
+                body += name
             }
-            if let username = PFUser.currentUser()?.username {
-                body += "\n" + "Username: " + username
+            body += "\nEmail:"
+            if let email = self.emailTextField.text {
+                body += email
             }
-            body += "\n\nUser in question: [enter username]"
-            body += "\nComment: [optional]"
+            body += "\nUsername:"
+            if let username = self.usernameTextField.text {
+                body += username
+            }
             
             let mailComposeVC = MFMailComposeViewController()
             mailComposeVC.mailComposeDelegate = self
@@ -259,7 +255,7 @@ extension LoginViewController: MFMailComposeViewControllerDelegate {
             self.presentViewController(mailComposeVC, animated: true, completion: nil)
             
         } else {
-            let alert = UIAlertController(title: "Mail Not Enabled", message: "Could not send message. Set up a mail account for your device and try again.", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "Mail Not Enabled", message: "Could not send signup request. Please set up a mail account for your device and try again.", preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
             
             self.presentViewController(alert, animated: true, completion: nil)
