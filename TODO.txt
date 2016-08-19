@@ -1,0 +1,97 @@
+****************
+* IMPROVEMENTS *
+****************
+
+	- Add to Info.plist: ITSAppUsesNonExemptEncryption = false
+
+	PROFILE
+	- Fix background photo upload by saving a copy to local storage after it's set.
+
+	CHAT
+	- FIX profile photo loading
+	- stylize:
+		- subsequent messages from same user don't need profile photo next to them
+
+	- use refresh control to load earlier messages
+
+	REEL
+	- allow going back to ImagePicker from ADD CAPTION (EASY)
+
+	* photo posting
+	- debug ADD CAPTION text editor (placeholder text)
+	- attach current user's username to photos posted
+	- record date photo posted
+	- increment user's numPhotosPosted when photo posted
+	- increment user's totalNumFaves when their photo is faved
+	- implement profile photos (user query)
+
+	* photo reel
+	- add date Photo posted
+
+	* other
+	- don't hide placeholder text in caption/comment views until user starts typing
+	- change faved bool to favedBy array of users who have faved a given num        <********
+
+	CALENDAR
+	- CHECK to make Thursday appear as Th (not T)
+	- add unique color for each day of week
+
+	MEMBERS
+	- add member detail view (same look as profile)
+		- member quote
+		- background photo?
+
+	MENU
+	- implement numfaves and numphotos in menu
+	- prevent content view from moving when user tries to swipe to right with menu hidden
+
+	EXTRA
+	- refactor code using Store (see @Nick Troccoli's YikkityYak project)
+
+********
+* BUGS *
+********
+	
+	- Profile photo upload causes exception 'This query has an outstanding network connection. You have to wait until it's done.' May only be when you try and quit the app.
+
+		Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: 'This query has an outstanding network connection. You have to wait until it's done.'
+
+*********
+* IDEAS *
+*********
+
+	- Create an offline testing harness (dummy events/messages and pass them directly to the server calls)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
