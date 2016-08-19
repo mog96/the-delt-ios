@@ -4,6 +4,9 @@
 
 	- Add to Info.plist: ITSAppUsesNonExemptEncryption = false
 
+	LOGIN
+	- Successful login transition causes button icons to appear in the top left corner at first.
+
 	PROFILE
 	- Fix background photo upload by saving a copy to local storage after it's set.
 

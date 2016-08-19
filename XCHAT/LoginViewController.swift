@@ -173,15 +173,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    // TODO: This transition causes the button icons to appear in the top left corner at first.
     func transitionToApp() {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
         UIView.transitionWithView(self.view.window!, duration: 0.5, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
             self.view.window!.rootViewController = appDelegate.hamburgerViewController
             let reelStoryboard = UIStoryboard(name: "Reel", bundle: nil)
-            let reelNavigationController = reelStoryboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
+            let reelNC = reelStoryboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
+            if let reelVC = reelNC.viewControllers[0] as? ReelViewController {
+                reelVC.menuDelegate = appDelegate.menuViewController // Set menu delegate so menu button works for first view shown.
+            }
             
-            appDelegate.hamburgerViewController?.contentViewController = reelNavigationController
+            appDelegate.hamburgerViewController?.contentViewController = reelNC
             appDelegate.menuViewController.tableView.reloadData()
             
             }, completion: nil)
