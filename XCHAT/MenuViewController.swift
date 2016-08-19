@@ -19,12 +19,14 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var hamburgerViewController: HamburgerViewController?
     
+    let kProfileCellHeight: CGFloat = 172
+    let kMenuCellHeight: CGFloat = 55
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.tableView.estimatedRowHeight = 44.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         
@@ -40,32 +42,39 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: Table View
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell: UITableViewCell!
+        
         switch indexPath.row {
         case 0:
-            let cell = tableView.dequeueReusableCellWithIdentifier("ProfileCell")!
-            return cell
+            cell = tableView.dequeueReusableCellWithIdentifier("ProfileCell")!
         case 1:
-            let cell = tableView.dequeueReusableCellWithIdentifier("ChatCell")!
-            return cell
+            cell = tableView.dequeueReusableCellWithIdentifier("ChatCell")!
         case 2:
-            let cell = tableView.dequeueReusableCellWithIdentifier("ReelCell")!
-            return cell
+            cell = tableView.dequeueReusableCellWithIdentifier("ReelCell")!
         case 3:
-            let cell = tableView.dequeueReusableCellWithIdentifier("CalendarCell")!
-            return cell
+            cell = tableView.dequeueReusableCellWithIdentifier("CalendarCell")!
         case 4:
-            let cell = tableView.dequeueReusableCellWithIdentifier("MembersCell")!
-            return cell
+            cell = tableView.dequeueReusableCellWithIdentifier("MembersCell")!
         default:
-            let cell = tableView.dequeueReusableCellWithIdentifier("SettingsCell")!
-            return cell
+            cell = tableView.dequeueReusableCellWithIdentifier("SettingsCell")!
         }
+        
+        cell.frame.size.height = self.kMenuCellHeight
+        return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 6
     }
-   
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        switch indexPath.row {
+        case 0:
+            return self.kProfileCellHeight
+        default:
+            return self.kMenuCellHeight
+        }
+    }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -126,25 +135,15 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
     }
-    
-    
-    // MARK: - Menu Delegate
-    
+}
+
+
+// MARK: - Menu Delegate
+
+extension MenuViewController {
     func menuButtonTapped() {
         print("SHOW HIDE MENU")
         
         self.hamburgerViewController?.showOrHideMenu()
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
