@@ -5,9 +5,10 @@
 	// - Add to Info.plist: ITSAppUsesNonExemptEncryption = false
 
 	- Red refresh controls?
+	- Handle case where app installed over previous version, but user forced to log in again.
 
 	LOGIN
-	- Show loading on LOG IN tapped
+	- Show loading on LOG IN tapped.
 	- Successful login transition causes button icons to appear in the top left corner at first.
 
 	PROFILE
@@ -15,10 +16,10 @@
 
 	CHAT
 	- FIX profile photo loading
-	- stylize:
-		- subsequent messages from same user don't need profile photo next to them
+	- Stylize:
+		- Subsequent messages from same user don't need profile photo next to them.
 
-	- use refresh control to load earlier messages
+	- Use refresh control to load earlier messages.
 
 	REEL
 	- allow going back to ImagePicker from ADD CAPTION (EASY)
