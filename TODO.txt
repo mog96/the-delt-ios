@@ -2,7 +2,7 @@
 * IMPROVEMENTS *
 ****************
 
-	// - Add to Info.plist: ITSAppUsesNonExemptEncryption = false
+	// - Add to Info.plist: ITSAppUsesNonExemptEncryption = false ?
 
 	- Red refresh controls?
 	- Handle case where app installed over previous version, but user forced to log in again.
@@ -18,26 +18,23 @@
 	- FIX profile photo loading
 	- Stylize:
 		- Subsequent messages from same user don't need profile photo next to them.
-
 	- Use refresh control to load earlier messages.
 
 	REEL
 	- allow going back to ImagePicker from ADD CAPTION (EASY)
-
 	* photo posting
-	- debug ADD CAPTION text editor (placeholder text)
-	- attach current user's username to photos posted
-	- record date photo posted
-	- increment user's numPhotosPosted when photo posted
-	- increment user's totalNumFaves when their photo is faved
-	- implement profile photos (user query)
-
+		- debug ADD CAPTION text editor (placeholder text)
+		- attach current user's username to photos posted
+		- record date photo posted
+		- increment user's numPhotosPosted when photo posted
+		- increment user's totalNumFaves when their photo is faved
+		- implement profile photos (user query)
 	* photo reel
-	- add date Photo posted
-
+		- add date Photo posted
+		- IMPORTANT: show video controls
 	* other
-	- don't hide placeholder text in caption/comment views until user starts typing
-	- change faved bool to favedBy array of users who have faved a given num        <********
+		- don't hide placeholder text in caption/comment views until user starts typing
+		- change faved bool to favedBy array of users who have faved a given num        <********
 
 	CALENDAR
 	- CHECK to make Thursday appear as Th (not T)
