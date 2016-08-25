@@ -2,9 +2,12 @@
 * IMPROVEMENTS *
 ****************
 
-	- Add to Info.plist: ITSAppUsesNonExemptEncryption = false
+	// - Add to Info.plist: ITSAppUsesNonExemptEncryption = false
+
+	- Red refresh controls?
 
 	LOGIN
+	- Show loading on LOG IN tapped
 	- Successful login transition causes button icons to appear in the top left corner at first.
 
 	PROFILE
