@@ -2,39 +2,46 @@
 * IMPROVEMENTS *
 ****************
 
-	- Add to Info.plist: ITSAppUsesNonExemptEncryption = false
+	- IMPORTANT: Remove Parse developer keys.
+	- Red refresh controls?
+	- Handle case where app installed over previous version, but user forced to log in again.
+	// - Add to Info.plist: ITSAppUsesNonExemptEncryption = false ?
+
+	LOGIN
+	- Show loading on LOG IN tapped.
+	- Successful login transition causes button icons to appear in the top left corner at first.
 
 	PROFILE
 	- Fix background photo upload by saving a copy to local storage after it's set.
 
 	CHAT
 	- FIX profile photo loading
-	- stylize:
-		- subsequent messages from same user don't need profile photo next to them
-
-	- use refresh control to load earlier messages
+	- Stylize:
+		- Subsequent messages from same user don't need profile photo next to them.
+	- Use refresh control to load earlier messages.
 
 	REEL
 	- allow going back to ImagePicker from ADD CAPTION (EASY)
-
 	* photo posting
-	- debug ADD CAPTION text editor (placeholder text)
-	- attach current user's username to photos posted
-	- record date photo posted
-	- increment user's numPhotosPosted when photo posted
-	- increment user's totalNumFaves when their photo is faved
-	- implement profile photos (user query)
-
+		- debug ADD CAPTION text editor (placeholder text)
+		- attach current user's username to photos posted
+		- record date photo posted
+		- increment user's numPhotosPosted when photo posted
+		- increment user's totalNumFaves when their photo is faved
+		- implement profile photos (user query)
 	* photo reel
-	- add date Photo posted
-
+		- add date Photo posted
+		- IMPORTANT: show video controls
 	* other
-	- don't hide placeholder text in caption/comment views until user starts typing
-	- change faved bool to favedBy array of users who have faved a given num        <********
+		- don't hide placeholder text in caption/comment views until user starts typing
+		- change faved bool to favedBy array of users who have faved a given num        <********
 
 	CALENDAR
+	- Add loading to event create.
+	- Advance start time to next hour, not current.
 	- CHECK to make Thursday appear as Th (not T)
 	- add unique color for each day of week
+	- Show previous events on scroll up!
 
 	MEMBERS
 	- add member detail view (same look as profile)

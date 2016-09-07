@@ -20,10 +20,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        Parse.setApplicationId("cEpg8HAH75eVLcqfp9VfbQIdUJ1lz7XVMwrZ5EYc", clientKey: "Ldbj47H9IXlzbIKkW1W7DkK2YvbeAfdCTVyregTL")
+        // Parse config.
+        let configuration = ParseClientConfiguration {
+            $0.applicationId = "cEpg8HAH75eVLcqfp9VfbQIdUJ1lz7XVMwrZ5EYc"
+            $0.clientKey = "Ldbj47H9IXlzbIKkW1W7DkK2YvbeAfdCTVyregTL"
+            // $0.server = "http://localhost:1337/parse"
+            $0.server = "http://thedelt.herokuapp.com/parse"
+        }
+        Parse.initializeWithConfiguration(configuration)
         
         PFUser.enableRevocableSessionInBackgroundWithBlock { (error: NSError?) -> Void in
-            print("IDK")
+            print("enableRevocableSessionInBackgroundWithBlock completed")
         }
         
         // Set up hamburger menu.

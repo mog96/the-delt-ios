@@ -84,7 +84,7 @@ class SettingsViewController: ContentViewController, UITableViewDataSource, UITa
         case 0:
             if indexPath.row == 0 {
                 let cell = self.tableView.dequeueReusableCellWithIdentifier("SettingsDescriptionCell") as! SettingsDescriptionTableViewCell
-                cell.setDescription("Select when you'd like to receive push notifications from THE DELT.")
+                cell.setDescription("Select when you'd like to receive push notifications from the delt.")
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCellWithIdentifier("NotificationCell", forIndexPath: indexPath) as! NotificationTableViewCell
@@ -104,7 +104,7 @@ class SettingsViewController: ContentViewController, UITableViewDataSource, UITa
         case 2:
             if indexPath.row == 0 {
                 let cell = self.tableView.dequeueReusableCellWithIdentifier("SettingsDescriptionCell") as! SettingsDescriptionTableViewCell
-                cell.setDescription("Report any content you feel is inappropriate, or users you feel are abusing this service and should be blocked from THE DELT.")
+                cell.setDescription("Report any content you feel is inappropriate, or users you feel are abusing this service and should be blocked from the delt.")
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCellWithIdentifier("FeedbackCell", forIndexPath: indexPath) as! FeedbackTableViewCell
@@ -158,7 +158,7 @@ class SettingsViewController: ContentViewController, UITableViewDataSource, UITa
     
     func presentReportUserMailCompose() {
         if MFMailComposeViewController.canSendMail() {
-            let subject = "THE DELT: Report User"
+            let subject = "Report User - the delt."
             let recipient = "mateog@stanford.edu"
             var body = "Name: "
             if let name = PFUser.currentUser()?.objectForKey("name") as? String {
