@@ -2,10 +2,10 @@
 * IMPROVEMENTS *
 ****************
 
-	// - Add to Info.plist: ITSAppUsesNonExemptEncryption = false ?
-
+	- IMPORTANT: Remove Parse developer keys.
 	- Red refresh controls?
 	- Handle case where app installed over previous version, but user forced to log in again.
+	// - Add to Info.plist: ITSAppUsesNonExemptEncryption = false ?
 
 	LOGIN
 	- Show loading on LOG IN tapped.
@@ -37,8 +37,11 @@
 		- change faved bool to favedBy array of users who have faved a given num        <********
 
 	CALENDAR
+	- Add loading to event create.
+	- Advance start time to next hour, not current.
 	- CHECK to make Thursday appear as Th (not T)
 	- add unique color for each day of week
+	- Show previous events on scroll up!
 
 	MEMBERS
 	- add member detail view (same look as profile)

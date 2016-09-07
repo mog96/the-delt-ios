@@ -15,9 +15,9 @@ class PushHelper{
         //Subscribe
         // When users indicate they are Giants fans, we subscribe them to that channel.
         let currentInstallation = PFInstallation.currentInstallation()
-        currentInstallation.addUniqueObject("Giants", forKey: "channels")
+        currentInstallation?.addUniqueObject("Giants", forKey: "channels")
         
-        currentInstallation.saveInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in
+        currentInstallation?.saveInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in
             // nothing
         })
     }
@@ -26,14 +26,14 @@ class PushHelper{
         //Unsubscribe
         // When users indicate they are Giants fans, we subscribe them to that channel.
         let currentInstallation = PFInstallation.currentInstallation()
-        currentInstallation.removeObject("Giants" ,forKey: "channels")
-        currentInstallation.saveInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in
+        currentInstallation?.removeObject("Giants" ,forKey: "channels")
+        currentInstallation?.saveInBackgroundWithBlock({ (success:Bool, error:NSError?) -> Void in
             // nothing
         })
     }
     
     class func subscribedChannels() -> [String] {
-        return PFInstallation.currentInstallation().channels!
+        return PFInstallation.currentInstallation()!.channels!
     }
     
     func pushToChannel(message: NSString, channel:NSString){
