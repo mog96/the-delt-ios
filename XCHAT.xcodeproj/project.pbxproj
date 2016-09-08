@@ -88,7 +88,7 @@
 		38F655E11B0D235700C5586A /* ReelGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F655E01B0D235700C5586A /* ReelGridViewController.swift */; };
 		38F655E31B0D236900C5586A /* ReelGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F655E21B0D236900C5586A /* ReelGridCell.swift */; };
 		38F655E51B0D521200C5586A /* LogOutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F655E41B0D521200C5586A /* LogOutTableViewCell.swift */; };
-		D7F106F1A2813B89283B2700 /* Pods_XCHAT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC8561782BEC7941431DC07 /* Pods_XCHAT.framework */; };
+		E61D7AA9D610766D9F786185 /* Pods_XCHAT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA26B4F882840903BF5F9FF4 /* Pods_XCHAT.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,7 +102,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0233005665DE0C251DCD8868 /* Pods-XCHAT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XCHAT.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XCHAT/Pods-XCHAT.debug.xcconfig"; sourceTree = "<group>"; };
 		2515CDDA1C58BDD40008A2B2 /* LayoutUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutUtils.swift; sourceTree = "<group>"; };
 		252208981C5DF532004FAE9A /* CalendarCells.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalendarCells.xib; sourceTree = "<group>"; };
 		252237741C991AA20077AC77 /* PhotoVideoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoVideoCell.swift; sourceTree = "<group>"; };
@@ -189,8 +188,9 @@
 		38F655E01B0D235700C5586A /* ReelGridViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReelGridViewController.swift; sourceTree = "<group>"; };
 		38F655E21B0D236900C5586A /* ReelGridCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReelGridCell.swift; sourceTree = "<group>"; };
 		38F655E41B0D521200C5586A /* LogOutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogOutTableViewCell.swift; sourceTree = "<group>"; };
-		DFC8561782BEC7941431DC07 /* Pods_XCHAT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XCHAT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FEC42659FDF095F7A6F4C5FF /* Pods-XCHAT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XCHAT.release.xcconfig"; path = "Pods/Target Support Files/Pods-XCHAT/Pods-XCHAT.release.xcconfig"; sourceTree = "<group>"; };
+		712757A71E38977C88B0E46E /* Pods-XCHAT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XCHAT.release.xcconfig"; path = "Pods/Target Support Files/Pods-XCHAT/Pods-XCHAT.release.xcconfig"; sourceTree = "<group>"; };
+		AA26B4F882840903BF5F9FF4 /* Pods_XCHAT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XCHAT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C13DA56B626E1D28B7220808 /* Pods-XCHAT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XCHAT.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XCHAT/Pods-XCHAT.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,7 +211,7 @@
 				3887E9F41B043AC400D16CF6 /* CoreGraphics.framework in Frameworks */,
 				3887E9F21B043ABE00D16CF6 /* CFNetwork.framework in Frameworks */,
 				3887E9F01B043AB900D16CF6 /* AudioToolbox.framework in Frameworks */,
-				D7F106F1A2813B89283B2700 /* Pods_XCHAT.framework in Frameworks */,
+				E61D7AA9D610766D9F786185 /* Pods_XCHAT.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,7 +307,7 @@
 				259FBA551B02F5A6006F1650 /* XCHATTests */,
 				259FBA3E1B02F5A5006F1650 /* Products */,
 				3E0F26945D5D8483DE7A5FFC /* Frameworks */,
-				3DC1B11FBF6DD11D855D2168 /* Pods */,
+				E1B1EAB2321B937C8A1DA55A /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -474,15 +474,6 @@
 			name = Calendar;
 			sourceTree = "<group>";
 		};
-		3DC1B11FBF6DD11D855D2168 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				0233005665DE0C251DCD8868 /* Pods-XCHAT.debug.xcconfig */,
-				FEC42659FDF095F7A6F4C5FF /* Pods-XCHAT.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		3E0F26945D5D8483DE7A5FFC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -499,9 +490,18 @@
 				3887E9F31B043AC400D16CF6 /* CoreGraphics.framework */,
 				3887E9F11B043ABE00D16CF6 /* CFNetwork.framework */,
 				3887E9EF1B043AB900D16CF6 /* AudioToolbox.framework */,
-				DFC8561782BEC7941431DC07 /* Pods_XCHAT.framework */,
+				AA26B4F882840903BF5F9FF4 /* Pods_XCHAT.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E1B1EAB2321B937C8A1DA55A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C13DA56B626E1D28B7220808 /* Pods-XCHAT.debug.xcconfig */,
+				712757A71E38977C88B0E46E /* Pods-XCHAT.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -517,7 +517,6 @@
 				259FBA3B1B02F5A5006F1650 /* Resources */,
 				BB1CFC6A0494DCE374FF4960 /* [CP] Embed Pods Frameworks */,
 				79E2EC0BEDCF2CD30DDE9FAA /* [CP] Copy Pods Resources */,
-				E4398FBE751E3546EF1E4CB8 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -658,21 +657,6 @@
 			inputPaths = (
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XCHAT/Pods-XCHAT-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E4398FBE751E3546EF1E4CB8 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -869,7 +853,7 @@
 		};
 		259FBA5D1B02F5A6006F1650 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0233005665DE0C251DCD8868 /* Pods-XCHAT.debug.xcconfig */;
+			baseConfigurationReference = C13DA56B626E1D28B7220808 /* Pods-XCHAT.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -890,7 +874,7 @@
 		};
 		259FBA5E1B02F5A6006F1650 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FEC42659FDF095F7A6F4C5FF /* Pods-XCHAT.release.xcconfig */;
+			baseConfigurationReference = 712757A71E38977C88B0E46E /* Pods-XCHAT.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
