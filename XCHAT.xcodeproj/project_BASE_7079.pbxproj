@@ -21,6 +21,8 @@
 		252A6B5B1C4CF8AC00FA1F75 /* StartDatePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252A6B5A1C4CF8AC00FA1F75 /* StartDatePickerTableViewCell.swift */; };
 		2540A3931C2B9CC7003E4B31 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2540A3921C2B9CC7003E4B31 /* Login.storyboard */; };
 		2540A3951C2B9ED6003E4B31 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2540A3941C2B9ED6003E4B31 /* Main.storyboard */; };
+		2540A3971C2BACFD003E4B31 /* SignupView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2540A3961C2BACFD003E4B31 /* SignupView.xib */; };
+		2540A39A1C2BAE59003E4B31 /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2540A3991C2BAE59003E4B31 /* LoginView.xib */; };
 		254A19AA1B18768E0030F316 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 254A19A91B18768E0030F316 /* Keys.plist */; };
 		25518A3F1B0ECFF200550DE9 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25518A3E1B0ECFF200550DE9 /* ButtonCell.swift */; };
 		25518A411B0ED03B00550DE9 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25518A401B0ED03B00550DE9 /* CommentCell.swift */; };
@@ -44,6 +46,7 @@
 		259FBA591B02F5A6006F1650 /* XCHATTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259FBA581B02F5A6006F1650 /* XCHATTests.swift */; };
 		25C6CCDA1B1290C200EADB5B /* CaptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C6CCD91B1290C200EADB5B /* CaptionViewController.swift */; };
 		25C6CCDC1B12FF1600EADB5B /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C6CCDB1B12FF1600EADB5B /* CommentViewController.swift */; };
+		25DE9B7F1C33D6C400C4D647 /* EmailTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25DE9B7E1C33D6C400C4D647 /* EmailTextField.xib */; };
 		25E5252A1C59C8B600477C3D /* GestureUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E525291C59C8B600477C3D /* GestureUtils.swift */; };
 		25F016061B045882004D78F6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F016051B045882004D78F6 /* LoginViewController.swift */; };
 		25F0160A1B045D83004D78F6 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F016091B045D83004D78F6 /* MenuViewController.swift */; };
@@ -88,7 +91,7 @@
 		38F655E11B0D235700C5586A /* ReelGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F655E01B0D235700C5586A /* ReelGridViewController.swift */; };
 		38F655E31B0D236900C5586A /* ReelGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F655E21B0D236900C5586A /* ReelGridCell.swift */; };
 		38F655E51B0D521200C5586A /* LogOutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F655E41B0D521200C5586A /* LogOutTableViewCell.swift */; };
-		E61D7AA9D610766D9F786185 /* Pods_XCHAT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA26B4F882840903BF5F9FF4 /* Pods_XCHAT.framework */; };
+		D7F106F1A2813B89283B2700 /* Pods_XCHAT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFC8561782BEC7941431DC07 /* Pods_XCHAT.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +105,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0233005665DE0C251DCD8868 /* Pods-XCHAT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XCHAT.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XCHAT/Pods-XCHAT.debug.xcconfig"; sourceTree = "<group>"; };
 		2515CDDA1C58BDD40008A2B2 /* LayoutUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutUtils.swift; sourceTree = "<group>"; };
 		252208981C5DF532004FAE9A /* CalendarCells.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalendarCells.xib; sourceTree = "<group>"; };
 		252237741C991AA20077AC77 /* PhotoVideoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoVideoCell.swift; sourceTree = "<group>"; };
@@ -117,6 +121,8 @@
 		252A6B5A1C4CF8AC00FA1F75 /* StartDatePickerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartDatePickerTableViewCell.swift; sourceTree = "<group>"; };
 		2540A3921C2B9CC7003E4B31 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		2540A3941C2B9ED6003E4B31 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		2540A3961C2BACFD003E4B31 /* SignupView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignupView.xib; sourceTree = "<group>"; };
+		2540A3991C2BAE59003E4B31 /* LoginView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginView.xib; sourceTree = "<group>"; };
 		254A19A91B18768E0030F316 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		25518A3E1B0ECFF200550DE9 /* ButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
 		25518A401B0ED03B00550DE9 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
@@ -144,6 +150,7 @@
 		259FBA581B02F5A6006F1650 /* XCHATTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCHATTests.swift; sourceTree = "<group>"; };
 		25C6CCD91B1290C200EADB5B /* CaptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptionViewController.swift; sourceTree = "<group>"; };
 		25C6CCDB1B12FF1600EADB5B /* CommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
+		25DE9B7E1C33D6C400C4D647 /* EmailTextField.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmailTextField.xib; sourceTree = "<group>"; };
 		25E525291C59C8B600477C3D /* GestureUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GestureUtils.swift; sourceTree = "<group>"; };
 		25F016051B045882004D78F6 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		25F016091B045D83004D78F6 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -188,9 +195,8 @@
 		38F655E01B0D235700C5586A /* ReelGridViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReelGridViewController.swift; sourceTree = "<group>"; };
 		38F655E21B0D236900C5586A /* ReelGridCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReelGridCell.swift; sourceTree = "<group>"; };
 		38F655E41B0D521200C5586A /* LogOutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogOutTableViewCell.swift; sourceTree = "<group>"; };
-		712757A71E38977C88B0E46E /* Pods-XCHAT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XCHAT.release.xcconfig"; path = "Pods/Target Support Files/Pods-XCHAT/Pods-XCHAT.release.xcconfig"; sourceTree = "<group>"; };
-		AA26B4F882840903BF5F9FF4 /* Pods_XCHAT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XCHAT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C13DA56B626E1D28B7220808 /* Pods-XCHAT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XCHAT.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XCHAT/Pods-XCHAT.debug.xcconfig"; sourceTree = "<group>"; };
+		DFC8561782BEC7941431DC07 /* Pods_XCHAT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XCHAT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FEC42659FDF095F7A6F4C5FF /* Pods-XCHAT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XCHAT.release.xcconfig"; path = "Pods/Target Support Files/Pods-XCHAT/Pods-XCHAT.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,7 +217,7 @@
 				3887E9F41B043AC400D16CF6 /* CoreGraphics.framework in Frameworks */,
 				3887E9F21B043ABE00D16CF6 /* CFNetwork.framework in Frameworks */,
 				3887E9F01B043AB900D16CF6 /* AudioToolbox.framework in Frameworks */,
-				E61D7AA9D610766D9F786185 /* Pods_XCHAT.framework in Frameworks */,
+				D7F106F1A2813B89283B2700 /* Pods_XCHAT.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,10 +281,21 @@
 		2540A3911C2B9C84003E4B31 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				2540A3921C2B9CC7003E4B31 /* Login.storyboard */,
+				2540A3981C2BAD04003E4B31 /* Layout */,
 				25F016051B045882004D78F6 /* LoginViewController.swift */,
 			);
 			name = Login;
+			sourceTree = "<group>";
+		};
+		2540A3981C2BAD04003E4B31 /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				2540A3921C2B9CC7003E4B31 /* Login.storyboard */,
+				2540A3991C2BAE59003E4B31 /* LoginView.xib */,
+				25DE9B7E1C33D6C400C4D647 /* EmailTextField.xib */,
+				2540A3961C2BACFD003E4B31 /* SignupView.xib */,
+			);
+			name = Layout;
 			sourceTree = "<group>";
 		};
 		258D49861B15AC5700A632D3 /* Threads */ = {
@@ -307,7 +324,7 @@
 				259FBA551B02F5A6006F1650 /* XCHATTests */,
 				259FBA3E1B02F5A5006F1650 /* Products */,
 				3E0F26945D5D8483DE7A5FFC /* Frameworks */,
-				E1B1EAB2321B937C8A1DA55A /* Pods */,
+				3DC1B11FBF6DD11D855D2168 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -474,6 +491,15 @@
 			name = Calendar;
 			sourceTree = "<group>";
 		};
+		3DC1B11FBF6DD11D855D2168 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0233005665DE0C251DCD8868 /* Pods-XCHAT.debug.xcconfig */,
+				FEC42659FDF095F7A6F4C5FF /* Pods-XCHAT.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		3E0F26945D5D8483DE7A5FFC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -490,18 +516,9 @@
 				3887E9F31B043AC400D16CF6 /* CoreGraphics.framework */,
 				3887E9F11B043ABE00D16CF6 /* CFNetwork.framework */,
 				3887E9EF1B043AB900D16CF6 /* AudioToolbox.framework */,
-				AA26B4F882840903BF5F9FF4 /* Pods_XCHAT.framework */,
+				DFC8561782BEC7941431DC07 /* Pods_XCHAT.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		E1B1EAB2321B937C8A1DA55A /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				C13DA56B626E1D28B7220808 /* Pods-XCHAT.debug.xcconfig */,
-				712757A71E38977C88B0E46E /* Pods-XCHAT.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -517,6 +534,7 @@
 				259FBA3B1B02F5A5006F1650 /* Resources */,
 				BB1CFC6A0494DCE374FF4960 /* [CP] Embed Pods Frameworks */,
 				79E2EC0BEDCF2CD30DDE9FAA /* [CP] Copy Pods Resources */,
+				E4398FBE751E3546EF1E4CB8 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -594,13 +612,16 @@
 				381BD6C81B158C5F005C6D1C /* Members.storyboard in Resources */,
 				385C74521B0ECB8A009BAC7A /* Profile.storyboard in Resources */,
 				3890A1D31B0B187C00B4FF00 /* Calendar.storyboard in Resources */,
+				25DE9B7F1C33D6C400C4D647 /* EmailTextField.xib in Resources */,
 				259FBA4D1B02F5A6006F1650 /* LaunchScreen.xib in Resources */,
 				387866101B0478C400623BC1 /* Settings.storyboard in Resources */,
 				255BE9821B170E9C0001B160 /* Chat.storyboard in Resources */,
 				2540A3951C2B9ED6003E4B31 /* Main.storyboard in Resources */,
+				2540A39A1C2BAE59003E4B31 /* LoginView.xib in Resources */,
 				381125B31B0C1DB400DBBAD2 /* Reel.storyboard in Resources */,
 				2540A3931C2B9CC7003E4B31 /* Login.storyboard in Resources */,
 				252A6B481C4CA98F00FA1F75 /* MessageView.xib in Resources */,
+				2540A3971C2BACFD003E4B31 /* SignupView.xib in Resources */,
 				259FBA4A1B02F5A6006F1650 /* Images.xcassets in Resources */,
 				252208991C5DF532004FAE9A /* CalendarCells.xib in Resources */,
 				252A6B431C4C9BAE00FA1F75 /* SettingsHeaderView.xib in Resources */,
@@ -657,6 +678,21 @@
 			inputPaths = (
 			);
 			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XCHAT/Pods-XCHAT-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E4398FBE751E3546EF1E4CB8 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -853,7 +889,7 @@
 		};
 		259FBA5D1B02F5A6006F1650 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C13DA56B626E1D28B7220808 /* Pods-XCHAT.debug.xcconfig */;
+			baseConfigurationReference = 0233005665DE0C251DCD8868 /* Pods-XCHAT.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -874,7 +910,7 @@
 		};
 		259FBA5E1B02F5A6006F1650 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 712757A71E38977C88B0E46E /* Pods-XCHAT.release.xcconfig */;
+			baseConfigurationReference = FEC42659FDF095F7A6F4C5FF /* Pods-XCHAT.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

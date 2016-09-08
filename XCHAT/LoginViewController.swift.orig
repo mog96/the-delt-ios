@@ -143,12 +143,9 @@ extension LoginViewController {
         UIView.transitionWithView(self.view.window!, duration: 0.5, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
             self.view.window!.rootViewController = appDelegate.hamburgerViewController
             let reelStoryboard = UIStoryboard(name: "Reel", bundle: nil)
-            let reelNC = reelStoryboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
-            if let reelVC = reelNC.viewControllers[0] as? ReelViewController {
-                reelVC.menuDelegate = appDelegate.menuViewController // Set menu delegate so menu button works for first view shown.
-            }
+            let reelNavigationController = reelStoryboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
             
-            appDelegate.hamburgerViewController?.contentViewController = reelNC
+            appDelegate.hamburgerViewController?.contentViewController = reelNavigationController
             appDelegate.menuViewController.tableView.reloadData()
             
             }, completion: nil)
@@ -258,6 +255,7 @@ extension LoginViewController: MFMailComposeViewControllerDelegate {
         }
     }
     
+<<<<<<< HEAD
     func presentSignupRequestMailCompose() {
         if MFMailComposeViewController.canSendMail() {
             let subject = "THE DELT: Signup Request"
@@ -282,6 +280,22 @@ extension LoginViewController: MFMailComposeViewControllerDelegate {
             mailComposeVC.setSubject(subject)
             mailComposeVC.setToRecipients([recipient])
             mailComposeVC.setMessageBody(body, isHTML: false)
+=======
+    // TODO: This transition causes the button icons to appear in the top left corner at first.
+    func transitionToApp() {
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        UIView.transitionWithView(self.view.window!, duration: 0.5, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
+            self.view.window!.rootViewController = appDelegate.hamburgerViewController
+            let reelStoryboard = UIStoryboard(name: "Reel", bundle: nil)
+            let reelNC = reelStoryboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
+            if let reelVC = reelNC.viewControllers[0] as? ReelViewController {
+                reelVC.menuDelegate = appDelegate.menuViewController // Set menu delegate so menu button works for first view shown.
+            }
+            
+            appDelegate.hamburgerViewController?.contentViewController = reelNC
+            appDelegate.menuViewController.tableView.reloadData()
+>>>>>>> master
             
             
             // mailComposeVC.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.blackColor()]
