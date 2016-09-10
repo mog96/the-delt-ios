@@ -88,6 +88,9 @@
 		38F655E11B0D235700C5586A /* ReelGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F655E01B0D235700C5586A /* ReelGridViewController.swift */; };
 		38F655E31B0D236900C5586A /* ReelGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F655E21B0D236900C5586A /* ReelGridCell.swift */; };
 		38F655E51B0D521200C5586A /* LogOutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F655E41B0D521200C5586A /* LogOutTableViewCell.swift */; };
+		D582521F1D839322008313DF /* AdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D582521E1D839322008313DF /* AdminViewController.swift */; };
+		D58252211D839340008313DF /* AddUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58252201D839340008313DF /* AddUserViewController.swift */; };
+		D58252231D839354008313DF /* Admin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D58252221D839354008313DF /* Admin.storyboard */; };
 		E61D7AA9D610766D9F786185 /* Pods_XCHAT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA26B4F882840903BF5F9FF4 /* Pods_XCHAT.framework */; };
 /* End PBXBuildFile section */
 
@@ -191,6 +194,9 @@
 		712757A71E38977C88B0E46E /* Pods-XCHAT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XCHAT.release.xcconfig"; path = "Pods/Target Support Files/Pods-XCHAT/Pods-XCHAT.release.xcconfig"; sourceTree = "<group>"; };
 		AA26B4F882840903BF5F9FF4 /* Pods_XCHAT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XCHAT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C13DA56B626E1D28B7220808 /* Pods-XCHAT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XCHAT.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XCHAT/Pods-XCHAT.debug.xcconfig"; sourceTree = "<group>"; };
+		D582521E1D839322008313DF /* AdminViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminViewController.swift; sourceTree = "<group>"; };
+		D58252201D839340008313DF /* AddUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddUserViewController.swift; sourceTree = "<group>"; };
+		D58252221D839354008313DF /* Admin.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Admin.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -323,6 +329,7 @@
 		259FBA3F1B02F5A5006F1650 /* XCHAT */ = {
 			isa = PBXGroup;
 			children = (
+				D582521D1D8392E9008313DF /* Admin */,
 				2540A3911C2B9C84003E4B31 /* Login */,
 				384F23011B0AE90C00A04081 /* Menu */,
 				385C74501B0ECB70009BAC7A /* Profile */,
@@ -495,6 +502,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D582521D1D8392E9008313DF /* Admin */ = {
+			isa = PBXGroup;
+			children = (
+				D58252221D839354008313DF /* Admin.storyboard */,
+				D582521E1D839322008313DF /* AdminViewController.swift */,
+				D58252201D839340008313DF /* AddUserViewController.swift */,
+			);
+			name = Admin;
+			sourceTree = "<group>";
+		};
 		E1B1EAB2321B937C8A1DA55A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -590,6 +607,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D58252231D839354008313DF /* Admin.storyboard in Resources */,
 				259FBA481B02F5A5006F1650 /* Menu.storyboard in Resources */,
 				381BD6C81B158C5F005C6D1C /* Members.storyboard in Resources */,
 				385C74521B0ECB8A009BAC7A /* Profile.storyboard in Resources */,
@@ -679,6 +697,7 @@
 				2515CDDB1C58BDD40008A2B2 /* LayoutUtils.swift in Sources */,
 				38D9FB921B15583B0030B6D9 /* LocationCell.swift in Sources */,
 				25966C251C99978100D56DFF /* VideoDetailViewController.swift in Sources */,
+				D582521F1D839322008313DF /* AdminViewController.swift in Sources */,
 				25F016061B045882004D78F6 /* LoginViewController.swift in Sources */,
 				25C6CCDA1B1290C200EADB5B /* CaptionViewController.swift in Sources */,
 				3881235F1B13E864008AA524 /* ProfileTableViewCell.swift in Sources */,
@@ -702,6 +721,7 @@
 				258040B21C54DF00002D1F08 /* FeedbackTableViewCell.swift in Sources */,
 				384F22F81B0AE17900A04081 /* FirstMessageCell.swift in Sources */,
 				25E5252A1C59C8B600477C3D /* GestureUtils.swift in Sources */,
+				D58252211D839340008313DF /* AddUserViewController.swift in Sources */,
 				25518A3F1B0ECFF200550DE9 /* ButtonCell.swift in Sources */,
 				252A6B541C4CF13400FA1F75 /* EventDescriptionTableViewCell.swift in Sources */,
 				252A6B591C4CF80D00FA1F75 /* EndDatePickerTableViewCell.swift in Sources */,

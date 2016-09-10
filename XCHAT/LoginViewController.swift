@@ -6,14 +6,6 @@
 //  Copyright (c) 2015 Mateo Garcia. All rights reserved.
 //
 
-/*
-FOR LOGIN VIEW
-- transform from login to signup on signup pressed
-- add email textfield on top #SEXY
-
-- fix logout.
-*/
-
 
 import UIKit
 import Parse
@@ -168,38 +160,6 @@ extension LoginViewController {
             
         } else {
             self.presentSignupRequestMailCompose()
-            
-            /*
-            let user = PFUser()
-            user.email = emailTextField.text
-            user.username = usernameTextField.text
-            user.password = passwordTextField.text
-            user["totalNumFavesReceived"] = 0
-            user["totalNumPhotosPosted"] = 0
-            
-            // other fields can be set just like with PFObject
-            // user["phone"] = "415-392-0202"
-            
-            user.signUpInBackgroundWithBlock { (succeeded: Bool, error: NSError?) -> Void in
-                if let error = error {
-                    let errorString = error.userInfo["error"] as? NSString
-                    
-                    // Show the errorString somewhere and let the user try again.
-                    print("Signup error: \(errorString)")
-                    
-                    let invalidSignupAlertVC = UIAlertController(title: "Email or Username Taken", message: "Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
-                    invalidSignupAlertVC.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                    self.presentViewController(invalidSignupAlertVC, animated: true, completion: nil)
-                    
-                } else {
-                    
-                    // Hooray! Let them use the app now.
-                    print("SIGNUP SUCCESSFUL")
-                    
-                    self.transitionToApp()
-                }
-            }
-            */
         }
     }
     

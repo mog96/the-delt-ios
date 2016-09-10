@@ -3,6 +3,7 @@
 ****************
 
 	- IMPORTANT: Remove Parse developer keys.
+	
 	- Red refresh controls?
 	- Handle case where app installed over previous version, but user forced to log in again.
 	
