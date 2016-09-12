@@ -88,6 +88,8 @@
 		38F655E11B0D235700C5586A /* ReelGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F655E01B0D235700C5586A /* ReelGridViewController.swift */; };
 		38F655E31B0D236900C5586A /* ReelGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F655E21B0D236900C5586A /* ReelGridCell.swift */; };
 		38F655E51B0D521200C5586A /* LogOutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F655E41B0D521200C5586A /* LogOutTableViewCell.swift */; };
+		D525F1B31D8693F20002D8B6 /* EditUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525F1B21D8693F20002D8B6 /* EditUsersViewController.swift */; };
+		D525F1B51D86960E0002D8B6 /* EditUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525F1B41D86960E0002D8B6 /* EditUserTableViewCell.swift */; };
 		D582521F1D839322008313DF /* AdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D582521E1D839322008313DF /* AdminViewController.swift */; };
 		D58252211D839340008313DF /* AddUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58252201D839340008313DF /* AddUserViewController.swift */; };
 		D58252231D839354008313DF /* Admin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D58252221D839354008313DF /* Admin.storyboard */; };
@@ -194,6 +196,8 @@
 		712757A71E38977C88B0E46E /* Pods-XCHAT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XCHAT.release.xcconfig"; path = "Pods/Target Support Files/Pods-XCHAT/Pods-XCHAT.release.xcconfig"; sourceTree = "<group>"; };
 		AA26B4F882840903BF5F9FF4 /* Pods_XCHAT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XCHAT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C13DA56B626E1D28B7220808 /* Pods-XCHAT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XCHAT.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XCHAT/Pods-XCHAT.debug.xcconfig"; sourceTree = "<group>"; };
+		D525F1B21D8693F20002D8B6 /* EditUsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUsersViewController.swift; sourceTree = "<group>"; };
+		D525F1B41D86960E0002D8B6 /* EditUserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUserTableViewCell.swift; sourceTree = "<group>"; };
 		D582521E1D839322008313DF /* AdminViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminViewController.swift; sourceTree = "<group>"; };
 		D58252201D839340008313DF /* AddUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddUserViewController.swift; sourceTree = "<group>"; };
 		D58252221D839354008313DF /* Admin.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Admin.storyboard; sourceTree = "<group>"; };
@@ -329,7 +333,6 @@
 		259FBA3F1B02F5A5006F1650 /* XCHAT */ = {
 			isa = PBXGroup;
 			children = (
-				D582521D1D8392E9008313DF /* Admin */,
 				2540A3911C2B9C84003E4B31 /* Login */,
 				384F23011B0AE90C00A04081 /* Menu */,
 				385C74501B0ECB70009BAC7A /* Profile */,
@@ -338,6 +341,7 @@
 				3890A1CB1B0B17B900B4FF00 /* Calendar */,
 				3830AC891B157D5700CA5C9B /* Members */,
 				384F22EF1B0AE08A00A04081 /* Settings */,
+				D582521D1D8392E9008313DF /* Admin */,
 				259FBA421B02F5A5006F1650 /* AppDelegate.swift */,
 				2540A3941C2B9ED6003E4B31 /* Main.storyboard */,
 				25E525281C59C89F00477C3D /* Utilities */,
@@ -451,8 +455,8 @@
 				257A6B711B056D5B00996A56 /* HamburgerViewController.swift */,
 				25F016091B045D83004D78F6 /* MenuViewController.swift */,
 				252A6B511C4CD8C700FA1F75 /* ContentViewController.swift */,
-				3881235E1B13E864008AA524 /* ProfileTableViewCell.swift */,
 				255BE97B1B16E3900001B160 /* ProfileCell.swift */,
+				3881235E1B13E864008AA524 /* ProfileTableViewCell.swift */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -507,6 +511,8 @@
 			children = (
 				D58252221D839354008313DF /* Admin.storyboard */,
 				D582521E1D839322008313DF /* AdminViewController.swift */,
+				D525F1B21D8693F20002D8B6 /* EditUsersViewController.swift */,
+				D525F1B41D86960E0002D8B6 /* EditUserTableViewCell.swift */,
 				D58252201D839340008313DF /* AddUserViewController.swift */,
 			);
 			name = Admin;
@@ -720,6 +726,7 @@
 				38F655E31B0D236900C5586A /* ReelGridCell.swift in Sources */,
 				258040B21C54DF00002D1F08 /* FeedbackTableViewCell.swift in Sources */,
 				384F22F81B0AE17900A04081 /* FirstMessageCell.swift in Sources */,
+				D525F1B31D8693F20002D8B6 /* EditUsersViewController.swift in Sources */,
 				25E5252A1C59C8B600477C3D /* GestureUtils.swift in Sources */,
 				D58252211D839340008313DF /* AddUserViewController.swift in Sources */,
 				25518A3F1B0ECFF200550DE9 /* ButtonCell.swift in Sources */,
@@ -742,6 +749,7 @@
 				259FBA431B02F5A5006F1650 /* AppDelegate.swift in Sources */,
 				25518A411B0ED03B00550DE9 /* CommentCell.swift in Sources */,
 				252A6B401C4C950500FA1F75 /* SettingsDescriptionTableViewCell.swift in Sources */,
+				D525F1B51D86960E0002D8B6 /* EditUserTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

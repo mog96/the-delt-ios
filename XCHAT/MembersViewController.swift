@@ -9,14 +9,6 @@
 import UIKit
 import Parse
 
-
-// FIXME:
-// - search bar exit not animating properly
-// - photos not displaying
-
-// TODO
-// - If USER's cell is tapped, go to profile edit view
-
 class MembersViewController: ContentViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     var users = [PFUser]()
@@ -35,9 +27,6 @@ class MembersViewController: ContentViewController, UITableViewDelegate, UITable
     @IBOutlet weak var tableView: UITableView!
     
     var member: PFUser!
-    
-    var hamburgerViewController: HamburgerViewController!
-    
     var navigationBar: UINavigationBar!
     
     override func viewDidLoad() {

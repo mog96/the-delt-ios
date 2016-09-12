@@ -48,13 +48,16 @@
 	- Show previous events on scroll up!
 
 	MEMBERS
-	- add member detail view (same look as profile)
-		- member quote
-		- background photo?
+	- FIX: search bar exit not animating properly
+	- photos not displaying
+	- If current user's cell is tapped, go to profile edit view
 
 	MENU
 	- implement numfaves and numphotos in menu
 	- prevent content view from moving when user tries to swipe to right with menu hidden
+
+	SETTINGS
+	- Redo with UITableViewController.
 
 	EXTRA
 	- refactor code using Store (see @Nick Troccoli's YikkityYak project)

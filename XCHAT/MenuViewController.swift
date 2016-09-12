@@ -21,6 +21,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     let kProfileCellHeight: CGFloat = 172
     let kMenuCellHeight: CGFloat = 55
+    var kNumCells = 7
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +32,12 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         
         self.tableView.canCancelContentTouches = false
+        
+        if let isAdmin = PFUser.currentUser()?.objectForKey("isAdmin") as? Bool {
+            if isAdmin {
+                self.kNumCells = 7
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -43,7 +50,6 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UITableViewCell!
-        
         switch indexPath.row {
         case 0:
             cell = tableView.dequeueReusableCellWithIdentifier("ProfileCell")!
@@ -55,6 +61,8 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell = tableView.dequeueReusableCellWithIdentifier("CalendarCell")!
         case 4:
             cell = tableView.dequeueReusableCellWithIdentifier("MembersCell")!
+        case 6:
+            cell = tableView.dequeueReusableCellWithIdentifier("AdminCell")!
         default:
             cell = tableView.dequeueReusableCellWithIdentifier("SettingsCell")!
         }
@@ -64,7 +72,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return self.kNumCells
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -85,7 +93,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             let profileController = profileStoryboard.instantiateViewControllerWithIdentifier("ProfileNavigationController") as! UINavigationController
             PFUser.currentUser()?.fetchInBackground()
             
-            hamburgerViewController?.contentViewController = profileController
+            self.hamburgerViewController?.contentViewController = profileController
             
         case 1: // CHAT
             let chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
@@ -94,7 +102,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             firstViewController.menuDelegate = self
             
             UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
-            hamburgerViewController?.contentViewController = chatNavigationController
+            self.hamburgerViewController?.contentViewController = chatNavigationController
             
         case 2: // REEL
             let reelStoryboard = UIStoryboard(name: "Reel", bundle: nil)
@@ -103,7 +111,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             firstViewController.menuDelegate = self
             
             UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
-            hamburgerViewController?.contentViewController = reelNavigationController
+            self.hamburgerViewController?.contentViewController = reelNavigationController
             
         case 3: // CALENDAR
             let calendarStoryboard = UIStoryboard(name: "Calendar", bundle: nil)
@@ -112,7 +120,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             firstViewController.menuDelegate = self
             
             UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
-            hamburgerViewController?.contentViewController = calendarNavigationController
+            self.hamburgerViewController?.contentViewController = calendarNavigationController
             
         case 4: // MEMBERS
             let storyboard = UIStoryboard(name: "Members", bundle: nil)
@@ -122,7 +130,17 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             firstViewController.hamburgerViewController = self.hamburgerViewController
             
             UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
-            hamburgerViewController?.contentViewController = nc
+            self.hamburgerViewController?.contentViewController = nc
+            
+        case 6: // ADMIN
+            let storyboard = UIStoryboard(name: "Admin", bundle: nil)
+            let nc = storyboard.instantiateViewControllerWithIdentifier("AdminNC") as! UINavigationController
+            let firstVC = nc.viewControllers[0] as! AdminViewController
+            firstVC.menuDelegate = self
+            firstVC.hamburgerViewController = self.hamburgerViewController
+            
+            UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
+            self.hamburgerViewController?.contentViewController = nc
             
         default: // SETTINGS
             let settingsStoryboard = UIStoryboard(name: "Settings", bundle: nil)
@@ -131,7 +149,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             firstViewController.menuDelegate = self
             
             UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
-            hamburgerViewController?.contentViewController = settingsNavigationController
+            self.hamburgerViewController?.contentViewController = settingsNavigationController
         }
         
     }

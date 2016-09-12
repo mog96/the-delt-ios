@@ -8,12 +8,17 @@
 
 import UIKit
 
-class AdminViewController: UIViewController {
+class AdminViewController: ContentViewController {
 
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.setMenuButton(withColor: "white")
+        
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        // self.tableView.estimatedRowHeight = UITableViewAutomaticDimension
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,4 +37,25 @@ class AdminViewController: UIViewController {
     }
     */
 
+}
+
+
+// MARK: - Table View Delegate, Data Source
+
+extension AdminViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCellWithIdentifier("EditUsersCell")!
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.tableView.cellForRowAtIndexPath(indexPath)?.selected = false
+    }
 }
