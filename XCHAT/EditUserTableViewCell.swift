@@ -10,18 +10,10 @@ import UIKit
 import Parse
 import ParseUI
 
-protocol EditUserTableViewCellDelegate {
-    func deleteUser()
-}
-
 class EditUserTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var deleteButton: UIButton!
-    @IBOutlet weak var infoView: UIView!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    
-    var delegate: EditUserTableViewCellDelegate!
     
     var infoViewPanGestureOriginalLocation = CGPoint()
     
@@ -60,27 +52,5 @@ extension EditUserTableViewCell {
             }
         }
         self.nameLabel.text = user.username
-    }
-}
-
-
-// MARK: - Actions
-
-extension EditUserTableViewCell {
-    @IBAction func onDeleteButtonTapped(sender: AnyObject) {
-        self.delegate.deleteUser()
-    }
-    
-    func showDeleteButton() {
-        UIView.animateWithDuration(0.2, delay: 0, options: .CurveEaseOut, animations: {
-            let newOrigin = CGPoint(x: -(self.contentView.frame.width - self.deleteButton.frame.origin.x), y: 0)
-            self.infoView.frame.origin = newOrigin
-        }, completion: nil)
-    }
-    
-    func hideDeleteButton() {
-        UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
-            self.infoView.frame.origin = CGPointZero
-        }, completion: nil)
     }
 }
