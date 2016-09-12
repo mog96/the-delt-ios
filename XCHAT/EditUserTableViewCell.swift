@@ -48,9 +48,6 @@ extension EditUserTableViewCell {
         if let photo = user.objectForKey("photo") as? PFFile {
             let pfImageView = PFImageView()
             pfImageView.image = UIImage(named: "LOGIN BACKGROUND 1")
-            
-            print(photo)
-            
             pfImageView.file = photo as PFFile
             pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
                 if let error = error {
@@ -62,7 +59,6 @@ extension EditUserTableViewCell {
                 }
             }
         }
-        
         self.nameLabel.text = user.username
     }
 }
@@ -75,8 +71,14 @@ extension EditUserTableViewCell {
         self.delegate.deleteUser()
     }
     
+    func showDeleteButton() {
+        UIView.animateWithDuration(0.1, delay: 0, options: .CurveEaseOut, animations: {
+            self.infoView.frame.origin = CGPoint(x: -(self.contentView.frame.width - self.deleteButton.frame.origin.x), y: 0)
+            }, completion: nil)
+    }
+    
     func hideDeleteButton() {
-        UIView.animateWithDuration(2, delay: 0, options: .CurveEaseOut, animations: { 
+        UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
             self.infoView.frame.origin = CGPointZero
         }, completion: nil)
     }

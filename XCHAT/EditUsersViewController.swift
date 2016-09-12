@@ -13,7 +13,7 @@ class EditUsersViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    var swipedCell: EditUserTableViewCell!
+    var swipedCell: EditUserTableViewCell?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,15 +62,23 @@ extension EditUsersViewController {
                 self.swipedCell = cell
             } else {
                 if cell != self.swipedCell {
-                    self.swipedCell.hideDeleteButton()
+                    self.swipedCell?.hideDeleteButton()
                 }
             }
         } else if sender.state == .Changed {
-            self.swipedCell.infoView.frame.origin.x = translation.x
+            self.swipedCell?.infoView.frame.origin.x = translation.x
             
         } else if sender.state == .Ended {
-            
+            if velocity.x < 0 {
+                self.swipedCell?.showDeleteButton()
+            } else {
+                self.swipedCell?.hideDeleteButton()
+            }
         }
+    }
+    
+    @IBAction func onTableViewTapped(sender: AnyObject) {
+        self.swipedCell?.hideDeleteButton()
     }
 }
 

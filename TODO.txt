@@ -15,6 +15,8 @@
 	- Show loading on LOG IN tapped.
 	- Successful login transition causes button icons to appear in the top left corner at first.
 
+	- Cool animation on log in. Idea: On login button pressed, screen fades black, and if credentials incorrect, black fades out and new background image is present.
+
 	PROFILE
 	- Fix background photo upload by saving a copy to local storage after it's set.
 

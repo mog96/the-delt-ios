@@ -196,8 +196,6 @@ extension LoginViewController {
     
     @IBAction func onBackgroundTapped(sender: AnyObject) {
         self.view.endEditing(true)
-        
-        print("BACKGROUND TAPPED")
     }
 }
 

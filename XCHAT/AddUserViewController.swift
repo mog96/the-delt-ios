@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import MBProgressHUD
 
 class AddUserViewController: UIViewController {
     
@@ -28,39 +29,17 @@ class AddUserViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.nameTextField.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
+        self.nameTextField.keyboardAppearance = UIKeyboardAppearance.Dark
         
-        /*
-        let user = PFUser()
-        user.email = emailTextField.text
-        user.username = usernameTextField.text
-        user.password = passwordTextField.text
-        user["totalNumFavesReceived"] = 0
-        user["totalNumPhotosPosted"] = 0
+        self.emailTextField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
+        self.emailTextField.keyboardAppearance = UIKeyboardAppearance.Dark
         
-        // other fields can be set just like with PFObject
-        // user["phone"] = "415-392-0202"
+        self.usernameTextField.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
+        self.usernameTextField.keyboardAppearance = UIKeyboardAppearance.Dark
         
-        user.signUpInBackgroundWithBlock { (succeeded: Bool, error: NSError?) -> Void in
-            if let error = error {
-                let errorString = error.userInfo["error"] as? NSString
-                
-                // Show the errorString somewhere and let the user try again.
-                print("Signup error: \(errorString)")
-                
-                let invalidSignupAlertVC = UIAlertController(title: "Email or Username Taken", message: "Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
-                invalidSignupAlertVC.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                self.presentViewController(invalidSignupAlertVC, animated: true, completion: nil)
-                
-            } else {
-                
-                // Hooray! Let them use the app now.
-                print("SIGNUP SUCCESSFUL")
-                
-                self.transitionToApp()
-            }
-        }
-        */
+        self.passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
+        self.passwordTextField.keyboardAppearance = UIKeyboardAppearance.Dark
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -87,5 +66,45 @@ class AddUserViewController: UIViewController {
 extension AddUserViewController {
     @IBAction func onAddUserButtonTapped(sender: AnyObject) {
         print("TAPPED BEBE")
+        
+        let user = PFUser()
+        user.email = emailTextField.text
+        user.username = usernameTextField.text
+        user.password = passwordTextField.text
+        user["totalNumFavesReceived"] = 0
+        user["totalNumPhotosPosted"] = 0
+        
+        // other fields can be set just like with PFObject
+        // user["phone"] = "415-392-0202"
+        
+        user.signUpInBackgroundWithBlock { (succeeded: Bool, error: NSError?) -> Void in
+            if let error = error {
+                let errorString = error.userInfo["error"] as? NSString
+                
+                // Show the errorString somewhere and let the user try again.
+                print("Signup error: \(errorString)")
+                
+                let invalidSignupAlertVC = UIAlertController(title: "Email or Username Taken", message: "Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                invalidSignupAlertVC.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                self.presentViewController(invalidSignupAlertVC, animated: true, completion: nil)
+                
+            } else {
+                
+                // Hooray! Let them use the app now.
+                print("SIGNUP SUCCESSFUL")
+                
+                let currentHUD = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                currentHUD.labelText = "User Added!"
+                currentHUD.mode = MBProgressHUDMode.CustomView
+                currentHUD.customView =  UIImageView(image: UIImage(named: "reset_success"))
+                currentHUD.hide(true, afterDelay: 2.0)
+                
+                self.navigationController?.popViewControllerAnimated(true)
+            }
+        }
+    }
+    
+    @IBAction func onBackgroundTapped(sender: AnyObject) {
+        self.view.endEditing(true)
     }
 }
