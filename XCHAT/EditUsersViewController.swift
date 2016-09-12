@@ -19,25 +19,12 @@ class EditUsersViewController: UIViewController {
     var previousSwipedCell: EditUserTableViewCell?
     var infoViewOriginalOrigin = CGPointZero
     
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.allowsMultipleSelectionDuringEditing = false
-        
-        self.tableViewPanGestureRecognizer.enabled = false
-        self.tableViewTapGestureRecognizer.enabled = false
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        self.appDelegate.hamburgerViewController.panGestureRecognizer.enabled = false
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        self.appDelegate.hamburgerViewController.panGestureRecognizer.enabled = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,6 +44,7 @@ extension EditUsersViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("EditUserCell") as! EditUserTableViewCell
         cell.setupCell(user: PFUser.currentUser()!) // FIXME!
+        cell.delegate = self
         return cell
     }
     
@@ -85,9 +73,7 @@ extension EditUsersViewController {
         let location = sender.locationInView(self.tableView)
         let translation = sender.translationInView(self.tableView)
         let velocity = sender.velocityInView(self.tableView)
-        
-        print("PAN")
-        
+                
         if let indexPath = self.tableView.indexPathForRowAtPoint(location) {
             if sender.state == .Began {
                 self.swipedCell = self.tableView.cellForRowAtIndexPath(indexPath) as? EditUserTableViewCell
