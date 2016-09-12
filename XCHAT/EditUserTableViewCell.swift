@@ -72,9 +72,10 @@ extension EditUserTableViewCell {
     }
     
     func showDeleteButton() {
-        UIView.animateWithDuration(0.1, delay: 0, options: .CurveEaseOut, animations: {
-            self.infoView.frame.origin = CGPoint(x: -(self.contentView.frame.width - self.deleteButton.frame.origin.x), y: 0)
-            }, completion: nil)
+        UIView.animateWithDuration(0.2, delay: 0, options: .CurveEaseOut, animations: {
+            let newOrigin = CGPoint(x: -(self.contentView.frame.width - self.deleteButton.frame.origin.x), y: 0)
+            self.infoView.frame.origin = newOrigin
+        }, completion: nil)
     }
     
     func hideDeleteButton() {

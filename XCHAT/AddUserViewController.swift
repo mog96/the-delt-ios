@@ -99,7 +99,7 @@ extension AddUserViewController {
                 currentHUD.customView =  UIImageView(image: UIImage(named: "reset_success"))
                 currentHUD.hide(true, afterDelay: 2.0)
                 
-                self.navigationController?.popViewControllerAnimated(true)
+                // self.navigationController?.popViewControllerAnimated(true)
             }
         }
     }

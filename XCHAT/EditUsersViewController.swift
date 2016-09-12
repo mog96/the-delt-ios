@@ -12,14 +12,32 @@ import Parse
 class EditUsersViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var tableViewPanGestureRecognizer: UIPanGestureRecognizer!
+    @IBOutlet var tableViewTapGestureRecognizer: UITapGestureRecognizer!
     
     var swipedCell: EditUserTableViewCell?
+    var previousSwipedCell: EditUserTableViewCell?
+    var infoViewOriginalOrigin = CGPointZero
+    
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.tableView.delegate = self
         self.tableView.dataSource = self
+        self.tableView.allowsMultipleSelectionDuringEditing = false
+        
+        self.tableViewPanGestureRecognizer.enabled = false
+        self.tableViewTapGestureRecognizer.enabled = false
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.appDelegate.hamburgerViewController.panGestureRecognizer.enabled = false
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.appDelegate.hamburgerViewController.panGestureRecognizer.enabled = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,8 +60,21 @@ extension EditUsersViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        print("CAN EDIT")
+        return true
+    }
+    
+    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        return .Delete
+    }
+    
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        //
+        print("DELETE CELL")
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        self.tableView.cellForRowAtIndexPath(indexPath)?.selected = false
     }
 }
 
@@ -54,31 +85,46 @@ extension EditUsersViewController {
         let location = sender.locationInView(self.tableView)
         let translation = sender.translationInView(self.tableView)
         let velocity = sender.velocityInView(self.tableView)
-        let indexPath = self.tableView.indexPathForRowAtPoint(location)!
-        let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! EditUserTableViewCell
         
-        if sender.state == .Began {
-            if self.swipedCell == nil {
-                self.swipedCell = cell
-            } else {
-                if cell != self.swipedCell {
-                    self.swipedCell?.hideDeleteButton()
+        print("PAN")
+        
+        if let indexPath = self.tableView.indexPathForRowAtPoint(location) {
+            if sender.state == .Began {
+                self.swipedCell = self.tableView.cellForRowAtIndexPath(indexPath) as? EditUserTableViewCell
+                if self.previousSwipedCell == nil {
+                    self.previousSwipedCell = self.swipedCell
                 }
-            }
-        } else if sender.state == .Changed {
-            self.swipedCell?.infoView.frame.origin.x = translation.x
-            
-        } else if sender.state == .Ended {
-            if velocity.x < 0 {
-                self.swipedCell?.showDeleteButton()
-            } else {
-                self.swipedCell?.hideDeleteButton()
+                
+                if self.swipedCell == self.previousSwipedCell {
+                    self.infoViewOriginalOrigin = self.previousSwipedCell!.infoView.frame.origin
+                } else {
+                    self.resetTableView()
+                }
+                
+            } else if sender.state == .Changed {
+                self.previousSwipedCell?.infoView.frame.origin.x = self.infoViewOriginalOrigin.x + translation.x
+                
+            } else if sender.state == .Ended {
+                if velocity.x < 0 {
+                    self.previousSwipedCell?.showDeleteButton()
+                    self.tableView.scrollEnabled = false
+                    self.tableViewTapGestureRecognizer.enabled = true
+                } else {
+                    self.resetTableView()
+                }
             }
         }
     }
     
     @IBAction func onTableViewTapped(sender: AnyObject) {
-        self.swipedCell?.hideDeleteButton()
+        self.resetTableView()
+    }
+    
+    func resetTableView() {
+        self.previousSwipedCell?.hideDeleteButton()
+        self.previousSwipedCell = nil
+        self.tableView.scrollEnabled = true
+        self.tableViewTapGestureRecognizer.enabled = false
     }
 }
 
