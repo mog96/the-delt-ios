@@ -1,13 +1,31 @@
 ****************
 * IMPROVEMENTS *
 ****************
-	
-	- Red refresh controls?
-	- Handle case where app installed over previous version, but user forced to log in again.
-	
-	- Add force touch menu.
 
+	QUICK:
+	- Show previous calendar events on scroll up!
+	- allow going back to ImagePicker from ADD CAPTION (EASY)
+	- Red refresh controls?
 	- Add Whisper for no network connection.
+	
+	GAME PLAN THRU 9/23:
+	- Finish admin implementation with Parse cloud code.
+	- Setup Facebook posting to secret group, submit for Facebook review.
+		- Reading for admins. Will likely accompany with Reel API revision.
+	- Add Camera and Filters, swanky UI (∆ snap/recording button).
+		- Facebook posting from within app.
+	- Start Chat cloud code and multiple conversartion topics.
+	- Start integrating email list.
+
+	GAME PLAN THRU DECEMBER:
+	- Complete Chat code.
+	- Integrate email list.
+	- Integrate reading and posting to Google Cal.
+	
+	WISHLIST
+	- Secondary Reel UI, kind of like Facebook's video UI... Something cool and resume-worthy.
+	- Add force touch menu.
+	- Handle case where app installed over previous version, but user forced to log in again.
 
 	LOGIN
 	- Show loading on LOG IN tapped.
@@ -25,7 +43,6 @@
 	- Use refresh control to load earlier messages.
 
 	REEL
-	- allow going back to ImagePicker from ADD CAPTION (EASY)
 	* photo posting
 		- debug ADD CAPTION text editor (placeholder text)
 		- attach current user's username to photos posted
@@ -44,8 +61,7 @@
 	- Add loading to event create.
 	- Advance start time to next hour, not current.
 	- CHECK to make Thursday appear as Th (not T)
-	- add unique color for each day of week
-	- Show previous events on scroll up!
+	- Add unique color for each day of week?
 
 	MEMBERS
 	- FIX: search bar exit not animating properly
@@ -63,16 +79,12 @@
 * BUGS *
 ********
 	
-	- Profile photo upload causes exception 'This query has an outstanding network connection. You have to wait until it's done.' May only be when you try and quit the app.
-
+	- Profile photo upload causes exception 'This query has an outstanding network connection. You have to wait until it's done.' May only be when you try and quit the app:
 		Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: 'This query has an outstanding network connection. You have to wait until it's done.'
 
 *********
 * IDEAS *
 *********
-
-	- Create an offline testing harness (dummy events/messages and pass them directly to the server calls)
-
 
 
 
