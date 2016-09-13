@@ -32,6 +32,7 @@ class MembersViewController: ContentViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setMenuButton(withColor: "white")
+        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
         
         screenSize = UIScreen.mainScreen().bounds
         
@@ -48,9 +49,7 @@ class MembersViewController: ContentViewController, UITableViewDelegate, UITable
         self.navigationController?.navigationBar.barStyle = UIBarStyle.BlackTranslucent
         self.navigationBar = self.navigationController?.navigationBar
         
-        fetchUsers()
-        
-        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+        self.fetchUsers()
     }
 
     override func didReceiveMemoryWarning() {
@@ -98,7 +97,7 @@ class MembersViewController: ContentViewController, UITableViewDelegate, UITable
     // MARK: Fetch
     
     // Stores users in [PFObject] and photos separately in NSMutableDictionary().
-    func fetchUsers(){
+    func fetchUsers() {
         let query = PFUser.query()
         query!.orderByAscending("username")
         query!.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
@@ -109,7 +108,6 @@ class MembersViewController: ContentViewController, UITableViewDelegate, UITable
                 self.tableView.reloadData()
             }
         }
-        
     }
     
     
@@ -144,7 +142,7 @@ class MembersViewController: ContentViewController, UITableViewDelegate, UITable
     
     func sortUsers(searchText: String) {
         let text = searchText.lowercaseString
-        for var i = self.usersToDisplay.count - 1; i >= 0; i-- {
+        for var i = self.usersToDisplay.count - 1; i >= 0; i -= 1 {
             var shouldIncludeUser = false
             if var name = usersToDisplay[i]["name"] as? String {
                 name = name.lowercaseString

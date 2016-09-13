@@ -15,6 +15,7 @@ class AdminViewController: ContentViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setMenuButton(withColor: "white")
+        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -46,8 +47,23 @@ extension AdminViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
+    }
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = NSBundle.mainBundle().loadNibNamed("SettingsHeaderView", owner: self, options: nil)[0] as! SettingsHeaderView
+        switch section {
+        default:
+            headerView.headerLabel.text = "MANAGE USERS"
+        }
+        headerView.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, headerView.frame.height)
+        return headerView
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

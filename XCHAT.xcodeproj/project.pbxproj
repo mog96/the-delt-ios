@@ -90,6 +90,7 @@
 		38F655E51B0D521200C5586A /* LogOutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F655E41B0D521200C5586A /* LogOutTableViewCell.swift */; };
 		D525F1B31D8693F20002D8B6 /* EditUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525F1B21D8693F20002D8B6 /* EditUsersViewController.swift */; };
 		D525F1B51D86960E0002D8B6 /* EditUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525F1B41D86960E0002D8B6 /* EditUserTableViewCell.swift */; };
+		D525F1B91D874CB30002D8B6 /* UITextField+NextTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525F1B81D874CB30002D8B6 /* UITextField+NextTextField.swift */; };
 		D582521F1D839322008313DF /* AdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D582521E1D839322008313DF /* AdminViewController.swift */; };
 		D58252211D839340008313DF /* AddUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58252201D839340008313DF /* AddUserViewController.swift */; };
 		D58252231D839354008313DF /* Admin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D58252221D839354008313DF /* Admin.storyboard */; };
@@ -198,6 +199,7 @@
 		C13DA56B626E1D28B7220808 /* Pods-XCHAT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XCHAT.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XCHAT/Pods-XCHAT.debug.xcconfig"; sourceTree = "<group>"; };
 		D525F1B21D8693F20002D8B6 /* EditUsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUsersViewController.swift; sourceTree = "<group>"; };
 		D525F1B41D86960E0002D8B6 /* EditUserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUserTableViewCell.swift; sourceTree = "<group>"; };
+		D525F1B81D874CB30002D8B6 /* UITextField+NextTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+NextTextField.swift"; sourceTree = "<group>"; };
 		D582521E1D839322008313DF /* AdminViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminViewController.swift; sourceTree = "<group>"; };
 		D58252201D839340008313DF /* AddUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddUserViewController.swift; sourceTree = "<group>"; };
 		D58252221D839354008313DF /* Admin.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Admin.storyboard; sourceTree = "<group>"; };
@@ -385,6 +387,7 @@
 			children = (
 				2515CDDA1C58BDD40008A2B2 /* LayoutUtils.swift */,
 				25E525291C59C8B600477C3D /* GestureUtils.swift */,
+				D525F1B81D874CB30002D8B6 /* UITextField+NextTextField.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -746,6 +749,7 @@
 				252237751C991AA20077AC77 /* PhotoVideoCell.swift in Sources */,
 				384F22FA1B0AE18D00A04081 /* NewThreadViewController.swift in Sources */,
 				387866121B0479D100623BC1 /* SettingsViewController.swift in Sources */,
+				D525F1B91D874CB30002D8B6 /* UITextField+NextTextField.swift in Sources */,
 				259FBA431B02F5A5006F1650 /* AppDelegate.swift in Sources */,
 				25518A411B0ED03B00550DE9 /* CommentCell.swift in Sources */,
 				252A6B401C4C950500FA1F75 /* SettingsDescriptionTableViewCell.swift in Sources */,

@@ -7,17 +7,18 @@
 //
 
 import UIKit
+import MBProgressHUD
 import MessageUI
 import Parse
 
-class SettingsViewController: ContentViewController, UITableViewDataSource, UITableViewDelegate, SwitchDelegate, FeedbackDelegate, LoggedOutDelegate, MFMailComposeViewControllerDelegate {
-
+class SettingsViewController: ContentViewController {
+    
+    @IBOutlet weak var tableView: UITableView!
+    
     var savedSettings = [String: Bool]()
     var window: UIWindow?
     
-    let kHeaderViewHeight = CGFloat(50)
-    
-    @IBOutlet weak var tableView: UITableView!
+    let settingsNames = ["Chat session started", "New photo uploaded"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +41,49 @@ class SettingsViewController: ContentViewController, UITableViewDataSource, UITa
     override func viewWillDisappear(animated: Bool) {
         UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
     }
-    
+}
+
+
+// MARK: - Helpers
+
+extension SettingsViewController {
+    func loginFacebook() {
+        /*
+        User.readingLoginManager.logInWithPublishPermissions(["publish_actions", "manage_pages", "publish_pages"], fromViewController: self, handler: { (result:FBSDKLoginManagerLoginResult!, error:NSError!) -> Void in
+            if(error != nil){
+                
+            }
+            if !self.hasPublishingCredentials(){
+                let alert = UIAlertController(title: "Facebook Permissions", message: "Please grant publishing permissions to share photos", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "Alright", style: .Default, handler: { (action:UIAlertAction) -> Void in
+                    self.postingLoader!.facebookSwitch.selected = false
+                }))
+                self.presentViewController(alert, animated: true, completion: { () -> Void in
+                })
+                return
+            }else{
+                if self.captionMode == CaptionMode.Text{
+                    self.facebookShareText()
+                }else{
+                    if self.captured_url != nil{
+                        self.facebookShareVideo()
+                        self.facebookName.hidden = true
+                    }else{
+                        self.facebookSharePhoto()
+                        self.facebookName.hidden = true
+                    }
+                }
+            }
+            }
+        )
+        */
+    }
+}
+
+
+// MARK: - Table View
+
+extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 4
     }
@@ -50,7 +93,7 @@ class SettingsViewController: ContentViewController, UITableViewDataSource, UITa
         case 0:
             return 3
         case 1:
-            return 1
+            return 2
         case 2:
             return 2
         default:
@@ -75,16 +118,15 @@ class SettingsViewController: ContentViewController, UITableViewDataSource, UITa
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return kHeaderViewHeight
+        return 50
     }
     
-    let settingsNames = ["Chat session started", "New photo uploaded"]
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
             if indexPath.row == 0 {
                 let cell = self.tableView.dequeueReusableCellWithIdentifier("SettingsDescriptionCell") as! SettingsDescriptionTableViewCell
-                cell.setDescription("Select when you'd like to receive push notifications from the delt.")
+                cell.setDescription("Select when you'd like to receive push notifications from The Delt.")
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCellWithIdentifier("NotificationCell", forIndexPath: indexPath) as! NotificationTableViewCell
@@ -98,13 +140,20 @@ class SettingsViewController: ContentViewController, UITableViewDataSource, UITa
                 return cell
             }
         case 1:
-            let cell = self.tableView.dequeueReusableCellWithIdentifier("SettingsDescriptionCell") as! SettingsDescriptionTableViewCell
-            cell.setDescription("Submit any comments or suggestions you may have to mateog@stanford.edu.")
-            return cell
+            switch indexPath.row {
+            case 0:
+                let cell = self.tableView.dequeueReusableCellWithIdentifier("SettingsDescriptionCell") as! SettingsDescriptionTableViewCell
+                cell.setDescription("Submit any comments or suggestions you may have to mateog@stanford.edu.")
+                return cell
+            default:
+                let cell = tableView.dequeueReusableCellWithIdentifier("FeedbackCell", forIndexPath: indexPath) as! FeedbackTableViewCell
+                cell.delegate = self
+                return cell
+            }
         case 2:
             if indexPath.row == 0 {
                 let cell = self.tableView.dequeueReusableCellWithIdentifier("SettingsDescriptionCell") as! SettingsDescriptionTableViewCell
-                cell.setDescription("Report any content you feel is inappropriate, or users you feel are abusing this service and should be blocked from the delt.")
+                cell.setDescription("Report any content you feel is inappropriate, or users you feel are abusing this service and should be blocked from The Delt.")
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCellWithIdentifier("FeedbackCell", forIndexPath: indexPath) as! FeedbackTableViewCell
@@ -124,17 +173,40 @@ class SettingsViewController: ContentViewController, UITableViewDataSource, UITa
             }
         }
     }
-    
+}
+
+
+// MARK: - Log Out Delegate
+
+extension SettingsViewController: LoggedOutDelegate {
     func loggedOutDelegate(logoutTableViewCell: LogOutTableViewCell) {
-        PFUser.logOut()
-        let loginStoryboard = UIStoryboard(name: "Login", bundle: nil)
-        let loginViewController = loginStoryboard.instantiateViewControllerWithIdentifier("LoginViewController") as? LoginViewController
-        
-        UIView.transitionWithView(self.view.window!, duration: 0.5, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
-            self.view.window!.rootViewController = loginViewController
-        }, completion: nil)
+        let alertVC = UIAlertController(title: "Log Out?", message: "Hate to see you go.", preferredStyle: UIAlertControllerStyle.Alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        alertVC.addAction(cancelAction)
+        if #available(iOS 9.0, *) {
+            alertVC.preferredAction = cancelAction
+        }
+        alertVC.addAction(UIAlertAction(title: "Log Out", style: .Default, handler: { (action: UIAlertAction) in
+            let currentHUD = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            currentHUD.label.text = "Logging Out..."
+            PFUser.logOutInBackgroundWithBlock({ (error: NSError?) in
+                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                let loginStoryboard = UIStoryboard(name: "Login", bundle: nil)
+                let loginViewController = loginStoryboard.instantiateViewControllerWithIdentifier("LoginViewController") as? LoginViewController
+                
+                UIView.transitionWithView(self.view.window!, duration: 0.5, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
+                    self.view.window!.rootViewController = loginViewController
+                    }, completion: nil)
+            })
+        }))
+        self.presentViewController(alertVC, animated: true, completion: nil)
     }
-   
+}
+
+
+// MARK: - Switch Delegate
+
+extension SettingsViewController: SwitchDelegate {
     func switchDelegate(switchtableViewCell: NotificationTableViewCell, switchValue: Bool) {
         savedSettings[switchtableViewCell.label.text!] = switchValue
         if switchValue{
@@ -145,10 +217,12 @@ class SettingsViewController: ContentViewController, UITableViewDataSource, UITa
             
         }
     }
-    
-    
-    // MARK: - Feedback Mail Compose
-    
+}
+
+
+// MARK: - Feedback Mail Compose
+
+extension SettingsViewController: MFMailComposeViewControllerDelegate, FeedbackDelegate {
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         
         // TODO: Handle each mail case? i.e. sent, not sent, etc.
@@ -156,19 +230,38 @@ class SettingsViewController: ContentViewController, UITableViewDataSource, UITa
         controller.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func presentReportUserMailCompose() {
+    func sendFeedback(type feedbackType: FeedbackType) {
         if MFMailComposeViewController.canSendMail() {
-            let subject = "Report User - the delt."
+            var subject = ""
             let recipient = "mateog@stanford.edu"
-            var body = "Name: "
-            if let name = PFUser.currentUser()?.objectForKey("name") as? String {
-                body += "\n" + name
+            var body = ""
+            
+            switch feedbackType {
+            case .ReportUser:
+                subject = "Report User - " + AppDelegate.appName
+                body = "Name: "
+                if let name = PFUser.currentUser()?.objectForKey("name") as? String {
+                    body += name
+                }
+                body += "\n" + "Username: "
+                if let username = PFUser.currentUser()?.username {
+                    body += username
+                }
+                body += "\n\nUser in question: [enter username]"
+                body += "\nComment: [optional]"
+                
+            default:
+                subject = "Feedback - " + AppDelegate.appName
+                body = "Name: "
+                if let name = PFUser.currentUser()?.objectForKey("name") as? String {
+                    body += name
+                }
+                body += "\n" + "Username: "
+                if let username = PFUser.currentUser()?.username {
+                    body += username
+                }
+                body += "\nFeedback: "
             }
-            if let username = PFUser.currentUser()?.username {
-                body += "\n" + "Username: " + username
-            }
-            body += "\n\nUser in question: [enter username]"
-            body += "\nComment: [optional]"
             
             let mailComposeVC = MFMailComposeViewController()
             mailComposeVC.mailComposeDelegate = self
@@ -189,5 +282,4 @@ class SettingsViewController: ContentViewController, UITableViewDataSource, UITa
             self.presentViewController(alert, animated: true, completion: nil)
         }
     }
-    
 }

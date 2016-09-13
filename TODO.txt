@@ -1,15 +1,13 @@
 ****************
 * IMPROVEMENTS *
 ****************
-
-	- IMPORTANT: Remove Parse developer keys.
 	
 	- Red refresh controls?
 	- Handle case where app installed over previous version, but user forced to log in again.
 	
 	- Add force touch menu.
 
-	- Build out admin view for adding users.
+	- Add Whisper for no network connection.
 
 	LOGIN
 	- Show loading on LOG IN tapped.
@@ -57,9 +55,6 @@
 	MENU
 	- implement numfaves and numphotos in menu
 	- prevent content view from moving when user tries to swipe to right with menu hidden
-
-	SETTINGS
-	- Redo with UITableViewController.
 
 	EXTRA
 	- refactor code using Store (see @Nick Troccoli's YikkityYak project)

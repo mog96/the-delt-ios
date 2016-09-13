@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import Reachability
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,22 +17,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var hamburgerViewController: HamburgerViewController!
     var menuViewController: MenuViewController!
     
+    static var appName = "the delt."
     static var allowRotation = false
     static var isAdmin = true
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        // Parse config.
-        let configuration = ParseClientConfiguration {
-            $0.applicationId = "cEpg8HAH75eVLcqfp9VfbQIdUJ1lz7XVMwrZ5EYc"
-            $0.clientKey = "Ldbj47H9IXlzbIKkW1W7DkK2YvbeAfdCTVyregTL"
-            // $0.server = "http://localhost:1337/parse"
-            $0.server = "http://thedelt.herokuapp.com/parse"
-        }
-        Parse.initializeWithConfiguration(configuration)
+        AppDelegate.appName = NSBundle.mainBundle().infoDictionary!["CFBundleDisplayName"] as! String
         
-        PFUser.enableRevocableSessionInBackgroundWithBlock { (error: NSError?) -> Void in
-            print("enableRevocableSessionInBackgroundWithBlock completed")
+        var keys: NSDictionary?
+        if let path = NSBundle.mainBundle().pathForResource("Keys", ofType: "plist") {
+            keys = NSDictionary(contentsOfFile: path)
+        }
+        
+        // Parse config.
+        if let _ = keys {
+            let configuration = ParseClientConfiguration {
+                $0.applicationId = keys!["parseApplicationId"] as? String
+                $0.clientKey = keys!["parseClientKey"] as? String
+                #if TARGET_IPHONE_SIMULATOR
+                    $0.server = "http://localhost:1337/parse"
+                #else
+                    $0.server = "http://mog.local:1337/parse"
+                #endif
+                //$0.server = "http://thedelt.herokuapp.com/parse"
+            }
+            Parse.initializeWithConfiguration(configuration)
+            
+            PFUser.enableRevocableSessionInBackgroundWithBlock { (error: NSError?) -> Void in
+                print("enableRevocableSessionInBackgroundWithBlock completion")
+            }
+            
+        } else {
+            print("Error: Unable to load Keys.plist.")
         }
         
         // Set up hamburger menu.
@@ -48,6 +66,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.hamburgerViewController!.contentViewController = initialNavigationController
         let reelViewController = initialNavigationController.viewControllers[0] as! ReelViewController
         reelViewController.menuDelegate = self.menuViewController
+        
+        /*
+        // Set up Reachability.
+        let reachability = Reachability(hostName: Parse.currentConfiguration()?.server)
+        reachability.unreachableBlock = { Void in
+            let alertVC = UIAlertController(title: "Unable to Connect", message: "Please check your network connection", preferredStyle: .Alert)
+            alertVC.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            if let currentVC = UIApplication.sharedApplication().keyWindow?.rootViewController {
+                currentVC.presentViewController(alertVC, animated: true, completion: nil)
+            }
+            print("UNABLE TO CONNECT")
+        }
+        reachability.startNotifier()
+        */
         
         // Check if user is logged in.
         if PFUser.currentUser() == nil {
