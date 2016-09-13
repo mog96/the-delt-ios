@@ -195,8 +195,33 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CalendarCell" rowHeight="55" id="fbb-t1-D4S">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AuxCell" rowHeight="55" id="xdm-Rw-6WY">
                                         <rect key="frame" x="0.0" y="304" width="320" height="55"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xdm-Rw-6WY" id="nQS-kY-cHq">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="54.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AUX" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="64A-7N-Con">
+                                                    <rect key="frame" x="15" y="10.5" width="63" height="34"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="63" id="FXe-QI-Qn7"/>
+                                                        <constraint firstAttribute="height" constant="34" id="XNt-sz-Vew"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="28"/>
+                                                    <color key="textColor" red="0.40709350649999998" green="0.54860040290000001" blue="0.81752539700000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="64A-7N-Con" firstAttribute="centerY" secondItem="nQS-kY-cHq" secondAttribute="centerY" id="SV1-6d-BuV"/>
+                                                <constraint firstItem="64A-7N-Con" firstAttribute="leading" secondItem="nQS-kY-cHq" secondAttribute="leading" constant="15" id="bNQ-Vg-uQW"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CalendarCell" rowHeight="55" id="fbb-t1-D4S">
+                                        <rect key="frame" x="0.0" y="359" width="320" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fbb-t1-D4S" id="K0Z-QM-DQh">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="54.5"/>
@@ -221,7 +246,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MembersCell" rowHeight="55" id="V95-PX-9t2">
-                                        <rect key="frame" x="0.0" y="359" width="320" height="55"/>
+                                        <rect key="frame" x="0.0" y="414" width="320" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="V95-PX-9t2" id="XcE-ng-MfT">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="54.5"/>
@@ -246,7 +271,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SettingsCell" rowHeight="55" id="Ypd-Y3-e3L">
-                                        <rect key="frame" x="0.0" y="414" width="320" height="55"/>
+                                        <rect key="frame" x="0.0" y="469" width="320" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ypd-Y3-e3L" id="eCZ-5H-Hv0">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="54.5"/>
@@ -271,7 +296,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AdminCell" rowHeight="55" id="01T-gD-19X">
-                                        <rect key="frame" x="0.0" y="469" width="320" height="55"/>
+                                        <rect key="frame" x="0.0" y="524" width="320" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="01T-gD-19X" id="LS2-FO-V0E">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="54.5"/>

@@ -9,7 +9,6 @@
         <!--ADMIN-->
         <scene sceneID="vND-ei-3E5">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aLB-vP-VuA" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="bJI-Zs-ZBK" customClass="AdminViewController" customModule="XCHAT" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9Nx-zc-fyJ"/>
@@ -66,13 +65,13 @@
                         <outlet property="tableView" destination="QhO-D5-Nvd" id="rTX-Px-b2i"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aLB-vP-VuA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1327" y="364"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="7X3-Fg-xXR">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="GIJ-bh-SSE" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="AdminNC" automaticallyAdjustsScrollViewInsets="NO" id="aAN-3Q-pVc" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
@@ -85,6 +84,7 @@
                         <segue destination="bJI-Zs-ZBK" kind="relationship" relationship="rootViewController" id="QfW-QW-SZ8"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GIJ-bh-SSE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="795" y="364"/>
         </scene>

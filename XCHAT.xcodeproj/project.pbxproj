@@ -94,6 +94,9 @@
 		D582521F1D839322008313DF /* AdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D582521E1D839322008313DF /* AdminViewController.swift */; };
 		D58252211D839340008313DF /* AddUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58252201D839340008313DF /* AddUserViewController.swift */; };
 		D58252231D839354008313DF /* Admin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D58252221D839354008313DF /* Admin.storyboard */; };
+		D5FB88A71D87F6F600984C19 /* Aux.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5FB88A61D87F6F600984C19 /* Aux.storyboard */; };
+		D5FB88A91D88054200984C19 /* AuxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB88A81D88054200984C19 /* AuxViewController.swift */; };
+		D5FB88AB1D8807C900984C19 /* AuxControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB88AA1D8807C900984C19 /* AuxControlsView.swift */; };
 		E61D7AA9D610766D9F786185 /* Pods_XCHAT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA26B4F882840903BF5F9FF4 /* Pods_XCHAT.framework */; };
 /* End PBXBuildFile section */
 
@@ -203,6 +206,9 @@
 		D582521E1D839322008313DF /* AdminViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminViewController.swift; sourceTree = "<group>"; };
 		D58252201D839340008313DF /* AddUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddUserViewController.swift; sourceTree = "<group>"; };
 		D58252221D839354008313DF /* Admin.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Admin.storyboard; sourceTree = "<group>"; };
+		D5FB88A61D87F6F600984C19 /* Aux.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Aux.storyboard; sourceTree = "<group>"; };
+		D5FB88A81D88054200984C19 /* AuxViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuxViewController.swift; sourceTree = "<group>"; };
+		D5FB88AA1D8807C900984C19 /* AuxControlsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuxControlsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -340,6 +346,7 @@
 				385C74501B0ECB70009BAC7A /* Profile */,
 				384F22F01B0AE0D500A04081 /* Chat */,
 				381125AB1B0C1CB700DBBAD2 /* Reel */,
+				D5FB88A51D87F6DA00984C19 /* Aux */,
 				3890A1CB1B0B17B900B4FF00 /* Calendar */,
 				3830AC891B157D5700CA5C9B /* Members */,
 				384F22EF1B0AE08A00A04081 /* Settings */,
@@ -521,6 +528,16 @@
 			name = Admin;
 			sourceTree = "<group>";
 		};
+		D5FB88A51D87F6DA00984C19 /* Aux */ = {
+			isa = PBXGroup;
+			children = (
+				D5FB88A61D87F6F600984C19 /* Aux.storyboard */,
+				D5FB88A81D88054200984C19 /* AuxViewController.swift */,
+				D5FB88AA1D8807C900984C19 /* AuxControlsView.swift */,
+			);
+			name = Aux;
+			sourceTree = "<group>";
+		};
 		E1B1EAB2321B937C8A1DA55A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -631,6 +648,7 @@
 				259FBA4A1B02F5A6006F1650 /* Images.xcassets in Resources */,
 				252208991C5DF532004FAE9A /* CalendarCells.xib in Resources */,
 				252A6B431C4C9BAE00FA1F75 /* SettingsHeaderView.xib in Resources */,
+				D5FB88A71D87F6F600984C19 /* Aux.storyboard in Resources */,
 				254A19AA1B18768E0030F316 /* Keys.plist in Resources */,
 				258D498C1B15C69600A632D3 /* WelcomeChatView.xib in Resources */,
 			);
@@ -713,6 +731,7 @@
 				385C74561B0ECD42009BAC7A /* EditableProfileViewController.swift in Sources */,
 				38D9FB961B1558530030B6D9 /* SpaceCell.swift in Sources */,
 				3890A1D11B0B17F600B4FF00 /* NewEventViewController.swift in Sources */,
+				D5FB88A91D88054200984C19 /* AuxViewController.swift in Sources */,
 				255BE97C1B16E3900001B160 /* ProfileCell.swift in Sources */,
 				38F655E11B0D235700C5586A /* ReelGridViewController.swift in Sources */,
 				25C6CCDC1B12FF1600EADB5B /* CommentViewController.swift in Sources */,
@@ -745,6 +764,7 @@
 				252A6B451C4C9EF500FA1F75 /* SettingsHeaderView.swift in Sources */,
 				252A6B521C4CD8C700FA1F75 /* ContentViewController.swift in Sources */,
 				38D9FB941B1558490030B6D9 /* DescriptionCell.swift in Sources */,
+				D5FB88AB1D8807C900984C19 /* AuxControlsView.swift in Sources */,
 				38F655DD1B0D231B00C5586A /* PhotoCell.swift in Sources */,
 				252237751C991AA20077AC77 /* PhotoVideoCell.swift in Sources */,
 				384F22FA1B0AE18D00A04081 /* NewThreadViewController.swift in Sources */,
