@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FBSDKLoginKit
 import MBProgressHUD
 import MessageUI
 import Parse
@@ -46,9 +47,10 @@ class SettingsViewController: ContentViewController {
 
 // MARK: - Helpers
 
+/*
 extension SettingsViewController {
-    func loginFacebook() {
-        /*
+    func loginFacebookRead() {
+        FBSDKLoginManager().logInWithReadPermissions([""], fromViewController: <#T##UIViewController!#>, handler: <#T##FBSDKLoginManagerRequestTokenHandler!##FBSDKLoginManagerRequestTokenHandler!##(FBSDKLoginManagerLoginResult!, NSError!) -> Void#>)
         User.readingLoginManager.logInWithPublishPermissions(["publish_actions", "manage_pages", "publish_pages"], fromViewController: self, handler: { (result:FBSDKLoginManagerLoginResult!, error:NSError!) -> Void in
             if(error != nil){
                 
@@ -76,10 +78,9 @@ extension SettingsViewController {
             }
             }
         )
-        */
     }
 }
-
+*/
 
 // MARK: - Table View
 
