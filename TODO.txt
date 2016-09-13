@@ -9,18 +9,23 @@
 	- Add Whisper for no network connection.
 	
 	GAME PLAN THRU 9/23:
-	- Finish admin implementation with Parse cloud code.
 	- Setup Facebook posting to secret group, submit for Facebook review.
 		- Reading for admins. Will likely accompany with Reel API revision.
 	- Add Camera and Filters, swanky UI (∆ snap/recording button).
 		- Facebook posting from within app.
 	- Start Chat cloud code and multiple conversartion topics.
 	- Start integrating email list.
+	- Show loading on LOG IN tapped.
+		- Idea: On login button pressed, screen fades black, and if credentials incorrect, black fades out and new background image is present.
 
 	GAME PLAN THRU DECEMBER:
 	- Complete Chat code.
 	- Integrate email list.
 	- Integrate reading and posting to Google Cal.
+	- Add admin user flag. Unlocks:
+		- Post deletion.
+		- User delete via Parse cloud code.
+		- User admin status (admin's can't remove admins).
 	
 	WISHLIST
 	- Secondary Reel UI, kind of like Facebook's video UI... Something cool and resume-worthy.
@@ -28,10 +33,7 @@
 	- Handle case where app installed over previous version, but user forced to log in again.
 
 	LOGIN
-	- Show loading on LOG IN tapped.
 	- Successful login transition causes button icons to appear in the top left corner at first.
-
-	- Cool animation on log in. Idea: On login button pressed, screen fades black, and if credentials incorrect, black fades out and new background image is present.
 
 	PROFILE
 	- Fix background photo upload by saving a copy to local storage after it's set.
