@@ -97,7 +97,6 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
     override func viewDidDisappear(animated: Bool) {
         self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
         self.navigationController?.navigationBar.shadowImage = nil
-        // self.navigationController?.view.backgroundColor = UIColor.clearColor()
         
         if !self.editable {
             self.photoImageView.image = nil
@@ -404,16 +403,4 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
             }
         })
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

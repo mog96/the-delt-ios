@@ -2,16 +2,37 @@
 * IMPROVEMENTS *
 ****************
 
-	- IMPORTANT: Remove Parse developer keys.
+	QUICK:
+	- Show previous calendar events on scroll up!
+	- allow going back to ImagePicker from ADD CAPTION (EASY)
 	- Red refresh controls?
-	- Handle case where app installed over previous version, but user forced to log in again.
+	- Add Whisper for no network connection.
 	
-	- Add force touch menu.
+	GAME PLAN THRU 9/23:
+	- Setup Facebook posting to secret group, submit for Facebook review.
+		- Reading for admins. Will likely accompany with Reel API revision.
+	- Add Camera and Filters, swanky UI (∆ snap/recording button).
+		- Facebook posting from within app.
+	- Start Chat cloud code and multiple conversartion topics.
+	- Start integrating email list.
+	- Show loading on LOG IN tapped.
+		- Idea: On login button pressed, screen fades black, and if credentials incorrect, black fades out and new background image is present.
 
-	- Build out admin view for adding users.
+	GAME PLAN THRU DECEMBER:
+	- Complete Chat code.
+	- Integrate email list.
+	- Integrate reading and posting to Google Cal.
+	- Add admin user flag. Unlocks:
+		- Post deletion.
+		- User delete via Parse cloud code.
+		- User admin status (admin's can't remove admins).
+	
+	WISHLIST
+	- Secondary Reel UI, kind of like Facebook's video UI... Something cool and resume-worthy.
+	- Add force touch menu.
+	- Handle case where app installed over previous version, but user forced to log in again.
 
 	LOGIN
-	- Show loading on LOG IN tapped.
 	- Successful login transition causes button icons to appear in the top left corner at first.
 
 	PROFILE
@@ -24,7 +45,6 @@
 	- Use refresh control to load earlier messages.
 
 	REEL
-	- allow going back to ImagePicker from ADD CAPTION (EASY)
 	* photo posting
 		- debug ADD CAPTION text editor (placeholder text)
 		- attach current user's username to photos posted
@@ -43,13 +63,12 @@
 	- Add loading to event create.
 	- Advance start time to next hour, not current.
 	- CHECK to make Thursday appear as Th (not T)
-	- add unique color for each day of week
-	- Show previous events on scroll up!
+	- Add unique color for each day of week?
 
 	MEMBERS
-	- add member detail view (same look as profile)
-		- member quote
-		- background photo?
+	- FIX: search bar exit not animating properly
+	- photos not displaying
+	- If current user's cell is tapped, go to profile edit view
 
 	MENU
 	- implement numfaves and numphotos in menu
@@ -62,16 +81,12 @@
 * BUGS *
 ********
 	
-	- Profile photo upload causes exception 'This query has an outstanding network connection. You have to wait until it's done.' May only be when you try and quit the app.
-
+	- Profile photo upload causes exception 'This query has an outstanding network connection. You have to wait until it's done.' May only be when you try and quit the app:
 		Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: 'This query has an outstanding network connection. You have to wait until it's done.'
 
 *********
 * IDEAS *
 *********
-
-	- Create an offline testing harness (dummy events/messages and pass them directly to the server calls)
-
 
 
 

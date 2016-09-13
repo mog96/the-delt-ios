@@ -19,8 +19,7 @@ class NotificationTableViewCell: UITableViewCell{
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        self.onSwitch.tintColor = UIColor(red: 104/256, green: 140/256, blue: 208/256, alpha: 1)
+        self.onSwitch.tintColor = LayoutUtils.blueColor
     }
     
     @IBAction func switchChanged(sender: AnyObject) {

@@ -14,6 +14,7 @@ class ContentViewController: UIViewController {
     var menuShown = false
     
     var menuDelegate: MenuDelegate!
+    var hamburgerViewController: HamburgerViewController!
     
     override func viewDidLoad() {
         self.appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate

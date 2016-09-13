@@ -9,13 +9,19 @@
 import UIKit
 
 protocol FeedbackDelegate {
-    func presentReportUserMailCompose()
+    func sendFeedback(type feedbackType: FeedbackType)
+}
+
+enum FeedbackType {
+    case Feedback
+    case ReportUser
 }
 
 class FeedbackTableViewCell: UITableViewCell {
     
     @IBOutlet weak var feedbackButton: UIButton!
     
+    var feedbackType: FeedbackType = .Feedback
     var delegate: FeedbackDelegate?
     
     override func awakeFromNib() {
@@ -24,7 +30,7 @@ class FeedbackTableViewCell: UITableViewCell {
     }
     
     @IBAction func onFeedbackButtonTapped(sender: AnyObject) {
-        delegate?.presentReportUserMailCompose()
+        self.delegate?.sendFeedback(type: self.feedbackType)
     }
     
     override func setSelected(selected: Bool, animated: Bool) {

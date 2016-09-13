@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="zzO-IZ-yTD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="zzO-IZ-yTD">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
         <!--MEMBERS-->
@@ -30,7 +30,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="148"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="E10E1C09-4833-44CB-AA93-96570DBF14D1" translatesAutoresizingMaskIntoConstraints="NO" id="GNb-Np-vu0">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="5BFEA06A-FD20-44E8-A477-215F5F8617F9" translatesAutoresizingMaskIntoConstraints="NO" id="GNb-Np-vu0">
                                                     <rect key="frame" x="16" y="16" width="116" height="116"/>
                                                     <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
@@ -160,7 +160,8 @@
             <objects>
                 <navigationController storyboardIdentifier="Members" automaticallyAdjustsScrollViewInsets="NO" id="zzO-IZ-yTD" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="5eV-51-W0h">
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="5eV-51-W0h">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -175,10 +176,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="E10E1C09-4833-44CB-AA93-96570DBF14D1" width="160" height="160">
+        <image name="5BFEA06A-FD20-44E8-A477-215F5F8617F9" width="160" height="160">
             <mutableData key="keyedArchiveRepresentation">
-YnBsaXN0MDDUAQIDBAUGOzxYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
-GxwgISksLzU4VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA
+YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
+GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA
 DBIAwAAAgAKACtISCRMVWk5TLm9iamVjdHOhFIADgAnSEgkXGqIYGYAEgAWACBAA0h0JHh9fEBROU1RJ
 RkZSZXByZXNlbnRhdGlvboAGgAdPEgABLsJNTQAqAAEsCGKFvWKFvWKFvWKFvWKFvWKFvWKFvWKFvWKF
 vWKFvWKFvWKFvWKFvWKFvWKFvWKFvWKHvWKHvWKHvWKHvWOGvmOGvmOGvmOGvmaGv2aGv2aGv2aGv2eF
@@ -1472,15 +1473,15 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAHRleHQAAAAARkIAAFhZWiAAAAAAAAD21gABAAAAANMtWFlaIAAAAAAAAAMW
 AAADMwAAAqRYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSg
 AAAPhAAAts9jdXJ2AAAAAAAAABoAAADLAckDYwWSCGsL9hA/FVEbNCHxKZAyGDuSRgVRd13ta3B6BYmx
-mnysab9908PpMP//0iIjJCVaJGNsYXNzbmFtZVgkY2xhc3Nlc18QEE5TQml0bWFwSW1hZ2VSZXCjJico
-XxAQTlNCaXRtYXBJbWFnZVJlcFpOU0ltYWdlUmVwWE5TT2JqZWN00iIjKitXTlNBcnJheaIqKNIiIy0u
-Xk5TTXV0YWJsZUFycmF5oy0qKNMwMQkyMzRXTlNXaGl0ZVxOU0NvbG9yU3BhY2VEMCAwABADgAvSIiM2
-N1dOU0NvbG9yojYo0iIjOTpXTlNJbWFnZaI5KF8QD05TS2V5ZWRBcmNoaXZlctE9PlRyb290gAEAAAAI
-AAAAEQAAABoAAAAjAAAALQAAADIAAAA3AAAARQAAAEsAAABUAAAAWwAAAGgAAABvAAAAdwAAAHkAAAB+
-AAAAgAAAAIIAAACHAAAAkgAAAJQAAACWAAAAmAAAAJ0AAACgAAAAogAAAKQAAACmAAAAqAAAAK0AAADE
-AAAAxgAAAMgAAS+QAAEvlQABL6AAAS+pAAEvvAABL8AAAS/TAAEv3gABL+cAAS/sAAEv9AABL/cAAS/8
-AAEwCwABMA8AATAWAAEwHgABMCsAATAwAAEwMgABMDQAATA5AAEwQQABMEQAATBJAAEwUQABMFQAATBm
-AAEwaQABMG4AAAAAAAAEAQAAAAAAAAA/AAAAAAAAAAAAAAAAAAEwcA
+mnysab9908PpMP//0iIjJCVaJGNsYXNzbmFtZVgkY2xhc3Nlc18QEE5TQml0bWFwSW1hZ2VSZXCjJCYn
+Wk5TSW1hZ2VSZXBYTlNPYmplY3TSIiMpKldOU0FycmF5oikn0iIjLC1eTlNNdXRhYmxlQXJyYXmjLCkn
+0y8wCTEyM1dOU1doaXRlXE5TQ29sb3JTcGFjZUQwIDAAEAOAC9IiIzU2V05TQ29sb3KiNSfSIiM4OVdO
+U0ltYWdlojgnXxAPTlNLZXllZEFyY2hpdmVy0Tw9VHJvb3SAAQAAAAgAAAARAAAAGgAAACMAAAAtAAAA
+MgAAADcAAABFAAAASwAAAFQAAABbAAAAaAAAAG8AAAB3AAAAeQAAAH4AAACAAAAAggAAAIcAAACSAAAA
+lAAAAJYAAACYAAAAnQAAAKAAAACiAAAApAAAAKYAAACoAAAArQAAAMQAAADGAAAAyAABL5AAAS+VAAEv
+oAABL6kAAS+8AAEvwAABL8sAAS/UAAEv2QABL+EAAS/kAAEv6QABL/gAAS/8AAEwAwABMAsAATAYAAEw
+HQABMB8AATAhAAEwJgABMC4AATAxAAEwNgABMD4AATBBAAEwUwABMFYAATBbAAAAAAAABAEAAAAAAAAA
+PgAAAAAAAAAAAAAAAAABMF0
 </mutableData>
         </image>
     </resources>
