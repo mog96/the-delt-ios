@@ -21,7 +21,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     let kProfileCellHeight: CGFloat = 172
     let kMenuCellHeight: CGFloat = 55
-    var kNumCells = 7
+    var kNumCells = 6
     
     override func viewDidLoad() {
         super.viewDidLoad()
