@@ -21,8 +21,8 @@ class DateTitleCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        artworkImageView.layer.cornerRadius = 2
-        artworkImageView.clipsToBounds = true
+        self.artworkImageView.layer.cornerRadius = 2
+        self.artworkImageView.clipsToBounds = true
     }
     
     override func setSelected(selected: Bool, animated: Bool) {

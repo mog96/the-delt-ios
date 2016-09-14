@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--CALENDAR-->
@@ -17,12 +18,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kLF-eg-sMa">
+                                <rect key="frame" x="79" y="264" width="162" height="41"/>
+                                <string key="text">No upcoming events.
+Tap '+' to add.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="227" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="iTg-gk-xXq">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="DateTitleCell" rowHeight="155" id="d2h-hg-gTU" customClass="DateTitleCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="86" width="320" height="155"/>
+                                        <rect key="frame" x="0.0" y="22" width="320" height="155"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="d2h-hg-gTU" id="pUW-rv-3hr">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="155"/>
@@ -88,7 +97,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LocationCell" rowHeight="16" id="U69-Pz-wAc" customClass="LocationCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="241" width="320" height="16"/>
+                                        <rect key="frame" x="0.0" y="177" width="320" height="16"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="U69-Pz-wAc" id="7RF-IK-JiR">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="16"/>
@@ -113,7 +122,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="DescriptionCell" rowHeight="24" id="Wyd-vD-I1a" customClass="DescriptionCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="257" width="320" height="24"/>
+                                        <rect key="frame" x="0.0" y="193" width="320" height="24"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Wyd-vD-I1a" id="r85-mH-4j3">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="24"/>
@@ -138,7 +147,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SpaceCell" rowHeight="16" id="R8k-41-3Kz" customClass="SpaceCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="281" width="320" height="16"/>
+                                        <rect key="frame" x="0.0" y="217" width="320" height="16"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="R8k-41-3Kz" id="lNE-fw-gMv">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="16"/>
@@ -165,21 +174,13 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kLF-eg-sMa">
-                                <rect key="frame" x="79" y="263.5" width="162" height="41"/>
-                                <string key="text">No upcoming events.
-Tap '+' to add.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="0jh-Y5-XSm" firstAttribute="top" secondItem="iTg-gk-xXq" secondAttribute="bottom" id="8Td-Sk-uoX"/>
                             <constraint firstAttribute="trailing" secondItem="iTg-gk-xXq" secondAttribute="trailing" id="NsJ-2k-mAl"/>
                             <constraint firstItem="kLF-eg-sMa" firstAttribute="centerY" secondItem="yfj-Kh-Y7D" secondAttribute="centerY" id="PRS-yC-ZW9"/>
-                            <constraint firstItem="iTg-gk-xXq" firstAttribute="top" secondItem="yfj-Kh-Y7D" secondAttribute="top" id="aXh-Gt-ghJ"/>
+                            <constraint firstItem="iTg-gk-xXq" firstAttribute="top" secondItem="yfj-Kh-Y7D" secondAttribute="topMargin" id="XOY-wV-YcO"/>
                             <constraint firstItem="iTg-gk-xXq" firstAttribute="leading" secondItem="yfj-Kh-Y7D" secondAttribute="leading" id="epn-GO-0JQ"/>
                             <constraint firstItem="kLF-eg-sMa" firstAttribute="centerX" secondItem="yfj-Kh-Y7D" secondAttribute="centerX" id="jGx-vI-es6"/>
                         </constraints>
@@ -200,7 +201,7 @@ Tap '+' to add.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X6S-du-hLX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="372" y="-303"/>
+            <point key="canvasLocation" x="904" y="-303"/>
         </scene>
         <!--PAST EVENTS-->
         <scene sceneID="b67-TR-4DU">
@@ -375,25 +376,7 @@ Tap '+' to add.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kcw-NE-qgv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="904" y="-303"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="pnK-R3-b1R">
-            <objects>
-                <navigationController storyboardIdentifier="Nav" automaticallyAdjustsScrollViewInsets="NO" id="pio-rF-K3O" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="0Ff-22-5tP">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="AhH-mZ-BXr" kind="relationship" relationship="rootViewController" id="hya-uq-cEC"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="NKi-uc-k8z" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-140" y="-303"/>
+            <point key="canvasLocation" x="1436" y="-303"/>
         </scene>
         <!--ADD EVENT-->
         <scene sceneID="hNL-aY-zYx">
@@ -783,7 +766,7 @@ Tap '+' to add.</string>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2481" y="-303"/>
+            <point key="canvasLocation" x="3013" y="-303"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="6CU-wr-5VP">
@@ -821,7 +804,26 @@ Tap '+' to add.</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="df6-uA-ypf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1949" y="-303"/>
+            <point key="canvasLocation" x="2481" y="-303"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="eSB-NL-QYd">
+            <objects>
+                <navigationController storyboardIdentifier="Nav" automaticallyAdjustsScrollViewInsets="NO" id="4Sg-BF-r0f" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="MGl-26-VCM">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="AhH-mZ-BXr" kind="relationship" relationship="rootViewController" id="LZW-Jn-xcM"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ske-To-D7n" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="372" y="-303"/>
         </scene>
     </scenes>
     <resources>

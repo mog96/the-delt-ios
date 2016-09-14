@@ -89,16 +89,6 @@ class LoginViewController: UIViewController {
         self.loginView.setNeedsLayout()
         self.loginView.layoutIfNeeded()
         self.loginViewLoginHeight = self.loginView.frame.height
-        
-        // Set up Reachability.
-        let reachability = Reachability(hostName: Parse.currentConfiguration()?.server)
-        reachability.unreachableBlock = { Void in
-            let alertVC = UIAlertController(title: "Unable to Connect", message: "Please check your network connection.", preferredStyle: .Alert)
-            alertVC.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-            self.presentViewController(alertVC, animated: true, completion: nil)
-            print("UNABLE TO CONNECT")
-        }
-        reachability.startNotifier()
     }
     
     override func viewDidAppear(animated: Bool) {
