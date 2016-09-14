@@ -76,7 +76,6 @@
 		3887EA061B043AFC00D16CF6 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3887EA051B043AFC00D16CF6 /* Accounts.framework */; };
 		3887EA081B043B0000D16CF6 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3887EA071B043B0000D16CF6 /* Social.framework */; };
 		3890A1D11B0B17F600B4FF00 /* NewEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3890A1D01B0B17F600B4FF00 /* NewEventViewController.swift */; };
-		3890A1D31B0B187C00B4FF00 /* Calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3890A1D21B0B187C00B4FF00 /* Calendar.storyboard */; };
 		38D9FB8E1B1557F40030B6D9 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D9FB8D1B1557F40030B6D9 /* CalendarViewController.swift */; };
 		38D9FB901B15582E0030B6D9 /* DateTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D9FB8F1B15582E0030B6D9 /* DateTitleCell.swift */; };
 		38D9FB921B15583B0030B6D9 /* LocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D9FB911B15583B0030B6D9 /* LocationCell.swift */; };
@@ -91,6 +90,7 @@
 		D525F1B31D8693F20002D8B6 /* EditUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525F1B21D8693F20002D8B6 /* EditUsersViewController.swift */; };
 		D525F1B51D86960E0002D8B6 /* EditUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525F1B41D86960E0002D8B6 /* EditUserTableViewCell.swift */; };
 		D525F1B91D874CB30002D8B6 /* UITextField+NextTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525F1B81D874CB30002D8B6 /* UITextField+NextTextField.swift */; };
+		D54BBA891D891B730028FC12 /* Calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D54BBA881D891B730028FC12 /* Calendar.storyboard */; };
 		D582521F1D839322008313DF /* AdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D582521E1D839322008313DF /* AdminViewController.swift */; };
 		D58252211D839340008313DF /* AddUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58252201D839340008313DF /* AddUserViewController.swift */; };
 		D58252231D839354008313DF /* Admin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D58252221D839354008313DF /* Admin.storyboard */; };
@@ -185,7 +185,6 @@
 		3887EA051B043AFC00D16CF6 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		3887EA071B043B0000D16CF6 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		3890A1D01B0B17F600B4FF00 /* NewEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewEventViewController.swift; sourceTree = "<group>"; };
-		3890A1D21B0B187C00B4FF00 /* Calendar.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Calendar.storyboard; sourceTree = "<group>"; };
 		38D9FB8D1B1557F40030B6D9 /* CalendarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		38D9FB8F1B15582E0030B6D9 /* DateTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTitleCell.swift; sourceTree = "<group>"; };
 		38D9FB911B15583B0030B6D9 /* LocationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationCell.swift; sourceTree = "<group>"; };
@@ -203,6 +202,7 @@
 		D525F1B21D8693F20002D8B6 /* EditUsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUsersViewController.swift; sourceTree = "<group>"; };
 		D525F1B41D86960E0002D8B6 /* EditUserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUserTableViewCell.swift; sourceTree = "<group>"; };
 		D525F1B81D874CB30002D8B6 /* UITextField+NextTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+NextTextField.swift"; sourceTree = "<group>"; };
+		D54BBA881D891B730028FC12 /* Calendar.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Calendar.storyboard; path = ../../../../../Desktop/Calendar.storyboard; sourceTree = "<group>"; };
 		D582521E1D839322008313DF /* AdminViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminViewController.swift; sourceTree = "<group>"; };
 		D58252201D839340008313DF /* AddUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddUserViewController.swift; sourceTree = "<group>"; };
 		D58252221D839354008313DF /* Admin.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Admin.storyboard; sourceTree = "<group>"; };
@@ -255,7 +255,7 @@
 		2522089A1C5DF618004FAE9A /* Layout */ = {
 			isa = PBXGroup;
 			children = (
-				3890A1D21B0B187C00B4FF00 /* Calendar.storyboard */,
+				D54BBA881D891B730028FC12 /* Calendar.storyboard */,
 				252208981C5DF532004FAE9A /* CalendarCells.xib */,
 			);
 			name = Layout;
@@ -633,11 +633,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D54BBA891D891B730028FC12 /* Calendar.storyboard in Resources */,
 				D58252231D839354008313DF /* Admin.storyboard in Resources */,
 				259FBA481B02F5A5006F1650 /* Menu.storyboard in Resources */,
 				381BD6C81B158C5F005C6D1C /* Members.storyboard in Resources */,
 				385C74521B0ECB8A009BAC7A /* Profile.storyboard in Resources */,
-				3890A1D31B0B187C00B4FF00 /* Calendar.storyboard in Resources */,
 				259FBA4D1B02F5A6006F1650 /* LaunchScreen.xib in Resources */,
 				387866101B0478C400623BC1 /* Settings.storyboard in Resources */,
 				255BE9821B170E9C0001B160 /* Chat.storyboard in Resources */,

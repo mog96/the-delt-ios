@@ -57,6 +57,7 @@ class NewEventViewController: UIViewController, UITableViewDelegate, UITableView
         case 0:
             return self.eventDescriptionCell
         case 1:
+            self.startDatePickerCell.setDateToNextHour()
             return self.startDatePickerCell
         default:
             return self.endDatePickerCell
