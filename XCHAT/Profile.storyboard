@@ -21,7 +21,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7MR-wv-vVO">
-                                        <rect key="frame" x="60" y="515" width="200" height="17"/>
+                                        <rect key="frame" x="60" y="507" width="200" height="17"/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
@@ -52,9 +52,9 @@
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Tell us about yourself." translatesAutoresizingMaskIntoConstraints="NO" id="OrG-gK-qAW">
-                                        <rect key="frame" x="55" y="395" width="211" height="108"/>
+                                        <rect key="frame" x="55" y="395" width="211" height="100"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="108" id="Fhd-vs-vSx"/>
+                                            <constraint firstAttribute="height" constant="100" id="Fhd-vs-vSx"/>
                                             <constraint firstAttribute="width" constant="211" id="R6g-Qi-vmE"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
@@ -92,7 +92,7 @@
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <constraints>
-                                    <constraint firstItem="eN1-sJ-Pnu" firstAttribute="top" secondItem="7MR-wv-vVO" secondAttribute="bottom" id="4VA-Cd-5Eh"/>
+                                    <constraint firstItem="eN1-sJ-Pnu" firstAttribute="top" secondItem="7MR-wv-vVO" secondAttribute="bottom" constant="8" id="4VA-Cd-5Eh"/>
                                     <constraint firstItem="eN1-sJ-Pnu" firstAttribute="trailing" secondItem="Hss-q8-sA2" secondAttribute="trailing" id="4cC-sw-Cxl"/>
                                     <constraint firstItem="eN1-sJ-Pnu" firstAttribute="trailing" secondItem="Tsv-tX-sYK" secondAttribute="trailing" id="8LA-vs-aad"/>
                                     <constraint firstItem="Hss-q8-sA2" firstAttribute="top" secondItem="ytx-yl-3lt" secondAttribute="bottom" constant="4" id="8g1-qc-V3x"/>

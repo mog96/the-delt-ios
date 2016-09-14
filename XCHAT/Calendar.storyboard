@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
         <!--CALENDAR-->
@@ -21,29 +21,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PastEventsCell" rowHeight="47" id="IQd-aw-26Z">
-                                        <rect key="frame" x="0.0" y="86" width="320" height="47"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IQd-aw-26Z" id="AhL-De-BhY">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="47"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="See past events" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KpM-ut-jjI">
-                                                    <rect key="frame" x="92" y="12" width="136" height="23"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="KpM-ut-jjI" firstAttribute="centerX" secondItem="AhL-De-BhY" secondAttribute="centerX" id="qd5-2R-eIe"/>
-                                                <constraint firstItem="KpM-ut-jjI" firstAttribute="centerY" secondItem="AhL-De-BhY" secondAttribute="centerY" id="uiQ-5M-3PW"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.94223819360000005" green="0.4325872281" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    </tableViewCell>
                                     <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="DateTitleCell" rowHeight="155" id="d2h-hg-gTU" customClass="DateTitleCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="133" width="320" height="155"/>
+                                        <rect key="frame" x="0.0" y="86" width="320" height="155"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="d2h-hg-gTU" id="pUW-rv-3hr">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="155"/>
@@ -109,7 +88,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LocationCell" rowHeight="16" id="U69-Pz-wAc" customClass="LocationCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="288" width="320" height="16"/>
+                                        <rect key="frame" x="0.0" y="241" width="320" height="16"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="U69-Pz-wAc" id="7RF-IK-JiR">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="16"/>
@@ -134,7 +113,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="DescriptionCell" rowHeight="24" id="Wyd-vD-I1a" customClass="DescriptionCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="304" width="320" height="24"/>
+                                        <rect key="frame" x="0.0" y="257" width="320" height="24"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Wyd-vD-I1a" id="r85-mH-4j3">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="24"/>
@@ -159,7 +138,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SpaceCell" rowHeight="16" id="R8k-41-3Kz" customClass="SpaceCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="328" width="320" height="16"/>
+                                        <rect key="frame" x="0.0" y="281" width="320" height="16"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="R8k-41-3Kz" id="lNE-fw-gMv">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="16"/>
@@ -186,13 +165,23 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kLF-eg-sMa">
+                                <rect key="frame" x="79" y="263.5" width="162" height="41"/>
+                                <string key="text">No upcoming events.
+Tap '+' to add.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="0jh-Y5-XSm" firstAttribute="top" secondItem="iTg-gk-xXq" secondAttribute="bottom" id="8Td-Sk-uoX"/>
                             <constraint firstAttribute="trailing" secondItem="iTg-gk-xXq" secondAttribute="trailing" id="NsJ-2k-mAl"/>
+                            <constraint firstItem="kLF-eg-sMa" firstAttribute="centerY" secondItem="yfj-Kh-Y7D" secondAttribute="centerY" id="PRS-yC-ZW9"/>
                             <constraint firstItem="iTg-gk-xXq" firstAttribute="top" secondItem="yfj-Kh-Y7D" secondAttribute="top" id="aXh-Gt-ghJ"/>
                             <constraint firstItem="iTg-gk-xXq" firstAttribute="leading" secondItem="yfj-Kh-Y7D" secondAttribute="leading" id="epn-GO-0JQ"/>
+                            <constraint firstItem="kLF-eg-sMa" firstAttribute="centerX" secondItem="yfj-Kh-Y7D" secondAttribute="centerX" id="jGx-vI-es6"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="CALENDAR" id="IYj-Wb-G8j">
@@ -204,6 +193,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="noUpcomingEventsLabel" destination="kLF-eg-sMa" id="28o-Bq-fQg"/>
                         <outlet property="tableView" destination="iTg-gk-xXq" id="tVq-4c-416"/>
                         <segue destination="dAj-3e-cBS" kind="push" identifier="PastEventsSegue" id="y9I-1C-Udy"/>
                     </connections>

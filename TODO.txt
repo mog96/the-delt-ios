@@ -25,6 +25,8 @@
 	- Add admin user flag. Unlocks:
 		- Post deletion.
 		- User delete via Parse cloud code.
+			Parse.Cloud.useMasterKey();
+			user.destroy();
 		- User admin status (admin's can't remove admins).
 	
 	WISHLIST
@@ -45,6 +47,7 @@
 	- Use refresh control to load earlier messages.
 
 	REEL
+	- Cache photos.
 	* photo posting
 		- debug ADD CAPTION text editor (placeholder text)
 		- attach current user's username to photos posted
@@ -64,6 +67,7 @@
 	- Advance start time to next hour, not current.
 	- CHECK to make Thursday appear as Th (not T)
 	- Add unique color for each day of week?
+	- IDEA: Old events are linked to gallery of photos taken that day.
 
 	MEMBERS
 	- FIX: search bar exit not animating properly

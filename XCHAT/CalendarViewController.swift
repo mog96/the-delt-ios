@@ -8,43 +8,41 @@
 
 import UIKit
 import Parse
+import MBProgressHUD
 
 // TODO:
-// - SET EVENT COLOR FOR DAY OF WEEK
+// - SET EVENT COLOR FOR DAY OF WEEK (alternate rainbow colors)
 
 class CalendarViewController: ContentViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var events: [PFObject] = [PFObject]()
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var noUpcomingEventsLabel: UILabel!
+    
     var refreshControl: UIRefreshControl!
     
-    // @IBOutlet weak var defaultView: UIView!
-    @IBOutlet weak var tableView: UITableView!
+    var events: [PFObject] = [PFObject]()
+    var currentIndex = 0
+    let kPageLength = 6
+    var currentReloadIndex = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setMenuButton(withColor: "red")
+        UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
         
-        tableView.dataSource = self
-        tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
         self.tableView.estimatedRowHeight = 16.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
         
-        refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: "onRefresh", forControlEvents: UIControlEvents.ValueChanged)
-        tableView.insertSubview(refreshControl, atIndex: 0)
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.addTarget(self, action: #selector(self.onRefresh), forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl.tintColor = UIColor.redColor()
+        self.tableView.insertSubview(refreshControl, atIndex: 0)
         
-        refreshData()
+        self.refreshData()
         
-        /*
-        DEFAULT (no events, tap '+' to add) VIEW
-        if events.count == 0 {
-        defaultView.hidden = false
-        print(defaultView.hidden)
-        print("SHOW DEFAULT")
-        }
-        */
-        
-        UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
+        self.currentReloadIndex = self.kPageLength / 2
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -123,10 +121,16 @@ class CalendarViewController: ContentViewController, UITableViewDelegate, UITabl
     // MARK: Refresh
     
     func refreshData() {
-        var query = PFQuery(className: "Event")
-        query.whereKey("startTime", greaterThan: NSDate())
+        let currentHUD = MBProgressHUD()
+        currentHUD.label.text = "Loading Events..."
+        currentHUD.showAnimated(true)
+        
+        let query = PFQuery(className: "Event")
+        // query.whereKey("startTime", greaterThan: NSDate())
         query.orderByAscending("startTime")
+        query.limit = 10
         query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
+            currentHUD.hideAnimated(true)
             if let objects = objects {
                 self.events = objects
                 self.tableView.reloadData()
@@ -141,16 +145,5 @@ class CalendarViewController: ContentViewController, UITableViewDelegate, UITabl
         refreshData()
         refreshControl.endRefreshing()
     }
-    
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
-    */
-    
 }
 
