@@ -47,6 +47,7 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
         
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(ReelViewController.onRefresh), forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl.tintColor = UIColor.redColor()
         tableView.insertSubview(refreshControl, atIndex: 0)
         
         // Navigation Bar Style

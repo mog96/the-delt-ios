@@ -126,7 +126,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.section {
         case 0:
             if indexPath.row == 0 {
-                let cell = self.tableView.dequeueReusableCellWithIdentifier("SettingsDescriptionCell") as! SettingsDescriptionTableViewCell
+                let cell = NSBundle.mainBundle().loadNibNamed("SettingsDescriptionCell", owner: self, options: nil)![0] as! SettingsDescriptionTableViewCell
                 cell.setDescription("Select when you'd like to receive push notifications from The Delt.")
                 return cell
             } else {
@@ -168,8 +168,9 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.setDescription("Hate to see you go! Come back soon.")
                 return cell
             } else {
-                let cell = tableView.dequeueReusableCellWithIdentifier("LogoutCell", forIndexPath: indexPath) as! LogOutTableViewCell
+                let cell = NSBundle.mainBundle().loadNibNamed("ActionButtonTableViewCell", owner: self, options: nil)![0] as! ActionButtonTableViewCell
                 cell.delegate = self
+                cell.actionButton.setTitle("Log Out", forState: .Normal)
                 return cell
             }
         }
@@ -179,8 +180,8 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
 
 // MARK: - Log Out Delegate
 
-extension SettingsViewController: LoggedOutDelegate {
-    func loggedOutDelegate(logoutTableViewCell: LogOutTableViewCell) {
+extension SettingsViewController: ActionButtonCellDelegate {
+    func onActionButtonCellTapped() {
         let alertVC = UIAlertController(title: "Log Out?", message: "Hate to see you go.", preferredStyle: UIAlertControllerStyle.Alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
         alertVC.addAction(cancelAction)

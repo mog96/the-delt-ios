@@ -10,9 +10,6 @@ import UIKit
 import Parse
 import MBProgressHUD
 
-// TODO:
-// - SET EVENT COLOR FOR DAY OF WEEK (alternate rainbow colors)
-
 class CalendarViewController: ContentViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
@@ -57,18 +54,6 @@ class CalendarViewController: ContentViewController, UITableViewDelegate, UITabl
         super.didReceiveMemoryWarning()
         
         // Dispose of any resources that can be recreated.
-    }
-}
-
-
-// MARK: - Helpers
-
-extension CalendarViewController {
-    func refreshCurrentEvents() {
-        self.getEvents { (events: [PFObject]) in
-            self.events = events
-            self.tableView.reloadData()
-        }
     }
 }
 
@@ -179,11 +164,23 @@ extension CalendarViewController {
 }
 
 
+// New Event Delegate
+
+extension CalendarViewController: NewEventViewControllerDelegate {
+    func refreshCurrentEvents() {
+        self.getEvents { (events: [PFObject]) in
+            self.events = events
+            self.tableView.reloadData()
+        }
+    }
+}
+
+
 // MARK: - Actions
 
 extension CalendarViewController {
     func onRefresh() {
-        self.getPastEvents(before: NSDate(), count: self.kPageLength) { (events: [PFObject]) in
+        self.getPastEvents(before: self.events[0]["startTime"] as! NSDate, count: self.kPageLength) { (events: [PFObject]) in
             if events.count > 0 {
                 let previousContentOffset = self.tableView.contentOffset
                 let previousContentSize = self.tableView.contentSize
@@ -203,5 +200,18 @@ extension CalendarViewController {
             }
         }
         self.refreshControl.endRefreshing()
+    }
+}
+
+
+// MARK: - Navigation
+
+extension CalendarViewController {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "NewEventSegue" {
+            let nc = segue.destinationViewController as! UINavigationController
+            let newEventVC = nc.viewControllers[0] as! NewEventViewController
+            newEventVC.delegate = self
+        }
     }
 }

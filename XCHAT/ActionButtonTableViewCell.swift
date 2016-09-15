@@ -8,21 +8,26 @@
 
 import UIKit
 
-protocol LoggedOutDelegate{
-    func loggedOutDelegate(logoutTableViewCell : LogOutTableViewCell)
+protocol ActionButtonCellDelegate {
+    func onActionButtonCellTapped()
 }
 
-class LogOutTableViewCell: UITableViewCell {
-    var delegate: LoggedOutDelegate?
+class ActionButtonTableViewCell: UITableViewCell {
+    
+    @IBOutlet weak var actionButton: UIButton!
+    
+    var delegate: ActionButtonCellDelegate?
+    var identifier = ""
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
-    @IBAction func logoutPressed(sender: AnyObject){
-        delegate?.loggedOutDelegate(self)
+    
+    @IBAction func onActionButtonTapped(sender: AnyObject) {
+        self.delegate?.onActionButtonCellTapped()
     }
+    
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

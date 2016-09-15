@@ -12,19 +12,20 @@ import Parse
 
 // FIXME: ADD EVENT SCROLL VIEW NOT WORKING
 
-// TODO:
-// - Add check that endDate succeed startDate
-// - Reverse animate startDatePicker on endDatePicker changed?
+@objc protocol NewEventViewControllerDelegate {
+    optional func refreshCurrentEvents()
+}
 
 class NewEventViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, NewEventDelegate {
     
     var artworkImage: UIImage?
-    var calendarViewController: CalendarViewController?
     
     @IBOutlet weak var tableView: UITableView!
     var eventDescriptionCell: EventDescriptionTableViewCell!
     var startDatePickerCell: StartDatePickerTableViewCell!
     var endDatePickerCell: EndDatePickerTableViewCell!
+    
+    var delegate: NewEventViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,10 +107,12 @@ class NewEventViewController: UIViewController, UITableViewDelegate, UITableView
                 currentHUD.hideAnimated(true)
                 if error != nil {
                     print(error?.description)
+                    let alertVC = UIAlertController(title: "Unable to Post Event", message: "Please try again.", preferredStyle: .Alert)
+                    alertVC.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                    self.presentViewController(alertVC, animated: true, completion: nil)
                 } else {
-                    self.dismissViewControllerAnimated(true, completion: { () -> Void in
-                        self.calendarViewController?.refreshCurrentEvents()
-                    })
+                    self.delegate?.refreshCurrentEvents?()
+                    self.dismissViewControllerAnimated(true, completion: nil)
                 }
             }
         }

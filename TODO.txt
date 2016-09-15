@@ -3,14 +3,13 @@
 ****************
 
 	QUICK:
-	- Show previous calendar events on scroll up!
 	- allow going back to ImagePicker from ADD CAPTION (EASY)
-	- Red refresh controls?
 	- Add Whisper for no network connection.
 	
 	GAME PLAN THRU 9/23:
+	- Implement Alert All Delts notification.
 	- Setup Facebook posting to secret group, submit for Facebook review.
-		- Reading for admins. Will likely accompany with Reel API revision.
+		- Reading for admins. Will likely accompany Reel API revision.
 	- Add Camera and Filters, swanky UI (∆ snap/recording button).
 		- Facebook posting from within app.
 	- Start Chat cloud code and multiple conversartion topics.
@@ -41,7 +40,6 @@
 	- Fix background photo upload by saving a copy to local storage after it's set.
 
 	CHAT
-	- FIX profile photo loading
 	- Stylize:
 		- Subsequent messages from same user don't need profile photo next to them.
 	- Use refresh control to load earlier messages.
@@ -63,6 +61,8 @@
 		- change faved bool to favedBy array of users who have faved a given num        <********
 
 	CALENDAR
+	// - Add check that endDate succeed startDate
+	// - Reverse animate startDatePicker on endDatePicker changed?
 	- Push notification on new event created.
 	- Add loading to event create.
 	- Advance start time to next hour, not current.

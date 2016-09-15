@@ -21,7 +21,8 @@ class MenuViewController: UIViewController {
     
     let kProfileCellHeight: CGFloat = 172
     let kMenuCellHeight: CGFloat = 55
-    var kNumCells = 7
+    // var kNumCells = 7
+    var kNumCells = 8 // FOR ADMIN
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,9 +57,9 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
         case 0:
             cell = tableView.dequeueReusableCellWithIdentifier("ProfileCell")!
         case 1:
-            cell = tableView.dequeueReusableCellWithIdentifier("ChatCell")!
-        case 2:
             cell = tableView.dequeueReusableCellWithIdentifier("ReelCell")!
+        case 2:
+            cell = tableView.dequeueReusableCellWithIdentifier("ChatCell")!
         case 3:
             cell = tableView.dequeueReusableCellWithIdentifier("AuxCell")!
         case 4:
@@ -99,16 +100,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             
             self.hamburgerViewController?.contentViewController = profileController
             
-        case 1: // CHAT
-            let chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
-            let chatNavigationController = chatStoryboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
-            let firstViewController = chatNavigationController.viewControllers[0] as! ChatViewController
-            firstViewController.menuDelegate = self
-            
-            UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
-            self.hamburgerViewController?.contentViewController = chatNavigationController
-            
-        case 2: // REEL
+        case 1: // REEL
             let reelStoryboard = UIStoryboard(name: "Reel", bundle: nil)
             let reelNavigationController = reelStoryboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
             let firstViewController = reelNavigationController.viewControllers[0] as! ReelViewController
@@ -116,6 +108,15 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             
             UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
             self.hamburgerViewController?.contentViewController = reelNavigationController
+            
+        case 2: // CHAT
+            let chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
+            let chatNavigationController = chatStoryboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
+            let firstViewController = chatNavigationController.viewControllers[0] as! ChatViewController
+            firstViewController.menuDelegate = self
+            
+            UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
+            self.hamburgerViewController?.contentViewController = chatNavigationController
             
         case 3: // AUX
             let storyboard = UIStoryboard(name: "Aux", bundle: nil)

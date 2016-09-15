@@ -25,6 +25,10 @@ class DateTitleCell: UITableViewCell {
         self.artworkImageView.clipsToBounds = true
     }
     
+    override func prepareForReuse() {
+        self.artworkImageView.image = nil
+    }
+    
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         

@@ -86,11 +86,13 @@
 		38F655DF1B0D233400C5586A /* PhotoDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F655DE1B0D233400C5586A /* PhotoDetailsViewController.swift */; };
 		38F655E11B0D235700C5586A /* ReelGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F655E01B0D235700C5586A /* ReelGridViewController.swift */; };
 		38F655E31B0D236900C5586A /* ReelGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F655E21B0D236900C5586A /* ReelGridCell.swift */; };
-		38F655E51B0D521200C5586A /* LogOutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F655E41B0D521200C5586A /* LogOutTableViewCell.swift */; };
+		38F655E51B0D521200C5586A /* ActionButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F655E41B0D521200C5586A /* ActionButtonTableViewCell.swift */; };
 		D525F1B31D8693F20002D8B6 /* EditUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525F1B21D8693F20002D8B6 /* EditUsersViewController.swift */; };
 		D525F1B51D86960E0002D8B6 /* EditUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525F1B41D86960E0002D8B6 /* EditUserTableViewCell.swift */; };
 		D525F1B91D874CB30002D8B6 /* UITextField+NextTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525F1B81D874CB30002D8B6 /* UITextField+NextTextField.swift */; };
 		D55496051D8A5C0A00090E76 /* Calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D55496041D8A5C0A00090E76 /* Calendar.storyboard */; };
+		D55496071D8A862600090E76 /* ActionButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D55496061D8A862600090E76 /* ActionButtonTableViewCell.xib */; };
+		D55496091D8A8A7500090E76 /* SettingsDescriptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D55496081D8A8A7500090E76 /* SettingsDescriptionTableViewCell.xib */; };
 		D582521F1D839322008313DF /* AdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D582521E1D839322008313DF /* AdminViewController.swift */; };
 		D58252211D839340008313DF /* AddUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58252201D839340008313DF /* AddUserViewController.swift */; };
 		D58252231D839354008313DF /* Admin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D58252221D839354008313DF /* Admin.storyboard */; };
@@ -194,7 +196,7 @@
 		38F655DE1B0D233400C5586A /* PhotoDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDetailsViewController.swift; sourceTree = "<group>"; };
 		38F655E01B0D235700C5586A /* ReelGridViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReelGridViewController.swift; sourceTree = "<group>"; };
 		38F655E21B0D236900C5586A /* ReelGridCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReelGridCell.swift; sourceTree = "<group>"; };
-		38F655E41B0D521200C5586A /* LogOutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogOutTableViewCell.swift; sourceTree = "<group>"; };
+		38F655E41B0D521200C5586A /* ActionButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionButtonTableViewCell.swift; sourceTree = "<group>"; };
 		712757A71E38977C88B0E46E /* Pods-XCHAT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XCHAT.release.xcconfig"; path = "Pods/Target Support Files/Pods-XCHAT/Pods-XCHAT.release.xcconfig"; sourceTree = "<group>"; };
 		AA26B4F882840903BF5F9FF4 /* Pods_XCHAT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XCHAT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C13DA56B626E1D28B7220808 /* Pods-XCHAT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XCHAT.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XCHAT/Pods-XCHAT.debug.xcconfig"; sourceTree = "<group>"; };
@@ -202,6 +204,8 @@
 		D525F1B41D86960E0002D8B6 /* EditUserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUserTableViewCell.swift; sourceTree = "<group>"; };
 		D525F1B81D874CB30002D8B6 /* UITextField+NextTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+NextTextField.swift"; sourceTree = "<group>"; };
 		D55496041D8A5C0A00090E76 /* Calendar.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Calendar.storyboard; sourceTree = "<group>"; };
+		D55496061D8A862600090E76 /* ActionButtonTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActionButtonTableViewCell.xib; sourceTree = "<group>"; };
+		D55496081D8A8A7500090E76 /* SettingsDescriptionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsDescriptionTableViewCell.xib; sourceTree = "<group>"; };
 		D582521E1D839322008313DF /* AdminViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminViewController.swift; sourceTree = "<group>"; };
 		D58252201D839340008313DF /* AddUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddUserViewController.swift; sourceTree = "<group>"; };
 		D58252221D839354008313DF /* Admin.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Admin.storyboard; sourceTree = "<group>"; };
@@ -265,6 +269,7 @@
 			children = (
 				3878660F1B0478C400623BC1 /* Settings.storyboard */,
 				252A6B421C4C9BAE00FA1F75 /* SettingsHeaderView.xib */,
+				D55496081D8A8A7500090E76 /* SettingsDescriptionTableViewCell.xib */,
 			);
 			name = Layout;
 			sourceTree = "<group>";
@@ -393,6 +398,8 @@
 				2515CDDA1C58BDD40008A2B2 /* LayoutUtils.swift */,
 				25E525291C59C8B600477C3D /* GestureUtils.swift */,
 				D525F1B81D874CB30002D8B6 /* UITextField+NextTextField.swift */,
+				D55496061D8A862600090E76 /* ActionButtonTableViewCell.xib */,
+				38F655E41B0D521200C5586A /* ActionButtonTableViewCell.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -435,7 +442,6 @@
 				252A6B3F1C4C950500FA1F75 /* SettingsDescriptionTableViewCell.swift */,
 				387866131B047A2100623BC1 /* NotificationTableViewCell.swift */,
 				258040B11C54DF00002D1F08 /* FeedbackTableViewCell.swift */,
-				38F655E41B0D521200C5586A /* LogOutTableViewCell.swift */,
 				3878660D1B0475B500623BC1 /* PushHelper.swift */,
 			);
 			name = Settings;
@@ -650,7 +656,9 @@
 				252A6B431C4C9BAE00FA1F75 /* SettingsHeaderView.xib in Resources */,
 				D5FB88A71D87F6F600984C19 /* Aux.storyboard in Resources */,
 				254A19AA1B18768E0030F316 /* Keys.plist in Resources */,
+				D55496091D8A8A7500090E76 /* SettingsDescriptionTableViewCell.xib in Resources */,
 				258D498C1B15C69600A632D3 /* WelcomeChatView.xib in Resources */,
+				D55496071D8A862600090E76 /* ActionButtonTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -739,7 +747,7 @@
 				38D9FB981B155C780030B6D9 /* MessageLoadMoreCell.swift in Sources */,
 				3878660E1B0475B500623BC1 /* PushHelper.swift in Sources */,
 				255BE9881B1737940001B160 /* MessageCell.swift in Sources */,
-				38F655E51B0D521200C5586A /* LogOutTableViewCell.swift in Sources */,
+				38F655E51B0D521200C5586A /* ActionButtonTableViewCell.swift in Sources */,
 				38D9FB8E1B1557F40030B6D9 /* CalendarViewController.swift in Sources */,
 				381125AD1B0C1CD200DBBAD2 /* ReelViewController.swift in Sources */,
 				258D49881B15AC6B00A632D3 /* ThreadsViewController.swift in Sources */,
