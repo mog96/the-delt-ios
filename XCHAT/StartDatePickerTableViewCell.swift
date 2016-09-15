@@ -21,7 +21,7 @@ class StartDatePickerTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.eventDatePicker.addTarget(self, action: "onDateChanged", forControlEvents: UIControlEvents.ValueChanged)
+        self.eventDatePicker.addTarget(self, action: #selector(StartDatePickerTableViewCell.onDateChanged), forControlEvents: UIControlEvents.ValueChanged)
     }
     
     override func setSelected(selected: Bool, animated: Bool) {

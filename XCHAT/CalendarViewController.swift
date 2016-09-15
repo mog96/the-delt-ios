@@ -22,10 +22,10 @@ class CalendarViewController: ContentViewController, UITableViewDelegate, UITabl
     
     var events: [PFObject] = [PFObject]()
     var currentIndex = 0
-    let kPageLength = 6
+    let kPageLength = 10
     var currentReloadIndex = Int()
     
-    var firstCurrentEventCellIndexPath: NSIndexPath?
+    // var firstCurrentEventCellIndexPath: NSIndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,35 +40,16 @@ class CalendarViewController: ContentViewController, UITableViewDelegate, UITabl
         self.refreshControl = UIRefreshControl()
         self.refreshControl.addTarget(self, action: #selector(self.onRefresh), forControlEvents: UIControlEvents.ValueChanged)
         self.refreshControl.tintColor = UIColor.redColor()
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Loading Past Events...", attributes: [NSForegroundColorAttributeName : UIColor.redColor()])
         self.tableView.insertSubview(refreshControl, atIndex: 0)
         
         self.currentReloadIndex = self.kPageLength / 2
         
         self.noUpcomingEventsLabel.hidden = true
         
-        self.getEvents(index: self.currentIndex, count: self.kPageLength) { (events: [PFObject]) in
+        self.getEvents { (events: [PFObject]) in
             self.events = events
-            if let index = self.events.indexOf({ (event: PFObject) -> Bool in
-                return (event["startTime"] as! NSDate).compare(NSDate()) == .OrderedDescending
-            }) {
-                self.firstCurrentEventCellIndexPath = NSIndexPath(forRow: 0, inSection: index)
-            }
             self.tableView.reloadData()
-            
-            // Set table view offset.
-            let navBarBottomY = self.navigationController!.navigationBar.frame.origin.y + self.navigationController!.navigationBar.frame.height
-            if let indexPath = self.firstCurrentEventCellIndexPath {
-                self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: false)
-                let rect = self.tableView.rectForSection(indexPath.section)
-                let bottomYInset = UIScreen.mainScreen().bounds.height - (navBarBottomY + rect.height)
-                self.tableView.contentInset = UIEdgeInsets(top: navBarBottomY, left: 0, bottom: bottomYInset, right: 0)
-                self.tableView.setContentOffset(CGPoint(x: 0, y: rect.origin.y - navBarBottomY), animated: false)
-                
-            } else { // No current events.
-                let bottomYInset = UIScreen.mainScreen().bounds.height - navBarBottomY
-                self.tableView.contentInset = UIEdgeInsetsMake(navBarBottomY, 0, bottomYInset, 0)
-                self.tableView.setContentOffset(CGPoint(x: 0, y: self.tableView.contentSize.height), animated: false)
-            }
         }
     }
     
@@ -77,10 +58,24 @@ class CalendarViewController: ContentViewController, UITableViewDelegate, UITabl
         
         // Dispose of any resources that can be recreated.
     }
-    
-    
-    // MARK: Table View
-    
+}
+
+
+// MARK: - Helpers
+
+extension CalendarViewController {
+    func refreshCurrentEvents() {
+        self.getEvents { (events: [PFObject]) in
+            self.events = events
+            self.tableView.reloadData()
+        }
+    }
+}
+
+
+// MARK: Table View
+
+extension CalendarViewController {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return events.count
     }
@@ -90,12 +85,12 @@ class CalendarViewController: ContentViewController, UITableViewDelegate, UITabl
         // Two required components: DateTitleCell and SpaceCell.
         var numEventComponents = 2
         
-        var event = events[section] as PFObject
+        let event = events[section] as PFObject
         if let location = event["location"] as? String {
-            numEventComponents++
+            numEventComponents += 1
         }
         if let description = event["description"] as? String {
-            numEventComponents++
+            numEventComponents += 1
         }
         
         return numEventComponents
@@ -115,22 +110,22 @@ class CalendarViewController: ContentViewController, UITableViewDelegate, UITabl
         
         switch indexPath.row {
         case 0:
-            var cell = tableView.dequeueReusableCellWithIdentifier("DateTitleCell", forIndexPath: indexPath) as! DateTitleCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("DateTitleCell", forIndexPath: indexPath) as! DateTitleCell
             cell.setUpCell(event)
             return cell
         default:
             if indexPath.row == 1 && hasLocation {
-                var cell = tableView.dequeueReusableCellWithIdentifier("LocationCell", forIndexPath: indexPath) as! LocationCell
+                let cell = tableView.dequeueReusableCellWithIdentifier("LocationCell", forIndexPath: indexPath) as! LocationCell
                 cell.locationLabel.text = event["location"] as? String
                 return cell
                 
             } else if (indexPath.row == 1 && hasDescription) || (indexPath.row == 2 && hasDescription) {
-                var cell = tableView.dequeueReusableCellWithIdentifier("DescriptionCell", forIndexPath: indexPath) as! DescriptionCell
+                let cell = tableView.dequeueReusableCellWithIdentifier("DescriptionCell", forIndexPath: indexPath) as! DescriptionCell
                 cell.descriptionLabel.text = event["description"] as? String
                 return cell
                 
             } else {
-                var cell = tableView.dequeueReusableCellWithIdentifier("SpaceCell", forIndexPath: indexPath) as! SpaceCell
+                let cell = tableView.dequeueReusableCellWithIdentifier("SpaceCell", forIndexPath: indexPath) as! SpaceCell
                 return cell
             }
         }
@@ -139,22 +134,38 @@ class CalendarViewController: ContentViewController, UITableViewDelegate, UITabl
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
     }
-    
-    
-    // MARK: Refresh
-    
-    func refreshData() {
-        print("CALENDAR REFRESH DATA") // START HERE
-    }
-    
-    func getEvents(index index: Int, count: Int, completion: ([PFObject] -> ())) {
+}
+
+
+// MARK: - Refresh Helpers
+
+extension CalendarViewController {
+    func getEvents(completion completion: ([PFObject] -> ())) {
         let currentHUD = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         currentHUD.label.text = "Loading Events..."
         
         let query = PFQuery(className: "Event")
-        // query.whereKey("startTime", greaterThan: NSDate())
+        query.whereKey("startTime", greaterThan: NSDate())
+        query.orderByAscending("startTime")
+        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
+            currentHUD.hideAnimated(true)
+            if let objects = objects {
+                completion(objects)
+            } else {
+                print("object is nil")
+                print(error?.description)
+            }
+        }
+    }
+    
+    func getPastEvents(before date: NSDate, count: Int, completion: ([PFObject] -> ())) {
+        let currentHUD = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        currentHUD.label.text = "Loading Events..."
+        
+        let query = PFQuery(className: "Event")
+        query.whereKey("startTime", lessThan: date)
         query.orderByDescending("startTime")
-        query.limit = 10
+        query.limit = count
         query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
             currentHUD.hideAnimated(true)
             if let objects = objects {
@@ -165,10 +176,32 @@ class CalendarViewController: ContentViewController, UITableViewDelegate, UITabl
             }
         }
     }
-    
-    func onRefresh() {
-        // refreshData() // FIXME
-        refreshControl.endRefreshing()
-    }
 }
 
+
+// MARK: - Actions
+
+extension CalendarViewController {
+    func onRefresh() {
+        self.getPastEvents(before: NSDate(), count: self.kPageLength) { (events: [PFObject]) in
+            if events.count > 0 {
+                let previousContentOffset = self.tableView.contentOffset
+                let previousContentSize = self.tableView.contentSize
+                self.events.insertContentsOf(events, at: 0)
+                self.tableView.insertSections(NSIndexSet(indexesInRange: NSRange(location: 0, length: events.count)), withRowAnimation: .None)
+                let firstCurrentEventCellIndexPath = NSIndexPath(forRow: 0, inSection: events.count)
+                let rect = self.tableView.rectForSection(firstCurrentEventCellIndexPath.section)
+                let navBarBottomY = self.navigationController!.navigationBar.frame.origin.y + self.navigationController!.navigationBar.frame.height
+                let bottomYInset = UIScreen.mainScreen().bounds.height - (navBarBottomY + rect.height)
+                
+                // Adjust inset and offset so that first current event cell sits at top of table view.
+                if previousContentSize.height < self.tableView.frame.height {
+                    
+                }
+                // self.tableView.contentInset = UIEdgeInsets(top: navBarBottomY, left: 0, bottom: bottomYInset, right: 0)
+                self.tableView.setContentOffset(CGPoint(x: 0, y: rect.origin.y - navBarBottomY), animated: false)
+            }
+        }
+        self.refreshControl.endRefreshing()
+    }
+}

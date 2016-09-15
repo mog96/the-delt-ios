@@ -14,7 +14,7 @@
 	- Add Camera and Filters, swanky UI (∆ snap/recording button).
 		- Facebook posting from within app.
 	- Start Chat cloud code and multiple conversartion topics.
-	- Start integrating email list.
+	- Start integrating email list. https://github.com/matthewpalmer/Charter
 	- Show loading on LOG IN tapped.
 		- Idea: On login button pressed, screen fades black, and if credentials incorrect, black fades out and new background image is present.
 
@@ -63,6 +63,7 @@
 		- change faved bool to favedBy array of users who have faved a given num        <********
 
 	CALENDAR
+	- Push notification on new event created.
 	- Add loading to event create.
 	- Advance start time to next hour, not current.
 	- CHECK to make Thursday appear as Th (not T)

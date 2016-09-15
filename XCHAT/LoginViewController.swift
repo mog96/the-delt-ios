@@ -186,7 +186,7 @@ extension LoginViewController: MFMailComposeViewControllerDelegate {
         // TODO: Handle each mail case? i.e. sent, not sent, etc.
         
         controller.dismissViewControllerAnimated(true) {
-            if result == MFMailComposeResultSent {
+            if result == .Sent {
                 let alert = UIAlertController(title: "Thanks for Signing Up!", message: "If your charge has already been added to The Delt, you'll be added immediately. If your charge is not yet using The Delt, we'll be in touch as soon as possible about signing up your charge.", preferredStyle: .Alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
                 self.presentViewController(alert, animated: true, completion: nil)

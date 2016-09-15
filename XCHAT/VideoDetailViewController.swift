@@ -72,7 +72,7 @@ class VideoDetailViewController: UIViewController {
         print("ADDING PLAYER")
         
         // NSNotificationCenter.defaultCenter().addObserver(self, selector: "videoSizeAvailable", name: MPMovieNaturalSizeAvailableNotification, object: self.videoPlayer)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "videoFinished", name: MPMoviePlayerPlaybackDidFinishNotification, object: self.videoPlayer)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(VideoDetailViewController.videoFinished), name: MPMoviePlayerPlaybackDidFinishNotification, object: self.videoPlayer)
         
         containerView.addSubview(self.videoPlayer.view)
         self.videoPlayer.view.autoPinEdgesToSuperviewEdges()

@@ -70,7 +70,7 @@ class PhotoVideoCell: UITableViewCell {
                 self.videoUrl = NSURL(string: file.url!)!
                 
                 // Enable cell tap.
-                let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "onControlsViewTapped")
+                let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(PhotoVideoCell.onControlsViewTapped))
                 self.controlsView.addGestureRecognizer(tapGestureRecognizer)
                 
             // Photo.
@@ -130,7 +130,7 @@ class PhotoVideoCell: UITableViewCell {
         self.videoPlayer!.shouldAutoplay = true
         
         // NSNotificationCenter.defaultCenter().addObserver(self, selector: "videoSizeAvailable", name: MPMovieNaturalSizeAvailableNotification, object: self.videoPlayer)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "videoFinished", name: MPMoviePlayerPlaybackDidFinishNotification, object: self.videoPlayer)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(PhotoVideoCell.videoFinished), name: MPMoviePlayerPlaybackDidFinishNotification, object: self.videoPlayer)
         
         containerView.addSubview(self.videoPlayer!.view)
         self.videoPlayer!.view.autoPinEdgesToSuperviewEdges()

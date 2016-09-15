@@ -47,8 +47,8 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
         self.automaticallyAdjustsScrollViewInsets = false
         
         // Add keyboard observers.
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditableProfileViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditableProfileViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
         // Set delegates.
         self.nameTextField.delegate = self

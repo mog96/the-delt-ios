@@ -46,7 +46,7 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
         self.tableView.rowHeight = UITableViewAutomaticDimension
         
         refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: "onRefresh", forControlEvents: UIControlEvents.ValueChanged)
+        refreshControl.addTarget(self, action: #selector(ReelViewController.onRefresh), forControlEvents: UIControlEvents.ValueChanged)
         tableView.insertSubview(refreshControl, atIndex: 0)
         
         // Navigation Bar Style
@@ -72,14 +72,14 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
     // MARK: TableView
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        var photo = photos.objectAtIndex(section) as! NSMutableDictionary
+        let photo = photos.objectAtIndex(section) as! NSMutableDictionary
         
         // Header
-        var headerView = UIView(frame: CGRect(x: 0, y: 0, width: kHeaderWidth, height: kHeaderHeight))
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: kHeaderWidth, height: kHeaderHeight))
         headerView.backgroundColor = UIColor(white: 3, alpha: 0.5)
         
         // Profile Image
-        var profileImageView = UIImageView(frame: CGRect(x: 8 , y: 8, width: kProfileWidthHeight, height: kProfileWidthHeight))
+        let profileImageView = UIImageView(frame: CGRect(x: 8 , y: 8, width: kProfileWidthHeight, height: kProfileWidthHeight))
         // profileImageView.backgroundColor = UIColor.redColor()
         profileImageView.contentMode = UIViewContentMode.ScaleAspectFill
         profileImageView.layer.cornerRadius = 1
@@ -87,11 +87,11 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
         
         profileImageView.backgroundColor = UIColor.redColor()
         
-        var query = PFUser.query()
+        let query = PFUser.query()
         query?.whereKey("username", equalTo: photo.valueForKey("username") as! String)
         query?.findObjectsInBackgroundWithBlock({ (users: [PFObject]?, error: NSError?) -> Void in
             if let users = users {
-                var pfImageView = PFImageView()
+                let pfImageView = PFImageView()
                 if users.count > 0 {
                     if let _ = users[0].valueForKey("photo"){
                         pfImageView.file = users[0].valueForKey("photo") as? PFFile
@@ -112,7 +112,7 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
         })
         
         // Username Label
-        var usernameLabel = UILabel(frame: CGRect(x: 8 + kProfileWidthHeight + 8, y: 12, width: 200, height: 16))
+        let usernameLabel = UILabel(frame: CGRect(x: 8 + kProfileWidthHeight + 8, y: 12, width: 200, height: 16))
         usernameLabel.text = photo.valueForKey("username") as? String
         usernameLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 16.5)
         usernameLabel.textColor = UIColor.redColor()
@@ -143,18 +143,18 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
         if let numFaves = photo?.valueForKey("numFaves") as? Int {
             if numFaves > 0 {
                 hasFaves = true
-                commentOffset++
+                commentOffset += 1
             }
         }
         switch indexPath.row {
         case 0:
-            var cell = tableView.dequeueReusableCellWithIdentifier("PhotoVideoCell", forIndexPath: indexPath) as! PhotoVideoCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("PhotoVideoCell", forIndexPath: indexPath) as! PhotoVideoCell
             
             cell.setUpCell(photo)
             cell.delegate = self
             return cell
         case 1:
-            var cell = tableView.dequeueReusableCellWithIdentifier("ButtonCell", forIndexPath: indexPath) as! ButtonCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("ButtonCell", forIndexPath: indexPath) as! ButtonCell
             
             cell.delegate = self
             cell.setUpCell(photo)
@@ -162,12 +162,12 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
         default:
             if indexPath.row == 2 && hasFaves {
                 
-                var cell = tableView.dequeueReusableCellWithIdentifier("FavesCell", forIndexPath: indexPath) as! FavesCell
+                let cell = tableView.dequeueReusableCellWithIdentifier("FavesCell", forIndexPath: indexPath) as! FavesCell
                 
                 cell.setUpCell(photo)
                 return cell
             } else {
-                var cell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as! CommentCell
+                let cell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as! CommentCell
             
                 cell.commentIndex = indexPath.row - commentOffset
                 cell.setUpCell(photo)
@@ -182,7 +182,7 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
         let photo = photos.objectAtIndex(section) as? NSMutableDictionary
         if let numFaves = photo?.valueForKey("numFaves") as? Int {
             if numFaves > 0 {
-                numRows++
+                numRows += 1
             }
         }
         if let numComments = photo?.valueForKey("numComments") as? Int {

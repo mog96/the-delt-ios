@@ -63,15 +63,15 @@ class ChatViewController: ContentViewController, UITableViewDataSource, UITableV
         self.fetchMessages()
         
         // Add keyboard observers.
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
         // SET MESSAGE REFRESH
         // Refetch messages every 15 seconds. 
-        _ = NSTimer.scheduledTimerWithTimeInterval(15, target: self, selector: "fetchMessages", userInfo: nil, repeats: true)
+        _ = NSTimer.scheduledTimerWithTimeInterval(15, target: self, selector: #selector(ChatViewController.fetchMessages), userInfo: nil, repeats: true)
         
         // Setup message view.
-        self.messageView = NSBundle.mainBundle().loadNibNamed("MessageView", owner: self, options: nil)[0] as! MessageView
+        self.messageView = NSBundle.mainBundle().loadNibNamed("MessageView", owner: self, options: nil)![0] as! MessageView
         self.messageView.frame = CGRectMake(0, UIScreen.mainScreen().bounds.height - self.messageView.frame.height, self.messageView.frame.height, UIScreen.mainScreen().bounds.width)
         let placeholder = "Holler at your brothers."
         self.messageView.placeholder = placeholder

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 import Parse
 
 // FIXME: ADD EVENT SCROLL VIEW NOT WORKING
@@ -99,12 +100,15 @@ class NewEventViewController: UIViewController, UITableViewDelegate, UITableView
                 event["artwork"] = artwork
             }
             
+            let currentHUD = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            currentHUD.label.text = "Posting Event..."
             event.saveInBackgroundWithBlock { (result: Bool, error: NSError?) -> Void in
+                currentHUD.hideAnimated(true)
                 if error != nil {
                     print(error?.description)
                 } else {
                     self.dismissViewControllerAnimated(true, completion: { () -> Void in
-                        self.calendarViewController?.refreshData()
+                        self.calendarViewController?.refreshCurrentEvents()
                     })
                 }
             }

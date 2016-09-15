@@ -90,7 +90,7 @@
 		D525F1B31D8693F20002D8B6 /* EditUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525F1B21D8693F20002D8B6 /* EditUsersViewController.swift */; };
 		D525F1B51D86960E0002D8B6 /* EditUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525F1B41D86960E0002D8B6 /* EditUserTableViewCell.swift */; };
 		D525F1B91D874CB30002D8B6 /* UITextField+NextTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525F1B81D874CB30002D8B6 /* UITextField+NextTextField.swift */; };
-		D54BBA891D891B730028FC12 /* Calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D54BBA881D891B730028FC12 /* Calendar.storyboard */; };
+		D55496051D8A5C0A00090E76 /* Calendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D55496041D8A5C0A00090E76 /* Calendar.storyboard */; };
 		D582521F1D839322008313DF /* AdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D582521E1D839322008313DF /* AdminViewController.swift */; };
 		D58252211D839340008313DF /* AddUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58252201D839340008313DF /* AddUserViewController.swift */; };
 		D58252231D839354008313DF /* Admin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D58252221D839354008313DF /* Admin.storyboard */; };
@@ -149,7 +149,6 @@
 		259FBA491B02F5A6006F1650 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		259FBA4C1B02F5A6006F1650 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		259FBA521B02F5A6006F1650 /* XCHATTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XCHATTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		259FBA571B02F5A6006F1650 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		259FBA581B02F5A6006F1650 /* XCHATTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCHATTests.swift; sourceTree = "<group>"; };
 		25C6CCD91B1290C200EADB5B /* CaptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptionViewController.swift; sourceTree = "<group>"; };
 		25C6CCDB1B12FF1600EADB5B /* CommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
@@ -202,7 +201,7 @@
 		D525F1B21D8693F20002D8B6 /* EditUsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUsersViewController.swift; sourceTree = "<group>"; };
 		D525F1B41D86960E0002D8B6 /* EditUserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditUserTableViewCell.swift; sourceTree = "<group>"; };
 		D525F1B81D874CB30002D8B6 /* UITextField+NextTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextField+NextTextField.swift"; sourceTree = "<group>"; };
-		D54BBA881D891B730028FC12 /* Calendar.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Calendar.storyboard; path = ../../../../../Desktop/Calendar.storyboard; sourceTree = "<group>"; };
+		D55496041D8A5C0A00090E76 /* Calendar.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Calendar.storyboard; sourceTree = "<group>"; };
 		D582521E1D839322008313DF /* AdminViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminViewController.swift; sourceTree = "<group>"; };
 		D58252201D839340008313DF /* AddUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddUserViewController.swift; sourceTree = "<group>"; };
 		D58252221D839354008313DF /* Admin.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Admin.storyboard; sourceTree = "<group>"; };
@@ -255,7 +254,7 @@
 		2522089A1C5DF618004FAE9A /* Layout */ = {
 			isa = PBXGroup;
 			children = (
-				D54BBA881D891B730028FC12 /* Calendar.storyboard */,
+				D55496041D8A5C0A00090E76 /* Calendar.storyboard */,
 				252208981C5DF532004FAE9A /* CalendarCells.xib */,
 			);
 			name = Layout;
@@ -384,7 +383,6 @@
 		259FBA561B02F5A6006F1650 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				259FBA571B02F5A6006F1650 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -601,10 +599,12 @@
 					259FBA3C1B02F5A5006F1650 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = 9VEX7Q727F;
+						LastSwiftMigration = 0800;
 					};
 					259FBA511B02F5A6006F1650 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = 9VEX7Q727F;
+						LastSwiftMigration = 0800;
 						TestTargetID = 259FBA3C1B02F5A5006F1650;
 					};
 				};
@@ -633,7 +633,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D54BBA891D891B730028FC12 /* Calendar.storyboard in Resources */,
+				D55496051D8A5C0A00090E76 /* Calendar.storyboard in Resources */,
 				D58252231D839354008313DF /* Admin.storyboard in Resources */,
 				259FBA481B02F5A5006F1650 /* Menu.storyboard in Resources */,
 				381BD6C81B158C5F005C6D1C /* Members.storyboard in Resources */,
@@ -920,6 +920,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XCHAT/XCHAT-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -940,6 +941,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XCHAT/XCHAT-Bridging-Header.h";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -964,6 +966,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.codepath.XCHAT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XCHAT.app/XCHAT";
 			};
 			name = Debug;
@@ -984,6 +987,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.codepath.XCHAT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XCHAT.app/XCHAT";
 			};
 			name = Release;

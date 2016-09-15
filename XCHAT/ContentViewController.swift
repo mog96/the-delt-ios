@@ -25,7 +25,7 @@ class ContentViewController: UIViewController {
         let menuImage = UIImage(named: "menu_icon_" + color + ".png")
         menuButton.setImage(menuImage, forState: UIControlState.Normal)
         menuButton.frame = CGRectMake(5, 0, 17, 11)
-        menuButton.addTarget(self, action: "menuTapped", forControlEvents: UIControlEvents.TouchUpInside)
+        menuButton.addTarget(self, action: #selector(ContentViewController.menuTapped), forControlEvents: UIControlEvents.TouchUpInside)
         
         let menuBarButton = UIBarButtonItem(customView: menuButton)
         self.navigationItem.leftBarButtonItem = menuBarButton
