@@ -26,6 +26,7 @@
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="w4A-2h-aVX" appends="YES" id="nqB-ma-qys"/>
+                                    <outletCollection property="gestureRecognizers" destination="0zb-Rz-6CM" appends="YES" id="bYF-Tc-ak8"/>
                                 </connections>
                             </view>
                         </subviews>
@@ -46,6 +47,7 @@
                         <outlet property="contentView" destination="wbx-we-8zp" id="hV7-2E-Qcp"/>
                         <outlet property="menuView" destination="6uk-7K-X2L" id="wV4-F5-crb"/>
                         <outlet property="panGestureRecognizer" destination="w4A-2h-aVX" id="oeV-bH-oEa"/>
+                        <outlet property="tapGestureRecognizer" destination="0zb-Rz-6CM" id="RWv-ck-agT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oi7-jh-YeO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -54,6 +56,11 @@
                         <action selector="onPanGesture:" destination="2Hw-Cm-Zzm" id="juE-m6-OJI"/>
                     </connections>
                 </panGestureRecognizer>
+                <tapGestureRecognizer id="0zb-Rz-6CM">
+                    <connections>
+                        <action selector="onContentViewTapped:" destination="2Hw-Cm-Zzm" id="YwH-aA-oLy"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="214" y="1019"/>
         </scene>

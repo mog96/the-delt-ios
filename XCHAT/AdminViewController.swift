@@ -103,7 +103,7 @@ extension AdminViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - Action Button Delegate
 
 extension AdminViewController: ActionButtonCellDelegate {
-    func onActionButtonCellTapped() {
+    func actionButtonCell(tappedBySender sender: AnyObject) {
         let alertVC = UIAlertController(title: "Alert All Delts", message: "All Delts will be notified immediately.", preferredStyle: .Alert)
         alertVC.addTextFieldWithConfigurationHandler { (textField: UITextField) in
             textField.placeholder = "Add a message."

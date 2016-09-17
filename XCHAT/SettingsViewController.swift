@@ -126,7 +126,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.section {
         case 0:
             if indexPath.row == 0 {
-                let cell = NSBundle.mainBundle().loadNibNamed("SettingsDescriptionCell", owner: self, options: nil)![0] as! SettingsDescriptionTableViewCell
+                let cell = NSBundle.mainBundle().loadNibNamed("SettingsDescriptionTableViewCell", owner: self, options: nil)![0] as! SettingsDescriptionTableViewCell
                 cell.setDescription("Select when you'd like to receive push notifications from The Delt.")
                 return cell
             } else {
@@ -143,7 +143,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         case 1:
             switch indexPath.row {
             case 0:
-                let cell = self.tableView.dequeueReusableCellWithIdentifier("SettingsDescriptionCell") as! SettingsDescriptionTableViewCell
+                let cell = NSBundle.mainBundle().loadNibNamed("SettingsDescriptionTableViewCell", owner: self, options: nil)![0] as! SettingsDescriptionTableViewCell
                 cell.setDescription("Submit any comments or suggestions you may have to mateog@stanford.edu.")
                 return cell
             default:
@@ -153,7 +153,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
             }
         case 2:
             if indexPath.row == 0 {
-                let cell = self.tableView.dequeueReusableCellWithIdentifier("SettingsDescriptionCell") as! SettingsDescriptionTableViewCell
+                let cell = NSBundle.mainBundle().loadNibNamed("SettingsDescriptionTableViewCell", owner: self, options: nil)![0] as! SettingsDescriptionTableViewCell
                 cell.setDescription("Report any content you feel is inappropriate, or users you feel are abusing this service and should be blocked from The Delt.")
                 return cell
             } else {
@@ -164,7 +164,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
             }
         default:
             if indexPath.row == 0 {
-                let cell = self.tableView.dequeueReusableCellWithIdentifier("SettingsDescriptionCell") as! SettingsDescriptionTableViewCell
+                let cell = NSBundle.mainBundle().loadNibNamed("SettingsDescriptionTableViewCell", owner: self, options: nil)![0] as! SettingsDescriptionTableViewCell
                 cell.setDescription("Hate to see you go! Come back soon.")
                 return cell
             } else {
@@ -181,7 +181,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
 // MARK: - Log Out Delegate
 
 extension SettingsViewController: ActionButtonCellDelegate {
-    func onActionButtonCellTapped() {
+    func actionButtonCell(tappedBySender sender: AnyObject) {
         let alertVC = UIAlertController(title: "Log Out?", message: "Hate to see you go.", preferredStyle: UIAlertControllerStyle.Alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
         alertVC.addAction(cancelAction)

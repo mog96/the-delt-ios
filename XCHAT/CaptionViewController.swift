@@ -33,6 +33,8 @@ class CaptionViewController: UIViewController, UITextViewDelegate {
         self.photoImageView.image = self.photo
         self.photoImageView.clipsToBounds = true
         self.captionTextView.delegate = self
+        
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -86,6 +88,10 @@ class CaptionViewController: UIViewController, UITextViewDelegate {
             
             // code
         })
+    }
+    
+    @IBAction func onCancelButtonTapped(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func onScreenTapped(sender: AnyObject) {

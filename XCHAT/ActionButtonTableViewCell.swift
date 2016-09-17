@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ActionButtonCellDelegate {
-    func onActionButtonCellTapped()
+    func actionButtonCell(tappedBySender sender: AnyObject)
 }
 
 class ActionButtonTableViewCell: UITableViewCell {
@@ -25,7 +25,7 @@ class ActionButtonTableViewCell: UITableViewCell {
     }
     
     @IBAction func onActionButtonTapped(sender: AnyObject) {
-        self.delegate?.onActionButtonCellTapped()
+        self.delegate?.actionButtonCell(tappedBySender: sender)
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
@@ -33,5 +33,4 @@ class ActionButtonTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
 }

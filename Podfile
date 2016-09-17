@@ -10,6 +10,9 @@ target "XCHAT" do
 	pod 'ParseUI'
 	pod 'PureLayout'
 	pod 'Reachability'
+	# pod 'Soundcloud'
+		# pod '1PasswordExtension'
+		# pod 'UICKeyChainStore'
 	# pod 'Whisper'
 	# pod 'ViewUtils', '1.1.2'
 end

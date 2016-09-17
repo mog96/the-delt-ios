@@ -25,31 +25,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         AppDelegate.appName = NSBundle.mainBundle().infoDictionary!["CFBundleDisplayName"] as! String
         
-        var keys: NSDictionary?
         if let path = NSBundle.mainBundle().pathForResource("Keys", ofType: "plist") {
-            keys = NSDictionary(contentsOfFile: path)
-        }
-        
-        // Parse config.
-        if let _ = keys {
-            let configuration = ParseClientConfiguration {
-                $0.applicationId = keys!["parseApplicationId"] as? String
-                $0.clientKey = keys!["parseClientKey"] as? String
-                #if TARGET_IPHONE_SIMULATOR
-                    $0.server = "http://localhost:1337/parse"
-                #else
-                    $0.server = "http://mog.local:1337/parse"
-                #endif
-                //$0.server = "http://thedelt.herokuapp.com/parse"
+            if let keys = NSDictionary(contentsOfFile: path) {
+                // Parse config.
+                let configuration = ParseClientConfiguration {
+                    $0.applicationId = keys["parseApplicationId"] as? String
+                    $0.clientKey = keys["parseClientKey"] as? String
+                    #if TARGET_IPHONE_SIMULATOR
+                        $0.server = "http://localhost:1337/parse"
+                    #else
+                        $0.server = "http://mog.local:1337/parse"
+                    #endif
+                    //$0.server = "http://thedelt.herokuapp.com/parse"
+                }
+                Parse.initializeWithConfiguration(configuration)
+                PFUser.enableRevocableSessionInBackgroundWithBlock { (error: NSError?) -> Void in
+                    print("enableRevocableSessionInBackgroundWithBlock completion")
+                }
+                
+                // SoundCloud config.
+//                Soundcloud.clientIdentifier = "COOL"
+//                let soundcloud = Soundcloud()
+//                Soundcloud.clientIdentifier = keys["soundCloudClientID"] as String
+                
+            } else {
+                print("Error: Unable to load Keys.plist.")
             }
-            Parse.initializeWithConfiguration(configuration)
-            
-            PFUser.enableRevocableSessionInBackgroundWithBlock { (error: NSError?) -> Void in
-                print("enableRevocableSessionInBackgroundWithBlock completion")
-            }
-            
-        } else {
-            print("Error: Unable to load Keys.plist.")
         }
         
         // Set up hamburger menu.

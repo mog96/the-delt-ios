@@ -1,4 +1,4 @@
-    //
+//
 //  HamburgerViewController.swift
 //  chirpin
 //
@@ -8,18 +8,17 @@
 
 import UIKit
 
-class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
+class HamburgerViewController: UIViewController {
     
     @IBOutlet weak var menuView: UIView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet var panGestureRecognizer: UIPanGestureRecognizer!
+    @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
     
     let xThreshold = 100
     var contentViewOriginalOrigin: CGPoint!
     var screenSize: CGRect!
     var menuShown = false
-    
-    // MARK: View Loading
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,8 +26,10 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
         // FOR SCREEN SIZE-DEPENDENT MENU WIDTH
         screenSize = UIScreen.mainScreen().bounds
         
-        configureContentViewController()
-        configureMenuViewController()
+        self.configureContentViewController()
+        self.configureMenuViewController()
+        
+        // self.tapGestureRecognizer.delegate = self
     }
     
     override func didReceiveMemoryWarning() {
@@ -59,59 +60,56 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
     func configureContentViewController() {
         if self.contentView != nil {
             self.contentViewController!.view.frame = contentView.bounds
-            for subview in contentView.subviews {
+            for subview in self.contentView.subviews {
                 subview.removeFromSuperview()
             }
-            contentView.addSubview(contentViewController!.view)
+            self.contentView.addSubview(self.contentViewController!.view)
             
             self.hideMenu()
-            
-            /*
-            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
-            tapGestureRecognizer.numberOfTapsRequired = 2
-            tapGestureRecognizer.delegate = self
-            self.view.addGestureRecognizer(tapGestureRecognizer)
-            */
         }
     }
-    
-    /*
-    func handleTap(recognizer: UITapGestureRecognizer){
-        hideMenu()
-    }
-    */
     
     func configureMenuViewController() {
-        if menuView != nil {
-            //print("MENU SUCCESS")
-            menuViewController!.view.frame = menuView.bounds
-            for subview in menuView.subviews {
+        if self.menuView != nil {
+            self.menuViewController!.view.frame = menuView.bounds
+            for subview in self.menuView.subviews {
                 subview.removeFromSuperview()
             }
-            menuView.addSubview(menuViewController!.view)
+            self.menuView.addSubview(menuViewController!.view)
         }
     }
-    
-    
-    // MARK: Actions
-    
-    func showMenu(){
+}
+
+
+// MARK: - Helpers
+
+extension HamburgerViewController {
+    func showMenu() {
         UIView.animateWithDuration(0.35, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: { () -> Void in
             self.contentView.frame.origin = CGPoint(x: 280, y: 0)
-        }, completion: { (finished: Bool) -> Void in
-            self.menuShown = true
+            }, completion: { (finished: Bool) -> Void in
+                self.menuShown = true
+                self.tapGestureRecognizer.enabled = true
+                for subview in self.contentView.subviews {
+                    subview.userInteractionEnabled = false
+                }
+                // self.performSelector(#selector(self.hideStatusBar), withObject: self, afterDelay: 10)
         })
     }
     
-
-    func hideMenu(){
+    
+    func hideMenu() {
         UIView.animateWithDuration(0.35, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: { () -> Void in
             self.contentView.frame.origin = CGPoint(x: 0, y: 0)
-        }, completion: { (finished: Bool) -> Void in
-            if !self.contentViewController!.isKindOfClass(EditableProfileViewController) {
-                UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
-            }
-            self.menuShown = false
+            }, completion: { (finished: Bool) -> Void in
+                if !self.contentViewController!.isKindOfClass(EditableProfileViewController) {
+                    UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
+                }
+                self.menuShown = false
+                self.tapGestureRecognizer.enabled = false
+                for subview in self.contentView.subviews {
+                    subview.userInteractionEnabled = true
+                }
         })
     }
     
@@ -123,6 +121,24 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    func hideStatusBar() {
+        UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: .None)
+    }
+}
+
+
+// MARK: - Gesture Recognizer Delegate
+
+//extension HamburgerViewController: UIGestureRecognizerDelegate {
+//    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+//        return true
+//    }
+//}
+
+
+// MARK: - Actions
+
+extension HamburgerViewController {
     @IBAction func onPanGesture(sender: UIPanGestureRecognizer) {
         let translation = sender.translationInView(view)
         let velocity = sender.velocityInView(view)
@@ -148,5 +164,10 @@ class HamburgerViewController: UIViewController, UIGestureRecognizerDelegate {
                 self.hideMenu()
             }
         }
+    }
+    
+    @IBAction func onContentViewTapped(sender: AnyObject) {
+        print("CONTENT VIEW TAPED")
+        self.hideMenu()
     }
 }
