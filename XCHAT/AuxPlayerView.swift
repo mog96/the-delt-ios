@@ -25,11 +25,71 @@ class AuxPlayerView: UIView {
     @IBOutlet weak var trackNameLabel: UILabel!
     @IBOutlet weak var artistAlbumNameLabel: UILabel!
     
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    @IBOutlet weak var panGestureRecognizer: UIPanGestureRecognizer!
+    @IBOutlet weak var thumbnailControlsTapGestureRecognizer: UITapGestureRecognizer!
+    
+    var originalOrigin: CGPoint!
+    
+    override func awakeFromNib() {
+        // Set aux player view background color to translucent black.
+        // self.backgroundColor = UIColor(white: 0, alpha: 0.75)
     }
-    */
+}
+
+
+// MARK: - Helpers
+
+extension AuxPlayerView {
+    func showAuxPlayerView() {
+        UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: { () -> Void in
+            self.frame.origin = CGPoint(x: 0, y: -self.thumbnailControlsViewHeight.constant)
+            }, completion: { (finished: Bool) -> Void in
+                // Completion.
+        })
+    }
+    
+    func hideAuxPlayerView() {
+        UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: { () -> Void in
+            self.frame.origin = CGPoint(x: 0, y: self.superview!.frame.height - self.thumbnailControlsViewHeight.constant)
+            }, completion: { (finished: Bool) -> Void in
+                // Completion.
+        })
+    }
+}
+
+
+// MARK: - Actions
+
+extension AuxPlayerView {
+    
+    // Assumes this view has superview.
+    @IBAction func onPanGesture(sender: AnyObject) {
+        print("PANNED")
+        
+        let translation = sender.translationInView(self.superview)
+        let velocity = sender.velocityInView(self.superview)
+        
+        if sender.state == UIGestureRecognizerState.Began {
+            self.originalOrigin = self.frame.origin
+            
+        } else if sender.state == UIGestureRecognizerState.Changed {
+            let newY = self.originalOrigin.y + translation.y
+            let offsetNewY = newY + self.thumbnailControlsViewHeight.constant
+            if offsetNewY >= 0 && newY <= self.superview!.frame.height  {
+                self.frame.origin.y = newY
+            }
+            
+        } else if sender.state == UIGestureRecognizerState.Ended {
+            if velocity.y < 0 {
+                self.showAuxPlayerView()
+                self.superview?.endEditing(true)
+            } else {
+                self.hideAuxPlayerView()
+            }
+        }
+    }
+    
+    @IBAction func onThumbnailControlsTapped(sender: AnyObject) {
+        self.showAuxPlayerView()
+    }
 }
