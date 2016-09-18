@@ -31,8 +31,14 @@ class AuxPlayerView: UIView {
     var originalOrigin: CGPoint!
     
     override func awakeFromNib() {
-        // Set aux player view background color to translucent black.
-        // self.backgroundColor = UIColor(white: 0, alpha: 0.75)
+        let playbackButtons = [self.thumbnailPreviousButton, self.thumbnailPlayButton, self.thumbnailNextButton,
+                               self.previousButton, self.playButton, self.nextButton]
+        for playbackButton in playbackButtons {
+            playbackButton.setNeedsLayout()
+            playbackButton.layoutIfNeeded()
+            playbackButton.layer.cornerRadius = playbackButton.frame.width / 2
+            playbackButton.clipsToBounds = true
+        }
     }
 }
 
