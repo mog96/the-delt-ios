@@ -25,19 +25,30 @@ class AuxPlayerView: UIView {
     @IBOutlet weak var trackNameLabel: UILabel!
     @IBOutlet weak var artistAlbumNameLabel: UILabel!
     
-    @IBOutlet weak var panGestureRecognizer: UIPanGestureRecognizer!
     @IBOutlet weak var thumbnailControlsTapGestureRecognizer: UITapGestureRecognizer!
+    @IBOutlet weak var panGestureRecognizer: UIPanGestureRecognizer!
+    
+    var previousButtons: [UIButton]!
+    var playButtons: [UIButton]!
+    var nextButtons: [UIButton]!
     
     var originalOrigin: CGPoint!
     
     override func awakeFromNib() {
-        let playbackButtons = [self.thumbnailPreviousButton, self.thumbnailPlayButton, self.thumbnailNextButton,
-                               self.previousButton, self.playButton, self.nextButton]
+        self.playButtons = [self.thumbnailPlayButton, self.playButton]
+        self.previousButtons = [self.thumbnailPreviousButton, self.previousButton]
+        self.nextButtons = [self.thumbnailNextButton, self.nextButton]
+        
+        let playbackButtons = self.playButtons + self.previousButtons + self.nextButtons
         for playbackButton in playbackButtons {
             playbackButton.setNeedsLayout()
             playbackButton.layoutIfNeeded()
             playbackButton.layer.cornerRadius = playbackButton.frame.width / 2
             playbackButton.clipsToBounds = true
+        }
+        
+        for pb in self.playButtons {
+            // pb. // START HERE< assign action to each button
         }
     }
 }
@@ -68,6 +79,10 @@ extension AuxPlayerView {
 
 extension AuxPlayerView {
     
+    @IBAction func onThumbnailControlsTapped(sender: AnyObject) {
+        self.showAuxPlayerView()
+    }
+    
     // Assumes this view has superview.
     @IBAction func onPanGesture(sender: AnyObject) {
         print("PANNED")
@@ -95,7 +110,7 @@ extension AuxPlayerView {
         }
     }
     
-    @IBAction func onThumbnailControlsTapped(sender: AnyObject) {
-        self.showAuxPlayerView()
+    func onPlayButtonTapped(sender: UIButton) {
+        sender.selected = !sender.selected
     }
 }

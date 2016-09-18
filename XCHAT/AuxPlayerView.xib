@@ -122,6 +122,9 @@
                             </constraints>
                             <state key="normal" image="play_icon_black"/>
                             <state key="selected" image="pause_icon_black"/>
+                            <connections>
+                                <action selector="onPlayButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="fgR-jQ-w5V"/>
+                            </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.75" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:05" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="37T-cl-ClA">
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
