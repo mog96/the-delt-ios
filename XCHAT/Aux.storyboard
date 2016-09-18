@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -187,89 +186,14 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qjx-pT-wFs" customClass="AuxControlsView" customModule="XCHAT" customModuleProvider="target">
-                                <subviews>
-                                    <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Wo-9I-n9L">
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="f72-Q0-OAg">
-                                            <frame key="frameInset"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <subviews>
-                                                <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gd8-KR-Wqs">
-                                                    <frame key="frameInset" minY="-512"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" id="Qna-fm-J5g">
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    </view>
-                                                    <vibrancyEffect>
-                                                        <blurEffect style="light"/>
-                                                    </vibrancyEffect>
-                                                </visualEffectView>
-                                            </subviews>
-                                        </view>
-                                        <blurEffect style="light"/>
-                                    </visualEffectView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bLp-wG-YSf">
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="bLp-wG-YSf" secondAttribute="height" multiplier="1:1" id="wXi-rA-aHL"/>
-                                        </constraints>
-                                    </imageView>
-                                    <button opaque="NO" alpha="0.90000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dQF-j6-Kxp">
-                                        <color key="backgroundColor" red="0.40784313725490196" green="0.5490196078431373" blue="0.81568627450980391" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="dQF-j6-Kxp" secondAttribute="height" multiplier="1:1" id="IDo-Tz-YWp"/>
-                                        </constraints>
-                                        <state key="normal" image="previous_icon_black"/>
-                                    </button>
-                                    <button opaque="NO" alpha="0.89999997615814209" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sh2-u8-Wy8">
-                                        <color key="backgroundColor" red="0.40784313725490196" green="0.5490196078431373" blue="0.81568627450980391" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="Sh2-u8-Wy8" secondAttribute="height" multiplier="1:1" id="qD7-uZ-4R3"/>
-                                        </constraints>
-                                        <state key="normal" image="next_icon_black"/>
-                                    </button>
-                                    <button opaque="NO" alpha="0.89999997615814209" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="amz-J0-qg1">
-                                        <color key="backgroundColor" red="0.40784313725490196" green="0.5490196078431373" blue="0.81568627450980391" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="amz-J0-qg1" secondAttribute="height" multiplier="1:1" id="dju-IR-tTa"/>
-                                        </constraints>
-                                        <state key="normal" image="play_icon_black"/>
-                                        <state key="selected" image="pause_icon_black"/>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="56" id="5c2-Ft-BLt"/>
-                                    <constraint firstItem="0Wo-9I-n9L" firstAttribute="top" secondItem="Qjx-pT-wFs" secondAttribute="top" id="Bbj-9M-uGd"/>
-                                    <constraint firstItem="Sh2-u8-Wy8" firstAttribute="width" secondItem="dQF-j6-Kxp" secondAttribute="width" id="CJP-q8-A58"/>
-                                    <constraint firstItem="bLp-wG-YSf" firstAttribute="leading" secondItem="Qjx-pT-wFs" secondAttribute="leading" constant="8" id="Ecs-Bt-Zd8"/>
-                                    <constraint firstItem="amz-J0-qg1" firstAttribute="width" secondItem="dQF-j6-Kxp" secondAttribute="width" id="FAi-1I-Wgo"/>
-                                    <constraint firstItem="bLp-wG-YSf" firstAttribute="top" secondItem="Qjx-pT-wFs" secondAttribute="top" constant="8" id="GVg-8G-21l"/>
-                                    <constraint firstItem="Sh2-u8-Wy8" firstAttribute="top" secondItem="dQF-j6-Kxp" secondAttribute="top" id="Gav-mo-lmh"/>
-                                    <constraint firstAttribute="bottom" secondItem="Sh2-u8-Wy8" secondAttribute="bottom" constant="12" id="Ifx-NX-FKL"/>
-                                    <constraint firstItem="amz-J0-qg1" firstAttribute="leading" secondItem="dQF-j6-Kxp" secondAttribute="trailing" id="KNI-lm-AW4"/>
-                                    <constraint firstItem="amz-J0-qg1" firstAttribute="bottom" secondItem="dQF-j6-Kxp" secondAttribute="bottom" id="OOd-89-0Ib"/>
-                                    <constraint firstAttribute="bottom" secondItem="bLp-wG-YSf" secondAttribute="bottom" constant="8" id="Xnn-Vu-IpO"/>
-                                    <constraint firstItem="Sh2-u8-Wy8" firstAttribute="bottom" secondItem="dQF-j6-Kxp" secondAttribute="bottom" id="ckf-Wx-qU2"/>
-                                    <constraint firstAttribute="bottom" secondItem="0Wo-9I-n9L" secondAttribute="bottom" id="gFm-8z-5oT"/>
-                                    <constraint firstItem="Sh2-u8-Wy8" firstAttribute="leading" secondItem="amz-J0-qg1" secondAttribute="trailing" id="h1h-Ib-Nny"/>
-                                    <constraint firstItem="0Wo-9I-n9L" firstAttribute="leading" secondItem="Qjx-pT-wFs" secondAttribute="leading" id="hLD-P8-7ih"/>
-                                    <constraint firstAttribute="trailing" secondItem="Sh2-u8-Wy8" secondAttribute="trailing" constant="12" id="pcv-aX-faY"/>
-                                    <constraint firstAttribute="trailing" secondItem="0Wo-9I-n9L" secondAttribute="trailing" id="rWf-d3-5B6"/>
-                                    <constraint firstItem="Sh2-u8-Wy8" firstAttribute="top" secondItem="Qjx-pT-wFs" secondAttribute="top" constant="12" id="v9I-wv-Yo4"/>
-                                    <constraint firstItem="amz-J0-qg1" firstAttribute="top" secondItem="dQF-j6-Kxp" secondAttribute="top" id="ves-vJ-8y2"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="4sQ-kI-Vj8" firstAttribute="leading" secondItem="kOK-wS-10g" secondAttribute="leading" id="6Is-8T-f3c"/>
-                            <constraint firstAttribute="trailing" secondItem="Qjx-pT-wFs" secondAttribute="trailing" id="8jz-NE-xRI"/>
                             <constraint firstAttribute="bottom" secondItem="4sQ-kI-Vj8" secondAttribute="bottom" id="Hq9-K2-qKM"/>
                             <constraint firstAttribute="trailing" secondItem="4sQ-kI-Vj8" secondAttribute="trailing" id="Kj9-R9-ofY"/>
                             <constraint firstItem="4sQ-kI-Vj8" firstAttribute="top" secondItem="kOK-wS-10g" secondAttribute="top" id="LqI-yr-pK7"/>
-                            <constraint firstItem="1sd-QL-RSt" firstAttribute="top" secondItem="Qjx-pT-wFs" secondAttribute="bottom" id="dO2-2U-TST"/>
-                            <constraint firstItem="Qjx-pT-wFs" firstAttribute="leading" secondItem="kOK-wS-10g" secondAttribute="leading" id="h1k-HH-nF1"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="QUEUE" id="JX3-Xx-ZFe">
@@ -305,12 +229,6 @@
             <point key="canvasLocation" x="1053.5" y="343.5"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="next_icon_black" width="240" height="240"/>
-        <image name="pause_icon_black" width="128" height="128"/>
-        <image name="play_icon_black" width="240" height="240"/>
-        <image name="previous_icon_black" width="240" height="240"/>
-    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

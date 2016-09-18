@@ -38,7 +38,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     #endif
                     //$0.server = "http://thedelt.herokuapp.com/parse"
                 }
-                Parse.initializeWithConfiguration(configuration)
+//                Parse.initializeWithConfiguration(configuration)
+                
+                /****
+                 *
+                 *
+                 *
+                 *
+                    UNCOMMENT ABOVE!!!!!
+                 *
+                 *
+                 *
+                 *
+                ****/
+                
                 PFUser.enableRevocableSessionInBackgroundWithBlock { (error: NSError?) -> Void in
                     print("enableRevocableSessionInBackgroundWithBlock completion")
                 }
