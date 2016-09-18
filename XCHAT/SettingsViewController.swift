@@ -23,15 +23,13 @@ class SettingsViewController: ContentViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
         self.setMenuButton(withColor: "white")
         
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.estimatedRowHeight = 44
-        tableView.rowHeight = UITableViewAutomaticDimension
-        
-        self.navigationController?.navigationBar.barStyle = UIBarStyle.BlackTranslucent
-        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        self.tableView.estimatedRowHeight = 44
+        self.tableView.rowHeight = UITableViewAutomaticDimension
     }
 
     override func didReceiveMemoryWarning() {
@@ -81,6 +79,7 @@ extension SettingsViewController {
     }
 }
 */
+
 
 // MARK: - Table View
 
