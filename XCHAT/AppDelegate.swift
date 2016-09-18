@@ -38,51 +38,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     #endif
                     //$0.server = "http://thedelt.herokuapp.com/parse"
                 }
-//                Parse.initializeWithConfiguration(configuration)
-                
-                /****
-                 *
-                 *
-                 *
-                 *
-                    UNCOMMENT ABOVE!!!!!
-                 *
-                 *
-                 *
-                 *
-                ****/
+                Parse.initializeWithConfiguration(configuration)
                 
                 PFUser.enableRevocableSessionInBackgroundWithBlock { (error: NSError?) -> Void in
                     print("enableRevocableSessionInBackgroundWithBlock completion")
                 }
                 
                 // SoundCloud config.
-//                Soundcloud.clientIdentifier = "COOL"
-//                let soundcloud = Soundcloud()
-//                Soundcloud.clientIdentifier = keys["soundCloudClientID"] as String
+                // Soundcloud.clientIdentifier = "COOL"
+                // let soundcloud = Soundcloud()
+                // Soundcloud.clientIdentifier = keys["soundCloudClientID"] as String
                 
             } else {
                 print("Error: Unable to load Keys.plist.")
             }
         }
         
-        // Set up hamburger menu.
-        let menuStoryboard = UIStoryboard(name: "Menu", bundle: nil)
-        self.hamburgerViewController = menuStoryboard.instantiateViewControllerWithIdentifier("HamburgerViewController") as! HamburgerViewController
-        self.menuViewController = menuStoryboard.instantiateViewControllerWithIdentifier("MenuViewController") as! MenuViewController
-        self.hamburgerViewController!.menuViewController = self.menuViewController
-        self.menuViewController.hamburgerViewController = hamburgerViewController
-        
-        // ** SETS START VIEW **
-        // Set up initial view (REEL).
-        let initialStoryboard = UIStoryboard(name: "Reel", bundle: nil)
-        let initialNavigationController = initialStoryboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
-        self.hamburgerViewController!.contentViewController = initialNavigationController
-        let reelViewController = initialNavigationController.viewControllers[0] as! ReelViewController
-        reelViewController.menuDelegate = self.menuViewController
-        
         /*
-        // Set up Reachability.
+        // Set up Reachability. TODO: Use Whisper...
         let reachability = Reachability(hostName: Parse.currentConfiguration()?.server)
         reachability.unreachableBlock = { Void in
             let alertVC = UIAlertController(title: "Unable to Connect", message: "Please check your network connection", preferredStyle: .Alert)
@@ -95,8 +68,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         reachability.startNotifier()
         */
         
+        // Set up hamburger menu.
+        let menuStoryboard = UIStoryboard(name: "Menu", bundle: nil)
+        self.hamburgerViewController = menuStoryboard.instantiateViewControllerWithIdentifier("HamburgerViewController") as! HamburgerViewController
+        self.menuViewController = menuStoryboard.instantiateViewControllerWithIdentifier("MenuViewController") as! MenuViewController
+        self.hamburgerViewController!.menuViewController = self.menuViewController
+        self.menuViewController.hamburgerViewController = hamburgerViewController
+        
+        
+        /** SET START VIEW **/
+        
+        // Set up initial view (REEL).
+        let storyboard = UIStoryboard(name: "Reel", bundle: nil)
+        let firstNC = storyboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
+        self.hamburgerViewController!.contentViewController = firstNC
+        let firstVC = firstNC.viewControllers[0] as! ReelViewController
+        firstVC.menuDelegate = self.menuViewController
+        
         // Check if user is logged in.
-        if PFUser.currentUser() == nil {
+        if PFUser.currentUser() == nil && false { /** TEMP 2016-09-18 **/
             
             // START HERE: present login.
             
@@ -115,19 +105,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         
-        
-        
-        
-        // Override point for customization after application launch.
-        // NSNotificationCenter.defaultCenter().addObserver(self, selector: "userDidLogout", name: userDidLogoutNotification, object: nil)
-        
-        
-        //****** DEPRECATED ******
-        //if we want to read from a file called Credentials.plist
-        //if let path=NSBundle.mainBundle().pathForResource("Credentials", ofType: "plist") {
-            //var myDict = NSDictionary(contentsOfFile: path)
-            //let appId = myDict!.valueForKey("appId") as! NSString
-            //let clientKey = myDict!.valueForKey("clientKey")as! NSString
+        /** SCRAP **/
         
         /*
         // PUSH STUFF

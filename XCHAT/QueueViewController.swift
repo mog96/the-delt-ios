@@ -12,8 +12,6 @@ class QueueViewController: ContentViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    var auxPlayerView: AuxPlayerView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,10 +19,6 @@ class QueueViewController: ContentViewController {
         self.tableView.dataSource = self
         self.tableView.allowsMultipleSelectionDuringEditing = false
         self.tableView.backgroundView = UIView()
-        
-        self.auxPlayerView = NSBundle.mainBundle().loadNibNamed("AuxPlayerView", owner: self, options: nil)![0] as! AuxPlayerView
-        self.auxPlayerView.frame.origin = CGPoint(x: 0, y: self.view.frame.height - self.auxPlayerView.thumbnailControlsViewHeight.constant)
-        self.auxPlayerView.frame.size = CGSize(width: self.view.frame.width, height: self.view.frame.height + self.auxPlayerView.thumbnailControlsViewHeight.constant)
     }
 
     override func didReceiveMemoryWarning() {

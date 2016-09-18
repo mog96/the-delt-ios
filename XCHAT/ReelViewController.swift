@@ -35,7 +35,7 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
         super.viewDidLoad()
         self.setMenuButton(withColor: "red")
         
-        refreshData()
+        self.refreshData()
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -363,8 +363,8 @@ extension ReelViewController {
     }
     
     func onRefresh() {
-        refreshData()
-        refreshControl.endRefreshing()
+        self.refreshData()
+        self.refreshControl.endRefreshing()
     }
 }
 

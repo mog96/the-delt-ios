@@ -80,34 +80,36 @@ class ProfileCell: UITableViewCell {
         
         // Update user's total num faves by fetching from server, summing, and saving to user's table entry.
         let query = PFQuery(className: "Photo")
-        query.whereKey("username", equalTo: PFUser.currentUser()!.username!)
-        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
-            if let error = error {
-                print(error)
-            } else {
-                if let objects = objects {
-                    var totalFaves = 0
-                    for object in objects {
-                        totalFaves += object["numFaves"] as! Int
-                    }
-                    
-                    // Save current user's total num faves.
-                    PFUser.currentUser()?.setObject(totalFaves, forKey: "totalNumFavesReceived")
-                    PFUser.currentUser()?.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
-                        if error == nil {
-                            if let numFaves = PFUser.currentUser()?.objectForKey("totalNumFavesReceived") as? Int {
-                                if numFaves == 1 {
-                                    self.numFavesLabel.text = "1 fave received"
+        if let username = PFUser.currentUser()?.username {
+            query.whereKey("username", equalTo: username)
+            query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
+                if let error = error {
+                    print(error)
+                } else {
+                    if let objects = objects {
+                        var totalFaves = 0
+                        for object in objects {
+                            totalFaves += object["numFaves"] as! Int
+                        }
+                        
+                        // Save current user's total num faves.
+                        PFUser.currentUser()?.setObject(totalFaves, forKey: "totalNumFavesReceived")
+                        PFUser.currentUser()?.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
+                            if error == nil {
+                                if let numFaves = PFUser.currentUser()?.objectForKey("totalNumFavesReceived") as? Int {
+                                    if numFaves == 1 {
+                                        self.numFavesLabel.text = "1 fave received"
+                                    } else {
+                                        self.numFavesLabel.text = "\(numFaves) faves received"
+                                    }
                                 } else {
-                                    self.numFavesLabel.text = "\(numFaves) faves received"
+                                    self.numFavesLabel.text = "0 faves received"
                                 }
                             } else {
-                                self.numFavesLabel.text = "0 faves received"
+                                print(error)
                             }
-                        } else {
-                            print(error)
-                        }
-                    })
+                        })
+                    }
                 }
             }
         }

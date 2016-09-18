@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -163,8 +164,10 @@
                                             <frame key="frameInset" width="375" height="115"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TEn-zP-awR">
-                                                    <frame key="frameInset" minX="8" minY="8" width="99" height="99"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TEn-zP-awR">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="TEn-zP-awR" secondAttribute="height" multiplier="1:1" id="GA5-2U-q7J"/>
+                                                    </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SoundCloud Track Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K7c-JB-TSg">
                                                     <frame key="frameInset" minX="115" minY="8" width="191" height="21"/>
@@ -191,8 +194,10 @@
                                             <frame key="frameInset" width="375" height="115"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0ol-yS-kuq">
-                                                    <frame key="frameInset" minX="8" minY="8" width="99" height="99"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0ol-yS-kuq">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="0ol-yS-kuq" secondAttribute="height" multiplier="1:1" id="6Kr-Ha-RoS"/>
+                                                    </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Spotify Track Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hPH-Mk-LYa">
                                                     <frame key="frameInset" minX="155" minY="8" width="151" height="21"/>
@@ -219,8 +224,10 @@
                                             <frame key="frameInset" width="375" height="115"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gMo-h7-dep">
-                                                    <frame key="frameInset" minX="8" minY="8" width="99" height="99"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gMo-h7-dep">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="gMo-h7-dep" secondAttribute="height" multiplier="1:1" id="kKJ-YJ-3dw"/>
+                                                    </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Apple Music Track Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z9S-nl-VkH">
                                                     <frame key="frameInset" minX="115" minY="8" width="191" height="21"/>
@@ -265,10 +272,10 @@
             </objects>
             <point key="canvasLocation" x="2178.5" y="343.5"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Aux Navigation Controller-->
         <scene sceneID="4nY-Tg-E73">
             <objects>
-                <navigationController storyboardIdentifier="AuxNC" automaticallyAdjustsScrollViewInsets="NO" id="BXz-eq-mmC" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="AuxNC" automaticallyAdjustsScrollViewInsets="NO" id="BXz-eq-mmC" customClass="AuxNavigationController" customModule="XCHAT" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="k8p-gW-J5I">

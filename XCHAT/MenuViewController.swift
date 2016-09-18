@@ -120,7 +120,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             
         case 3: // AUX
             let storyboard = UIStoryboard(name: "Aux", bundle: nil)
-            let nc = storyboard.instantiateViewControllerWithIdentifier("AuxNC") as! UINavigationController
+            let nc = storyboard.instantiateViewControllerWithIdentifier("AuxNC") as! AuxNavigationController
             let firstVC = nc.viewControllers[0] as! AuxViewController
             firstVC.menuDelegate = self
             
