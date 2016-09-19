@@ -2,8 +2,10 @@
 * IMPROVEMENTS *
 ****************
 
-	QUICK:
-	- Add Whisper for no network connection.
+	OFFLINE:
+	- Divide Chat messages by day.
+	
+
 	
 	GAME PLAN THRU 9/23:
 	- Implement Alert All Delts notification.
@@ -20,14 +22,17 @@
 	- Complete Chat code.
 	- Integrate email list.
 	- Integrate reading and posting to Google Cal.
-	- Add admin user flag. Unlocks:
+	- Add admin user bool. Unlocks:
 		- Post deletion.
 		- User delete via Parse cloud code.
 			Parse.Cloud.useMasterKey();
 			user.destroy();
-		- User admin status (admin's can't remove admins).
+		- User administration status (admin's can't remove admins).
 	
+
+
 	WISHLIST
+	- Add Whisper for no network connection.
 	- Reel photo caching.
 	- Secondary Reel UI, kind of like Facebook's video UI... Something cool and resume-worthy.
 	- Add force touch menu.
@@ -37,6 +42,8 @@
 	- Check if Soundcloud pod has been updated to Swift 2.3
 	- Redo protocol naming scheme to className(didDoAction object: ...)
 	- Cache reel photos.
+
+
 
 	LOGIN
 	- Successful login transition causes button icons to appear in the top left corner at first.
@@ -62,7 +69,7 @@
 	CHAT
 	- Divide messages by day.
 	- Subsequent messages from same user don't need profile photo next to them.
-	- Use refresh control to load earlier messages.
+	- Use refresh control to load earlier messages (refresh control inside hidden table view cell?).
 
 	AUX
 	- Floating playback controls using another UIWindow...

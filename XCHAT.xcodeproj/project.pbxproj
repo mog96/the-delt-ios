@@ -34,7 +34,6 @@
 		258040B21C54DF00002D1F08 /* FeedbackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258040B11C54DF00002D1F08 /* FeedbackTableViewCell.swift */; };
 		258D49881B15AC6B00A632D3 /* ThreadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258D49871B15AC6B00A632D3 /* ThreadsViewController.swift */; };
 		258D498A1B15AEB900A632D3 /* MemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258D49891B15AEB900A632D3 /* MemberCell.swift */; };
-		258D498C1B15C69600A632D3 /* WelcomeChatView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 258D498B1B15C69600A632D3 /* WelcomeChatView.xib */; };
 		25966C241C99978100D56DFF /* SwipeAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25966C221C99978100D56DFF /* SwipeAnimator.swift */; };
 		25966C251C99978100D56DFF /* VideoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25966C231C99978100D56DFF /* VideoDetailViewController.swift */; };
 		259FBA431B02F5A5006F1650 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259FBA421B02F5A5006F1650 /* AppDelegate.swift */; };
@@ -144,7 +143,6 @@
 		258040B11C54DF00002D1F08 /* FeedbackTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackTableViewCell.swift; sourceTree = "<group>"; };
 		258D49871B15AC6B00A632D3 /* ThreadsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadsViewController.swift; sourceTree = "<group>"; };
 		258D49891B15AEB900A632D3 /* MemberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberCell.swift; sourceTree = "<group>"; };
-		258D498B1B15C69600A632D3 /* WelcomeChatView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WelcomeChatView.xib; sourceTree = "<group>"; };
 		25966C221C99978100D56DFF /* SwipeAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeAnimator.swift; sourceTree = "<group>"; };
 		25966C231C99978100D56DFF /* VideoDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoDetailViewController.swift; sourceTree = "<group>"; };
 		259FBA3D1B02F5A5006F1650 /* XCHAT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XCHAT.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -463,7 +461,6 @@
 				255BE9871B1737940001B160 /* MessageCell.swift */,
 				255BE9831B172E550001B160 /* MessageLeadingSpaceCell.swift */,
 				38D9FB971B155C780030B6D9 /* MessageLoadMoreCell.swift */,
-				258D498B1B15C69600A632D3 /* WelcomeChatView.xib */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -675,7 +672,6 @@
 				D5FB88A71D87F6F600984C19 /* Aux.storyboard in Resources */,
 				254A19AA1B18768E0030F316 /* Keys.plist in Resources */,
 				D55496091D8A8A7500090E76 /* SettingsDescriptionTableViewCell.xib in Resources */,
-				258D498C1B15C69600A632D3 /* WelcomeChatView.xib in Resources */,
 				D55496071D8A862600090E76 /* ActionButtonTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

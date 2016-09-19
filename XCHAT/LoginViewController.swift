@@ -278,20 +278,21 @@ extension LoginViewController {
                     
                     print("LOGIN FAILED")
                     
-                    let errorString = error?.userInfo["error"] as! String
-                    switch errorString {
-                    case "Invalid username/password.":
-                        let invalidLoginAlertVC = UIAlertController(title: "Invalid Username or Password", message: "Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
-                        invalidLoginAlertVC.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                        self.presentViewController(invalidLoginAlertVC, animated: true, completion: nil)
-                    case "Could not connect to the server.":
-                        let invalidLoginAlertVC = UIAlertController(title: "Server Error", message: "Could not connect to the server. Please try again later.", preferredStyle: UIAlertControllerStyle.Alert)
-                        invalidLoginAlertVC.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                        self.presentViewController(invalidLoginAlertVC, animated: true, completion: nil)
-                    default:
-                        let invalidLoginAlertVC = UIAlertController(title: "Login Error", message: "Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
-                        invalidLoginAlertVC.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                        self.presentViewController(invalidLoginAlertVC, animated: true, completion: nil)
+                    if let errorString = error?.userInfo["error"] as? String {
+                        switch errorString {
+                        case "Invalid username/password.":
+                            let invalidLoginAlertVC = UIAlertController(title: "Invalid Username or Password", message: "Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                            invalidLoginAlertVC.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                            self.presentViewController(invalidLoginAlertVC, animated: true, completion: nil)
+                        case "Could not connect to the server.":
+                            let invalidLoginAlertVC = UIAlertController(title: "Server Error", message: "Could not connect to the server. Please try again later.", preferredStyle: UIAlertControllerStyle.Alert)
+                            invalidLoginAlertVC.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                            self.presentViewController(invalidLoginAlertVC, animated: true, completion: nil)
+                        default:
+                            let invalidLoginAlertVC = UIAlertController(title: "Login Error", message: "Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                            invalidLoginAlertVC.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                            self.presentViewController(invalidLoginAlertVC, animated: true, completion: nil)
+                        }
                     }
                 }
             }
