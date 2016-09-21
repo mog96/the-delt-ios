@@ -36,6 +36,8 @@ class ChatViewController: ContentViewController {
     
     var refreshTimer: NSTimer!
     
+    let kMessageDraftKey = "ChatMessageDraft"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
@@ -54,9 +56,12 @@ class ChatViewController: ContentViewController {
         // Setup message view.
         self.messageView = NSBundle.mainBundle().loadNibNamed("MessageView", owner: self, options: nil)![0] as! MessageView
         self.messageView.frame = CGRectMake(0, UIScreen.mainScreen().bounds.height - self.messageView.frame.height, self.messageView.frame.height, UIScreen.mainScreen().bounds.width)
-        let placeholder = "Holler at your brothers."
-        self.messageView.placeholder = placeholder
-        self.messageView.messageTextView.text = placeholder
+//        let placeholder = "Holler at your brothers."
+//        self.messageView.placeholder = placeholder
+//        self.messageView.messageTextView.text = placeholder
+        if let messageDraft = NSUserDefaults.standardUserDefaults().objectForKey(self.kMessageDraftKey) as? String {
+            self.messageView.messageTextView.text = messageDraft
+        }
         self.messageView.delegate = self
         self.view.addSubview(self.messageView)
         self.messageView.autoPinEdgeToSuperviewEdge(.Left)
@@ -77,7 +82,16 @@ class ChatViewController: ContentViewController {
     }
     
     override func viewWillDisappear(animated: Bool) {
-        let messageDraft = self.messageView.messageTextView.text
+        let messageDraft = self.messageView.messageTextView.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        if messageDraft.characters.count > 0 && messageDraft != self.messageView.placeholder {
+            NSUserDefaults.standardUserDefaults().setObject(messageDraft, forKey: self.kMessageDraftKey)
+            
+            print("SAVE MESSAGE DRAFT", NSUserDefaults.standardUserDefaults().objectForKey(self.kMessageDraftKey)!)
+        } else {
+            NSUserDefaults.standardUserDefaults().removeObjectForKey(self.kMessageDraftKey)
+            
+            print("CLEAR DRAFT")
+        }
     }
     
     override func didReceiveMemoryWarning() {
