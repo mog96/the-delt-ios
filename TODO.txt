@@ -70,6 +70,7 @@
 	- Divide messages by day.
 	- Subsequent messages from same user don't need profile photo next to them.
 	- Use refresh control to load earlier messages (refresh control inside hidden table view cell?).
+	- don't hide placeholder text in caption/comment views until user starts typing
 
 	AUX
 	- Floating playback controls using another UIWindow...

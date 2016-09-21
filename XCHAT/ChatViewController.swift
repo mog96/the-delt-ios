@@ -106,7 +106,7 @@ extension ChatViewController {
         }
     }
     
-    private func trimmedMessage(message: String, placeholder: String?) -> String? {
+    func trimmedMessage(message: String, placeholder: String?) -> String? {
         let trimmedMessage = message.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         if trimmedMessage.characters.count > 0 && trimmedMessage != placeholder {
             return trimmedMessage
@@ -118,12 +118,8 @@ extension ChatViewController {
     @objc private func saveMessageDraft() {
         if let messageDraft = self.trimmedMessage(self.messageView.messageTextView.text, placeholder: self.messageView.placeholder) {
             NSUserDefaults.standardUserDefaults().setObject(messageDraft, forKey: self.kMessageDraftKey)
-            
-            print("SAVE MESSAGE DRAFT", NSUserDefaults.standardUserDefaults().objectForKey(self.kMessageDraftKey)!)
         } else {
             NSUserDefaults.standardUserDefaults().removeObjectForKey(self.kMessageDraftKey)
-            
-            print("CLEAR DRAFT")
         }
     }
 }
@@ -135,9 +131,7 @@ extension ChatViewController {
     func keyboardWillShow(notification: NSNotification){
         let userInfo = notification.userInfo
         let kbSize = userInfo?[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue
-        
         self.messageViewBottomConstraint.constant = -kbSize!.height
-        print("MESSAGEVIEW FRAME: \(self.messageView.frame)")
         
         UIView.animateWithDuration(0.2, animations: { () -> Void in
             
@@ -369,26 +363,14 @@ extension ChatViewController: MessageViewDelegate {
     func onSendButtonTapped() {
         if let sentMessage = self.trimmedMessage(self.messageView.messageTextView.text, placeholder: self.messageView.placeholder) {
             let message = PFObject(className: "message")
+            
+            // FIXME: CACHE USERNAME in NSUserDefaults.
             // Dummy authorId and threadId
             if let username = PFUser.currentUser()?.valueForKey("username") as? String {
                 message["authorUsername"] = username
             }
             message["threadId"] = self.threadId
             message["content"] = sentMessage
-            message.saveInBackgroundWithBlock { (result: Bool, error: NSError?) -> Void in
-                if error != nil {
-                    print("Error sending message \"\(sentMessage)\":", error?.userInfo["error"] as? String)
-                    
-                    let alertVC = UIAlertController(title: "Send Failed", message: "Please try again later.", preferredStyle: UIAlertControllerStyle.Alert)
-                    alertVC.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
-                    self.presentViewController(alertVC, animated: true, completion: nil)
-                    
-                    print(error?.description)
-                } else {
-                    // Succeed - reload
-                    self.fetchMessages()
-                }
-            }
             
             NSUserDefaults.standardUserDefaults().setObject(sentMessage, forKey: self.kLastSentMessageKey)
             
@@ -396,8 +378,22 @@ extension ChatViewController: MessageViewDelegate {
             
             self.messageView.messageTextView.text = ""
             
-        } else {
-            // Present alert that it is invalid message.
+            message.saveInBackgroundWithBlock { (result: Bool, error: NSError?) -> Void in
+                if error != nil {
+                    print("Error sending message \"\(sentMessage)\":", error?.userInfo["error"] as? String)
+                    
+                    if self.trimmedMessage(self.messageView.messageTextView.text, placeholder: self.messageView.placeholder) == nil {
+                        self.messageView.messageTextView.text = NSUserDefaults.standardUserDefaults().objectForKey(self.kLastSentMessageKey) as? String
+                    }
+                    let alertVC = UIAlertController(title: "Send Failed", message: "Please try again later.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alertVC.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+                    self.presentViewController(alertVC, animated: true, completion: nil)
+                } else {
+                    // Succeed - reload
+                    self.fetchMessages()
+                }
+            }
+            
         }
     }
 }

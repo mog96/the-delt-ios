@@ -53,6 +53,12 @@ class MessageView: UIView, UITextViewDelegate {
         }
     }
     
+    
+    
+    // FIXME: Send button unusable until at least one non-whitespace character typed. (Show speech-to-text like iMessage?)
+    // FIXME: Don't hide placeholder until user types.
+    
+    
 
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
