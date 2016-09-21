@@ -73,6 +73,9 @@ class ChatViewController: ContentViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
+        // Notify when app going into background to save message drafts.
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.saveMessageDraft), name: UIApplicationDidEnterBackgroundNotification, object: nil)
+        
         // Fetch messages.
         self.fetchMessages()
         
@@ -82,16 +85,7 @@ class ChatViewController: ContentViewController {
     }
     
     override func viewWillDisappear(animated: Bool) {
-        let messageDraft = self.messageView.messageTextView.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-        if messageDraft.characters.count > 0 && messageDraft != self.messageView.placeholder {
-            NSUserDefaults.standardUserDefaults().setObject(messageDraft, forKey: self.kMessageDraftKey)
-            
-            print("SAVE MESSAGE DRAFT", NSUserDefaults.standardUserDefaults().objectForKey(self.kMessageDraftKey)!)
-        } else {
-            NSUserDefaults.standardUserDefaults().removeObjectForKey(self.kMessageDraftKey)
-            
-            print("CLEAR DRAFT")
-        }
+        self.saveMessageDraft()
     }
     
     override func didReceiveMemoryWarning() {
@@ -116,6 +110,19 @@ extension ChatViewController {
                 messageTableView.layoutIfNeeded()
                 messageTableView.scrollToRowAtIndexPath(lastIndexPath, atScrollPosition: UITableViewScrollPosition.Bottom, animated: true)
             }
+        }
+    }
+    
+    func saveMessageDraft() {
+        let messageDraft = self.messageView.messageTextView.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        if messageDraft.characters.count > 0 && messageDraft != self.messageView.placeholder {
+            NSUserDefaults.standardUserDefaults().setObject(messageDraft, forKey: self.kMessageDraftKey)
+            
+            print("SAVE MESSAGE DRAFT", NSUserDefaults.standardUserDefaults().objectForKey(self.kMessageDraftKey)!)
+        } else {
+            NSUserDefaults.standardUserDefaults().removeObjectForKey(self.kMessageDraftKey)
+            
+            print("CLEAR DRAFT")
         }
     }
 }
