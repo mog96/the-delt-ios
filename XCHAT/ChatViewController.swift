@@ -21,22 +21,18 @@ class ChatViewController: ContentViewController {
     @IBOutlet weak var subWelcomeLabel: UILabel!
     
     var pictures = NSMutableDictionary()
-    
-    // This should be changed if we want to allow thread selection
-    var threadId: String = "AtsDDF0sUK"
-    
     var messages = [PFObject]()
     var numOfMessagesToLoad: Int = 20
     var numOfTotalMessages: Int?
     
-    var originalWidth: CGFloat?
-    var originalHeight: CGFloat?
-    
-    var firstLoad: Bool = true
-    
     var refreshTimer: NSTimer!
+    var presentedConnectionError = false
+    
+    // This should be changed if we want to allow thread selection
+    var threadId: String = "AtsDDF0sUK"
     
     let kMessageDraftKey = "ChatMessageDraft"
+    let kLastSentMessageKey = "ChatLastSentMessage"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,9 +45,6 @@ class ChatViewController: ContentViewController {
         messageTableView.rowHeight = UITableViewAutomaticDimension
         messageTableView.estimatedRowHeight = 90
         messageTableView.tableFooterView = UIView(frame: CGRectZero)
-        
-        self.originalWidth = messageTableView.frame.width
-        self.originalHeight = messageTableView.frame.height
         
         // Setup message view.
         self.messageView = NSBundle.mainBundle().loadNibNamed("MessageView", owner: self, options: nil)![0] as! MessageView
@@ -113,9 +106,17 @@ extension ChatViewController {
         }
     }
     
-    func saveMessageDraft() {
-        let messageDraft = self.messageView.messageTextView.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-        if messageDraft.characters.count > 0 && messageDraft != self.messageView.placeholder {
+    private func trimmedMessage(message: String, placeholder: String?) -> String? {
+        let trimmedMessage = message.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        if trimmedMessage.characters.count > 0 && trimmedMessage != placeholder {
+            return trimmedMessage
+        } else {
+            return nil
+        }
+    }
+    
+    @objc private func saveMessageDraft() {
+        if let messageDraft = self.trimmedMessage(self.messageView.messageTextView.text, placeholder: self.messageView.placeholder) {
             NSUserDefaults.standardUserDefaults().setObject(messageDraft, forKey: self.kMessageDraftKey)
             
             print("SAVE MESSAGE DRAFT", NSUserDefaults.standardUserDefaults().objectForKey(self.kMessageDraftKey)!)
@@ -182,28 +183,24 @@ extension ChatViewController {
                     self.messageTableView.reloadData()
                     self.messageTableView.layoutIfNeeded()
                     self.scrollToBottom()
-                    self.firstLoad = false
                 }
                 
             } else {
                 
                 // Print error message.
-                print("Error fetching Chat messages:", error?.userInfo["error"])
+                print("Error fetching Chat messages:", error?.userInfo["error"] as? String)
                 if let errorString = error?.userInfo["error"] as? String {
-                    if errorString == "Could not connect to the server." {
-                        let alertVC = UIAlertController(title: "Unable to Send", message: "Please try again later.", preferredStyle: UIAlertControllerStyle.Alert)
-                        alertVC.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                    if errorString == "Could not connect to the server." && !self.presentedConnectionError {
+                        self.refreshTimer.invalidate()
+                        
+                        self.view.endEditing(true)
+                        let alertVC = UIAlertController(title: "Unable to Connect", message: "Please try again later.", preferredStyle: UIAlertControllerStyle.Alert)
+                        alertVC.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
                         self.presentViewController(alertVC, animated: true, completion: nil)
+                        
+                        self.presentedConnectionError = true
                     }
                 }
-                
-                
-                // START HERE: Kill refresh timer.
-                
-                
-                
-                
-                
             }
         }
     }
@@ -370,35 +367,38 @@ extension ChatViewController: LoadMoreMessagesDelegate {
 
 extension ChatViewController: MessageViewDelegate {
     func onSendButtonTapped() {
-        if validateMessage(self.messageView.messageTextView.text!) {
+        if let sentMessage = self.trimmedMessage(self.messageView.messageTextView.text, placeholder: self.messageView.placeholder) {
             let message = PFObject(className: "message")
             // Dummy authorId and threadId
             if let username = PFUser.currentUser()?.valueForKey("username") as? String {
                 message["authorUsername"] = username
             }
-            message["threadId"] = threadId
-            message["content"] = self.messageView.messageTextView.text
-            
-            
-            // Clear the text field
-            self.messageView.messageTextView.text = ""
-            
+            message["threadId"] = self.threadId
+            message["content"] = sentMessage
             message.saveInBackgroundWithBlock { (result: Bool, error: NSError?) -> Void in
                 if error != nil {
-                    // Print some kind of error to clients
-                    print("unable to send this message")
+                    print("Error sending message \"\(sentMessage)\":", error?.userInfo["error"] as? String)
+                    
+                    let alertVC = UIAlertController(title: "Send Failed", message: "Please try again later.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alertVC.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+                    self.presentViewController(alertVC, animated: true, completion: nil)
+                    
                     print(error?.description)
                 } else {
                     // Succeed - reload
                     self.fetchMessages()
                 }
             }
+            
+            NSUserDefaults.standardUserDefaults().setObject(sentMessage, forKey: self.kLastSentMessageKey)
+            
+            print("SAVE LAST SENT MESSAGE", NSUserDefaults.standardUserDefaults().objectForKey(self.kLastSentMessageKey)!)
+            
+            self.messageView.messageTextView.text = ""
+            
+        } else {
+            // Present alert that it is invalid message.
         }
-    }
-    
-    private func validateMessage(string: String) -> Bool {
-        let whitespaceSet = NSCharacterSet.whitespaceCharacterSet()
-        return string.stringByTrimmingCharactersInSet(whitespaceSet) != ""
     }
 }
 
