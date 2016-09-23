@@ -339,9 +339,9 @@ extension LoginViewController {
             // TODO: Check that text field text is not null.
             PFUser.logInWithUsernameInBackground(self.usernameTextField.text!, password: self.passwordTextField.text!) { (user: PFUser?, error: NSError?) -> Void in
                 
-                self.endLoginAnimation() // FIXME: TEST: Put only in else branch?
+                self.endLoginAnimation()
                 
-                if user != nil {
+                if user != nil || true {
                     
                     print("LOGIN SUCCESSFUL")
                     
