@@ -49,6 +49,7 @@
 
 	LOGIN
 	- Successful login transition causes button icons to appear in the top left corner at first.
+	- showSignup() call in viewDidLoad() has animations that show when view appears... looks a little weird... but kinda cool...
 
 	PROFILE
 	- Fix background photo upload by saving a copy to local storage after it's set.

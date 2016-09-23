@@ -30,12 +30,14 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
     
+    var loginLabel: UILabel!
+    var loginLabelOriginalOrigin: CGPoint!
+    var controlsHiddenOnLogin: [UIControl]!
+    
     var loginButtonOriginalColor: UIColor!
     var signupButtonOriginalColor: UIColor!
     
     var loginViewLoginHeight: CGFloat!
-    
-    var loginLabelOriginalOrigin: CGPoint!
     
     var textFieldOriginalHeight: CGFloat!
     
@@ -81,18 +83,19 @@ class LoginViewController: UIViewController {
         self.usernameTextField.nextTextField = self.passwordTextField
         self.passwordTextField.returnKeyType = .Go
         
-        self.loginButtonOriginalColor = self.loginButton.titleColorForState(.Normal)
-        self.signupButtonOriginalColor = self.signupButton.titleColorForState(.Normal)
-        
+        // Group buttons and text fields for animations.
         self.textFieldOriginalHeight = self.nameTextFieldHeight.constant
-        
         self.textFields = [self.nameTextField, self.emailTextField, self.usernameTextField, self.passwordTextField]
         self.signupTextFieldConstraints = [self.nameTextFieldHeight, self.nameTextFieldBottomSpacing, self.emailTextFieldHeight, self.emailTextFieldBottomSpacing]
         self.loginTextFieldConstraints = [self.passwordTextFieldHeight, self.passwordTextFieldBottomSpacing]
+        self.controlsHiddenOnLogin = [self.usernameTextField, self.passwordTextField, self.signupButton]
+        
+        // Login and sign up button colors.
+        self.loginButtonOriginalColor = self.loginButton.titleColorForState(.Normal)
+        self.signupButtonOriginalColor = self.signupButton.titleColorForState(.Normal)
         
         // Show login text fields on load.
         self.showSignup(false)
-        
         // Must come after above line to ensure login view is proper height.
         self.loginView.layer.cornerRadius = 2
         self.loginView.layer.masksToBounds = true
@@ -105,6 +108,17 @@ class LoginViewController: UIViewController {
         super.viewDidAppear(animated)
         
         usernameTextField.becomeFirstResponder()
+        
+        // Login label used as duplicate of login button title label to animate login button.
+        self.loginLabel = UILabel()
+        self.loginLabel.text = self.loginButton.titleLabel!.text
+        self.loginLabel.textColor = self.loginButton.titleLabel!.textColor
+        self.loginLabel.font = self.loginButton.titleLabel!.font
+        let loginButtonTitleLabelFrame = self.loginButton.convertRect(self.loginButton.titleLabel!.frame, toView: self.view)
+        self.loginLabel.frame = CGRect(x: loginButtonTitleLabelFrame.origin.x, y: loginButtonTitleLabelFrame.origin.y, width: loginButtonTitleLabelFrame.width, height: loginButtonTitleLabelFrame.height)
+        self.loginLabelOriginalOrigin = loginLabel.frame.origin
+        self.loginLabel.hidden = true
+        self.view.addSubview(self.loginLabel)
     }
 
     override func didReceiveMemoryWarning() {
@@ -169,6 +183,51 @@ extension LoginViewController {
             appDelegate.menuViewController.tableView.reloadData()
             
             }, completion: nil)
+    }
+    
+    func startLoginAnimation() {
+        self.view.endEditing(true)
+        self.loginLabel.hidden = false
+        self.loginButton.hidden = true
+        UIView.animateWithDuration(0.5, animations: {
+            self.loginLabel.text = "LOGGING IN..."
+            self.loginLabel.sizeToFit()
+            self.loginLabel.center.x = self.loginView.center.x
+        })
+        UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true) // Set black status bar
+        UIView.transitionWithView(self.backgroundImageView, duration: 0.5, options: .TransitionCrossDissolve, animations: {
+            self.backgroundImageView.hidden = true
+            }, completion: { _ in
+                self.loginBackgroundImageIndex = (self.loginBackgroundImageIndex + 1) % self.loginBackgroundImageNames.count
+                self.backgroundImageView.image = UIImage(named: self.loginBackgroundImageNames[self.loginBackgroundImageIndex])
+        })
+        self.controlsHiddenOnLogin.forEach({ (component: UIControl) in
+            UIView.transitionWithView(component, duration: 0.5, options: .TransitionCrossDissolve, animations: {
+                component.hidden = true
+                }, completion: nil)
+        })
+    }
+    
+    func endLoginAnimation() {
+        // Return duplicate login label to login button title label's position.
+        UIView.animateWithDuration(0.5, animations: {
+            self.loginLabel.text = "LOG IN"
+            self.loginLabel.sizeToFit()
+            self.loginLabel.frame.origin.x = self.loginLabelOriginalOrigin.x
+            }, completion: { _ in
+                self.loginButton.hidden = false
+                self.loginLabel.hidden = true
+        })
+        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+        UIView.transitionWithView(self.backgroundImageView, duration: 0.5, options: .TransitionCrossDissolve, animations: {
+            self.backgroundImageView.hidden = false
+            }, completion: nil)
+        self.controlsHiddenOnLogin.forEach({ (component: UIControl) in
+            UIView.transitionWithView(component, duration: 0.5, options: .TransitionCrossDissolve, animations: {
+                component.hidden = false
+                }, completion: nil)
+        })
+        self.lastFirstResponder?.becomeFirstResponder()
     }
 }
 
@@ -275,62 +334,12 @@ extension LoginViewController {
     // Logs in with username (not email) and password.
     @IBAction func loginPressed(sender: AnyObject) {
         if self.loginView.frame.height == self.loginViewLoginHeight {
-            self.view.endEditing(true)
-            
-            // Duplicate login button title label, hide login button.
-            let loginLabel = UILabel()
-            loginLabel.text = self.loginButton.titleLabel!.text
-            loginLabel.textColor = self.loginButton.titleLabel!.textColor
-            loginLabel.font = self.loginButton.titleLabel!.font
-            let loginButtonTitleLabelFrame = self.loginButton.convertRect(self.loginButton.titleLabel!.frame, toView: self.view)
-            loginLabel.frame = CGRect(x: loginButtonTitleLabelFrame.origin.x, y: loginButtonTitleLabelFrame.origin.y, width: loginButtonTitleLabelFrame.width, height: loginButtonTitleLabelFrame.height)
-            self.loginLabelOriginalOrigin = loginLabel.frame.origin
-            self.view.addSubview(loginLabel)
-            self.loginButton.hidden = true
-            
-            // Animate duplicate login label.
-            UIView.animateWithDuration(0.5, animations: { 
-                loginLabel.text = "LOGGING IN..."
-                loginLabel.sizeToFit()
-                loginLabel.center.x = self.loginView.center.x
-            })
-            
-            UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true) // Set black status bar
-            UIView.transitionWithView(self.backgroundImageView, duration: 0.5, options: .TransitionCrossDissolve, animations: { 
-                self.backgroundImageView.hidden = true
-                }, completion: { _ in
-                    self.loginBackgroundImageIndex = (self.loginBackgroundImageIndex + 1) % self.loginBackgroundImageNames.count
-                    self.backgroundImageView.image = UIImage(named: self.loginBackgroundImageNames[self.loginBackgroundImageIndex])
-            })
-            let hiddenLoginComponents = [self.usernameTextField, self.passwordTextField, self.signupButton]
-            hiddenLoginComponents.forEach({ (component: UIControl) in
-                UIView.transitionWithView(component, duration: 0.5, options: .TransitionCrossDissolve, animations: {
-                    component.hidden = true
-                    }, completion: nil)
-            })
+            self.startLoginAnimation()
             
             // TODO: Check that text field text is not null.
             PFUser.logInWithUsernameInBackground(self.usernameTextField.text!, password: self.passwordTextField.text!) { (user: PFUser?, error: NSError?) -> Void in
                 
-                // Return duplicate login label to login button title label's position.
-                UIView.animateWithDuration(0.5, animations: { 
-                    loginLabel.text = "LOG IN"
-                    loginLabel.sizeToFit()
-                    loginLabel.frame.origin.x = self.loginLabelOriginalOrigin.x
-                    }, completion: { _ in
-                        self.loginButton.hidden = false
-                        loginLabel.hidden = true
-                })
-                UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
-                UIView.transitionWithView(self.backgroundImageView, duration: 0.5, options: .TransitionCrossDissolve, animations: { 
-                    self.backgroundImageView.hidden = false
-                    }, completion: nil)
-                hiddenLoginComponents.forEach({ (component: UIControl) in
-                    UIView.transitionWithView(component, duration: 0.5, options: .TransitionCrossDissolve, animations: {
-                        component.hidden = false
-                        }, completion: nil)
-                })
-                self.lastFirstResponder?.becomeFirstResponder()
+                self.endLoginAnimation() // FIXME: TEST: Put only in else branch?
                 
                 if user != nil {
                     
