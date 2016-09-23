@@ -7,20 +7,22 @@
 	
 
 	
-	GAME PLAN THRU 9/23:
+	GAME PLAN THRU 9/30:
+	- Show loading on LOG IN tapped.
+		- Idea: On login button pressed, screen fades black, and if credentials incorrect, black fades out and new background image is present.
+		- Find more background images.
 	- Implement Alert All Delts notification.
 	- Setup Facebook posting to secret group, submit for Facebook review.
 		- Reading for admins. Will likely accompany Reel API revision.
 	- Add Camera and Filters, swanky UI (∆ snap/recording button).
 		- Facebook posting from within app.
 	- Start Chat cloud code and multiple conversartion topics.
-	- Start integrating email list. https://github.com/matthewpalmer/Charter
-	- Show loading on LOG IN tapped.
-		- Idea: On login button pressed, screen fades black, and if credentials incorrect, black fades out and new background image is present.
+
+	
 
 	GAME PLAN THRU DECEMBER:
 	- Complete Chat code.
-	- Integrate email list.
+	- Integrate email list. https://github.com/matthewpalmer/Charter
 	- Integrate reading and posting to Google Cal.
 	- Add admin user bool. Unlocks:
 		- Post deletion.

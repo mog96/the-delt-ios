@@ -14,6 +14,7 @@ import Reachability
 
 class LoginViewController: UIViewController {
     
+    @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var loginView: UIView!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var nameTextFieldHeight: NSLayoutConstraint!
@@ -39,6 +40,8 @@ class LoginViewController: UIViewController {
     var textFields: [UITextField]!
     var signupTextFieldConstraints: [NSLayoutConstraint]!
     var loginTextFieldConstraints: [NSLayoutConstraint]!
+    
+    let loginBackgroundImages = ["LOGIN BACKGROUND 1"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
