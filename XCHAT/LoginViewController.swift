@@ -15,6 +15,7 @@ import Reachability
 class LoginViewController: UIViewController {
     
     @IBOutlet weak var backgroundImageView: UIImageView!
+    @IBOutlet weak var deltLoadingView: DeltLoadingView!
     @IBOutlet weak var loginView: UIView!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var nameTextFieldHeight: NSLayoutConstraint!
@@ -32,7 +33,6 @@ class LoginViewController: UIViewController {
     
     var loginLabel: UILabel!
     var loginLabelOriginalOrigin: CGPoint!
-    var controlsHiddenOnLogin: [UIControl]!
     
     var loginButtonOriginalColor: UIColor!
     var signupButtonOriginalColor: UIColor!
@@ -44,6 +44,7 @@ class LoginViewController: UIViewController {
     var textFields: [UITextField]!
     var signupTextFieldConstraints: [NSLayoutConstraint]!
     var loginTextFieldConstraints: [NSLayoutConstraint]!
+    var controlsHiddenOnLogin: [UIControl]!
     
     let loginBackgroundImageNames = ["LOGIN BACKGROUND 1", "OUTER SPACE"]
     var loginBackgroundImageIndex = 0
@@ -54,6 +55,8 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         
         self.backgroundImageView.image = UIImage(named: self.loginBackgroundImageNames[self.loginBackgroundImageIndex])
+        
+        self.deltLoadingView.hidden = true
         
         // Name text field.
         self.nameTextField.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
@@ -187,6 +190,7 @@ extension LoginViewController {
     
     func startLoginAnimation() {
         self.view.endEditing(true)
+        
         self.loginLabel.hidden = false
         self.loginButton.hidden = true
         UIView.animateWithDuration(0.5, animations: {
@@ -206,6 +210,10 @@ extension LoginViewController {
                 component.hidden = true
                 }, completion: nil)
         })
+        UIView.transitionWithView(self.deltLoadingView, duration: 0.5, options: .TransitionCrossDissolve, animations: {
+            self.deltLoadingView.startAnimating()
+            self.deltLoadingView.hidden = false
+            }, completion: nil)
     }
     
     func endLoginAnimation() {
@@ -227,6 +235,11 @@ extension LoginViewController {
                 component.hidden = false
                 }, completion: nil)
         })
+        UIView.transitionWithView(self.deltLoadingView, duration: 0.5, options: .TransitionCrossDissolve, animations: {
+            self.deltLoadingView.hidden = true
+            self.deltLoadingView.stopAnimating()
+            }, completion: nil)
+        
         self.lastFirstResponder?.becomeFirstResponder()
     }
 }
@@ -341,7 +354,7 @@ extension LoginViewController {
                 
                 self.endLoginAnimation()
                 
-                if user != nil || true {
+                if user != nil {
                     
                     print("LOGIN SUCCESSFUL")
                     

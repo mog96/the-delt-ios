@@ -9,14 +9,6 @@
 import UIKit
 
 class DeltLoadingView: UIView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
     
     private var shouldContinue = false
     
@@ -33,44 +25,48 @@ class DeltLoadingView: UIView {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
             while self.shouldContinue {
                 dispatch_async(dispatch_get_main_queue(), {
+                    print("ADD DELT LABEL")
                     self.addDeltLabel()
                 })
-                sleep(1)
+                NSThread.sleepForTimeInterval(0.3)
             }
         }
     }
     
     private func addDeltLabel() {
-        let deltLabel = self.deltLabel()
-        self.addSubview(deltLabel)
-        deltLabel.hidden = true
-        UIView.transitionWithView(deltLabel, duration: 0.5, options: .TransitionCrossDissolve, animations: {
-            deltLabel.hidden = false
+        let delt = self.deltLabel()
+        delt.hidden = true
+        self.addSubview(delt)
+        UIView.transitionWithView(delt, duration: 0.5, options: .TransitionCrossDissolve, animations: {
+            delt.hidden = false
             }, completion: { _ in
-                UIView.transitionWithView(deltLabel, duration: 0.5, options: .TransitionCrossDissolve, animations: {
-                    deltLabel.hidden = true
+                UIView.transitionWithView(delt, duration: 0.5, options: .TransitionCrossDissolve, animations: {
+                    delt.hidden = true
                     }, completion: { _ in
-                        deltLabel.removeFromSuperview()
+                        delt.removeFromSuperview()
                 })
         })
     }
     
     // Returns ∆ label with random origin within this view's bounds.
     private func deltLabel() -> UILabel {
-        let deltLabel = UILabel()
+        let deltLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         deltLabel.text = "Δ"
         deltLabel.textColor = LayoutUtils.greenColor
         deltLabel.font = UIFont.systemFontOfSize(15)
         deltLabel.sizeToFit()
-        deltLabel.frame.origin = self.randomOriginForRect(self.deltLabel().bounds)
+        deltLabel.frame.origin = self.randomOriginForRect(deltLabel.bounds)
+        
+        print("DELT FRAME:", deltLabel.frame)
+        
         return deltLabel
     }
     
     private func randomOriginForRect(rect: CGRect) -> CGPoint {
         let maxWidth = self.frame.width - rect.width
         let maxHeight = self.frame.height - rect.height
-        let randomX = CGFloat(arc4random() / UInt32.max) * maxWidth
-        let randomY = CGFloat(arc4random() / UInt32.max) * maxHeight
+        let randomX = CGFloat(arc4random()) / CGFloat(UInt32.max) * maxWidth
+        let randomY = CGFloat(arc4random()) / CGFloat(UInt32.max) * maxHeight
         return CGPoint(x: randomX, y: randomY)
     }
 }

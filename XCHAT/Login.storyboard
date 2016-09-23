@@ -103,12 +103,17 @@
                                     <constraint firstItem="tpU-FH-LpV" firstAttribute="leading" secondItem="BaS-R6-wbi" secondAttribute="leading" constant="32" id="sHW-ai-V35"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eyf-lw-abX" customClass="DeltLoadingView" customModule="XCHAT" customModuleProvider="target"/>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="BaS-R6-wbi" firstAttribute="centerX" secondItem="GfO-jz-nGZ" secondAttribute="centerX" id="0lk-2T-sjV"/>
+                            <constraint firstItem="Eyf-lw-abX" firstAttribute="top" secondItem="GfO-jz-nGZ" secondAttribute="top" id="7U8-5K-xF5"/>
                             <constraint firstItem="Z2s-wZ-ZQ6" firstAttribute="top" secondItem="GfO-jz-nGZ" secondAttribute="top" id="8BU-eO-WG8"/>
+                            <constraint firstAttribute="bottom" secondItem="Eyf-lw-abX" secondAttribute="bottom" id="FHm-nm-gON"/>
                             <constraint firstItem="BaS-R6-wbi" firstAttribute="top" secondItem="wJR-SR-HVR" secondAttribute="bottom" constant="69" id="NoG-hv-Xy5"/>
+                            <constraint firstAttribute="trailing" secondItem="Eyf-lw-abX" secondAttribute="trailing" id="RVG-Ow-bWT"/>
+                            <constraint firstItem="Eyf-lw-abX" firstAttribute="leading" secondItem="GfO-jz-nGZ" secondAttribute="leading" id="WYU-ND-aWN"/>
                             <constraint firstItem="Z2s-wZ-ZQ6" firstAttribute="leading" secondItem="GfO-jz-nGZ" secondAttribute="leading" id="ckb-tc-ifz"/>
                             <constraint firstItem="c4s-r6-jr8" firstAttribute="top" secondItem="Z2s-wZ-ZQ6" secondAttribute="bottom" id="iAP-et-g6T"/>
                             <constraint firstAttribute="trailing" secondItem="Z2s-wZ-ZQ6" secondAttribute="trailing" id="yxq-b5-4fT"/>
@@ -116,6 +121,7 @@
                     </view>
                     <connections>
                         <outlet property="backgroundImageView" destination="Z2s-wZ-ZQ6" id="tGu-Er-vJJ"/>
+                        <outlet property="deltLoadingView" destination="Eyf-lw-abX" id="mOg-1s-cUK"/>
                         <outlet property="emailTextField" destination="L0C-9y-iPw" id="WPa-2h-ar6"/>
                         <outlet property="emailTextFieldBottomSpacing" destination="nlH-Md-T39" id="gyo-tW-1ob"/>
                         <outlet property="emailTextFieldHeight" destination="1uk-S6-H2s" id="yxw-L5-vrw"/>
