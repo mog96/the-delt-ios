@@ -35,16 +35,23 @@ class LoginViewController: UIViewController {
     
     var loginViewLoginHeight: CGFloat!
     
+    var loginLabelOriginalOrigin: CGPoint!
+    
     var textFieldOriginalHeight: CGFloat!
     
     var textFields: [UITextField]!
     var signupTextFieldConstraints: [NSLayoutConstraint]!
     var loginTextFieldConstraints: [NSLayoutConstraint]!
     
-    let loginBackgroundImages = ["LOGIN BACKGROUND 1"]
+    let loginBackgroundImageNames = ["LOGIN BACKGROUND 1", "OUTER SPACE"]
+    var loginBackgroundImageIndex = 0
+    
+    var lastFirstResponder: UITextField?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.backgroundImageView.image = UIImage(named: self.loginBackgroundImageNames[self.loginBackgroundImageIndex])
         
         // Name text field.
         self.nameTextField.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
@@ -86,7 +93,7 @@ class LoginViewController: UIViewController {
         // Show login text fields on load.
         self.showSignup(false)
         
-        // Must come after above line to ensure login view is proper height
+        // Must come after above line to ensure login view is proper height.
         self.loginView.layer.cornerRadius = 2
         self.loginView.layer.masksToBounds = true
         self.loginView.setNeedsLayout()
@@ -178,6 +185,10 @@ extension LoginViewController: UITextFieldDelegate {
         }
         return true
     }
+    
+    func textFieldDidBeginEditing(textField: UITextField) {
+        self.lastFirstResponder = textField
+    }
 }
 
 
@@ -264,9 +275,63 @@ extension LoginViewController {
     // Logs in with username (not email) and password.
     @IBAction func loginPressed(sender: AnyObject) {
         if self.loginView.frame.height == self.loginViewLoginHeight {
+            self.view.endEditing(true)
+            
+            // Duplicate login button title label, hide login button.
+            let loginLabel = UILabel()
+            loginLabel.text = self.loginButton.titleLabel!.text
+            loginLabel.textColor = self.loginButton.titleLabel!.textColor
+            loginLabel.font = self.loginButton.titleLabel!.font
+            let loginButtonTitleLabelFrame = self.loginButton.convertRect(self.loginButton.titleLabel!.frame, toView: self.view)
+            loginLabel.frame = CGRect(x: loginButtonTitleLabelFrame.origin.x, y: loginButtonTitleLabelFrame.origin.y, width: loginButtonTitleLabelFrame.width, height: loginButtonTitleLabelFrame.height)
+            self.loginLabelOriginalOrigin = loginLabel.frame.origin
+            self.view.addSubview(loginLabel)
+            self.loginButton.hidden = true
+            
+            // Animate duplicate login label.
+            UIView.animateWithDuration(0.5, animations: { 
+                loginLabel.text = "LOGGING IN..."
+                loginLabel.sizeToFit()
+                loginLabel.center.x = self.loginView.center.x
+            })
+            
+            UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true) // Set black status bar
+            UIView.transitionWithView(self.backgroundImageView, duration: 0.5, options: .TransitionCrossDissolve, animations: { 
+                self.backgroundImageView.hidden = true
+                }, completion: { _ in
+                    self.loginBackgroundImageIndex = (self.loginBackgroundImageIndex + 1) % self.loginBackgroundImageNames.count
+                    self.backgroundImageView.image = UIImage(named: self.loginBackgroundImageNames[self.loginBackgroundImageIndex])
+            })
+            let hiddenLoginComponents = [self.usernameTextField, self.passwordTextField, self.signupButton]
+            hiddenLoginComponents.forEach({ (component: UIControl) in
+                UIView.transitionWithView(component, duration: 0.5, options: .TransitionCrossDissolve, animations: {
+                    component.hidden = true
+                    }, completion: nil)
+            })
             
             // TODO: Check that text field text is not null.
             PFUser.logInWithUsernameInBackground(self.usernameTextField.text!, password: self.passwordTextField.text!) { (user: PFUser?, error: NSError?) -> Void in
+                
+                // Return duplicate login label to login button title label's position.
+                UIView.animateWithDuration(0.5, animations: { 
+                    loginLabel.text = "LOG IN"
+                    loginLabel.sizeToFit()
+                    loginLabel.frame.origin.x = self.loginLabelOriginalOrigin.x
+                    }, completion: { _ in
+                        self.loginButton.hidden = false
+                        loginLabel.hidden = true
+                })
+                UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+                UIView.transitionWithView(self.backgroundImageView, duration: 0.5, options: .TransitionCrossDissolve, animations: { 
+                    self.backgroundImageView.hidden = false
+                    }, completion: nil)
+                hiddenLoginComponents.forEach({ (component: UIControl) in
+                    UIView.transitionWithView(component, duration: 0.5, options: .TransitionCrossDissolve, animations: {
+                        component.hidden = false
+                        }, completion: nil)
+                })
+                self.lastFirstResponder?.becomeFirstResponder()
+                
                 if user != nil {
                     
                     print("LOGIN SUCCESSFUL")
@@ -282,6 +347,9 @@ extension LoginViewController {
                     print("LOGIN FAILED")
                     
                     if let errorString = error?.userInfo["error"] as? String {
+                        
+                        print("LOGIN ERROR:", errorString)
+                        
                         switch errorString {
                         case "Invalid username/password.":
                             let invalidLoginAlertVC = UIAlertController(title: "Invalid Username or Password", message: "Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
@@ -307,5 +375,6 @@ extension LoginViewController {
     
     @IBAction func onBackgroundTapped(sender: AnyObject) {
         self.view.endEditing(true)
+        self.lastFirstResponder = nil
     }
 }
