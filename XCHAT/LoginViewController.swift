@@ -110,7 +110,7 @@ class LoginViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        usernameTextField.becomeFirstResponder()
+        self.usernameTextField.becomeFirstResponder()
         
         // Login label used as duplicate of login button title label to animate login button.
         self.loginLabel = UILabel()
@@ -119,7 +119,7 @@ class LoginViewController: UIViewController {
         self.loginLabel.font = self.loginButton.titleLabel!.font
         let loginButtonTitleLabelFrame = self.loginButton.convertRect(self.loginButton.titleLabel!.frame, toView: self.view)
         self.loginLabel.frame = CGRect(x: loginButtonTitleLabelFrame.origin.x, y: loginButtonTitleLabelFrame.origin.y, width: loginButtonTitleLabelFrame.width, height: loginButtonTitleLabelFrame.height)
-        self.loginLabelOriginalOrigin = loginLabel.frame.origin
+        self.loginLabelOriginalOrigin = self.loginLabel.frame.origin
         self.loginLabel.hidden = true
         self.view.addSubview(self.loginLabel)
     }

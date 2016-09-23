@@ -11,6 +11,16 @@ import UIKit
 class DeltLoadingView: UIView {
     
     private var shouldContinue = false
+    private var exemptFrames: [CGRect]?
+    
+    init(frame: CGRect, exemptFrames: CGRect...) {
+        super.init(frame: frame)
+        self.exemptFrames = exemptFrames
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
     
     func startAnimating() {
         self.shouldContinue = true
@@ -20,7 +30,12 @@ class DeltLoadingView: UIView {
     func stopAnimating() {
         self.shouldContinue = false
     }
-    
+}
+
+
+// MARK: - Helpers
+
+extension DeltLoadingView {
     private func animateDelts() {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
             while self.shouldContinue {
@@ -63,6 +78,20 @@ class DeltLoadingView: UIView {
     }
     
     private func randomOriginForRect(rect: CGRect) -> CGPoint {
+        var randomOrigin: CGPoint!
+        if let exemptFrames = self.exemptFrames {
+            var isContainedInExemptFrame = false
+            repeat {
+                randomOrigin = self.generateRandomOriginForRect(rect)
+                exemptFrames.forEach({ isContainedInExemptFrame = $0.contains(randomOrigin) })
+            } while isContainedInExemptFrame
+        } else {
+            randomOrigin = self.generateRandomOriginForRect(rect)
+        }
+        return randomOrigin
+    }
+    
+    private func generateRandomOriginForRect(rect: CGRect) -> CGPoint {
         let maxWidth = self.frame.width - rect.width
         let maxHeight = self.frame.height - rect.height
         let randomX = CGFloat(arc4random()) / CGFloat(UInt32.max) * maxWidth
