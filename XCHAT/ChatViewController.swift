@@ -49,9 +49,6 @@ class ChatViewController: ContentViewController {
         // Setup message view.
         self.messageView = NSBundle.mainBundle().loadNibNamed("MessageView", owner: self, options: nil)![0] as! MessageView
         self.messageView.frame = CGRectMake(0, UIScreen.mainScreen().bounds.height - self.messageView.frame.height, self.messageView.frame.height, UIScreen.mainScreen().bounds.width)
-//        let placeholder = "Holler at your brothers."
-//        self.messageView.placeholder = placeholder
-//        self.messageView.messageTextView.text = placeholder
         if let messageDraft = NSUserDefaults.standardUserDefaults().objectForKey(self.kMessageDraftKey) as? String {
             self.messageView.messageTextView.text = messageDraft
         }
@@ -373,8 +370,6 @@ extension ChatViewController: MessageViewDelegate {
             message["content"] = sentMessage
             
             NSUserDefaults.standardUserDefaults().setObject(sentMessage, forKey: self.kLastSentMessageKey)
-            
-            print("SAVE LAST SENT MESSAGE", NSUserDefaults.standardUserDefaults().objectForKey(self.kLastSentMessageKey)!)
             
             self.messageView.messageTextView.text = ""
             

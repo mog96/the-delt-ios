@@ -86,7 +86,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         firstVC.menuDelegate = self.menuViewController
         
         // Check if user is logged in.
-        if PFUser.currentUser() == nil && false { /** TEMP 2016-09-18 **/
+        if PFUser.currentUser() == nil { // && false { /** TEMP 2016-09-18 **/
             
             // START HERE: present login.
             
@@ -103,6 +103,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Does exactly the same as arrow in storyboard. ("100% parity." --Tim Lee)
             window?.rootViewController = self.hamburgerViewController
         }
+        
+        
+        
+        
         
         
         /** SCRAP **/
