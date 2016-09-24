@@ -12,7 +12,7 @@
 		- Idea: On login button pressed, screen fades black, and if credentials incorrect, black fades out and new background image is present.
 		- Find more background images.
 	- Implement Alert All Delts notification.
-	- Setup Facebook posting to secret group, submit for Facebook review.
+	- Setup Facebook posting to secret group, submit for Facebook review. (https://developers.facebook.com/docs/graph-api/reference/v2.7/group/feed)
 		- Reading for admins. Will likely accompany Reel API revision.
 	- Add Camera and Filters, swanky UI (∆ snap/recording button).
 		- Facebook posting from within app.

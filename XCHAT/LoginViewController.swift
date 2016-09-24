@@ -226,10 +226,10 @@ extension LoginViewController {
     
     // WARNING: Recursive loop could cause stack overflow.
     private func pulseLoginLabel() {
-        UIView.animateWithDuration(0.5, animations: { 
+        UIView.animateWithDuration(1, animations: {
             self.loginLabel.alpha = 0
             }) { _ in
-                UIView.animateWithDuration(0.5, animations: { 
+                UIView.animateWithDuration(2, animations: {
                     self.loginLabel.alpha = 1
                     }, completion: { _ in
                         if self.shouldContinueAnimating {
