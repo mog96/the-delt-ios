@@ -8,9 +8,6 @@
 
 	
 	GAME PLAN THRU 9/30:
-	- Show loading on LOG IN tapped.
-		- Idea: On login button pressed, screen fades black, and if credentials incorrect, black fades out and new background image is present.
-		- Find more background images.
 	- Implement Alert All Delts notification.
 	- Setup Facebook posting to secret group, submit for Facebook review. (https://developers.facebook.com/docs/graph-api/reference/v2.7/group/feed)
 		- Reading for admins. Will likely accompany Reel API revision.
@@ -48,6 +45,7 @@
 
 
 	LOGIN
+	- Find more background images.
 	- Successful login transition causes button icons to appear in the top left corner at first.
 	- showSignup() call in viewDidLoad() has animations that show when view appears... looks a little weird... but kinda cool...
 
