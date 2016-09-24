@@ -104,7 +104,7 @@ class LoginViewController: UIViewController {
         // Show login text fields on load.
         self.showSignup(false)
         // Must come after above line to ensure login view is proper height.
-        self.loginView.layer.cornerRadius = 2
+        self.loginView.layer.cornerRadius = 3
         self.loginView.layer.masksToBounds = true
         self.loginView.setNeedsLayout()
         self.loginView.layoutIfNeeded()
