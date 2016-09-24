@@ -22,6 +22,16 @@ class DeltLoadingView: UIView {
         super.init(coder: aDecoder)
     }
     
+    func addExemptFrames(exemptFrames: CGRect...) {
+        if self.exemptFrames != nil {
+            self.exemptFrames!.appendContentsOf(exemptFrames)
+        } else {
+            self.exemptFrames = exemptFrames
+        }
+        
+        print("EXEMPT FRAMES:", self.exemptFrames)
+    }
+    
     func startAnimating() {
         self.shouldContinue = true
         self.animateDelts()
@@ -40,9 +50,9 @@ extension DeltLoadingView {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
             while self.shouldContinue {
                 dispatch_async(dispatch_get_main_queue(), {
-                    print("ADD DELT LABEL")
                     self.addDeltLabel()
                 })
+                // let interval = 0.4 + Double(arc4random()) / Double(UInt32.max) * 0.1
                 NSThread.sleepForTimeInterval(0.3)
             }
         }
@@ -70,32 +80,29 @@ extension DeltLoadingView {
         deltLabel.textColor = LayoutUtils.greenColor
         deltLabel.font = UIFont.systemFontOfSize(15)
         deltLabel.sizeToFit()
-        deltLabel.frame.origin = self.randomOriginForRect(deltLabel.bounds)
-        
-        print("DELT FRAME:", deltLabel.frame)
-        
+        deltLabel.frame = self.randomFrameWithSize(deltLabel.bounds.size)
         return deltLabel
     }
     
-    private func randomOriginForRect(rect: CGRect) -> CGPoint {
-        var randomOrigin: CGPoint!
+    private func randomFrameWithSize(size: CGSize) -> CGRect {
+        var randomFrame: CGRect!
         if let exemptFrames = self.exemptFrames {
-            var isContainedInExemptFrame = false
+            var intersectsExemptFrame = false
             repeat {
-                randomOrigin = self.generateRandomOriginForRect(rect)
-                exemptFrames.forEach({ isContainedInExemptFrame = $0.contains(randomOrigin) })
-            } while isContainedInExemptFrame
+                randomFrame = self.generateRandomFrameWithSize(size)
+                exemptFrames.forEach({ intersectsExemptFrame = $0.intersects(randomFrame) })
+            } while intersectsExemptFrame
         } else {
-            randomOrigin = self.generateRandomOriginForRect(rect)
+            randomFrame = self.generateRandomFrameWithSize(size)
         }
-        return randomOrigin
+        return randomFrame
     }
     
-    private func generateRandomOriginForRect(rect: CGRect) -> CGPoint {
-        let maxWidth = self.frame.width - rect.width
-        let maxHeight = self.frame.height - rect.height
+    private func generateRandomFrameWithSize(size: CGSize) -> CGRect {
+        let maxWidth = self.frame.width - size.width
+        let maxHeight = self.frame.height - size.height
         let randomX = CGFloat(arc4random()) / CGFloat(UInt32.max) * maxWidth
         let randomY = CGFloat(arc4random()) / CGFloat(UInt32.max) * maxHeight
-        return CGPoint(x: randomX, y: randomY)
+        return CGRect(x: randomX, y: randomY, width: size.width, height: size.height)
     }
 }

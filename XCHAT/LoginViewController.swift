@@ -33,6 +33,8 @@ class LoginViewController: UIViewController {
     
     var loginLabel: UILabel!
     var loginLabelOriginalOrigin: CGPoint!
+    let loginString = "LOG IN"
+    let loggingInString = "LOGGING IN..."
     
     var loginButtonOriginalColor: UIColor!
     var signupButtonOriginalColor: UIColor!
@@ -112,16 +114,7 @@ class LoginViewController: UIViewController {
         
         self.usernameTextField.becomeFirstResponder()
         
-        // Login label used as duplicate of login button title label to animate login button.
-        self.loginLabel = UILabel()
-        self.loginLabel.text = self.loginButton.titleLabel!.text
-        self.loginLabel.textColor = self.loginButton.titleLabel!.textColor
-        self.loginLabel.font = self.loginButton.titleLabel!.font
-        let loginButtonTitleLabelFrame = self.loginButton.convertRect(self.loginButton.titleLabel!.frame, toView: self.view)
-        self.loginLabel.frame = CGRect(x: loginButtonTitleLabelFrame.origin.x, y: loginButtonTitleLabelFrame.origin.y, width: loginButtonTitleLabelFrame.width, height: loginButtonTitleLabelFrame.height)
-        self.loginLabelOriginalOrigin = self.loginLabel.frame.origin
-        self.loginLabel.hidden = true
-        self.view.addSubview(self.loginLabel)
+        self.addLoginLabel()
     }
 
     override func didReceiveMemoryWarning() {
@@ -134,7 +127,33 @@ class LoginViewController: UIViewController {
 // MARK: - Helpers
 
 extension LoginViewController {
-    func showSignup(show: Bool) {
+    
+    // Login label used as duplicate of login button title label for animations.
+    private func addLoginLabel() {
+        self.loginLabel = UILabel()
+        self.loginLabel.text = self.loginButton.titleLabel!.text
+        self.loginLabel.textColor = self.loginButton.titleLabel!.textColor
+        self.loginLabel.font = self.loginButton.titleLabel!.font
+        let loginButtonTitleLabelFrame = self.loginButton.convertRect(self.loginButton.titleLabel!.frame, toView: self.view)
+        self.loginLabel.frame = CGRect(x: loginButtonTitleLabelFrame.origin.x, y: loginButtonTitleLabelFrame.origin.y, width: loginButtonTitleLabelFrame.width, height: loginButtonTitleLabelFrame.height)
+        self.loginLabelOriginalOrigin = self.loginLabel.frame.origin
+        self.loginLabel.hidden = true
+        self.view.addSubview(self.loginLabel)
+        
+        self.exemptLoginLabelFrameFromDeltAnimation()
+    }
+    
+    private func exemptLoginLabelFrameFromDeltAnimation() {
+        self.loginLabel.text = self.loggingInString
+        self.loginLabel.sizeToFit()
+        self.loginLabel.center.x = self.loginView.center.x
+        self.deltLoadingView.addExemptFrames(self.loginLabel.frame)
+        self.loginLabel.text = self.loginString
+        self.loginLabel.sizeToFit()
+        self.loginLabel.frame.origin.x = self.loginLabelOriginalOrigin.x
+    }
+    
+    private func showSignup(show: Bool) {
         self.view.endEditing(true)
         
         let animationDuration = 0.35
@@ -171,34 +190,17 @@ extension LoginViewController {
             }, completion: nil)
     }
     
-    func transitionToApp() {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        UIView.transitionWithView(self.view.window!, duration: 0.5, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
-            self.view.window!.rootViewController = appDelegate.hamburgerViewController
-            let reelStoryboard = UIStoryboard(name: "Reel", bundle: nil)
-            let reelNC = reelStoryboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
-            if let reelVC = reelNC.viewControllers[0] as? ReelViewController {
-                reelVC.menuDelegate = appDelegate.menuViewController // Set menu delegate so menu button works for first view shown.
-            }
-            
-            appDelegate.hamburgerViewController?.contentViewController = reelNC
-            appDelegate.menuViewController.tableView.reloadData()
-            
-            }, completion: nil)
-    }
-    
-    func startLoginAnimation() {
+    private func startLoginAnimation() {
         self.view.endEditing(true)
         
         self.loginLabel.hidden = false
         self.loginButton.hidden = true
         UIView.animateWithDuration(0.5, animations: {
-            self.loginLabel.text = "LOGGING IN..."
+            self.loginLabel.text = self.loggingInString
             self.loginLabel.sizeToFit()
             self.loginLabel.center.x = self.loginView.center.x
         })
-        UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true) // Set black status bar
+        UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: .Fade)
         UIView.transitionWithView(self.backgroundImageView, duration: 0.5, options: .TransitionCrossDissolve, animations: {
             self.backgroundImageView.hidden = true
             }, completion: { _ in
@@ -216,17 +218,17 @@ extension LoginViewController {
             }, completion: nil)
     }
     
-    func endLoginAnimation() {
+    private func endLoginAnimation() {
         // Return duplicate login label to login button title label's position.
         UIView.animateWithDuration(0.5, animations: {
-            self.loginLabel.text = "LOG IN"
+            self.loginLabel.text = self.loginString
             self.loginLabel.sizeToFit()
             self.loginLabel.frame.origin.x = self.loginLabelOriginalOrigin.x
             }, completion: { _ in
                 self.loginButton.hidden = false
                 self.loginLabel.hidden = true
         })
-        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+        UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Fade)
         UIView.transitionWithView(self.backgroundImageView, duration: 0.5, options: .TransitionCrossDissolve, animations: {
             self.backgroundImageView.hidden = false
             }, completion: nil)
@@ -241,6 +243,23 @@ extension LoginViewController {
             }, completion: nil)
         
         self.lastFirstResponder?.becomeFirstResponder()
+    }
+    
+    private func transitionToApp() {
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        UIView.transitionWithView(self.view.window!, duration: 0.5, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
+            self.view.window!.rootViewController = appDelegate.hamburgerViewController
+            let reelStoryboard = UIStoryboard(name: "Reel", bundle: nil)
+            let reelNC = reelStoryboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
+            if let reelVC = reelNC.viewControllers[0] as? ReelViewController {
+                reelVC.menuDelegate = appDelegate.menuViewController // Set menu delegate so menu button works for first view shown.
+            }
+            
+            appDelegate.hamburgerViewController?.contentViewController = reelNC
+            appDelegate.menuViewController.tableView.reloadData()
+            
+            }, completion: nil)
     }
 }
 
@@ -374,17 +393,17 @@ extension LoginViewController {
                         
                         switch errorString {
                         case "Invalid username/password.":
-                            let invalidLoginAlertVC = UIAlertController(title: "Invalid Username or Password", message: "Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
-                            invalidLoginAlertVC.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                            self.presentViewController(invalidLoginAlertVC, animated: true, completion: nil)
+                            let ac = UIAlertController(title: "Invalid Username or Password", message: "Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                            ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                            self.presentViewController(ac, animated: true, completion: nil)
                         case "Could not connect to the server.":
-                            let invalidLoginAlertVC = UIAlertController(title: "Server Error", message: "Could not connect to the server. Please try again later.", preferredStyle: UIAlertControllerStyle.Alert)
-                            invalidLoginAlertVC.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                            self.presentViewController(invalidLoginAlertVC, animated: true, completion: nil)
+                            let ac = UIAlertController(title: "Unable to Connect", message: "Please try again later.", preferredStyle: UIAlertControllerStyle.Alert)
+                            ac.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+                            self.presentViewController(ac, animated: true, completion: nil)
                         default:
-                            let invalidLoginAlertVC = UIAlertController(title: "Login Error", message: "Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
-                            invalidLoginAlertVC.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                            self.presentViewController(invalidLoginAlertVC, animated: true, completion: nil)
+                            let ac = UIAlertController(title: "Server Error", message: "Please try again later.", preferredStyle: UIAlertControllerStyle.Alert)
+                            ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                            self.presentViewController(ac, animated: true, completion: nil)
                         }
                     }
                 }
