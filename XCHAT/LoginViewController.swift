@@ -53,6 +53,8 @@ class LoginViewController: UIViewController {
     
     var lastFirstResponder: UITextField?
     
+    var shouldContinueAnimating = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -193,13 +195,17 @@ extension LoginViewController {
     private func startLoginAnimation() {
         self.view.endEditing(true)
         
+        self.shouldContinueAnimating = true
+        
         self.loginLabel.hidden = false
         self.loginButton.hidden = true
-        UIView.animateWithDuration(0.5, animations: {
+        UIView.animateWithDuration(0.5, animations: { 
             self.loginLabel.text = self.loggingInString
             self.loginLabel.sizeToFit()
             self.loginLabel.center.x = self.loginView.center.x
-        })
+            }) { _ in
+                self.pulseLoginLabel()
+        }
         UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: .Fade)
         UIView.transitionWithView(self.backgroundImageView, duration: 0.5, options: .TransitionCrossDissolve, animations: {
             self.backgroundImageView.hidden = true
@@ -218,7 +224,24 @@ extension LoginViewController {
             }, completion: nil)
     }
     
+    // WARNING: Recursive loop could cause stack overflow.
+    private func pulseLoginLabel() {
+        UIView.animateWithDuration(0.5, animations: { 
+            self.loginLabel.alpha = 0
+            }) { _ in
+                UIView.animateWithDuration(0.5, animations: { 
+                    self.loginLabel.alpha = 1
+                    }, completion: { _ in
+                        if self.shouldContinueAnimating {
+                            self.pulseLoginLabel()
+                        }
+                })
+        }
+    }
+    
     private func endLoginAnimation() {
+        self.shouldContinueAnimating = false
+        
         // Return duplicate login label to login button title label's position.
         UIView.animateWithDuration(0.5, animations: {
             self.loginLabel.text = self.loginString
