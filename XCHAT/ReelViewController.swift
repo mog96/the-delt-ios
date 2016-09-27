@@ -37,15 +37,15 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
         
         self.refreshData()
         
-        tableView.delegate = self
-        tableView.dataSource = self
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         self.tableView.estimatedRowHeight = 44.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
         
-        refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(ReelViewController.onRefresh), forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.addTarget(self, action: #selector(ReelViewController.onRefresh), forControlEvents: UIControlEvents.ValueChanged)
         self.refreshControl.tintColor = UIColor.redColor()
-        tableView.insertSubview(refreshControl, atIndex: 0)
+        self.tableView.insertSubview(refreshControl, atIndex: 0)
         
         // Navigation Bar Style
         // self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.redColor()]
@@ -74,11 +74,15 @@ extension ReelViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let photo = photos.objectAtIndex(section) as! NSMutableDictionary
         
-        // Header
+        // Header.
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: kHeaderWidth, height: kHeaderHeight))
-        headerView.backgroundColor = UIColor(white: 3, alpha: 0.5)
+        headerView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.7)
         
-        // Profile Image
+        // Blur.
+        let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light))
+        blurView.frame = headerView.frame
+        
+        // Profile image.
         let profileImageView = UIImageView(frame: CGRect(x: 8 , y: 8, width: kProfileWidthHeight, height: kProfileWidthHeight))
         // profileImageView.backgroundColor = UIColor.redColor()
         profileImageView.contentMode = UIViewContentMode.ScaleAspectFill
@@ -111,8 +115,8 @@ extension ReelViewController: UITableViewDelegate, UITableViewDataSource {
             }
         })
         
-        // Username Label
-        let usernameLabel = UILabel(frame: CGRect(x: 8 + kProfileWidthHeight + 8, y: 12, width: 200, height: 16))
+        // Username label.
+        let usernameLabel = UsernameLabel(frame: CGRect(x: 8 + self.kProfileWidthHeight + 8, y: 12, width: 200, height: 16))
         usernameLabel.text = photo.valueForKey("username") as? String
         usernameLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 16.5)
         usernameLabel.textColor = UIColor.redColor()
@@ -128,7 +132,8 @@ extension ReelViewController: UITableViewDelegate, UITableViewDataSource {
         
         headerView.insertSubview(profileImageView, atIndex: 0)
         headerView.insertSubview(usernameLabel, atIndex: 0)
-        // headerView.insertSubview(usernameBoxView, atIndex: 0)
+        headerView.insertSubview(blurView, atIndex: 0)
+        
         return headerView
     }
     

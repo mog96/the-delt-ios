@@ -190,7 +190,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="commentLabel" destination="snw-Wd-w4J" id="jz3-j5-fXI"/>
-                                            <outlet property="usernameLabel" destination="zaU-Gg-JcE" id="J8n-3P-bim"/>
+                                            <outlet property="usernameLabel" destination="zaU-Gg-JcE" id="Wh9-pW-WAL"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="PhotoCell" rowHeight="375" id="qu7-R2-Xrt" customClass="PhotoCell" customModule="XCHAT" customModuleProvider="target">
