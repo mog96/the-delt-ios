@@ -22,24 +22,20 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="321" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="DWp-4s-K0I">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="PhotoVideoCell" rowHeight="320" id="KRZ-8Z-g9B" customClass="PhotoVideoCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="86" width="375" height="320"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="PhotoVideoCell" rowHeight="375" id="KRZ-8Z-g9B" customClass="PhotoVideoCell" customModule="XCHAT" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="86" width="375" height="375"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KRZ-8Z-g9B" id="Bis-oI-8Xo">
-                                            <frame key="frameInset" width="375" height="320"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KRZ-8Z-g9B" id="Bis-oI-8Xo">
+                                            <frame key="frameInset" width="375" height="375"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GQA-8z-5kG">
-                                                    <frame key="frameInset" width="320" height="320"/>
-                                                </view>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O7w-iR-YT1">
-                                                    <frame key="frameInset" width="320" height="320"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GQA-8z-5kG"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="O7w-iR-YT1">
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="O7w-iR-YT1" secondAttribute="height" multiplier="1:1" id="JPy-eA-WNI"/>
                                                     </constraints>
                                                 </imageView>
-                                                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IiW-Zw-dyW">
-                                                    <frame key="frameInset" width="320" height="320"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IiW-Zw-dyW">
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <gestureRecognizers/>
                                                 </view>
@@ -66,7 +62,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ButtonCell" rowHeight="40" id="8fU-es-WRF" customClass="ButtonCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="406" width="375" height="40"/>
+                                        <rect key="frame" x="0.0" y="461" width="375" height="40"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8fU-es-WRF" id="oXL-h3-BA6">
                                             <frame key="frameInset" width="375" height="40"/>
@@ -126,7 +122,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FavesCell" rowHeight="24" id="5t0-qc-vHO" customClass="FavesCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="446" width="375" height="24"/>
+                                        <rect key="frame" x="0.0" y="501" width="375" height="24"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5t0-qc-vHO" id="LT8-TH-VQo">
                                             <frame key="frameInset" width="375" height="24"/>
@@ -161,14 +157,13 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="CommentCell" rowHeight="25" id="Odl-Mt-Ono" customClass="CommentCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="470" width="375" height="25"/>
+                                        <rect key="frame" x="0.0" y="525" width="375" height="25"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Odl-Mt-Ono" id="1A7-A1-ITA">
                                             <frame key="frameInset" width="375" height="25"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" misplaced="YES" text="mateog" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zaU-Gg-JcE">
-                                                    <frame key="frameInset" minX="8" width="50" height="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="mateog" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zaU-Gg-JcE" customClass="UsernameLabel" customModule="XCHAT" customModuleProvider="target">
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="17" id="gQs-tT-9AK"/>
                                                     </constraints>
@@ -198,15 +193,14 @@
                                             <outlet property="usernameLabel" destination="zaU-Gg-JcE" id="J8n-3P-bim"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="PhotoCell" rowHeight="320" id="qu7-R2-Xrt" customClass="PhotoCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="495" width="375" height="320"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="PhotoCell" rowHeight="375" id="qu7-R2-Xrt" customClass="PhotoCell" customModule="XCHAT" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="550" width="375" height="375"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="qu7-R2-Xrt" id="Ec3-k6-ccW">
-                                            <frame key="frameInset" width="375" height="320"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qu7-R2-Xrt" id="Ec3-k6-ccW">
+                                            <frame key="frameInset" width="375" height="375"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ojt-pF-Ugw">
-                                                    <frame key="frameInset" width="320" height="320"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ojt-pF-Ugw">
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="ojt-pF-Ugw" secondAttribute="height" multiplier="1:1" id="8D8-Tj-HPW"/>
                                                     </constraints>

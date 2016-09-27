@@ -99,6 +99,7 @@
 		D58252211D839340008313DF /* AddUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58252201D839340008313DF /* AddUserViewController.swift */; };
 		D58252231D839354008313DF /* Admin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D58252221D839354008313DF /* Admin.storyboard */; };
 		D5AB749C1D8EF06C00E321B4 /* AuxNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AB749B1D8EF06C00E321B4 /* AuxNavigationController.swift */; };
+		D5D17CE61D9A556400C645FA /* UsernameLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D17CE51D9A556400C645FA /* UsernameLabel.swift */; };
 		D5E001131D959FE900ABEFBE /* DeltLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E001121D959FE900ABEFBE /* DeltLoadingView.swift */; };
 		D5FB88A71D87F6F600984C19 /* Aux.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5FB88A61D87F6F600984C19 /* Aux.storyboard */; };
 		D5FB88A91D88054200984C19 /* QueueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB88A81D88054200984C19 /* QueueViewController.swift */; };
@@ -215,6 +216,7 @@
 		D58252201D839340008313DF /* AddUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddUserViewController.swift; sourceTree = "<group>"; };
 		D58252221D839354008313DF /* Admin.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Admin.storyboard; sourceTree = "<group>"; };
 		D5AB749B1D8EF06C00E321B4 /* AuxNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuxNavigationController.swift; sourceTree = "<group>"; };
+		D5D17CE51D9A556400C645FA /* UsernameLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsernameLabel.swift; sourceTree = "<group>"; };
 		D5E001121D959FE900ABEFBE /* DeltLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeltLoadingView.swift; sourceTree = "<group>"; };
 		D5FB88A61D87F6F600984C19 /* Aux.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Aux.storyboard; sourceTree = "<group>"; };
 		D5FB88A81D88054200984C19 /* QueueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueViewController.swift; sourceTree = "<group>"; };
@@ -403,6 +405,7 @@
 			isa = PBXGroup;
 			children = (
 				2515CDDA1C58BDD40008A2B2 /* LayoutUtils.swift */,
+				D5D17CE51D9A556400C645FA /* UsernameLabel.swift */,
 				25E525291C59C8B600477C3D /* GestureUtils.swift */,
 				D525F1B81D874CB30002D8B6 /* UITextField+NextTextField.swift */,
 				D55496061D8A862600090E76 /* ActionButtonTableViewCell.xib */,
@@ -741,6 +744,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5D17CE61D9A556400C645FA /* UsernameLabel.swift in Sources */,
 				257A6B721B056D5B00996A56 /* HamburgerViewController.swift in Sources */,
 				255BE9841B172E550001B160 /* MessageLeadingSpaceCell.swift in Sources */,
 				38D9FB901B15582E0030B6D9 /* DateTitleCell.swift in Sources */,

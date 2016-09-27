@@ -31,12 +31,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let configuration = ParseClientConfiguration {
                     $0.applicationId = keys["parseApplicationId"] as? String
                     $0.clientKey = keys["parseClientKey"] as? String
+                    $0.server = "http://thedelt.herokuapp.com/parse"
+                    
+                    /*
+                    /* DEVELOPMENT ONLY */
                     #if TARGET_IPHONE_SIMULATOR
                         $0.server = "http://localhost:1337/parse"
                     #else
                         $0.server = "http://mog.local:1337/parse"
                     #endif
-                    //$0.server = "http://thedelt.herokuapp.com/parse"
+                    */
                 }
                 Parse.initializeWithConfiguration(configuration)
                 
@@ -54,6 +58,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
+        // Set up hamburger menu.
+        let menuStoryboard = UIStoryboard(name: "Menu", bundle: nil)
+        self.hamburgerViewController = menuStoryboard.instantiateViewControllerWithIdentifier("HamburgerViewController") as! HamburgerViewController
+        self.menuViewController = menuStoryboard.instantiateViewControllerWithIdentifier("MenuViewController") as! MenuViewController
+        self.hamburgerViewController!.menuViewController = self.menuViewController
+        self.menuViewController.hamburgerViewController = hamburgerViewController
+        
         /*
         // Set up Reachability. TODO: Use Whisper...
         let reachability = Reachability(hostName: Parse.currentConfiguration()?.server)
@@ -68,13 +79,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         reachability.startNotifier()
         */
         
-        // Set up hamburger menu.
-        let menuStoryboard = UIStoryboard(name: "Menu", bundle: nil)
-        self.hamburgerViewController = menuStoryboard.instantiateViewControllerWithIdentifier("HamburgerViewController") as! HamburgerViewController
-        self.menuViewController = menuStoryboard.instantiateViewControllerWithIdentifier("MenuViewController") as! MenuViewController
-        self.hamburgerViewController!.menuViewController = self.menuViewController
-        self.menuViewController.hamburgerViewController = hamburgerViewController
-        
         
         /** SET START VIEW **/
         
@@ -86,12 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         firstVC.menuDelegate = self.menuViewController
         
         // Check if user is logged in.
-        if PFUser.currentUser() == nil { // && false { /** TEMP 2016-09-18 **/
-            
-            // START HERE: present login.
-            
-            print("DOOKIE")
-            
+        if PFUser.currentUser() == nil {
             let loginStoryboard = UIStoryboard(name: "Login", bundle: nil)
             let loginViewController = loginStoryboard.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
             

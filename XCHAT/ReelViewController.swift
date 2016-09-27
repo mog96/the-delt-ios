@@ -70,9 +70,7 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
 
 // MARK: - Table View
 
-extension ReelViewController: UITableViewDelegate, UITableViewDataSource {
-    // MARK: TableView
-    
+extension ReelViewController: UITableViewDelegate, UITableViewDataSource {    
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let photo = photos.objectAtIndex(section) as! NSMutableDictionary
         
