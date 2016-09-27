@@ -100,6 +100,7 @@
 		D58252231D839354008313DF /* Admin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D58252221D839354008313DF /* Admin.storyboard */; };
 		D5AB749C1D8EF06C00E321B4 /* AuxNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AB749B1D8EF06C00E321B4 /* AuxNavigationController.swift */; };
 		D5D17CE61D9A556400C645FA /* UsernameLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D17CE51D9A556400C645FA /* UsernameLabel.swift */; };
+		D5D17CE81D9A610700C645FA /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D17CE71D9A610700C645FA /* ProfileImageView.swift */; };
 		D5E001131D959FE900ABEFBE /* DeltLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E001121D959FE900ABEFBE /* DeltLoadingView.swift */; };
 		D5FB88A71D87F6F600984C19 /* Aux.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5FB88A61D87F6F600984C19 /* Aux.storyboard */; };
 		D5FB88A91D88054200984C19 /* QueueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FB88A81D88054200984C19 /* QueueViewController.swift */; };
@@ -217,6 +218,7 @@
 		D58252221D839354008313DF /* Admin.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Admin.storyboard; sourceTree = "<group>"; };
 		D5AB749B1D8EF06C00E321B4 /* AuxNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuxNavigationController.swift; sourceTree = "<group>"; };
 		D5D17CE51D9A556400C645FA /* UsernameLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsernameLabel.swift; sourceTree = "<group>"; };
+		D5D17CE71D9A610700C645FA /* ProfileImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		D5E001121D959FE900ABEFBE /* DeltLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeltLoadingView.swift; sourceTree = "<group>"; };
 		D5FB88A61D87F6F600984C19 /* Aux.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Aux.storyboard; sourceTree = "<group>"; };
 		D5FB88A81D88054200984C19 /* QueueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueViewController.swift; sourceTree = "<group>"; };
@@ -406,6 +408,7 @@
 			children = (
 				2515CDDA1C58BDD40008A2B2 /* LayoutUtils.swift */,
 				D5D17CE51D9A556400C645FA /* UsernameLabel.swift */,
+				D5D17CE71D9A610700C645FA /* ProfileImageView.swift */,
 				25E525291C59C8B600477C3D /* GestureUtils.swift */,
 				D525F1B81D874CB30002D8B6 /* UITextField+NextTextField.swift */,
 				D55496061D8A862600090E76 /* ActionButtonTableViewCell.xib */,
@@ -759,6 +762,7 @@
 				3881235F1B13E864008AA524 /* ProfileTableViewCell.swift in Sources */,
 				385C74561B0ECD42009BAC7A /* EditableProfileViewController.swift in Sources */,
 				38D9FB961B1558530030B6D9 /* SpaceCell.swift in Sources */,
+				D5D17CE81D9A610700C645FA /* ProfileImageView.swift in Sources */,
 				3890A1D11B0B17F600B4FF00 /* NewEventViewController.swift in Sources */,
 				D5E001131D959FE900ABEFBE /* DeltLoadingView.swift in Sources */,
 				D5FB88A91D88054200984C19 /* QueueViewController.swift in Sources */,

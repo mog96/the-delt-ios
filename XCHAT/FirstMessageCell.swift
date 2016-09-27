@@ -12,12 +12,11 @@ import ParseUI
 
 class FirstMessageCell: UITableViewCell {
     
-    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var usernameLabel: UsernameLabel!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var timestampLabel: UILabel!
-    
-    @IBOutlet weak var authorProfileImageView: UIImageView!
-    
+    @IBOutlet weak var authorProfileImageView: ProfileImageView!
+        
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -105,8 +104,10 @@ class FirstMessageCell: UITableViewCell {
         query?.findObjectsInBackgroundWithBlock({ (users: [PFObject]?, error: NSError?) -> Void in
             if let users = users {
                 let pfImageView = PFImageView()
-                pfImageView.file = users[0].valueForKey("photo") as? PFFile
-                if let _=pfImageView.file{
+                let user = users[0]
+                self.authorProfileImageView.user = user as? PFUser
+                pfImageView.file = user.valueForKey("photo") as? PFFile
+                if let _ = pfImageView.file {
                     pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
                         if let error = error {
                         

@@ -1,5 +1,5 @@
 //
-//  UsernameLabel.swift
+//  ProfileImageView.swift
 //  XCHAT
 //
 //  Created by Mateo Garcia on 9/27/16.
@@ -9,8 +9,8 @@
 import UIKit
 import Parse
 
-class UsernameLabel: UILabel {
-    
+class ProfileImageView: UIImageView {
+
     var user: PFUser?
     
     var tapGestureRecognizer: UITapGestureRecognizer!
@@ -20,7 +20,7 @@ class UsernameLabel: UILabel {
         self.user = aUser
         self.commonInit()
     }
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.commonInit()
@@ -41,8 +41,9 @@ class UsernameLabel: UILabel {
 
 // MARK: - Actions
 
-extension UsernameLabel {
+extension ProfileImageView {
     func onTap() {
         print("USER:", self.user?.username)
     }
 }
+

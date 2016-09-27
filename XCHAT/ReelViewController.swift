@@ -83,7 +83,7 @@ extension ReelViewController: UITableViewDelegate, UITableViewDataSource {
         blurView.frame = headerView.frame
         
         // Profile image.
-        let profileImageView = UIImageView(frame: CGRect(x: 8 , y: 8, width: kProfileWidthHeight, height: kProfileWidthHeight))
+        let profileImageView = ProfileImageView(frame: CGRect(x: 8 , y: 8, width: kProfileWidthHeight, height: kProfileWidthHeight))
         // profileImageView.backgroundColor = UIColor.redColor()
         profileImageView.contentMode = UIViewContentMode.ScaleAspectFill
         profileImageView.layer.cornerRadius = 1
@@ -97,7 +97,9 @@ extension ReelViewController: UITableViewDelegate, UITableViewDataSource {
             if let users = users {
                 let pfImageView = PFImageView()
                 if users.count > 0 {
-                    if let _ = users[0].valueForKey("photo"){
+                    let user = users[0]
+                    profileImageView.user = user as? PFUser
+                    if let _ = user.valueForKey("photo"){
                         pfImageView.file = users[0].valueForKey("photo") as? PFFile
                         pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
                             if let error = error {
@@ -173,6 +175,12 @@ extension ReelViewController: UITableViewDelegate, UITableViewDataSource {
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as! CommentCell
+                
+                
+                
+                // START HERE: ADD USER TO USERNALE LABEL
+                
+                
                 
                 cell.commentIndex = indexPath.row - commentOffset
                 cell.setUpCell(photo)
