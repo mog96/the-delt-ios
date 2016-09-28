@@ -99,7 +99,7 @@ class LoginViewController: UIViewController {
         self.passwordTextField.returnKeyType = .Go
         
         // Confirm password text field.
-        self.confirmPasswordTextField.attributedPlaceholder = NSAttributedString(string: "Confirm Password", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
+        self.confirmPasswordTextField.attributedPlaceholder = NSAttributedString(string: "Confirm", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
         self.confirmPasswordTextField.keyboardAppearance = UIKeyboardAppearance.Dark
         self.confirmPasswordTextField.delegate = self
         self.passwordTextField.nextTextField = self.confirmPasswordTextField

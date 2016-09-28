@@ -154,10 +154,23 @@ extension SignupRequestsViewController: SignupRequestTableViewCellDelegate {
                 print("Error:", error?.userInfo["error"])
                 currentHUD.hideAnimated(true)
             } else {
-                if createdUser != nil {
+                if let user = createdUser as? PFUser {
                     currentHUD.label.text = "Approved!"
+                    currentHUD.hideAnimated(true, afterDelay: 1.0)
+                    
+                    self.presentSignupApprovedMailCompose(forUser: user)
+                    object.deleteInBackgroundWithBlock({ (completed: Bool, error: NSError?) in
+                        if error != nil {
+                            print("Error:", error?.userInfo["error"])
+                        } else {
+                            print("USER", user.username, "DELETED")
+                            self.fetchSignupRequests()
+                            self.refreshControl.beginRefreshing()
+                        }
+                    })
+                } else {
+                    print("ERROR RETRIEVING NEW USER.")
                 }
-                currentHUD.hideAnimated(true, afterDelay: 1.0)
             }
             self.resetTableView()
         }
