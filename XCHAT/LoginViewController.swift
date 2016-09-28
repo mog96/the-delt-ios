@@ -280,7 +280,7 @@ extension LoginViewController {
             }
             
             appDelegate.hamburgerViewController?.contentViewController = reelNC
-            appDelegate.menuViewController.tableView.reloadData()
+            appDelegate.menuViewController?.tableView.reloadData()
             
             }, completion: nil)
     }
@@ -494,6 +494,12 @@ extension LoginViewController {
                 if user != nil {
                     
                     print("LOGIN SUCCESSFUL")
+                    
+                    if let isAdmin = user?.objectForKey("is_admin") as? Bool {
+                        AppDelegate.isAdmin = isAdmin
+                    } else {
+                        AppDelegate.isAdmin = false
+                    }
                     
                     self.emailTextField.resignFirstResponder()
                     self.usernameTextField.resignFirstResponder()

@@ -14,12 +14,17 @@ import Reachability
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var hamburgerViewController: HamburgerViewController!
-    var menuViewController: MenuViewController!
+    var hamburgerViewController: HamburgerViewController?
+    var menuViewController: MenuViewController?
     
     static var appName = "the delt."
     static var allowRotation = false
-    static var isAdmin = true
+    static var isAdmin = false {
+        didSet {
+            let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+            appDelegate?.menuViewController?.checkAdmin()
+        }
+    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
@@ -60,10 +65,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Set up hamburger menu.
         let menuStoryboard = UIStoryboard(name: "Menu", bundle: nil)
-        self.hamburgerViewController = menuStoryboard.instantiateViewControllerWithIdentifier("HamburgerViewController") as! HamburgerViewController
-        self.menuViewController = menuStoryboard.instantiateViewControllerWithIdentifier("MenuViewController") as! MenuViewController
+        self.hamburgerViewController = menuStoryboard.instantiateViewControllerWithIdentifier("HamburgerViewController") as? HamburgerViewController
+        self.menuViewController = menuStoryboard.instantiateViewControllerWithIdentifier("MenuViewController") as? MenuViewController
         self.hamburgerViewController!.menuViewController = self.menuViewController
-        self.menuViewController.hamburgerViewController = hamburgerViewController
+        self.menuViewController?.hamburgerViewController = hamburgerViewController
         
         /*
         // Set up Reachability. TODO: Use Whisper...
@@ -98,6 +103,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = loginViewController
             
         } else {
+            
+            if let isAdmin = PFUser.currentUser()!.objectForKey("is_admin") as? Bool {
+                AppDelegate.isAdmin = isAdmin
+            } else {
+                AppDelegate.isAdmin = false
+            }
             
             // Does exactly the same as arrow in storyboard. ("100% parity." --Tim Lee)
             window?.rootViewController = self.hamburgerViewController

@@ -24,7 +24,9 @@ class MenuViewController: UIViewController {
     let kProfileCellHeight: CGFloat = 172
     let kMenuCellHeight: CGFloat = 55
     
-    var kNumCells = 6
+    let kMinCells = 6
+    let kMaxCells = 7
+    var numCells = 6
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,17 +39,25 @@ class MenuViewController: UIViewController {
         self.tableView.canCancelContentTouches = false
     }
     
-    override func viewWillAppear(animated: Bool) {
-        if let isAdmin = PFUser.currentUser()?.objectForKey("is_admin") as? Bool {
-            if isAdmin {
-                self.kNumCells += 1
-            }
-        }
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+}
+
+
+// MARK: - Helpers
+
+extension MenuViewController {
+    func checkAdmin() {
+        if AppDelegate.isAdmin {
+            self.numCells = kMaxCells
+        } else {
+            self.numCells = kMinCells
+        }
+        if self.tableView != nil {
+            self.tableView.reloadData()
+        }
     }
 }
 
@@ -83,7 +93,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.kNumCells
+        return self.numCells
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

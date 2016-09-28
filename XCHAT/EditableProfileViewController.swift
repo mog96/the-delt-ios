@@ -115,7 +115,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
             self.navigationController?.navigationBar.translucent = true
             self.navigationController?.view.backgroundColor = UIColor.clearColor()
             
-            self.appDelegate.hamburgerViewController.panGestureRecognizer.enabled = false
+            self.appDelegate.hamburgerViewController?.panGestureRecognizer.enabled = false
         }
     }
     
@@ -126,7 +126,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
         if !self.editable {
             self.photoImageView.image = nil
             self.backgroundPhotoImageView.image = nil
-            self.appDelegate.hamburgerViewController.panGestureRecognizer.enabled = true
+            self.appDelegate.hamburgerViewController?.panGestureRecognizer.enabled = true
         }
     }
     
@@ -418,7 +418,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
                         self.view.layoutIfNeeded()
                         
                         // Reload menu.
-                        self.appDelegate.menuViewController.tableView.reloadData()
+                        self.appDelegate.menuViewController?.tableView.reloadData()
                         
                     } else {
                         print(error)
