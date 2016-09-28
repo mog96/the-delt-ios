@@ -14,6 +14,8 @@ class UsernameLabel: UILabel {
     var user: PFUser?
     var username: String?
     
+    var profilePresenterDelegate: ProfilePresenterDelegate?
+    
     var tapGestureRecognizer: UITapGestureRecognizer!
     
     init(user aUser: PFUser, frame: CGRect) {
@@ -28,7 +30,7 @@ class UsernameLabel: UILabel {
         self.username = aUsername
         self.commonInit()
     }
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.commonInit()
@@ -53,5 +55,11 @@ extension UsernameLabel {
     func onTap() {
         print("USER:", self.user?.username)
         print("USERNAME:", self.username)
+        
+        if self.user != nil {
+            self.profilePresenterDelegate?.profilePresenter(wasTappedWithUser: self.user)
+        } else if self.username != nil {
+            self.profilePresenterDelegate?.profilePresenter(wasTappedWithUsername: self.username)
+        }
     }
 }

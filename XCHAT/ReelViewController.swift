@@ -88,8 +88,8 @@ extension ReelViewController: UITableViewDelegate, UITableViewDataSource {
         profileImageView.contentMode = UIViewContentMode.ScaleAspectFill
         profileImageView.layer.cornerRadius = 1
         profileImageView.clipsToBounds = true
-        
         profileImageView.backgroundColor = UIColor.redColor()
+        profileImageView.profilePresenterDelegate = self
         
         let query = PFUser.query()
         query?.whereKey("username", equalTo: photo.valueForKey("username") as! String)
@@ -125,6 +125,7 @@ extension ReelViewController: UITableViewDelegate, UITableViewDataSource {
         usernameLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 16.5)
         usernameLabel.textColor = UIColor.redColor()
         usernameLabel.sizeToFit()
+        usernameLabel.profilePresenterDelegate = self
         
         /*
          USERNAME STYLE
@@ -179,6 +180,7 @@ extension ReelViewController: UITableViewDelegate, UITableViewDataSource {
             } else {
                 let cell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as! CommentCell
                 cell.commentIndex = indexPath.row - commentOffset
+                cell.usernameLabel.profilePresenterDelegate = self
                 cell.setUpCell(photo)
                 
                 return cell

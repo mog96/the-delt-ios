@@ -296,6 +296,8 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
             
             // Message sent by different user.
             let cell = tableView.dequeueReusableCellWithIdentifier("FirstMessageCell", forIndexPath: indexPath) as! FirstMessageCell
+            cell.usernameLabel.profilePresenterDelegate = self
+            cell.authorProfileImageView.profilePresenterDelegate = self
             cell.setUpCellWithPictures(message, pictures: self.pictures)
             return cell
         }

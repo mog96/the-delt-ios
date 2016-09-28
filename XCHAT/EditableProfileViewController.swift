@@ -11,6 +11,11 @@ import UIKit
 import Parse
 import ParseUI
 
+protocol ProfilePresenterDelegate {
+    func profilePresenter(wasTappedWithUser user: PFUser?)
+    func profilePresenter(wasTappedWithUsername username: String?)
+}
+
 class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -38,6 +43,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
     
     var editable = true
     var user: PFUser?
+    var username: String?
     
     let kYearLength = 4
     
@@ -75,7 +81,24 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
         self.photoButton.clipsToBounds = true
         
         self.bioTextViewPlaceholder = self.kBioDescriptionString
-        self.setupView(self.editable ? PFUser.currentUser() : self.user)
+        if self.editable {
+            self.setupView(PFUser.currentUser())
+        } else {
+            if self.user != nil {
+                self.setupView(self.user)
+            } else if self.username != nil {
+                let query = PFUser.query()
+                query?.whereKey("username", equalTo: self.username!)
+                query?.findObjectsInBackgroundWithBlock({ (users: [PFObject]?, error: NSError?) -> Void in
+                    if let users = users {
+                        if users.count > 0 {
+                            self.user = users[0] as? PFUser
+                            self.setupView(self.user)
+                        }
+                    }
+                })
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -84,6 +107,8 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
     }
     
     override func viewWillAppear(animated: Bool) {
+        self.backgroundPhotoImageViewWidthConstraint.constant = UIScreen.mainScreen().bounds.width
+        
         if !self.editable {
             self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
             self.navigationController?.navigationBar.shadowImage = UIImage()
@@ -108,7 +133,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
     
     // MARK: - Setup Helpers
     
-    func setupView(user: PFUser?) {
+    private func setupView(user: PFUser?) {
         if let name = user?.objectForKey("name") as? String {
             self.nameTextField.text = name
         }
@@ -173,7 +198,6 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
                 }
             }
         }
-        self.backgroundPhotoImageViewWidthConstraint.constant = UIScreen.mainScreen().bounds.width
     }
     
     
