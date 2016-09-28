@@ -349,7 +349,7 @@ extension LoginViewController {
                             let alert = UIAlertController(title: "Signup Request Submitted", message: "The Admin has received your request and will be in touch soon.", preferredStyle: UIAlertControllerStyle.Alert)
                             alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: { _ in
                                 self.showSignup(false)
-                                self.usernameTextField.text = nil
+                                self.nameTextField.text = nil
                                 self.emailTextField.text = nil
                             }))
                             self.presentViewController(alert, animated: true, completion: nil)

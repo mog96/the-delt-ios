@@ -24,7 +24,7 @@ class MenuViewController: UIViewController {
     let kProfileCellHeight: CGFloat = 172
     let kMenuCellHeight: CGFloat = 55
     
-    var kNumCells = 7
+    var kNumCells = 6
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,14 +35,14 @@ class MenuViewController: UIViewController {
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         
         self.tableView.canCancelContentTouches = false
-        
-        /*
-        if let isAdmin = PFUser.currentUser()?.objectForKey("isAdmin") as? Bool {
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        if let isAdmin = PFUser.currentUser()?.objectForKey("is_admin") as? Bool {
             if isAdmin {
                 self.kNumCells += 1
             }
         }
-        */
     }
     
     override func didReceiveMemoryWarning() {
@@ -72,7 +72,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             cell = tableView.dequeueReusableCellWithIdentifier("CalendarCell")!
         case 4:
             cell = tableView.dequeueReusableCellWithIdentifier("MembersCell")!
-        case self.kNumCells - 1:
+        case 6:
             cell = tableView.dequeueReusableCellWithIdentifier("AdminCell")!
         default:
             cell = tableView.dequeueReusableCellWithIdentifier("SettingsCell")!
@@ -154,7 +154,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
             self.hamburgerViewController?.contentViewController = nc
             
-        case self.kNumCells - 1: // ADMIN
+        case 6: // ADMIN
             let storyboard = UIStoryboard(name: "Admin", bundle: nil)
             let nc = storyboard.instantiateViewControllerWithIdentifier("AdminNC") as! UINavigationController
             let firstVC = nc.viewControllers[0] as! AdminViewController

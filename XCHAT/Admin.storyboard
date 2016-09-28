@@ -381,7 +381,7 @@
                                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="onApproveButtonTappedWithSender:" destination="OcH-rc-ZQZ" eventType="touchUpInside" id="Bn2-gz-79D"/>
+                                                        <action selector="onApproveButtonTapped:" destination="OcH-rc-ZQZ" eventType="touchUpInside" id="f3r-TN-ACB"/>
                                                     </connections>
                                                 </button>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6rb-7I-Tvg">
@@ -428,7 +428,7 @@
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <gestureRecognizers/>
                                         <connections>
-                                            <outlet property="approveButton" destination="PKx-mY-8RY" id="eQy-VQ-D9R"/>
+                                            <outlet property="approveButton" destination="PKx-mY-8RY" id="Z7l-Xw-ecc"/>
                                             <outlet property="emailLabel" destination="wbw-hK-XjL" id="VwC-pN-dwy"/>
                                             <outlet property="infoView" destination="6rb-7I-Tvg" id="6kl-sY-8L2"/>
                                             <outlet property="nameLabel" destination="hsE-ZU-ush" id="nrG-8G-CBR"/>
@@ -447,26 +447,26 @@
                             <constraint firstAttribute="bottom" secondItem="6NN-4R-dPx" secondAttribute="bottom" id="rAr-Fa-W3B"/>
                         </constraints>
                         <connections>
-                            <outletCollection property="gestureRecognizers" destination="njC-Ue-B8z" appends="YES" id="HyX-bG-dmD"/>
-                            <outletCollection property="gestureRecognizers" destination="WWX-Ts-FHR" appends="YES" id="0lo-z6-XAz"/>
+                            <outletCollection property="gestureRecognizers" destination="utY-h1-fD9" appends="YES" id="Z8G-kc-lag"/>
+                            <outletCollection property="gestureRecognizers" destination="at6-Sl-BBR" appends="YES" id="fSY-Kw-jOY"/>
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" title="SIGNUP REQUESTS" id="jZZ-sr-vVk"/>
                     <connections>
                         <outlet property="tableView" destination="6NN-4R-dPx" id="OTb-bN-Q9U"/>
-                        <outlet property="tableViewPanGestureRecognizer" destination="njC-Ue-B8z" id="GGW-Zi-TPH"/>
-                        <outlet property="tableViewTapGestureRecognizer" destination="WWX-Ts-FHR" id="aKP-js-VHF"/>
+                        <outlet property="tableViewPanGestureRecognizer" destination="utY-h1-fD9" id="uHZ-jT-QRA"/>
+                        <outlet property="tableViewTapGestureRecognizer" destination="at6-Sl-BBR" id="4mZ-h1-Z44"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="buq-kS-I6M" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="njC-Ue-B8z">
+                <panGestureRecognizer minimumNumberOfTouches="1" id="utY-h1-fD9">
                     <connections>
-                        <action selector="onPanGesture:" destination="CcG-DF-JOM" id="4ft-Kl-XQX"/>
+                        <action selector="onPanGesture:" destination="CcG-DF-JOM" id="SRw-S9-a0M"/>
                     </connections>
                 </panGestureRecognizer>
-                <tapGestureRecognizer id="WWX-Ts-FHR">
+                <tapGestureRecognizer id="at6-Sl-BBR">
                     <connections>
-                        <action selector="onTableViewTapped:" destination="CcG-DF-JOM" id="WnP-zZ-dHE"/>
+                        <action selector="onViewTapped:" destination="CcG-DF-JOM" id="dxL-Zg-xjc"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

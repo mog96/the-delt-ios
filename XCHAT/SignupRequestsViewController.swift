@@ -9,6 +9,7 @@
 import UIKit
 import Parse
 import MessageUI
+import MBProgressHUD
 
 class SignupRequestsViewController: UIViewController {
     
@@ -23,22 +24,32 @@ class SignupRequestsViewController: UIViewController {
     var infoViewOriginalOrigin = CGPointZero
     
     var signupRequests = [PFObject]()
+    
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        
-        self.tableViewPanGestureRecognizer.enabled = false
-        self.tableViewTapGestureRecognizer.enabled = false
+        self.tableView.estimatedRowHeight = 95
         
         self.refreshControl = UIRefreshControl()
-        self.refreshControl.addTarget(self, action: #selector(ReelViewController.onRefresh), forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl.addTarget(self, action: #selector(self.onRefresh), forControlEvents: UIControlEvents.ValueChanged)
         self.refreshControl.tintColor = LayoutUtils.blueColor
         self.tableView.insertSubview(refreshControl, atIndex: 0)
+        
+        self.fetchSignupRequests()
     }
-
+    
+    override func viewWillAppear(animated: Bool) {
+        self.appDelegate.hamburgerViewController.panGestureRecognizer.enabled = false
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.appDelegate.hamburgerViewController.panGestureRecognizer.enabled = true
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -50,7 +61,7 @@ class SignupRequestsViewController: UIViewController {
 
 extension SignupRequestsViewController {
     func fetchSignupRequests() {
-        let query = PFQuery(className: "SignupRequests")
+        let query = PFQuery(className: "SignupRequest")
         query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) in
             if error != nil {
                 print("Error:", error?.userInfo["error"])
@@ -58,6 +69,7 @@ extension SignupRequestsViewController {
                 if let objects = objects {
                     self.signupRequests = objects
                     self.tableView.reloadData()
+                    self.refreshControl.endRefreshing()
                 }
             }
         }
@@ -65,7 +77,6 @@ extension SignupRequestsViewController {
     
     func onRefresh() {
         self.fetchSignupRequests()
-        self.refreshControl.endRefreshing()
     }
 }
 
@@ -88,6 +99,7 @@ extension SignupRequestsViewController: UITableViewDelegate, UITableViewDataSour
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("SignupRequestCell") as! SignupRequestTableViewCell
         cell.setupCell(signupRequest: self.signupRequests[indexPath.row])
+        cell.delegate = self
         return cell
     }
 }
@@ -97,6 +109,9 @@ extension SignupRequestsViewController: UITableViewDelegate, UITableViewDataSour
 
 extension SignupRequestsViewController: SignupRequestTableViewCellDelegate {
     func signupRequestTableViewCell(didApproveUser object: PFObject) {
+        let currentHUD = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        currentHUD.label.text = "Approving User..."
+        
         let user = PFUser()
         user["name"] = object["name"] as? String
         user.email = object["email"] as? String
@@ -110,9 +125,21 @@ extension SignupRequestsViewController: SignupRequestTableViewCellDelegate {
                 print("ERROR:", error)
             } else {
                 print("YES")
+                currentHUD.label.text = "Approved!"
+                currentHUD.hideAnimated(true, afterDelay: 1.0)
+                self.resetTableView()
                 
                 // PRESENT MAIL COMPOSE TO NOTIFY USER/EXPLAIN PASSWORD RESET
                 self.presentSignupApprovedMailCompose(forUser: user)
+                object.deleteInBackgroundWithBlock({ (completed: Bool, error: NSError?) in
+                    if error != nil {
+                        print("Error:", error?.userInfo["error"])
+                    } else {
+                        print("USER", user.username, "DELETED")
+                        self.fetchSignupRequests()
+                        self.refreshControl.beginRefreshing()
+                    }
+                })
             }
         }
     }
@@ -202,7 +229,7 @@ extension SignupRequestsViewController {
         }
     }
     
-    @IBAction func onTableViewTapped(sender: AnyObject) {
+    @IBAction func onViewTapped(sender: AnyObject) {
         self.resetTableView()
     }
     
