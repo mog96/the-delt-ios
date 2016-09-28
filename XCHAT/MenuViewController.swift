@@ -13,6 +13,8 @@ protocol MenuDelegate {
     func menuButtonTapped()
 }
 
+// NOTE: Aux Admin code commented out.
+
 class MenuViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
@@ -21,8 +23,8 @@ class MenuViewController: UIViewController {
     
     let kProfileCellHeight: CGFloat = 172
     let kMenuCellHeight: CGFloat = 55
-    // var kNumCells = 7
-    var kNumCells = 8 // FOR ADMIN
+    
+    var kNumCells = 6
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,11 +36,13 @@ class MenuViewController: UIViewController {
         
         self.tableView.canCancelContentTouches = false
         
+        /*
         if let isAdmin = PFUser.currentUser()?.objectForKey("isAdmin") as? Bool {
             if isAdmin {
-                self.kNumCells = 8
+                self.kNumCells += 1
             }
         }
+        */
     }
     
     override func didReceiveMemoryWarning() {
@@ -60,14 +64,18 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             cell = tableView.dequeueReusableCellWithIdentifier("ReelCell")!
         case 2:
             cell = tableView.dequeueReusableCellWithIdentifier("ChatCell")!
+        /*
         case 3:
             cell = tableView.dequeueReusableCellWithIdentifier("AuxCell")!
-        case 4:
+        */
+        case 3:
             cell = tableView.dequeueReusableCellWithIdentifier("CalendarCell")!
-        case 5:
+        case 4:
             cell = tableView.dequeueReusableCellWithIdentifier("MembersCell")!
+        /*
         case 7:
             cell = tableView.dequeueReusableCellWithIdentifier("AdminCell")!
+        */
         default:
             cell = tableView.dequeueReusableCellWithIdentifier("SettingsCell")!
         }
@@ -118,6 +126,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
             self.hamburgerViewController?.contentViewController = chatNavigationController
             
+        /*
         case 3: // AUX
             let storyboard = UIStoryboard(name: "Aux", bundle: nil)
             let nc = storyboard.instantiateViewControllerWithIdentifier("AuxNC") as! AuxNavigationController
@@ -126,8 +135,9 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             
             UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
             self.hamburgerViewController?.contentViewController = nc
+        */
             
-        case 4: // CALENDAR
+        case 3: // CALENDAR
             let calendarStoryboard = UIStoryboard(name: "Calendar", bundle: nil)
             let calendarNavigationController = calendarStoryboard.instantiateViewControllerWithIdentifier("Nav") as! UINavigationController
             let firstViewController = calendarNavigationController.viewControllers[0] as! CalendarViewController
@@ -136,7 +146,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
             self.hamburgerViewController?.contentViewController = calendarNavigationController
             
-        case 5: // MEMBERS
+        case 4: // MEMBERS
             let storyboard = UIStoryboard(name: "Members", bundle: nil)
             let nc = storyboard.instantiateViewControllerWithIdentifier("Members") as! UINavigationController
             let firstViewController = nc.viewControllers[0] as! MembersViewController
@@ -146,6 +156,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
             self.hamburgerViewController?.contentViewController = nc
             
+        /*
         case 7: // ADMIN
             let storyboard = UIStoryboard(name: "Admin", bundle: nil)
             let nc = storyboard.instantiateViewControllerWithIdentifier("AdminNC") as! UINavigationController
@@ -155,6 +166,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             
             UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
             self.hamburgerViewController?.contentViewController = nc
+        */
             
         default: // SETTINGS
             let settingsStoryboard = UIStoryboard(name: "Settings", bundle: nil)
