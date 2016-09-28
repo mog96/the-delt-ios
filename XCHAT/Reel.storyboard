@@ -29,13 +29,17 @@
                                             <frame key="frameInset" width="375" height="375"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GQA-8z-5kG"/>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="O7w-iR-YT1">
+                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GQA-8z-5kG">
+                                                    <frame key="frameInset" width="1000" height="1000"/>
+                                                </view>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O7w-iR-YT1">
+                                                    <frame key="frameInset" width="1000" height="1000"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="O7w-iR-YT1" secondAttribute="height" multiplier="1:1" id="JPy-eA-WNI"/>
                                                     </constraints>
                                                 </imageView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IiW-Zw-dyW">
+                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IiW-Zw-dyW">
+                                                    <frame key="frameInset" width="1000" height="1000"/>
                                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <gestureRecognizers/>
                                                 </view>
@@ -200,7 +204,8 @@
                                             <frame key="frameInset" width="375" height="375"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ojt-pF-Ugw">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ojt-pF-Ugw">
+                                                    <frame key="frameInset" width="1000" height="1000"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="ojt-pF-Ugw" secondAttribute="height" multiplier="1:1" id="8D8-Tj-HPW"/>
                                                     </constraints>

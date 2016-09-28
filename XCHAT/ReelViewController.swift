@@ -382,11 +382,26 @@ extension ReelViewController {
 
 extension ReelViewController {
     @IBAction func onAddButtonTapped(sender: AnyObject) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        alert.addAction(UIAlertAction(title: "CLICK", style: .Destructive, handler: { _ in      // FIXME: Using .Destructive to get red text color is a little hacky...
+            self.presentImagePicker(usingPhotoLibrary: false)
+        }))
+        alert.addAction(UIAlertAction(title: "CHOOSE", style: .Destructive, handler: { _ in
+            self.presentImagePicker(usingPhotoLibrary: true)
+        }))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    private func presentImagePicker(usingPhotoLibrary photoLibrary: Bool) {
         let imagePickerVC = UIImagePickerController()
         imagePickerVC.delegate = self
         imagePickerVC.allowsEditing = true
-        imagePickerVC.sourceType = .PhotoLibrary
-        imagePickerVC.mediaTypes = [kUTTypeImage as String, kUTTypeMovie as String]
+        if photoLibrary {
+            imagePickerVC.sourceType = .PhotoLibrary
+            imagePickerVC.mediaTypes = [kUTTypeImage as String, kUTTypeMovie as String]
+        } else {
+            imagePickerVC.sourceType = .Camera
+        }
         imagePickerVC.navigationBar.tintColor = UIColor.redColor()
         imagePickerVC.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: imagePickerVC, action: nil)
         self.presentViewController(imagePickerVC, animated: true, completion: nil)
