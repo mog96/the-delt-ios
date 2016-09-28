@@ -45,13 +45,13 @@ class AdminViewController: ContentViewController {
 
 extension AdminViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 1:
-            return 2
+            return 1
         default:
             return 1
         }
@@ -87,10 +87,15 @@ extension AdminViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.actionButton.setTitle("Alert All Delts", forState: .Normal)
                 return cell
             }
-            
         default:
-            let cell = self.tableView.dequeueReusableCellWithIdentifier("EditUsersCell")!
-            return cell
+            switch indexPath.row {
+            case 0:
+                let cell = self.tableView.dequeueReusableCellWithIdentifier("ApproveSignupRequestsCell")!
+                return cell
+            default:
+                let cell = self.tableView.dequeueReusableCellWithIdentifier("EditUsersCell")!
+                return cell
+            }
         }
     }
     

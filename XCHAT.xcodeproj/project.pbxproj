@@ -99,6 +99,8 @@
 		D58252211D839340008313DF /* AddUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58252201D839340008313DF /* AddUserViewController.swift */; };
 		D58252231D839354008313DF /* Admin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D58252221D839354008313DF /* Admin.storyboard */; };
 		D5AB749C1D8EF06C00E321B4 /* AuxNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AB749B1D8EF06C00E321B4 /* AuxNavigationController.swift */; };
+		D5ABCD581D9BB7BD001BA92E /* SignupRequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ABCD571D9BB7BD001BA92E /* SignupRequestsViewController.swift */; };
+		D5ABCD5A1D9BB895001BA92E /* SignupRequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ABCD591D9BB895001BA92E /* SignupRequestTableViewCell.swift */; };
 		D5D17CE61D9A556400C645FA /* UsernameLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D17CE51D9A556400C645FA /* UsernameLabel.swift */; };
 		D5D17CE81D9A610700C645FA /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D17CE71D9A610700C645FA /* ProfileImageView.swift */; };
 		D5E001131D959FE900ABEFBE /* DeltLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E001121D959FE900ABEFBE /* DeltLoadingView.swift */; };
@@ -217,6 +219,8 @@
 		D58252201D839340008313DF /* AddUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddUserViewController.swift; sourceTree = "<group>"; };
 		D58252221D839354008313DF /* Admin.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Admin.storyboard; sourceTree = "<group>"; };
 		D5AB749B1D8EF06C00E321B4 /* AuxNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuxNavigationController.swift; sourceTree = "<group>"; };
+		D5ABCD571D9BB7BD001BA92E /* SignupRequestsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupRequestsViewController.swift; sourceTree = "<group>"; };
+		D5ABCD591D9BB895001BA92E /* SignupRequestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupRequestTableViewCell.swift; sourceTree = "<group>"; };
 		D5D17CE51D9A556400C645FA /* UsernameLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsernameLabel.swift; sourceTree = "<group>"; };
 		D5D17CE71D9A610700C645FA /* ProfileImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		D5E001121D959FE900ABEFBE /* DeltLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeltLoadingView.swift; sourceTree = "<group>"; };
@@ -549,6 +553,8 @@
 				D525F1B21D8693F20002D8B6 /* EditUsersViewController.swift */,
 				D525F1B41D86960E0002D8B6 /* EditUserTableViewCell.swift */,
 				D58252201D839340008313DF /* AddUserViewController.swift */,
+				D5ABCD571D9BB7BD001BA92E /* SignupRequestsViewController.swift */,
+				D5ABCD591D9BB895001BA92E /* SignupRequestTableViewCell.swift */,
 			);
 			name = Admin;
 			sourceTree = "<group>";
@@ -753,6 +759,7 @@
 				38D9FB901B15582E0030B6D9 /* DateTitleCell.swift in Sources */,
 				252A6B4A1C4CA99F00FA1F75 /* MessageView.swift in Sources */,
 				25F0160A1B045D83004D78F6 /* MenuViewController.swift in Sources */,
+				D5ABCD581D9BB7BD001BA92E /* SignupRequestsViewController.swift in Sources */,
 				2515CDDB1C58BDD40008A2B2 /* LayoutUtils.swift in Sources */,
 				38D9FB921B15583B0030B6D9 /* LocationCell.swift in Sources */,
 				25966C251C99978100D56DFF /* VideoDetailViewController.swift in Sources */,
@@ -804,6 +811,7 @@
 				38F655DD1B0D231B00C5586A /* PhotoCell.swift in Sources */,
 				252237751C991AA20077AC77 /* PhotoVideoCell.swift in Sources */,
 				384F22FA1B0AE18D00A04081 /* NewThreadViewController.swift in Sources */,
+				D5ABCD5A1D9BB895001BA92E /* SignupRequestTableViewCell.swift in Sources */,
 				387866121B0479D100623BC1 /* SettingsViewController.swift in Sources */,
 				D525F1B91D874CB30002D8B6 /* UITextField+NextTextField.swift in Sources */,
 				259FBA431B02F5A5006F1650 /* AppDelegate.swift in Sources */,

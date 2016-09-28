@@ -24,7 +24,7 @@ class MenuViewController: UIViewController {
     let kProfileCellHeight: CGFloat = 172
     let kMenuCellHeight: CGFloat = 55
     
-    var kNumCells = 6
+    var kNumCells = 7
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,10 +72,8 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             cell = tableView.dequeueReusableCellWithIdentifier("CalendarCell")!
         case 4:
             cell = tableView.dequeueReusableCellWithIdentifier("MembersCell")!
-        /*
-        case 7:
+        case self.kNumCells - 1:
             cell = tableView.dequeueReusableCellWithIdentifier("AdminCell")!
-        */
         default:
             cell = tableView.dequeueReusableCellWithIdentifier("SettingsCell")!
         }
@@ -156,8 +154,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
             self.hamburgerViewController?.contentViewController = nc
             
-        /*
-        case 7: // ADMIN
+        case self.kNumCells - 1: // ADMIN
             let storyboard = UIStoryboard(name: "Admin", bundle: nil)
             let nc = storyboard.instantiateViewControllerWithIdentifier("AdminNC") as! UINavigationController
             let firstVC = nc.viewControllers[0] as! AdminViewController
@@ -166,7 +163,6 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
             
             UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
             self.hamburgerViewController?.contentViewController = nc
-        */
             
         default: // SETTINGS
             let settingsStoryboard = UIStoryboard(name: "Settings", bundle: nil)

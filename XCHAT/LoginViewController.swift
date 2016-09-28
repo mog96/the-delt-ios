@@ -287,6 +287,91 @@ extension LoginViewController {
 }
 
 
+// MARK: - Signup Helpers
+
+extension LoginViewController {
+    private func submitSignupRequest() {
+        let signupRequest = PFObject(className: "SignupRequest")
+        signupRequest["name"] = self.nameTextField.text
+        if let email = self.emailTextField.text {
+            self.checkEmail(email, forRequest: signupRequest)
+        } else {
+            let alert = UIAlertController(title: "Email Required", message: "Please enter an email address.", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
+    private func checkEmail(email: String, forRequest signupRequest: PFObject) {
+        let query = PFUser.query()
+        query?.whereKey("email", equalTo: email)
+        query?.findObjectsInBackgroundWithBlock({ (objects: [PFObject]?, error: NSError?) in
+            if error != nil {
+                print("Error:", error?.userInfo["error"])
+                self.presentErrorSubmittingRequestAlert()
+            } else {
+                if objects?.count == 0 {
+                    signupRequest["email"] = email
+                    if let username = self.usernameTextField.text {
+                        self.checkUsername(username, forRequest: signupRequest)
+                    } else {
+                        let alert = UIAlertController(title: "Username Required", message: "Please enter a username.", preferredStyle: UIAlertControllerStyle.Alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    }
+                    
+                } else {
+                    let alert = UIAlertController(title: "Email In Use", message: "The email you entered is already associated with an account. If that doesn't sound right, please contact your Admin.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            }
+        })
+    }
+    
+    private func checkUsername(username: String, forRequest signupRequest: PFObject) {
+        let query = PFUser.query()
+        query?.whereKey("username", equalTo: username)
+        query?.findObjectsInBackgroundWithBlock({ (objects: [PFObject]?, error: NSError?) in
+            if error != nil {
+                print("Error:", error?.userInfo["error"])
+                self.presentErrorSubmittingRequestAlert()
+            } else {
+                if objects?.count == 0 {
+                    signupRequest["username"] = username
+                    signupRequest.saveInBackgroundWithBlock({ (completed: Bool, error: NSError?) -> Void in
+                        if let error = error {
+                            // Log details of the failure
+                            print("Error: \(error) \(error.userInfo)")
+                            self.presentErrorSubmittingRequestAlert()
+                            
+                        } else {
+                            let alert = UIAlertController(title: "Signup Request Submitted", message: "The Admin has received your request and will be in touch soon.", preferredStyle: UIAlertControllerStyle.Alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: { _ in
+                                self.showSignup(false)
+                                self.usernameTextField.text = nil
+                                self.emailTextField.text = nil
+                            }))
+                            self.presentViewController(alert, animated: true, completion: nil)
+                        }
+                    })
+                } else {
+                    let alert = UIAlertController(title: "Username Taken", message: "The username you requested is already taken. Please choose another.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            }
+        })
+    }
+    
+    private func presentErrorSubmittingRequestAlert() {
+        let alert = UIAlertController(title: "Error Submitting Request", message: "Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+}
+
+
 // MARK: - Text Field Delegate
 
 extension LoginViewController: UITextFieldDelegate {
@@ -355,7 +440,7 @@ extension LoginViewController: MFMailComposeViewControllerDelegate {
             
         } else {
             let alert = UIAlertController(title: "Mail Not Enabled", message: "Could not send signup request. Please set up a mail account for your device and try again.", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
             
             self.presentViewController(alert, animated: true, completion: nil)
         }
@@ -382,7 +467,17 @@ extension LoginViewController {
             self.showSignup(true)
             
         } else {
-            self.presentSignupRequestMailCompose()
+            if let email = self.emailTextField.text {
+                if email.hasSuffix("@stanford.edu") {
+                    self.submitSignupRequest()
+                    
+                } else {
+                    self.presentSignupRequestMailCompose()
+                }
+                
+            } else {
+                self.presentSignupRequestMailCompose()
+            }
         }
     }
     
