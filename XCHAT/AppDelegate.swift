@@ -103,7 +103,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = loginViewController
             
         } else {
-            
             if let isAdmin = PFUser.currentUser()!.objectForKey("is_admin") as? Bool {
                 AppDelegate.isAdmin = isAdmin
             } else {

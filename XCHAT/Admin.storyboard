@@ -369,13 +369,13 @@
                                         <rect key="frame" x="0.0" y="92" width="375" height="94"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OcH-rc-ZQZ" id="Oa2-6p-L83">
-                                            <frame key="frameInset" width="375" height="93"/>
+                                            <frame key="frameInset" width="375" height="94"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PKx-mY-8RY">
                                                     <color key="backgroundColor" red="0.0" green="0.79691445709999997" blue="0.00024395447670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="68" id="zus-mx-Vld"/>
+                                                        <constraint firstAttribute="width" secondItem="PKx-mY-8RY" secondAttribute="height" multiplier="1:1" id="ULC-Ab-0yu"/>
                                                     </constraints>
                                                     <state key="normal" title="Approve">
                                                         <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -39,6 +39,10 @@ class MenuViewController: UIViewController {
         self.tableView.canCancelContentTouches = false
     }
     
+    override func viewWillAppear(animated: Bool) {
+        self.checkAdmin()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

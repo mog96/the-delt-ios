@@ -41,6 +41,7 @@ class LoginViewController: UIViewController {
     let loginString = "LOG IN"
     let loggingInString = "LOGGING IN..."
     let resetPasswordString = "RESET PASSWORD"
+    let resettingPasswordString = "RESETTING PASSWORD..."
     
     var loginButtonOriginalColor: UIColor!
     var signupButtonOriginalColor: UIColor!
@@ -100,11 +101,12 @@ class LoginViewController: UIViewController {
         // Confirm password text field.
         self.confirmPasswordTextField.attributedPlaceholder = NSAttributedString(string: "Confirm Password", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
         self.confirmPasswordTextField.keyboardAppearance = UIKeyboardAppearance.Dark
-        confirmPasswordTextField.delegate = self
+        self.confirmPasswordTextField.delegate = self
         self.passwordTextField.nextTextField = self.confirmPasswordTextField
         self.confirmPasswordTextField.returnKeyType = .Go
         self.confirmPasswordTextFieldHeight.constant = 0
         self.confirmPasswordTextFieldBottomSpacing.constant = 0
+        self.confirmPasswordTextField.hidden = true
         
         // Group buttons and text fields for animations.
         self.textFieldOriginalHeight = self.nameTextFieldHeight.constant
@@ -133,6 +135,14 @@ class LoginViewController: UIViewController {
         self.usernameTextField.becomeFirstResponder()
         
         self.addLoginLabel()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        if let isAdmin = PFUser.currentUser()?.objectForKey("is_admin") as? Bool {
+            AppDelegate.isAdmin = isAdmin
+        } else {
+            AppDelegate.isAdmin = false
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -213,33 +223,46 @@ extension LoginViewController {
 // MARK: - Delt Animation Helpers
 
 extension LoginViewController {
-    private func startLoginAnimation() {
+    private func startLoginAnimation(fromResetPassword fromResetPassword: Bool) {
         self.view.endEditing(true)
         
+        let animationDuration = 0.5
         self.shouldContinueAnimating = true
         
         self.loginLabel.hidden = false
         self.loginButton.hidden = true
-        UIView.animateWithDuration(0.5, animations: {
-            self.loginLabel.text = self.loggingInString
+        self.resetPasswordButton.hidden = true
+        UIView.animateWithDuration(animationDuration, animations: {
+            if fromResetPassword {
+                self.loginLabel.text = self.resettingPasswordString
+            } else {
+                self.loginLabel.text = self.loggingInString
+            }
             self.loginLabel.sizeToFit()
             self.loginLabel.center.x = self.loginView.center.x
         }) { _ in
             self.pulseLoginLabel()
         }
+        
         UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: .Fade)
-        UIView.transitionWithView(self.backgroundImageView, duration: 0.5, options: .TransitionCrossDissolve, animations: {
+        UIView.transitionWithView(self.backgroundImageView, duration: animationDuration, options: .TransitionCrossDissolve, animations: {
             self.backgroundImageView.hidden = true
             }, completion: { _ in
                 self.loginBackgroundImageIndex = (self.loginBackgroundImageIndex + 1) % self.loginBackgroundImageNames.count
                 self.backgroundImageView.image = UIImage(named: self.loginBackgroundImageNames[self.loginBackgroundImageIndex])
         })
-        self.controlsHiddenOnLogin.forEach({ (component: UIControl) in
-            UIView.transitionWithView(component, duration: 0.5, options: .TransitionCrossDissolve, animations: {
+        var controlsToHide: [UIControl]!
+        if fromResetPassword {
+            controlsToHide = [self.usernameTextField, self.passwordTextField, self.confirmPasswordTextField]
+        } else {
+            controlsToHide = self.controlsHiddenOnLogin
+        }
+        controlsToHide.forEach({ (component: UIControl) in
+            UIView.transitionWithView(component, duration: animationDuration, options: .TransitionCrossDissolve, animations: {
                 component.hidden = true
                 }, completion: nil)
         })
-        UIView.transitionWithView(self.deltLoadingView, duration: 0.5, options: .TransitionCrossDissolve, animations: {
+        UIView.transitionWithView(self.deltLoadingView, duration: animationDuration, options: .TransitionCrossDissolve, animations: {
             self.deltLoadingView.startAnimating()
             self.deltLoadingView.hidden = false
             }, completion: nil)
@@ -278,6 +301,12 @@ extension LoginViewController {
                 self.loginLabel.hidden = true
             }
             
+            [self.usernameTextField, self.passwordTextField].forEach({ (component: UIControl) in
+                UIView.transitionWithView(component, duration: animationDuration, options: .TransitionCrossDissolve, animations: {
+                    component.hidden = false
+                    }, completion: nil)
+            })
+            
             self.confirmPasswordTextFieldHeight.constant = self.textFieldOriginalHeight
             self.confirmPasswordTextFieldBottomSpacing.constant = self.textFieldOriginalHeight
             self.loginView.setNeedsLayout()
@@ -286,7 +315,11 @@ extension LoginViewController {
                 self.loginView.layoutIfNeeded()
                 self.confirmPasswordTextField.layoutIfNeeded()
                 self.passwordTextField.returnKeyType = .Next
-            })
+            }) { _ in
+                UIView.transitionWithView(self.confirmPasswordTextField, duration: animationDuration, options: .TransitionCrossDissolve, animations: {
+                    self.confirmPasswordTextField.hidden = false
+                    }, completion: nil)
+            }
             
         } else {
             // Return duplicate login label to login button title label's position.
@@ -536,7 +569,7 @@ extension LoginViewController {
     @IBAction func loginPressed(sender: AnyObject) {
         if self.loginView.frame.height == self.loginViewLoginHeight {
             if let username = self.usernameTextField.text, password = self.passwordTextField.text {
-                self.startLoginAnimation()
+                self.startLoginAnimation(fromResetPassword: false)
                 
                 // TODO: Check that text field text is not null.
                 PFUser.logInWithUsernameInBackground(username, password: password) { (user: PFUser?, error: NSError?) -> Void in
@@ -551,17 +584,7 @@ extension LoginViewController {
                             
                         } else {
                             self.endLoginAnmation(withResetPassword: false)
-                            
-                            if let isAdmin = user?.objectForKey("is_admin") as? Bool {
-                                AppDelegate.isAdmin = isAdmin
-                            } else {
-                                AppDelegate.isAdmin = false
-                            }
-                            
-                            self.emailTextField.resignFirstResponder()
-                            self.usernameTextField.resignFirstResponder()
-                            self.passwordTextField.resignFirstResponder()
-                            
+                            self.view.endEditing(true)
                             self.transitionToApp()
                         }
                         
@@ -603,13 +626,18 @@ extension LoginViewController {
         if let password = self.passwordTextField.text, confirmPassword = self.confirmPasswordTextField.text {
             if password.characters.count != 0 && confirmPassword.characters.count != 0 {
                 if password == confirmPassword {
-                    print("CONFIRMED")
+                    self.startLoginAnimation(fromResetPassword: true)
                     
-                    
-                    
-                    // START HERE: SET PASSWORD AND SAVE USER
-                    
-                    
+                    PFUser.currentUser()?.password = password
+                    PFUser.currentUser()?.saveInBackgroundWithBlock({ (completed: Bool, error: NSError?) in
+                        if error != nil {
+                            print("Error:", error?.userInfo["error"])
+                        } else {
+                            self.endLoginAnmation(withResetPassword: true)
+                            self.view.endEditing(true)
+                            self.transitionToApp()
+                        }
+                    })
                     
                 } else {
                     let alert = UIAlertController(title: "Passwords Don't Match", message: "Please try again.", preferredStyle: UIAlertControllerStyle.Alert)

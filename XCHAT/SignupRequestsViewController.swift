@@ -149,21 +149,17 @@ extension SignupRequestsViewController: SignupRequestTableViewCellDelegate {
                             "email": object["email"],
                             "username": object["username"],
                             "tempPass": "temp"]
-        PFCloud.callFunctionInBackground("approveUser", withParameters: approvedUser) { (object: AnyObject?, error: NSError?) in
+        PFCloud.callFunctionInBackground("approveUser", withParameters: approvedUser) { (createdUser: AnyObject?, error: NSError?) in
             if error != nil {
                 print("Error:", error?.userInfo["error"])
-                currentHUD.hideAnimated(true, afterDelay: 1.0)
+                currentHUD.hideAnimated(true)
             } else {
-                if object != nil {
-                    
-                    print("GOT AN OBJ!")
-                    
+                if createdUser != nil {
                     currentHUD.label.text = "Approved!"
-                    currentHUD.hideAnimated(true, afterDelay: 1.0)
-                    self.resetTableView()
-                    
                 }
+                currentHUD.hideAnimated(true, afterDelay: 1.0)
             }
+            self.resetTableView()
         }
     }
 }
