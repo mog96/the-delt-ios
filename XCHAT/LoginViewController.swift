@@ -28,13 +28,19 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var passwordTextFieldHeight: NSLayoutConstraint!
     @IBOutlet weak var passwordTextFieldBottomSpacing: NSLayoutConstraint!
+    @IBOutlet weak var confirmPasswordTextField: UITextField!
+    @IBOutlet weak var confirmPasswordTextFieldHeight: NSLayoutConstraint!
+    @IBOutlet weak var confirmPasswordTextFieldBottomSpacing: NSLayoutConstraint!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
+    @IBOutlet weak var resetPasswordButton: UIButton!
     
     var loginLabel: UILabel!
     var loginLabelOriginalOrigin: CGPoint!
+    
     let loginString = "LOG IN"
     let loggingInString = "LOGGING IN..."
+    let resetPasswordString = "RESET PASSWORD"
     
     var loginButtonOriginalColor: UIColor!
     var signupButtonOriginalColor: UIColor!
@@ -61,6 +67,7 @@ class LoginViewController: UIViewController {
         self.backgroundImageView.image = UIImage(named: self.loginBackgroundImageNames[self.loginBackgroundImageIndex])
         
         self.deltLoadingView.hidden = true
+        self.resetPasswordButton.hidden = true
         
         // Name text field.
         self.nameTextField.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
@@ -89,6 +96,15 @@ class LoginViewController: UIViewController {
         passwordTextField.delegate = self
         self.usernameTextField.nextTextField = self.passwordTextField
         self.passwordTextField.returnKeyType = .Go
+        
+        // Confirm password text field.
+        self.confirmPasswordTextField.attributedPlaceholder = NSAttributedString(string: "Confirm Password", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
+        self.confirmPasswordTextField.keyboardAppearance = UIKeyboardAppearance.Dark
+        confirmPasswordTextField.delegate = self
+        self.passwordTextField.nextTextField = self.confirmPasswordTextField
+        self.confirmPasswordTextField.returnKeyType = .Go
+        self.confirmPasswordTextFieldHeight.constant = 0
+        self.confirmPasswordTextFieldBottomSpacing.constant = 0
         
         // Group buttons and text fields for animations.
         self.textFieldOriginalHeight = self.nameTextFieldHeight.constant
@@ -191,7 +207,12 @@ extension LoginViewController {
             self.passwordTextField.hidden = show
             }, completion: nil)
     }
-    
+}
+
+
+// MARK: - Delt Animation Helpers
+
+extension LoginViewController {
     private func startLoginAnimation() {
         self.view.endEditing(true)
         
@@ -199,12 +220,12 @@ extension LoginViewController {
         
         self.loginLabel.hidden = false
         self.loginButton.hidden = true
-        UIView.animateWithDuration(0.5, animations: { 
+        UIView.animateWithDuration(0.5, animations: {
             self.loginLabel.text = self.loggingInString
             self.loginLabel.sizeToFit()
             self.loginLabel.center.x = self.loginView.center.x
-            }) { _ in
-                self.pulseLoginLabel()
+        }) { _ in
+            self.pulseLoginLabel()
         }
         UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: .Fade)
         UIView.transitionWithView(self.backgroundImageView, duration: 0.5, options: .TransitionCrossDissolve, animations: {
@@ -228,39 +249,67 @@ extension LoginViewController {
     private func pulseLoginLabel() {
         UIView.animateWithDuration(1, animations: {
             self.loginLabel.alpha = 0
-            }) { _ in
-                UIView.animateWithDuration(2, animations: {
-                    self.loginLabel.alpha = 1
-                    }, completion: { _ in
-                        if self.shouldContinueAnimating {
-                            self.pulseLoginLabel()
-                        }
-                })
+        }) { _ in
+            UIView.animateWithDuration(2, animations: {
+                self.loginLabel.alpha = 1
+                }, completion: { _ in
+                    if self.shouldContinueAnimating {
+                        self.pulseLoginLabel()
+                    }
+            })
         }
     }
     
-    private func endLoginAnimation() {
+    private func endLoginAnmation(withResetPassword resetPassword: Bool) {
+        let animationDuration = 0.5
         self.shouldContinueAnimating = false
         
-        // Return duplicate login label to login button title label's position.
-        UIView.animateWithDuration(0.5, animations: {
-            self.loginLabel.text = self.loginString
-            self.loginLabel.sizeToFit()
-            self.loginLabel.frame.origin.x = self.loginLabelOriginalOrigin.x
-            }, completion: { _ in
-                self.loginButton.hidden = false
+        if resetPassword {
+            // Use login label to animate to reset password button.
+            self.loginLabel.hidden = false
+            self.loginButton.hidden = true
+            UIView.animateWithDuration(animationDuration, animations: {
+                self.loginLabel.text = self.resetPasswordString
+                self.loginLabel.sizeToFit()
+                self.loginLabel.center.x = self.loginView.center.x
+                self.loginLabel.center.y = self.loginLabel.center.y + self.textFieldOriginalHeight * 2
+            }) { _ in
+                self.resetPasswordButton.hidden = false
                 self.loginLabel.hidden = true
-        })
+            }
+            
+            self.confirmPasswordTextFieldHeight.constant = self.textFieldOriginalHeight
+            self.confirmPasswordTextFieldBottomSpacing.constant = self.textFieldOriginalHeight
+            self.loginView.setNeedsLayout()
+            self.confirmPasswordTextField.setNeedsLayout()
+            UIView.animateWithDuration(animationDuration, animations: { () -> Void in
+                self.loginView.layoutIfNeeded()
+                self.confirmPasswordTextField.layoutIfNeeded()
+                self.passwordTextField.returnKeyType = .Next
+            })
+            
+        } else {
+            // Return duplicate login label to login button title label's position.
+            UIView.animateWithDuration(animationDuration, animations: {
+                self.loginLabel.text = self.loginString
+                self.loginLabel.sizeToFit()
+                self.loginLabel.frame.origin.x = self.loginLabelOriginalOrigin.x
+                }, completion: { _ in
+                    self.loginButton.hidden = false
+                    self.loginLabel.hidden = true
+            })
+            self.controlsHiddenOnLogin.forEach({ (component: UIControl) in
+                UIView.transitionWithView(component, duration: animationDuration, options: .TransitionCrossDissolve, animations: {
+                    component.hidden = false
+                    }, completion: nil)
+            })
+        }
+        
         UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Fade)
-        UIView.transitionWithView(self.backgroundImageView, duration: 0.5, options: .TransitionCrossDissolve, animations: {
+        UIView.transitionWithView(self.backgroundImageView, duration: animationDuration, options: .TransitionCrossDissolve, animations: {
             self.backgroundImageView.hidden = false
             }, completion: nil)
-        self.controlsHiddenOnLogin.forEach({ (component: UIControl) in
-            UIView.transitionWithView(component, duration: 0.5, options: .TransitionCrossDissolve, animations: {
-                component.hidden = false
-                }, completion: nil)
-        })
-        UIView.transitionWithView(self.deltLoadingView, duration: 0.5, options: .TransitionCrossDissolve, animations: {
+        UIView.transitionWithView(self.deltLoadingView, duration: animationDuration, options: .TransitionCrossDissolve, animations: {
             self.deltLoadingView.hidden = true
             self.deltLoadingView.stopAnimating()
             }, completion: nil)
@@ -269,9 +318,11 @@ extension LoginViewController {
     }
     
     private func transitionToApp() {
+        let animationDuration = 0.5
+        
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
-        UIView.transitionWithView(self.view.window!, duration: 0.5, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
+        UIView.transitionWithView(self.view.window!, duration: animationDuration, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
             self.view.window!.rootViewController = appDelegate.hamburgerViewController
             let reelStoryboard = UIStoryboard(name: "Reel", bundle: nil)
             let reelNC = reelStoryboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
@@ -484,50 +535,60 @@ extension LoginViewController {
     // Logs in with username (not email) and password.
     @IBAction func loginPressed(sender: AnyObject) {
         if self.loginView.frame.height == self.loginViewLoginHeight {
-            self.startLoginAnimation()
-            
-            // TODO: Check that text field text is not null.
-            PFUser.logInWithUsernameInBackground(self.usernameTextField.text!, password: self.passwordTextField.text!) { (user: PFUser?, error: NSError?) -> Void in
+            if let username = self.usernameTextField.text, password = self.passwordTextField.text {
+                self.startLoginAnimation()
                 
-                self.endLoginAnimation()
-                
-                if user != nil {
+                // TODO: Check that text field text is not null.
+                PFUser.logInWithUsernameInBackground(username, password: password) { (user: PFUser?, error: NSError?) -> Void in
                     
-                    print("LOGIN SUCCESSFUL")
-                    
-                    if let isAdmin = user?.objectForKey("is_admin") as? Bool {
-                        AppDelegate.isAdmin = isAdmin
+                    if user != nil {
+                        
+                        print("LOGIN SUCCESSFUL")
+                        
+                        if password == "temp" {
+                            self.passwordTextField.text = nil
+                            self.endLoginAnmation(withResetPassword: true)
+                            
+                        } else {
+                            self.endLoginAnmation(withResetPassword: false)
+                            
+                            if let isAdmin = user?.objectForKey("is_admin") as? Bool {
+                                AppDelegate.isAdmin = isAdmin
+                            } else {
+                                AppDelegate.isAdmin = false
+                            }
+                            
+                            self.emailTextField.resignFirstResponder()
+                            self.usernameTextField.resignFirstResponder()
+                            self.passwordTextField.resignFirstResponder()
+                            
+                            self.transitionToApp()
+                        }
+                        
                     } else {
-                        AppDelegate.isAdmin = false
-                    }
-                    
-                    self.emailTextField.resignFirstResponder()
-                    self.usernameTextField.resignFirstResponder()
-                    self.passwordTextField.resignFirstResponder()
-                    
-                    self.transitionToApp()
-                    
-                } else {
-                    
-                    print("LOGIN FAILED")
-                    
-                    if let errorString = error?.userInfo["error"] as? String {
                         
-                        print("LOGIN ERROR:", errorString)
+                        print("LOGIN FAILED")
                         
-                        switch errorString {
-                        case "Invalid username/password.":
-                            let ac = UIAlertController(title: "Invalid Username or Password", message: "Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
-                            ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                            self.presentViewController(ac, animated: true, completion: nil)
-                        case "Could not connect to the server.":
-                            let ac = UIAlertController(title: "Unable to Connect", message: "Please try again later.", preferredStyle: UIAlertControllerStyle.Alert)
-                            ac.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
-                            self.presentViewController(ac, animated: true, completion: nil)
-                        default:
-                            let ac = UIAlertController(title: "Server Error", message: "Please try again later.", preferredStyle: UIAlertControllerStyle.Alert)
-                            ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                            self.presentViewController(ac, animated: true, completion: nil)
+                        self.endLoginAnmation(withResetPassword: false)
+                        
+                        if let errorString = error?.userInfo["error"] as? String {
+                            
+                            print("LOGIN ERROR:", errorString)
+                            
+                            switch errorString {
+                            case "Invalid username/password.":
+                                let ac = UIAlertController(title: "Invalid Username or Password", message: "Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                                ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                                self.presentViewController(ac, animated: true, completion: nil)
+                            case "Could not connect to the server.":
+                                let ac = UIAlertController(title: "Unable to Connect", message: "Please try again later.", preferredStyle: UIAlertControllerStyle.Alert)
+                                ac.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+                                self.presentViewController(ac, animated: true, completion: nil)
+                            default:
+                                let ac = UIAlertController(title: "Server Error", message: "Please try again later.", preferredStyle: UIAlertControllerStyle.Alert)
+                                ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                                self.presentViewController(ac, animated: true, completion: nil)
+                            }
                         }
                     }
                 }
@@ -535,6 +596,27 @@ extension LoginViewController {
             
         } else {
             self.showSignup(false)
+        }
+    }
+    
+    @IBAction func onResetPasswordTapped(sender: AnyObject) {
+        if let password = self.passwordTextField.text, confirmPassword = self.confirmPasswordTextField.text {
+            if password.characters.count != 0 && confirmPassword.characters.count != 0 {
+                if password == confirmPassword {
+                    print("CONFIRMED")
+                    
+                    
+                    
+                    // START HERE: SET PASSWORD AND SAVE USER
+                    
+                    
+                    
+                } else {
+                    let alert = UIAlertController(title: "Passwords Don't Match", message: "Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            }
         }
     }
     

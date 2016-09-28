@@ -31,6 +31,14 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bwU-uc-bWb">
+                                        <state key="normal" title="RESET PASSWORD">
+                                            <color key="titleColor" red="0.0" green="0.79607843140000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="onResetPasswordTapped:" destination="a7e-my-ce2" eventType="touchUpInside" id="2P1-ke-wD1"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tpU-FH-LpV">
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="eUm-bY-qbm"/>
@@ -80,10 +88,21 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hLt-IU-v9i">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="17" id="RnS-6K-a9O"/>
+                                        </constraints>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstItem="hLt-IU-v9i" firstAttribute="leading" secondItem="lYD-C2-sIs" secondAttribute="leading" id="0Av-0g-8Lk"/>
                                     <constraint firstItem="lYD-C2-sIs" firstAttribute="leading" secondItem="Nd2-rA-6qv" secondAttribute="leading" id="6BP-FA-WOY"/>
+                                    <constraint firstItem="hLt-IU-v9i" firstAttribute="trailing" secondItem="lYD-C2-sIs" secondAttribute="trailing" id="7Nq-kE-tfp"/>
+                                    <constraint firstItem="bwU-uc-bWb" firstAttribute="top" secondItem="hLt-IU-v9i" secondAttribute="bottom" constant="17" id="9JC-R5-5Jx"/>
                                     <constraint firstItem="tpU-FH-LpV" firstAttribute="leading" secondItem="lYD-C2-sIs" secondAttribute="leading" constant="1" id="9dm-Wp-M4P"/>
                                     <constraint firstItem="25y-XK-twG" firstAttribute="bottom" secondItem="tpU-FH-LpV" secondAttribute="bottom" id="Dpy-A5-X38"/>
                                     <constraint firstItem="L0C-9y-iPw" firstAttribute="leading" secondItem="9gY-nU-tqn" secondAttribute="leading" id="KQD-S1-keT"/>
@@ -94,9 +113,11 @@
                                     <constraint firstAttribute="trailing" secondItem="25y-XK-twG" secondAttribute="trailing" constant="32" id="OFp-YG-hAo"/>
                                     <constraint firstAttribute="bottom" secondItem="tpU-FH-LpV" secondAttribute="bottom" constant="15" id="S9Q-hD-BLE"/>
                                     <constraint firstItem="lYD-C2-sIs" firstAttribute="trailing" secondItem="Nd2-rA-6qv" secondAttribute="trailing" id="bHo-TV-vxq"/>
-                                    <constraint firstItem="tpU-FH-LpV" firstAttribute="top" secondItem="lYD-C2-sIs" secondAttribute="bottom" constant="17" id="bqg-SO-iwW"/>
+                                    <constraint firstItem="bwU-uc-bWb" firstAttribute="centerX" secondItem="BaS-R6-wbi" secondAttribute="centerX" id="cRk-WA-DvX"/>
+                                    <constraint firstItem="tpU-FH-LpV" firstAttribute="top" secondItem="hLt-IU-v9i" secondAttribute="bottom" constant="17" id="eR3-fp-zWS"/>
                                     <constraint firstAttribute="width" constant="197" id="ets-em-Iei"/>
                                     <constraint firstItem="9gY-nU-tqn" firstAttribute="top" secondItem="BaS-R6-wbi" secondAttribute="top" constant="36" id="h8Z-3e-P34"/>
+                                    <constraint firstItem="hLt-IU-v9i" firstAttribute="top" secondItem="lYD-C2-sIs" secondAttribute="bottom" constant="17" id="i4E-q8-KFk"/>
                                     <constraint firstItem="25y-XK-twG" firstAttribute="trailing" secondItem="lYD-C2-sIs" secondAttribute="trailing" constant="-1" id="nS5-cb-Mge"/>
                                     <constraint firstItem="Nd2-rA-6qv" firstAttribute="top" secondItem="L0C-9y-iPw" secondAttribute="bottom" constant="17" id="nlH-Md-T39"/>
                                     <constraint firstItem="Nd2-rA-6qv" firstAttribute="trailing" secondItem="L0C-9y-iPw" secondAttribute="trailing" id="o5F-vc-GhR"/>
@@ -121,6 +142,9 @@
                     </view>
                     <connections>
                         <outlet property="backgroundImageView" destination="Z2s-wZ-ZQ6" id="tGu-Er-vJJ"/>
+                        <outlet property="confirmPasswordTextField" destination="hLt-IU-v9i" id="ZGd-uY-cmS"/>
+                        <outlet property="confirmPasswordTextFieldBottomSpacing" destination="eR3-fp-zWS" id="cfg-hJ-c5I"/>
+                        <outlet property="confirmPasswordTextFieldHeight" destination="RnS-6K-a9O" id="vuT-mm-v2C"/>
                         <outlet property="deltLoadingView" destination="Eyf-lw-abX" id="mOg-1s-cUK"/>
                         <outlet property="emailTextField" destination="L0C-9y-iPw" id="WPa-2h-ar6"/>
                         <outlet property="emailTextFieldBottomSpacing" destination="nlH-Md-T39" id="gyo-tW-1ob"/>
@@ -131,8 +155,9 @@
                         <outlet property="nameTextFieldBottomSpacing" destination="NMq-Js-L4j" id="nyL-Re-jna"/>
                         <outlet property="nameTextFieldHeight" destination="kT5-EK-vF1" id="sVU-Ie-5XA"/>
                         <outlet property="passwordTextField" destination="lYD-C2-sIs" id="QKg-96-yxv"/>
-                        <outlet property="passwordTextFieldBottomSpacing" destination="bqg-SO-iwW" id="JIy-Zs-Ejc"/>
+                        <outlet property="passwordTextFieldBottomSpacing" destination="i4E-q8-KFk" id="d2K-oe-DRc"/>
                         <outlet property="passwordTextFieldHeight" destination="Agp-Xj-IVf" id="jS8-qS-VAR"/>
+                        <outlet property="resetPasswordButton" destination="bwU-uc-bWb" id="yF6-7r-QCX"/>
                         <outlet property="signupButton" destination="25y-XK-twG" id="7c6-e9-BM9"/>
                         <outlet property="usernameTextField" destination="Nd2-rA-6qv" id="fXW-69-fCU"/>
                         <outlet property="usernameTextFieldBottomSpacing" destination="Nvb-Kk-TvT" id="liV-fe-S6c"/>
