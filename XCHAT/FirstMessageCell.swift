@@ -51,11 +51,15 @@ class FirstMessageCell: UITableViewCell {
             dateFormatter.dateFormat = "ha"
         }
         
-        usernameLabel.text = (message["authorUsername"] as! String)
-        timestampLabel.text = dateFormatter.stringFromDate(message.createdAt!)
-        messageLabel.text = (message["content"] as! String)
+        let username = message["authorUsername"] as! String
+        
+        self.usernameLabel.username = username
+        self.usernameLabel.text = username
+        self.timestampLabel.text = dateFormatter.stringFromDate(message.createdAt!)
+        self.messageLabel.text = (message["content"] as! String)
 
         if let profilePic = pictures[usernameLabel.text!]{
+            self.authorProfileImageView.username = username
             self.authorProfileImageView.image = profilePic as? UIImage
         }
         
@@ -95,9 +99,11 @@ class FirstMessageCell: UITableViewCell {
             dateFormatter.dateFormat = "ha"
         }
         
-        usernameLabel.text = (message["authorUsername"] as! String)
-        timestampLabel.text = dateFormatter.stringFromDate(message.createdAt!)
-        messageLabel.text = (message["content"] as! String)
+        let username = message["authorUsername"] as! String
+        self.usernameLabel.username = username
+        self.usernameLabel.text = username
+        self.timestampLabel.text = dateFormatter.stringFromDate(message.createdAt!)
+        self.messageLabel.text = (message["content"] as! String)
         
         let query = PFUser.query()
         query?.whereKey("username", equalTo: message.valueForKey("authorUsername") as! String)

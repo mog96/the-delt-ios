@@ -10,14 +10,22 @@ import UIKit
 import Parse
 
 class ProfileImageView: UIImageView {
-
+    
     var user: PFUser?
+    var username: String?
     
     var tapGestureRecognizer: UITapGestureRecognizer!
     
     init(user aUser: PFUser, frame: CGRect) {
         super.init(frame: frame)
         self.user = aUser
+        self.username = aUser.username
+        self.commonInit()
+    }
+    
+    init(username aUsername: String, frame: CGRect) {
+        super.init(frame: frame)
+        self.username = aUsername
         self.commonInit()
     }
     
@@ -44,6 +52,7 @@ class ProfileImageView: UIImageView {
 extension ProfileImageView {
     func onTap() {
         print("USER:", self.user?.username)
+        print("USERNAME:", self.username)
     }
 }
 

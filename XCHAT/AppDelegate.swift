@@ -31,16 +31,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let configuration = ParseClientConfiguration {
                     $0.applicationId = keys["parseApplicationId"] as? String
                     $0.clientKey = keys["parseClientKey"] as? String
-                    $0.server = "http://thedelt.herokuapp.com/parse"
                     
-                    /*
                     /* DEVELOPMENT ONLY */
                     #if TARGET_IPHONE_SIMULATOR
                         $0.server = "http://localhost:1337/parse"
                     #else
                         $0.server = "http://mog.local:1337/parse"
                     #endif
-                    */
+                    /* END DEVELOPMENT ONLY */
+                    
+                    // $0.server = "http://thedelt.herokuapp.com/parse"
                 }
                 Parse.initializeWithConfiguration(configuration)
                 

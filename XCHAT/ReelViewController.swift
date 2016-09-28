@@ -75,7 +75,7 @@ extension ReelViewController: UITableViewDelegate, UITableViewDataSource {
         let photo = photos.objectAtIndex(section) as! NSMutableDictionary
         
         // Header.
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: kHeaderWidth, height: kHeaderHeight))
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.kHeaderWidth, height: self.kHeaderHeight))
         headerView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.7)
         
         // Blur.
@@ -119,7 +119,9 @@ extension ReelViewController: UITableViewDelegate, UITableViewDataSource {
         
         // Username label.
         let usernameLabel = UsernameLabel(frame: CGRect(x: 8 + self.kProfileWidthHeight + 8, y: 12, width: 200, height: 16))
-        usernameLabel.text = photo.valueForKey("username") as? String
+        let username = photo.valueForKey("username") as? String
+        usernameLabel.username = username
+        usernameLabel.text = username
         usernameLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 16.5)
         usernameLabel.textColor = UIColor.redColor()
         usernameLabel.sizeToFit()
@@ -135,6 +137,7 @@ extension ReelViewController: UITableViewDelegate, UITableViewDataSource {
         headerView.insertSubview(profileImageView, atIndex: 0)
         headerView.insertSubview(usernameLabel, atIndex: 0)
         headerView.insertSubview(blurView, atIndex: 0)
+        blurView.autoPinEdgesToSuperviewEdges()
         
         return headerView
     }
@@ -175,13 +178,6 @@ extension ReelViewController: UITableViewDelegate, UITableViewDataSource {
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as! CommentCell
-                
-                
-                
-                // START HERE: ADD USER TO USERNALE LABEL
-                
-                
-                
                 cell.commentIndex = indexPath.row - commentOffset
                 cell.setUpCell(photo)
                 

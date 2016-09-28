@@ -8,8 +8,6 @@
 
 import UIKit
 
-// FIXME: ALLOW USER TO GO BACK TO PHOTO SELECTION
-
 // Communicates to presenter the caption entered for the given photo.
 protocol CaptionViewControllerDelegate {
     func captionViewController(didEnterCaption caption: String?)

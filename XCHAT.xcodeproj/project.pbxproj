@@ -428,8 +428,8 @@
 				25518A3E1B0ECFF200550DE9 /* ButtonCell.swift */,
 				25518A441B0ED06300550DE9 /* FavesCell.swift */,
 				25518A401B0ED03B00550DE9 /* CommentCell.swift */,
-				25C6CCD91B1290C200EADB5B /* CaptionViewController.swift */,
 				25C6CCDB1B12FF1600EADB5B /* CommentViewController.swift */,
+				25C6CCD91B1290C200EADB5B /* CaptionViewController.swift */,
 				25966C211C99976E00D56DFF /* Video Detail */,
 				25063BEA1C997B8C00573C6E /* Future */,
 			);
