@@ -112,6 +112,7 @@ extension SignupRequestsViewController: SignupRequestTableViewCellDelegate {
         let currentHUD = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         currentHUD.label.text = "Approving User..."
         
+        /*
         let user = PFUser()
         user["name"] = object["name"] as? String
         user.email = object["email"] as? String
@@ -140,6 +141,28 @@ extension SignupRequestsViewController: SignupRequestTableViewCellDelegate {
                         self.refreshControl.beginRefreshing()
                     }
                 })
+            }
+        }
+        */
+        
+        let approvedUser = ["name": object["name"],
+                            "email": object["email"],
+                            "username": object["username"],
+                            "tempPass": "temp"]
+        PFCloud.callFunctionInBackground("approveUser", withParameters: approvedUser) { (object: AnyObject?, error: NSError?) in
+            if error != nil {
+                print("Error:", error?.userInfo["error"])
+                currentHUD.hideAnimated(true, afterDelay: 1.0)
+            } else {
+                if object != nil {
+                    
+                    print("GOT AN OBJ!")
+                    
+                    currentHUD.label.text = "Approved!"
+                    currentHUD.hideAnimated(true, afterDelay: 1.0)
+                    self.resetTableView()
+                    
+                }
             }
         }
     }

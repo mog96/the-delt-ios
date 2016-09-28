@@ -65,22 +65,6 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    override func viewWillAppear(animated: Bool) {
-        let approvedUser = ["name": "mateo",
-                            "email": "mateo.o.garcia@gmail.com",
-                            "username": "mogmogmog",
-                            "tempPass": "temp"]
-        PFCloud.callFunctionInBackground("approveUser", withParameters: approvedUser) { (object: AnyObject?, error: NSError?) in
-            if error != nil {
-                print("Error:", error?.userInfo["error"])
-            } else {
-                if let object = object {
-                    print("GOT AN OBJ!")
-                }
-            }
-        }
-    }
 }
 
 

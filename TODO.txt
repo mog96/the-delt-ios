@@ -2,6 +2,11 @@
 * IMPROVEMENTS *
 ****************
 
+	ASAP
+	- login password reset
+	- login animation
+	
+
 	OFFLINE:
 	- Divide Chat messages by day.
 	
