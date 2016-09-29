@@ -34,7 +34,6 @@ PODS:
     - Parse (~> 1.9)
   - PureLayout (3.0.2)
   - Reachability (3.2)
-  - Whisper (3.1.1)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.1)
@@ -46,7 +45,6 @@ DEPENDENCIES:
   - ParseUI
   - PureLayout
   - Reachability
-  - Whisper
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
@@ -59,8 +57,7 @@ SPEC CHECKSUMS:
   ParseUI: c2bcdfbb00330e464b5b773266ae221697a3bb7b
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
-  Whisper: 74decae53daf8caff5acf8628e24b92d3f05a453
 
-PODFILE CHECKSUM: 58158e7e590f927819177fff299255006c814236
+PODFILE CHECKSUM: 78dc24dbb52dbedc8894af229421cf68ee04ea69
 
 COCOAPODS: 1.0.1

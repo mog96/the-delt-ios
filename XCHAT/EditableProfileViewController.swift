@@ -11,6 +11,11 @@ import UIKit
 import Parse
 import ParseUI
 
+protocol ProfilePresenterDelegate {
+    func profilePresenter(wasTappedWithUser user: PFUser?)
+    func profilePresenter(wasTappedWithUsername username: String?)
+}
+
 class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -38,6 +43,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
     
     var editable = true
     var user: PFUser?
+    var username: String?
     
     let kYearLength = 4
     
@@ -47,8 +53,8 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
         self.automaticallyAdjustsScrollViewInsets = false
         
         // Add keyboard observers.
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditableProfileViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(EditableProfileViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
         // Set delegates.
         self.nameTextField.delegate = self
@@ -61,12 +67,24 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
         if !self.editable {
             self.backgroundPhotoTapGestureRecognizer.enabled = false
             self.photoButton.enabled = false
+            self.photoButton.hidden = true
             self.nameTextField.enabled = false
             self.usernameTextField.enabled = false
             self.yearTextField.enabled = false
             self.phoneNumberTextField.enabled = false
             self.emailTextField.enabled = false
             self.bioTextView.editable = false
+            
+            // Hide placeholders.
+            let textItems = [self.nameTextField, self.usernameTextField, self.yearTextField, self.bioTextView, self.phoneNumberTextField, self.emailTextField]
+            for textItem in textItems {
+                if let item = textItem as? UITextField {
+                    item.text = nil
+                    item.placeholder = nil
+                } else if let item = textItem as? UITextView {
+                    item.text = nil
+                }
+            }
         }
         
         self.photoImageView.layer.cornerRadius = 3
@@ -75,7 +93,24 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
         self.photoButton.clipsToBounds = true
         
         self.bioTextViewPlaceholder = self.kBioDescriptionString
-        self.setupView(self.editable ? PFUser.currentUser() : self.user)
+        if self.editable {
+            self.setupView(PFUser.currentUser())
+        } else {
+            if self.user != nil {
+                self.setupView(self.user)
+            } else if self.username != nil {
+                let query = PFUser.query()
+                query?.whereKey("username", equalTo: self.username!)
+                query?.findObjectsInBackgroundWithBlock({ (users: [PFObject]?, error: NSError?) -> Void in
+                    if let users = users {
+                        if users.count > 0 {
+                            self.user = users[0] as? PFUser
+                            self.setupView(self.user)
+                        }
+                    }
+                })
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -84,13 +119,15 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
     }
     
     override func viewWillAppear(animated: Bool) {
+        self.backgroundPhotoImageViewWidthConstraint.constant = UIScreen.mainScreen().bounds.width
+        
         if !self.editable {
             self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
             self.navigationController?.navigationBar.shadowImage = UIImage()
             self.navigationController?.navigationBar.translucent = true
             self.navigationController?.view.backgroundColor = UIColor.clearColor()
             
-            self.appDelegate.hamburgerViewController.panGestureRecognizer.enabled = false
+            self.appDelegate.hamburgerViewController?.panGestureRecognizer.enabled = false
         }
     }
     
@@ -101,14 +138,14 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
         if !self.editable {
             self.photoImageView.image = nil
             self.backgroundPhotoImageView.image = nil
-            self.appDelegate.hamburgerViewController.panGestureRecognizer.enabled = true
+            self.appDelegate.hamburgerViewController?.panGestureRecognizer.enabled = true
         }
     }
     
     
     // MARK: - Setup Helpers
     
-    func setupView(user: PFUser?) {
+    private func setupView(user: PFUser?) {
         if let name = user?.objectForKey("name") as? String {
             self.nameTextField.text = name
         }
@@ -173,7 +210,6 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
                 }
             }
         }
-        self.backgroundPhotoImageViewWidthConstraint.constant = UIScreen.mainScreen().bounds.width
     }
     
     
@@ -394,7 +430,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
                         self.view.layoutIfNeeded()
                         
                         // Reload menu.
-                        self.appDelegate.menuViewController.tableView.reloadData()
+                        self.appDelegate.menuViewController?.tableView.reloadData()
                         
                     } else {
                         print(error)

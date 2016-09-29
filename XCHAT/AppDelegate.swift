@@ -14,61 +14,66 @@ import Reachability
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var hamburgerViewController: HamburgerViewController!
-    var menuViewController: MenuViewController!
+    var hamburgerViewController: HamburgerViewController?
+    var menuViewController: MenuViewController?
     
     static var appName = "the delt."
     static var allowRotation = false
-    static var isAdmin = true
+    static var isAdmin = false {
+        didSet {
+            let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+            appDelegate?.menuViewController?.checkAdmin()
+        }
+    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         AppDelegate.appName = NSBundle.mainBundle().infoDictionary!["CFBundleDisplayName"] as! String
         
-        var keys: NSDictionary?
         if let path = NSBundle.mainBundle().pathForResource("Keys", ofType: "plist") {
-            keys = NSDictionary(contentsOfFile: path)
-        }
-        
-        // Parse config.
-        if let _ = keys {
-            let configuration = ParseClientConfiguration {
-                $0.applicationId = keys!["parseApplicationId"] as? String
-                $0.clientKey = keys!["parseClientKey"] as? String
-                #if TARGET_IPHONE_SIMULATOR
-                    $0.server = "http://localhost:1337/parse"
-                #else
-                    $0.server = "http://mog.local:1337/parse"
-                #endif
-                //$0.server = "http://thedelt.herokuapp.com/parse"
+            if let keys = NSDictionary(contentsOfFile: path) {
+                // Parse config.
+                let configuration = ParseClientConfiguration {
+                    $0.applicationId = keys["parseApplicationId"] as? String
+                    $0.clientKey = keys["parseClientKey"] as? String
+                    
+                    /*
+                    /* DEVELOPMENT ONLY */
+                    #if TARGET_IPHONE_SIMULATOR
+                        $0.server = "http://localhost:1337/parse"
+                    #else
+                        $0.server = "http://mog.local:1337/parse"
+                    #endif
+                    /* END DEVELOPMENT ONLY */
+                    */
+                    
+                    $0.server = "http://thedelt.herokuapp.com/parse"
+                }
+                Parse.initializeWithConfiguration(configuration)
+                
+                PFUser.enableRevocableSessionInBackgroundWithBlock { (error: NSError?) -> Void in
+                    print("enableRevocableSessionInBackgroundWithBlock completion")
+                }
+                
+                // SoundCloud config.
+                // Soundcloud.clientIdentifier = "COOL"
+                // let soundcloud = Soundcloud()
+                // Soundcloud.clientIdentifier = keys["soundCloudClientID"] as String
+                
+            } else {
+                print("Error: Unable to load Keys.plist.")
             }
-            Parse.initializeWithConfiguration(configuration)
-            
-            PFUser.enableRevocableSessionInBackgroundWithBlock { (error: NSError?) -> Void in
-                print("enableRevocableSessionInBackgroundWithBlock completion")
-            }
-            
-        } else {
-            print("Error: Unable to load Keys.plist.")
         }
         
         // Set up hamburger menu.
         let menuStoryboard = UIStoryboard(name: "Menu", bundle: nil)
-        self.hamburgerViewController = menuStoryboard.instantiateViewControllerWithIdentifier("HamburgerViewController") as! HamburgerViewController
-        self.menuViewController = menuStoryboard.instantiateViewControllerWithIdentifier("MenuViewController") as! MenuViewController
+        self.hamburgerViewController = menuStoryboard.instantiateViewControllerWithIdentifier("HamburgerViewController") as? HamburgerViewController
+        self.menuViewController = menuStoryboard.instantiateViewControllerWithIdentifier("MenuViewController") as? MenuViewController
         self.hamburgerViewController!.menuViewController = self.menuViewController
-        self.menuViewController.hamburgerViewController = hamburgerViewController
-        
-        // ** SETS START VIEW **
-        // Set up initial view (REEL).
-        let initialStoryboard = UIStoryboard(name: "Reel", bundle: nil)
-        let initialNavigationController = initialStoryboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
-        self.hamburgerViewController!.contentViewController = initialNavigationController
-        let reelViewController = initialNavigationController.viewControllers[0] as! ReelViewController
-        reelViewController.menuDelegate = self.menuViewController
+        self.menuViewController?.hamburgerViewController = hamburgerViewController
         
         /*
-        // Set up Reachability.
+        // Set up Reachability. TODO: Use Whisper...
         let reachability = Reachability(hostName: Parse.currentConfiguration()?.server)
         reachability.unreachableBlock = { Void in
             let alertVC = UIAlertController(title: "Unable to Connect", message: "Please check your network connection", preferredStyle: .Alert)
@@ -81,13 +86,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         reachability.startNotifier()
         */
         
+        
+        /** SET START VIEW **/
+        
+        // Set up initial view (REEL).
+        let storyboard = UIStoryboard(name: "Reel", bundle: nil)
+        let firstNC = storyboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
+        self.hamburgerViewController!.contentViewController = firstNC
+        let firstVC = firstNC.viewControllers[0] as! ReelViewController
+        firstVC.menuDelegate = self.menuViewController
+        
         // Check if user is logged in.
         if PFUser.currentUser() == nil {
-            
-            // START HERE: present login.
-            
-            print("DOOKIE")
-            
             let loginStoryboard = UIStoryboard(name: "Login", bundle: nil)
             let loginViewController = loginStoryboard.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
             
@@ -95,6 +105,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = loginViewController
             
         } else {
+            if let isAdmin = PFUser.currentUser()!.objectForKey("is_admin") as? Bool {
+                AppDelegate.isAdmin = isAdmin
+            } else {
+                AppDelegate.isAdmin = false
+            }
             
             // Does exactly the same as arrow in storyboard. ("100% parity." --Tim Lee)
             window?.rootViewController = self.hamburgerViewController
@@ -104,16 +119,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         
-        // Override point for customization after application launch.
-        // NSNotificationCenter.defaultCenter().addObserver(self, selector: "userDidLogout", name: userDidLogoutNotification, object: nil)
         
-        
-        //****** DEPRECATED ******
-        //if we want to read from a file called Credentials.plist
-        //if let path=NSBundle.mainBundle().pathForResource("Credentials", ofType: "plist") {
-            //var myDict = NSDictionary(contentsOfFile: path)
-            //let appId = myDict!.valueForKey("appId") as! NSString
-            //let clientKey = myDict!.valueForKey("clientKey")as! NSString
+        /** SCRAP **/
         
         /*
         // PUSH STUFF

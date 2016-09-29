@@ -44,7 +44,7 @@ class EditUsersViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.appDelegate.hamburgerViewController.panGestureRecognizer.enabled = false
+        self.appDelegate.hamburgerViewController?.panGestureRecognizer.enabled = false
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -53,7 +53,7 @@ class EditUsersViewController: UIViewController {
     }
     
     override func viewWillDisappear(animated: Bool) {
-        self.appDelegate.hamburgerViewController.panGestureRecognizer.enabled = true
+        self.appDelegate.hamburgerViewController?.panGestureRecognizer.enabled = true
     }
 
     override func didReceiveMemoryWarning() {

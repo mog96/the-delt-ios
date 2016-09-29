@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--New Thread View Controller-->
@@ -14,16 +15,17 @@
                         <viewControllerLayoutGuide type="bottom" id="4ZU-t6-tXU"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Utc-01-DAx">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Thread Title" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e3p-cN-5wx">
-                                <rect key="frame" x="16" y="109" width="288" height="30"/>
+                                <frame key="frameInset" minX="16" minY="109" width="288" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="yIX-86-m1r">
                         <barButtonItem key="rightBarButtonItem" title="Create" id="ZSf-yZ-oa2">
@@ -67,23 +69,21 @@
                         <viewControllerLayoutGuide type="bottom" id="VYe-Iy-wSb"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="cH7-Ks-wJq">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fR2-bC-bWw">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MessageLeadingSpaceCell" rowHeight="10" id="ncs-wi-rWU" customClass="MessageLeadingSpaceCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="92" width="320" height="10"/>
+                                        <rect key="frame" x="0.0" y="92" width="375" height="10"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ncs-wi-rWU" id="3aY-ZW-jf9">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="10"/>
+                                            <frame key="frameInset" width="375" height="10"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Fz-Td-hEa">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="10"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="10" id="2hE-Tv-cm2"/>
                                                     </constraints>
@@ -101,36 +101,34 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" verticalCompressionResistancePriority="1" selectionStyle="none" indentationWidth="10" reuseIdentifier="FirstMessageCell" rowHeight="50" id="QQK-wa-W4m" customClass="FirstMessageCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="102" width="320" height="50"/>
+                                        <rect key="frame" x="0.0" y="102" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QQK-wa-W4m" id="zto-gh-BWT">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                            <frame key="frameInset" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Just writing a super casual message" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cVe-fo-4jU">
-                                                    <rect key="frame" x="58" y="22" width="252" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" misplaced="YES" text="patboony" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J75-XD-o4B">
-                                                    <rect key="frame" x="58" y="0.0" width="67" height="18"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" misplaced="YES" text="patboony" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J75-XD-o4B" customClass="UsernameLabel" customModule="XCHAT" customModuleProvider="target">
+                                                    <frame key="frameInset" minX="58" width="67" height="18"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RlQ-WC-zQJ">
-                                                    <rect key="frame" x="10" y="0.0" width="40" height="40"/>
-                                                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RlQ-WC-zQJ" customClass="ProfileImageView" customModule="XCHAT" customModuleProvider="target">
+                                                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="21C-Cu-ons"/>
                                                         <constraint firstAttribute="width" constant="40" id="d1g-i3-cBV"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="8:30p" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rin-yU-Ves">
-                                                    <rect key="frame" x="133" y="1" width="37" height="17"/>
+                                                    <frame key="frameInset" minX="133" minY="1" width="37" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -149,23 +147,22 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="authorProfileImageView" destination="RlQ-WC-zQJ" id="vcR-Yl-FuF"/>
+                                            <outlet property="authorProfileImageView" destination="RlQ-WC-zQJ" id="2DB-3n-JOa"/>
                                             <outlet property="messageLabel" destination="cVe-fo-4jU" id="N8z-Iu-26Z"/>
                                             <outlet property="timestampLabel" destination="Rin-yU-Ves" id="zHw-To-FLR"/>
-                                            <outlet property="usernameLabel" destination="J75-XD-o4B" id="bqA-yN-KWj"/>
+                                            <outlet property="usernameLabel" destination="J75-XD-o4B" id="HfJ-N5-tcM"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="18" id="Zfh-5l-qD5" customClass="MessageCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="152" width="320" height="18"/>
+                                        <rect key="frame" x="0.0" y="152" width="375" height="18"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Zfh-5l-qD5" id="CDt-dj-g3k">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="18"/>
+                                            <frame key="frameInset" width="375" height="18"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Just writing a super casual message" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="77H-pN-OaH">
-                                                    <rect key="frame" x="58" y="0.0" width="252" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -181,18 +178,17 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LoadMessagesCell" rowHeight="50" id="Kge-py-cim" customClass="MessageLoadMoreCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="170" width="320" height="50"/>
+                                        <rect key="frame" x="0.0" y="170" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Kge-py-cim" id="Efn-ZY-X9O">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                            <frame key="frameInset" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bgY-CV-TZA">
-                                                    <rect key="frame" x="84" y="10" width="152" height="30"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                     <state key="normal" title="Load More Messages">
-                                                        <color key="titleColor" red="1" green="0.50608635160000004" blue="0.121503894" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <color key="titleColor" red="1" green="0.50608635160000004" blue="0.121503894" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="loadMoreMessagesAction:" destination="Kge-py-cim" eventType="touchUpInside" id="r7g-qG-Af7"/>
@@ -212,7 +208,7 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="fR2-bC-bWw" firstAttribute="top" secondItem="cH7-Ks-wJq" secondAttribute="top" id="2Oe-ts-P3H"/>
@@ -247,14 +243,12 @@
                         <viewControllerLayoutGuide type="bottom" id="VuS-Ex-5DP"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="KQ6-Wo-A5B">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="i1g-pX-d4v">
-                                <rect key="frame" x="0.0" y="518" width="320" height="50"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Message" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="oaV-Kq-1Pe">
-                                        <rect key="frame" x="8" y="10" width="304" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes"/>
                                         <connections>
@@ -262,16 +256,15 @@
                                         </connections>
                                     </textField>
                                     <button opaque="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j8s-WS-j6q">
-                                        <rect key="frame" x="276" y="10" width="36" height="30"/>
                                         <state key="normal" title="Send">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="sendMessageAction:" destination="w3q-ZC-ez1" eventType="touchUpInside" id="lag-Wu-4QB"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.84791272100000004" green="0.84791272100000004" blue="0.84791272100000004" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.84791272100000004" green="0.84791272100000004" blue="0.84791272100000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="j8s-WS-j6q" secondAttribute="trailing" constant="8" id="2iO-Wl-RDq"/>
                                     <constraint firstAttribute="trailing" secondItem="oaV-Kq-1Pe" secondAttribute="trailing" constant="8" id="PtY-2c-5kJ"/>
@@ -282,19 +275,17 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="J6S-qe-yAG">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="518"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MessageLeadingSpaceCell" rowHeight="10" id="ReL-H3-oVb" customClass="MessageLeadingSpaceCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="10"/>
+                                        <rect key="frame" x="0.0" y="22" width="375" height="10"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ReL-H3-oVb" id="8gW-Tf-e71">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="10"/>
+                                            <frame key="frameInset" width="375" height="10"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EI4-Ok-JBR">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="10"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="10" id="WyT-MD-zVM"/>
                                                     </constraints>
@@ -312,36 +303,34 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" verticalCompressionResistancePriority="1" selectionStyle="none" indentationWidth="10" reuseIdentifier="FirstMessageCell" rowHeight="50" id="n56-pW-ufS" customClass="FirstMessageCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="32" width="320" height="50"/>
+                                        <rect key="frame" x="0.0" y="32" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="n56-pW-ufS" id="m3p-sa-QlF">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                            <frame key="frameInset" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Just writing a super casual message" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jCz-V6-lyc">
-                                                    <rect key="frame" x="58" y="22" width="252" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" misplaced="YES" text="patboony" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IxR-mI-FK3">
-                                                    <rect key="frame" x="58" y="0.0" width="67" height="18"/>
+                                                    <frame key="frameInset" minX="58" width="67" height="18"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LOGIN BACKGROUND 1" translatesAutoresizingMaskIntoConstraints="NO" id="2oO-rB-DXl">
-                                                    <rect key="frame" x="10" y="0.0" width="40" height="40"/>
-                                                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="8hV-Jd-B2f"/>
                                                         <constraint firstAttribute="width" constant="40" id="Eod-Yf-5jJ"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="8:30p" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kzt-lG-KWT">
-                                                    <rect key="frame" x="133" y="1" width="37" height="17"/>
+                                                    <frame key="frameInset" minX="133" minY="1" width="37" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -367,16 +356,15 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="18" id="HjH-Vw-Ac5" customClass="MessageCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="82" width="320" height="18"/>
+                                        <rect key="frame" x="0.0" y="82" width="375" height="18"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HjH-Vw-Ac5" id="AWU-dV-s3o">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="18"/>
+                                            <frame key="frameInset" width="375" height="18"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Just writing a super casual message" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PwK-i5-1ox">
-                                                    <rect key="frame" x="58" y="0.0" width="252" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -392,18 +380,17 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LoadMessagesCell" rowHeight="50" id="SeF-y6-SlT" customClass="MessageLoadMoreCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="100" width="320" height="50"/>
+                                        <rect key="frame" x="0.0" y="100" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SeF-y6-SlT" id="PJ0-LQ-4Pg">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                            <frame key="frameInset" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ePs-kJ-nc9">
-                                                    <rect key="frame" x="84" y="10" width="152" height="30"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                     <state key="normal" title="Load More Messages">
-                                                        <color key="titleColor" red="1" green="0.50608635160000004" blue="0.121503894" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <color key="titleColor" red="1" green="0.50608635160000004" blue="0.121503894" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="loadMoreMessagesAction:" destination="SeF-y6-SlT" eventType="touchUpInside" id="G8s-8G-X7f"/>
@@ -424,7 +411,7 @@
                                 <sections/>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="J6S-qe-yAG" firstAttribute="top" secondItem="KQ6-Wo-A5B" secondAttribute="top" id="3XB-Qj-FkL"/>
                             <constraint firstItem="VuS-Ex-5DP" firstAttribute="top" secondItem="i1g-pX-d4v" secondAttribute="bottom" id="4E3-CA-h4P"/>
@@ -475,4 +462,9 @@
     <resources>
         <image name="LOGIN BACKGROUND 1" width="673" height="992"/>
     </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
+    </simulatedMetricsContainer>
 </document>

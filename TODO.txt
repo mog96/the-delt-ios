@@ -2,77 +2,102 @@
 * IMPROVEMENTS *
 ****************
 
-	QUICK:
-	- Show previous calendar events on scroll up!
-	- allow going back to ImagePicker from ADD CAPTION (EASY)
-	- Red refresh controls?
-	- Add Whisper for no network connection.
+	OFFLINE:
+	- Divide Chat messages by day.
+	- Redo message compose UI.
 	
-	GAME PLAN THRU 9/23:
-	- Setup Facebook posting to secret group, submit for Facebook review.
-		- Reading for admins. Will likely accompany with Reel API revision.
+
+	
+	GAME PLAN THRU 9/30:
+	- Implement Alert All Delts notification.
+	- Setup Facebook posting to secret group, submit for Facebook review. (https://developers.facebook.com/docs/graph-api/reference/v2.7/group/feed)
+		- Reading for admins. Will likely accompany Reel API revision.
 	- Add Camera and Filters, swanky UI (∆ snap/recording button).
 		- Facebook posting from within app.
 	- Start Chat cloud code and multiple conversartion topics.
-	- Start integrating email list.
-	- Show loading on LOG IN tapped.
-		- Idea: On login button pressed, screen fades black, and if credentials incorrect, black fades out and new background image is present.
+
+	
 
 	GAME PLAN THRU DECEMBER:
 	- Complete Chat code.
-	- Integrate email list.
+	- Integrate email list. https://github.com/matthewpalmer/Charter
 	- Integrate reading and posting to Google Cal.
-	- Add admin user flag. Unlocks:
+	- Add admin user bool. Unlocks:
 		- Post deletion.
 		- User delete via Parse cloud code.
-		- User admin status (admin's can't remove admins).
+			Parse.Cloud.useMasterKey();
+			user.destroy();
+		- User administration status (admin's can't remove admins).
 	
+
+
 	WISHLIST
+	- Add Whisper for no network connection.
+	- Reel photo caching.
 	- Secondary Reel UI, kind of like Facebook's video UI... Something cool and resume-worthy.
 	- Add force touch menu.
 	- Handle case where app installed over previous version, but user forced to log in again.
 
+	GENERAL
+	- Check if Soundcloud pod has been updated to Swift 2.3
+	- Redo protocol naming scheme to className(didDoAction object: ...)
+	- Cache reel photos.
+
+
+
 	LOGIN
+	- Find more background images.
 	- Successful login transition causes button icons to appear in the top left corner at first.
+	- showSignup() call in viewDidLoad() has animations that show when view appears... looks a little weird... but kinda cool...
 
 	PROFILE
+	- Make phone numbers tappable.
 	- Fix background photo upload by saving a copy to local storage after it's set.
 
-	CHAT
-	- FIX profile photo loading
-	- Stylize:
-		- Subsequent messages from same user don't need profile photo next to them.
-	- Use refresh control to load earlier messages.
-
 	REEL
-	* photo posting
+	- Usernames link to profiles.
+	- Add date Photo posted.
+	- IMPORTANT: show video player controls.
+	- don't hide placeholder text in caption/comment views until user starts typing
+	- change faved bool to favedBy array of users who have faved a given num        <********
+	- POSTING
 		- debug ADD CAPTION text editor (placeholder text)
 		- attach current user's username to photos posted
 		- record date photo posted
 		- increment user's numPhotosPosted when photo posted
 		- increment user's totalNumFaves when their photo is faved
 		- implement profile photos (user query)
-	* photo reel
-		- add date Photo posted
-		- IMPORTANT: show video controls
-	* other
-		- don't hide placeholder text in caption/comment views until user starts typing
-		- change faved bool to favedBy array of users who have faved a given num        <********
+	- Large video upload causes crash ?
+	0 
+
+	CHAT
+	- Divide messages by day.
+	- Subsequent messages from same user don't need profile photo next to them.
+	- Use refresh control to load earlier messages (refresh control inside hidden table view cell?).
+	- don't hide placeholder text in caption/comment views until user starts typing
+
+	AUX
+	- Floating playback controls using another UIWindow...
 
 	CALENDAR
+	// - Add check that endDate succeed startDate
+	// - Reverse animate startDatePicker on endDatePicker changed?
+	- Push notification on new event created.
 	- Add loading to event create.
 	- Advance start time to next hour, not current.
 	- CHECK to make Thursday appear as Th (not T)
 	- Add unique color for each day of week?
+	- IDEA: Old events are linked to gallery of photos taken that day.
 
 	MEMBERS
-	- FIX: search bar exit not animating properly
+	- FIX: search bar exit not animating properly. Change search to same as Admin.
 	- photos not displaying
 	- If current user's cell is tapped, go to profile edit view
 
 	MENU
 	- implement numfaves and numphotos in menu
 	- prevent content view from moving when user tries to swipe to right with menu hidden
+	- Hide status bar on menu button tapped.
 
 	EXTRA
 	- refactor code using Store (see @Nick Troccoli's YikkityYak project)

@@ -11,8 +11,8 @@ import UIKit
 class CommentCell: UITableViewCell {
     
     var commentIndex: Int!
-
-    @IBOutlet weak var usernameLabel: UILabel!
+    
+    @IBOutlet weak var usernameLabel: UsernameLabel!
     @IBOutlet weak var commentLabel: UILabel!
     
     override func awakeFromNib() {
@@ -28,11 +28,11 @@ class CommentCell: UITableViewCell {
     
     func setUpCell(photo: NSMutableDictionary?) {
         
-        // screennameLabel.text = photo?["screenname"] as? String
-        
         if let comments = photo?.valueForKey("comments") as? [[String]] {
-            usernameLabel.text = comments[commentIndex][0]
-            commentLabel.text = comments[commentIndex][1]
+            let username = comments[commentIndex][0]
+            self.usernameLabel.username = username
+            self.usernameLabel.text = username
+            self.commentLabel.text = comments[commentIndex][1] // Comment.
         }
     }
 

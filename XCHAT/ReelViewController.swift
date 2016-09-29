@@ -14,17 +14,14 @@ import Foundation
 import Parse
 import ParseUI
 
-// FIXME: Not too important, but could just use a [PFObject]() instead of serializing data
-//        into NSMutableDictionary()
-
-class ReelViewController: ContentViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CaptionViewControllerDelegate, CommentViewControllerDelegate, ButtonCellDelegate {
+class ReelViewController: ContentViewController, UINavigationControllerDelegate {
     
     var photos = NSMutableArray()
     var uploadPhoto: UIImage?
     var uploadVideo: PFFile?
     var commentPhoto: NSMutableDictionary?
     
-    var refreshControl: UIRefreshControl!
+    var refreshControl: UIRefreshControl?
     
     let kHeaderWidth = 320
     let kHeaderHeight = 46
@@ -34,20 +31,17 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
     
     let transition = SwipeAnimator()
     
+    let kWelcomeMessageKey = "ReelRefreshControlWelcomeMessageDisplayed"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
         self.setMenuButton(withColor: "red")
         
-        refreshData()
-        
-        tableView.delegate = self
-        tableView.dataSource = self
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         self.tableView.estimatedRowHeight = 44.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        
-        refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: "onRefresh", forControlEvents: UIControlEvents.ValueChanged)
-        tableView.insertSubview(refreshControl, atIndex: 0)
         
         // Navigation Bar Style
         // self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.redColor()]
@@ -60,40 +54,81 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
         self.navigationItem.titleView = titleView
         */
         
-        UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
+        self.refreshData()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl!.addTarget(self, action: #selector(self.onRefresh), forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl!.tintColor = UIColor.redColor()
+        if NSUserDefaults.standardUserDefaults().objectForKey(self.kWelcomeMessageKey) == nil || NSUserDefaults.standardUserDefaults().objectForKey(self.kWelcomeMessageKey) as? Bool == false {
+            self.refreshControl!.attributedTitle = NSAttributedString(string: "Welcome to The Delt. It's a little slow...", attributes: [NSForegroundColorAttributeName : UIColor.redColor()])
+            NSUserDefaults.standardUserDefaults().setObject(true, forKey: self.kWelcomeMessageKey)
+        }
+        self.tableView.insertSubview(self.refreshControl!, atIndex: 0)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
-    // MARK: TableView
-    
+}
+
+
+// MARK: - Helpers
+
+extension ReelViewController {
+    private func presentImagePicker(usingPhotoLibrary photoLibrary: Bool) {
+        let imagePickerVC = UIImagePickerController()
+        imagePickerVC.delegate = self
+        imagePickerVC.allowsEditing = true
+        imagePickerVC.mediaTypes = [kUTTypeImage as String, kUTTypeMovie as String]
+        if photoLibrary {
+            imagePickerVC.sourceType = .PhotoLibrary
+            imagePickerVC.navigationBar.tintColor = UIColor.redColor()
+            imagePickerVC.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: imagePickerVC, action: nil)
+        } else {
+            imagePickerVC.sourceType = .Camera
+        }
+        self.presentViewController(imagePickerVC, animated: true, completion: nil)
+    }
+}
+
+
+// MARK: - Table View
+
+extension ReelViewController: UITableViewDelegate, UITableViewDataSource {    
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        var photo = photos.objectAtIndex(section) as! NSMutableDictionary
+        let photo = photos.objectAtIndex(section) as! NSMutableDictionary
         
-        // Header
-        var headerView = UIView(frame: CGRect(x: 0, y: 0, width: kHeaderWidth, height: kHeaderHeight))
-        headerView.backgroundColor = UIColor(white: 3, alpha: 0.5)
+        // Header.
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.kHeaderWidth, height: self.kHeaderHeight))
+        headerView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.7)
         
-        // Profile Image
-        var profileImageView = UIImageView(frame: CGRect(x: 8 , y: 8, width: kProfileWidthHeight, height: kProfileWidthHeight))
+        // Blur.
+        let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light))
+        blurView.frame = headerView.frame
+        
+        // Profile image.
+        let profileImageView = ProfileImageView(frame: CGRect(x: 8 , y: 8, width: kProfileWidthHeight, height: kProfileWidthHeight))
         // profileImageView.backgroundColor = UIColor.redColor()
         profileImageView.contentMode = UIViewContentMode.ScaleAspectFill
-        profileImageView.layer.cornerRadius = 1
+        profileImageView.layer.cornerRadius = 2
         profileImageView.clipsToBounds = true
-        
         profileImageView.backgroundColor = UIColor.redColor()
+        profileImageView.profilePresenterDelegate = self
         
-        var query = PFUser.query()
+        let query = PFUser.query()
         query?.whereKey("username", equalTo: photo.valueForKey("username") as! String)
         query?.findObjectsInBackgroundWithBlock({ (users: [PFObject]?, error: NSError?) -> Void in
             if let users = users {
-                var pfImageView = PFImageView()
+                let pfImageView = PFImageView()
                 if users.count > 0 {
-                    if let _ = users[0].valueForKey("photo"){
+                    let user = users[0]
+                    profileImageView.user = user as? PFUser
+                    if let _ = user.valueForKey("photo"){
                         pfImageView.file = users[0].valueForKey("photo") as? PFFile
                         pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
                             if let error = error {
@@ -105,30 +140,35 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
                             }
                         }
                     }
-
+                    
                 }
-
+                
             }
         })
         
-        // Username Label
-        var usernameLabel = UILabel(frame: CGRect(x: 8 + kProfileWidthHeight + 8, y: 12, width: 200, height: 16))
-        usernameLabel.text = photo.valueForKey("username") as? String
+        // Username label.
+        let usernameLabel = UsernameLabel(frame: CGRect(x: 8 + self.kProfileWidthHeight + 8, y: 12, width: 200, height: 16))
+        let username = photo.valueForKey("username") as? String
+        usernameLabel.username = username
+        usernameLabel.text = username
         usernameLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 16.5)
         usernameLabel.textColor = UIColor.redColor()
         usernameLabel.sizeToFit()
+        usernameLabel.profilePresenterDelegate = self
         
         /*
-        USERNAME STYLE
-
-        // Username Box
-        var usernameBoxView = UIView(frame: CGRect(x: 8 + kProfileWidthHeight, y: 8, width: Int(usernameLabel.frame.width) + 16, height: kProfileWidthHeight))
-        usernameBoxView.backgroundColor = UIColor.redColor()
-        */
+         USERNAME STYLE
+         
+         // Username Box
+         var usernameBoxView = UIView(frame: CGRect(x: 8 + kProfileWidthHeight, y: 8, width: Int(usernameLabel.frame.width) + 16, height: kProfileWidthHeight))
+         usernameBoxView.backgroundColor = UIColor.redColor()
+         */
         
         headerView.insertSubview(profileImageView, atIndex: 0)
         headerView.insertSubview(usernameLabel, atIndex: 0)
-        // headerView.insertSubview(usernameBoxView, atIndex: 0)
+        headerView.insertSubview(blurView, atIndex: 0)
+        blurView.autoPinEdgesToSuperviewEdges()
+        
         return headerView
     }
     
@@ -143,18 +183,18 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
         if let numFaves = photo?.valueForKey("numFaves") as? Int {
             if numFaves > 0 {
                 hasFaves = true
-                commentOffset++
+                commentOffset += 1
             }
         }
         switch indexPath.row {
         case 0:
-            var cell = tableView.dequeueReusableCellWithIdentifier("PhotoVideoCell", forIndexPath: indexPath) as! PhotoVideoCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("PhotoVideoCell", forIndexPath: indexPath) as! PhotoVideoCell
             
             cell.setUpCell(photo)
             cell.delegate = self
             return cell
         case 1:
-            var cell = tableView.dequeueReusableCellWithIdentifier("ButtonCell", forIndexPath: indexPath) as! ButtonCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("ButtonCell", forIndexPath: indexPath) as! ButtonCell
             
             cell.delegate = self
             cell.setUpCell(photo)
@@ -162,16 +202,16 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
         default:
             if indexPath.row == 2 && hasFaves {
                 
-                var cell = tableView.dequeueReusableCellWithIdentifier("FavesCell", forIndexPath: indexPath) as! FavesCell
+                let cell = tableView.dequeueReusableCellWithIdentifier("FavesCell", forIndexPath: indexPath) as! FavesCell
                 
                 cell.setUpCell(photo)
                 return cell
             } else {
-                var cell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as! CommentCell
-            
+                let cell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as! CommentCell
                 cell.commentIndex = indexPath.row - commentOffset
+                cell.usernameLabel.profilePresenterDelegate = self
                 cell.setUpCell(photo)
-            
+                
                 return cell
             }
         }
@@ -182,7 +222,7 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
         let photo = photos.objectAtIndex(section) as? NSMutableDictionary
         if let numFaves = photo?.valueForKey("numFaves") as? Int {
             if numFaves > 0 {
-                numRows++
+                numRows += 1
             }
         }
         if let numComments = photo?.valueForKey("numComments") as? Int {
@@ -207,132 +247,85 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
             }
         }
     }
+}
+
+
+// MARK: - Refresh Helpers
+
+extension ReelViewController {
     
-    
-    // MARK: Actions
-    
-    // TODO: imagePickerVC.sourceType = .Camera
-    @IBAction func onAddButtonTapped(sender: AnyObject) {
-        let imagePickerVC = UIImagePickerController()
-        imagePickerVC.delegate = self
-        imagePickerVC.allowsEditing = true
-        imagePickerVC.sourceType = .PhotoLibrary
-        imagePickerVC.mediaTypes = [kUTTypeImage as String, kUTTypeMovie as String]
-        presentViewController(imagePickerVC, animated: true, completion: nil)  // FIXME: Causes warning 'Presenting view controllers on detached view controllers is discouraged'
-    }
-    
-    
-    // MARK: ImagePickerController
-    
-    // Triggered when the user finishes taking an image. Saves the chosen image to our temporary
-    // uploadPhoto variable, and dismisses the image picker view controller. Once the image picker
-    // view controller is dismissed (a.k.a. inside the completion handler) we modally segue to
-    // show the "Location selection" screen. --Nick Troccoli
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        
-        // TODO: CHECK FILE SIZE. TOO LARGE CAUSES CRASH.
-        
-        // Photo.
-        if info[UIImagePickerControllerMediaType] as! String == kUTTypeImage as String {
-            self.uploadPhoto = info[UIImagePickerControllerEditedImage] as? UIImage
-        
-        // Video.
-        } else {
-            let videoUrl = info[UIImagePickerControllerMediaURL] as! NSURL
-            let videoData = NSData(contentsOfURL: videoUrl)
-            self.uploadVideo = PFFile(name: "video.mp4", data: videoData!)
-            
-            // Set video thumbnail image.
-            let asset = AVAsset(URL: videoUrl)
-            let generator: AVAssetImageGenerator = AVAssetImageGenerator(asset: asset)
-            let time = CMTimeMake(1, 1)
-            let imageRef = try! generator.copyCGImageAtTime(time, actualTime: nil)
-            self.uploadPhoto = UIImage(CGImage: imageRef)
-        }
-        
-        dismissViewControllerAnimated(true, completion: { () -> Void in
-            self.performSegueWithIdentifier("addCaptionSegue", sender: self) // segue to CaptionViewController
-        })
-    }
-    
-    
-    // MARK: Protocol Implementations
-    
-    func captionViewController(didEnterCaption caption: String?) {
-        let photo = PFObject(className: "Photo")
-        
-        let imageData = UIImageJPEGRepresentation(self.uploadPhoto!, 100)
-        let imageFile = PFFile(name: "image.jpeg", data: imageData!)
-        photo["imageFile"] = imageFile
-        
-        if let uploadVideo = self.uploadVideo {
-            photo["videoFile"] = self.uploadVideo
-        }
-        
-        photo["username"] = PFUser.currentUser()?.username
-        photo["faved"] = false
-        photo["numFaves"] = 0
-        photo["flagged"] = false
-        photo["numFlags"] = 0
-        
-        var comments = [[String]]()
-        if let caption = caption {
-            photo["numComments"] = 1
-            
-            comments.append([PFUser.currentUser()!.username!, caption])
-        } else {
-            photo["numComments"] = 0
-        }
-        photo["comments"] = comments
-        photo.saveInBackgroundWithBlock({ (completed: Bool, error: NSError?) -> Void in
+    // TODO: Just pass around PFObject, no need to deserialize...
+    func refreshData() {
+        self.refreshControl?.beginRefreshing()
+        let query = PFQuery(className: "Photo")
+        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
             if let error = error {
                 // Log details of the failure
                 print("Error: \(error) \(error.userInfo)")
                 
             } else {
-                self.refreshData()
-            }
-        })
-        
-        if let numPhotosPosted = PFUser.currentUser()!.objectForKey("numPhotosPosted") as? Int {
-            PFUser.currentUser()?.setObject(numPhotosPosted + 1, forKey: "numPhotosPosted")
-        } else {
-            PFUser.currentUser()?.setObject(1, forKey: "numPhotosPosted")
-        }
-        PFUser.currentUser()?.saveInBackground()
-    }
-
-    func commentViewController(didEnterComment comment: String) {
-        let query = PFQuery(className: "Photo")
-        let objectId = commentPhoto?.valueForKey("objectId") as! String
-        query.getObjectInBackgroundWithId(objectId) {
-            (photo: PFObject?, error: NSError?) -> Void in
-            if error != nil {
-                print(error)
-            } else if let photo = photo {
-                var commentPair: [String]
-                if let username = PFUser.currentUser()?.username {
-                    commentPair = [username, comment]
-                } else {
-                    commentPair = ["", comment]
+                print("Successfully retrieved \(objects!.count) photos.")
+                
+                if let objects = objects {
+                    self.photos.removeAllObjects()
+                    
+                    print("Adding photos to array")
+                    var i = 0
+                    
+                    for object in objects {
+                        let photo = NSMutableDictionary()
+                        photo.setObject(object.objectId!, forKey: "objectId")
+                        
+                        photo.setObject(object.objectForKey("imageFile")!, forKey: "imageFile")
+                        
+                        // VIDEO
+                        if let videoFile = object.objectForKey("videoFile") {
+                            photo.setObject(videoFile, forKey: "videoFile")
+                        }
+                        
+                        if let username = object.objectForKey("username") as? String {
+                            photo.setObject(username, forKey: "username")
+                        }
+                        if let favedBy = object.objectForKey("favedBy") as? [String] {
+                            photo.setObject(favedBy, forKey: "favedBy")
+                        }
+                        if let numFaves = object.objectForKey("numFaves") as? Int {
+                            photo.setObject(numFaves, forKey: "numFaves")
+                        }
+                        if let flagged = object.objectForKey("flagged") as? Bool {
+                            photo.setObject(flagged, forKey: "flagged")
+                        }
+                        if let numFlags = object.objectForKey("numFlags") as? Int {
+                            photo.setObject(numFlags, forKey: "numFlags")
+                        }
+                        if let numComments = object.objectForKey("numComments") as? Int {
+                            photo.setObject(numComments, forKey: "numComments")
+                        }
+                        if let comments = object.objectForKey("comments") as? [[String]] {
+                            photo.setObject(comments, forKey: "comments")
+                        }
+                        
+                        print("\(i++)")
+                        
+                        self.photos.insertObject(photo, atIndex: 0)
+                    }
                 }
                 
-                photo.addObject(commentPair, forKey: "comments")   // Add comment
-                photo.incrementKey("numComments")                  // Increment comment count
-                
-                photo.saveInBackgroundWithBlock({ (completed: Bool, eror: NSError?) -> Void in
-                    if let error = error {
-                        // Log details of the failure
-                        print("Error: \(error) \(error.userInfo)")
-                        
-                    } else {
-                        self.refreshData()
-                    }
-                })
+                self.tableView.reloadData()
+                self.refreshControl?.endRefreshing()
             }
         }
     }
     
+    func onRefresh() {
+        self.refreshData()
+    }
+}
+
+
+// MARK: - Button Cell Delegate
+
+extension ReelViewController: ButtonCellDelegate {
     func addComment(photo: NSMutableDictionary?) {
         commentPhoto = photo
         self.performSegueWithIdentifier("addCommentSegue", sender: self) // segue to CommentViewController
@@ -410,88 +403,151 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
             }
         }
     }
-    
-    
-    // MARK: Refresh
-    
-    // TODO: Just pass around PFObject, no need to deserialize...
-    func refreshData() {
-        let query = PFQuery(className: "Photo")
-        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
+}
+
+
+// MARK: - Actions
+
+extension ReelViewController {
+    @IBAction func onAddButtonTapped(sender: AnyObject) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        alert.addAction(UIAlertAction(title: "CLICK", style: .Destructive, handler: { _ in      // FIXME: Using .Destructive to get red text color is a little hacky...
+            self.presentImagePicker(usingPhotoLibrary: false)
+        }))
+        alert.addAction(UIAlertAction(title: "CHOOSE", style: .Destructive, handler: { _ in
+            self.presentImagePicker(usingPhotoLibrary: true)
+        }))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+}
+
+
+// MARK: - Image Picker Controller Delegate
+
+extension ReelViewController: UIImagePickerControllerDelegate {
+    // Triggered when the user finishes taking an image. Saves the chosen image to our temporary
+    // uploadPhoto variable, and dismisses the image picker view controller. Once the image picker
+    // view controller is dismissed (a.k.a. inside the completion handler) we modally segue to
+    // show the "Location selection" screen. --Nick Troccoli
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        // Photo.
+        if info[UIImagePickerControllerMediaType] as! String == kUTTypeImage as String {
+            self.uploadPhoto = info[UIImagePickerControllerEditedImage] as? UIImage
+            
+            // Video.
+        } else {
+            let videoUrl = info[UIImagePickerControllerMediaURL] as! NSURL
+            let videoData = NSData(contentsOfURL: videoUrl)
+            self.uploadVideo = PFFile(name: "video.mp4", data: videoData!)
+            
+            // Set video thumbnail image.
+            let asset = AVAsset(URL: videoUrl)
+            let generator: AVAssetImageGenerator = AVAssetImageGenerator(asset: asset)
+            let time = CMTimeMake(1, 1)
+            let imageRef = try! generator.copyCGImageAtTime(time, actualTime: nil)
+            self.uploadPhoto = UIImage(CGImage: imageRef)
+        }
+        
+        let storyboard = UIStoryboard(name: "Reel", bundle: nil)
+        let captionNC = storyboard.instantiateViewControllerWithIdentifier("CaptionNC") as! UINavigationController
+        let captionVC = captionNC.viewControllers[0] as! CaptionViewController
+        captionVC.delegate = self
+        captionVC.photo = self.uploadPhoto!
+        picker.pushViewController(captionVC, animated: true)
+    }
+}
+
+
+// MARK: - Caption View Controller Delegate
+
+extension ReelViewController: CaptionViewControllerDelegate {
+    func captionViewController(didEnterCaption caption: String?) {
+        let photo = PFObject(className: "Photo")
+        
+        let imageData = UIImageJPEGRepresentation(self.uploadPhoto!, 100)
+        let imageFile = PFFile(name: "image.jpeg", data: imageData!)
+        photo["imageFile"] = imageFile
+        
+        if let _ = self.uploadVideo {
+            photo["videoFile"] = self.uploadVideo
+        }
+        
+        photo["username"] = PFUser.currentUser()?.username
+        photo["faved"] = false
+        photo["numFaves"] = 0
+        photo["flagged"] = false
+        photo["numFlags"] = 0
+        
+        var comments = [[String]]()
+        if let caption = caption {
+            photo["numComments"] = 1
+            
+            comments.append([PFUser.currentUser()!.username!, caption])
+        } else {
+            photo["numComments"] = 0
+        }
+        photo["comments"] = comments
+        photo.saveInBackgroundWithBlock({ (completed: Bool, error: NSError?) -> Void in
             if let error = error {
                 // Log details of the failure
                 print("Error: \(error) \(error.userInfo)")
                 
             } else {
-                print("Successfully retrieved \(objects!.count) photos.")
-                
-                if let objects = objects {
-                    self.photos.removeAllObjects()
-                    
-                    print("Adding photos to array")
-                    var i = 0
-                    
-                    for object in objects {
-                        let photo = NSMutableDictionary()
-                        photo.setObject(object.objectId!, forKey: "objectId")
-                        
-                        photo.setObject(object.objectForKey("imageFile")!, forKey: "imageFile")
-                        
-                        // VIDEO
-                        if let videoFile = object.objectForKey("videoFile") {
-                            photo.setObject(videoFile, forKey: "videoFile")
-                        }
-                        
-                        if let username = object.objectForKey("username") as? String {
-                            photo.setObject(username, forKey: "username")
-                        }
-                        if let favedBy = object.objectForKey("favedBy") as? [String] {
-                            photo.setObject(favedBy, forKey: "favedBy")
-                        }
-                        if let numFaves = object.objectForKey("numFaves") as? Int {
-                            photo.setObject(numFaves, forKey: "numFaves")
-                        }
-                        if let flagged = object.objectForKey("flagged") as? Bool {
-                            photo.setObject(flagged, forKey: "flagged")
-                        }
-                        if let numFlags = object.objectForKey("numFlags") as? Int {
-                            photo.setObject(numFlags, forKey: "numFlags")
-                        }
-                        if let numComments = object.objectForKey("numComments") as? Int {
-                            photo.setObject(numComments, forKey: "numComments")
-                        }
-                        if let comments = object.objectForKey("comments") as? [[String]] {
-                            photo.setObject(comments, forKey: "comments")
-                        }
-                        
-                        print("\(i++)")
-                        
-                        self.photos.insertObject(photo, atIndex: 0)
-                    }
+                self.refreshData()
+            }
+        })
+        
+        if let numPhotosPosted = PFUser.currentUser()!.objectForKey("numPhotosPosted") as? Int {
+            PFUser.currentUser()?.setObject(numPhotosPosted + 1, forKey: "numPhotosPosted")
+        } else {
+            PFUser.currentUser()?.setObject(1, forKey: "numPhotosPosted")
+        }
+        PFUser.currentUser()?.saveInBackground()
+    }
+}
+
+
+// MARK: - Comment View Controller Delegate
+
+extension ReelViewController: CommentViewControllerDelegate {
+    func commentViewController(didEnterComment comment: String) {
+        let query = PFQuery(className: "Photo")
+        let objectId = commentPhoto?.valueForKey("objectId") as! String
+        query.getObjectInBackgroundWithId(objectId) {
+            (photo: PFObject?, error: NSError?) -> Void in
+            if error != nil {
+                print(error)
+            } else if let photo = photo {
+                var commentPair: [String]
+                if let username = PFUser.currentUser()?.username {
+                    commentPair = [username, comment]
+                } else {
+                    commentPair = ["", comment]
                 }
                 
-                self.tableView.reloadData()
+                photo.addObject(commentPair, forKey: "comments")   // Add comment
+                photo.incrementKey("numComments")                  // Increment comment count
                 
-                // FIXME: ADD ANIMATION FOR NEW PHOTO BEING ADDED
+                photo.saveInBackgroundWithBlock({ (completed: Bool, eror: NSError?) -> Void in
+                    if let error = error {
+                        // Log details of the failure
+                        print("Error: \(error) \(error.userInfo)")
+                        
+                    } else {
+                        self.refreshData()
+                    }
+                })
             }
         }
     }
-    
-    func onRefresh() {
-        refreshData()
-        refreshControl.endRefreshing()
-    }
-    
-    
-    // MARK: Navigation
-    
+}
+
+
+// MARK: - Navigation
+
+extension ReelViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "addCaptionSegue" {
-            let nc = segue.destinationViewController as! UINavigationController
-            let vc = nc.viewControllers.first as! CaptionViewController
-            vc.delegate = self
-            vc.photo = self.uploadPhoto!
-        } else if segue.identifier == "addCommentSegue" {
+        if segue.identifier == "addCommentSegue" {
             let nc = segue.destinationViewController as! UINavigationController
             let vc = nc.viewControllers.first as! CommentViewController
             vc.delegate = self
@@ -502,9 +558,10 @@ class ReelViewController: ContentViewController, UITableViewDelegate, UITableVie
             vc.selectedPhoto = self.photos[indexPath.section] as! NSMutableDictionary
         }
     }
-    
 }
 
+
+// MARK: - Photo Video Cell Delegate
 
 extension ReelViewController: PhotoVideoCellDelegate {
     func presentVideoDetailViewController(videoFile file: PFFile) {
@@ -513,8 +570,9 @@ extension ReelViewController: PhotoVideoCellDelegate {
 }
 
 
+// MARK: - Transition
+
 extension ReelViewController: UIViewControllerTransitioningDelegate {
-    
     func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
         /*

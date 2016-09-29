@@ -49,12 +49,19 @@ extension AdminViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        switch section {
+        case 1:
+            return 1
+        default:
+            return 1
+        }
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = NSBundle.mainBundle().loadNibNamed("SettingsHeaderView", owner: self, options: nil)[0] as! SettingsHeaderView
+        let headerView = NSBundle.mainBundle().loadNibNamed("SettingsHeaderView", owner: self, options: nil)![0] as! SettingsHeaderView
         switch section {
+        case 1:
+            headerView.headerLabel.text = "ACTIONS"
         default:
             headerView.headerLabel.text = "MANAGE USERS"
         }
@@ -67,11 +74,50 @@ extension AdminViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("EditUsersCell")!
-        return cell
+        switch indexPath.section {
+        case 1:
+            switch indexPath.row {
+            case 0:
+                let cell = NSBundle.mainBundle().loadNibNamed("SettingsDescriptionTableViewCell", owner: self, options: nil)![0] as! SettingsDescriptionTableViewCell
+                cell.setDescription("Immediately notify all delts with an important message.")
+                return cell
+            default:
+                let cell = NSBundle.mainBundle().loadNibNamed("ActionButtonTableViewCell", owner: self, options: nil)![0] as! ActionButtonTableViewCell
+                cell.delegate = self
+                cell.actionButton.setTitle("Alert All Delts", forState: .Normal)
+                return cell
+            }
+        default:
+            switch indexPath.row {
+            case 0:
+                let cell = self.tableView.dequeueReusableCellWithIdentifier("ApproveSignupRequestsCell")!
+                return cell
+            default:
+                let cell = self.tableView.dequeueReusableCellWithIdentifier("EditUsersCell")!
+                return cell
+            }
+        }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         self.tableView.cellForRowAtIndexPath(indexPath)?.selected = false
+    }
+}
+
+
+// MARK: - Action Button Delegate
+
+extension AdminViewController: ActionButtonCellDelegate {
+    func actionButtonCell(tappedBySender sender: AnyObject) {
+        let alertVC = UIAlertController(title: "Alert All Delts", message: "All Delts will be notified immediately.", preferredStyle: .Alert)
+        alertVC.addTextFieldWithConfigurationHandler { (textField: UITextField) in
+            textField.placeholder = "Add a message."
+        }
+        alertVC.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        alertVC.addAction(UIAlertAction(title: "Send", style: .Default, handler: { (action: UIAlertAction) in
+            let text = alertVC.textFields![0].text
+            print("ALERT ALL DELTS:", text)
+        }))
+        self.presentViewController(alertVC, animated: true, completion: nil)
     }
 }

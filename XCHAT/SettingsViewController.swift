@@ -23,15 +23,13 @@ class SettingsViewController: ContentViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
         self.setMenuButton(withColor: "white")
         
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.estimatedRowHeight = 44
-        tableView.rowHeight = UITableViewAutomaticDimension
-        
-        self.navigationController?.navigationBar.barStyle = UIBarStyle.BlackTranslucent
-        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        self.tableView.estimatedRowHeight = 44
+        self.tableView.rowHeight = UITableViewAutomaticDimension
     }
 
     override func didReceiveMemoryWarning() {
@@ -82,20 +80,26 @@ extension SettingsViewController {
 }
 */
 
+
 // MARK: - Table View
+
+// NOTE: Push notification settings commented out.
 
 extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 4
+        // return 4
+        return 3
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
+        /*
         case 0:
             return 3
-        case 1:
+        */
+        case 0:
             return 2
-        case 2:
+        case 1:
             return 2
         default:
             return 2
@@ -103,13 +107,15 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = NSBundle.mainBundle().loadNibNamed("SettingsHeaderView", owner: self, options: nil)[0] as! SettingsHeaderView
+        let headerView = NSBundle.mainBundle().loadNibNamed("SettingsHeaderView", owner: self, options: nil)![0] as! SettingsHeaderView
         switch section {
+        /*
         case 0:
             headerView.headerLabel.text = "PUSH NOTIFICATIONS"
-        case 1:
+        */
+        case 0:
             headerView.headerLabel.text = "FEEDBACK"
-        case 2:
+        case 1:
             headerView.headerLabel.text = "REPORT CONTENT OR USER"
         default:
             headerView.headerLabel.text = "LOG OUT"
@@ -124,9 +130,10 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         switch indexPath.section {
+        /*
         case 0:
             if indexPath.row == 0 {
-                let cell = self.tableView.dequeueReusableCellWithIdentifier("SettingsDescriptionCell") as! SettingsDescriptionTableViewCell
+                let cell = NSBundle.mainBundle().loadNibNamed("SettingsDescriptionTableViewCell", owner: self, options: nil)![0] as! SettingsDescriptionTableViewCell
                 cell.setDescription("Select when you'd like to receive push notifications from The Delt.")
                 return cell
             } else {
@@ -140,10 +147,11 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
                 }
                 return cell
             }
-        case 1:
+        */
+        case 0:
             switch indexPath.row {
             case 0:
-                let cell = self.tableView.dequeueReusableCellWithIdentifier("SettingsDescriptionCell") as! SettingsDescriptionTableViewCell
+                let cell = NSBundle.mainBundle().loadNibNamed("SettingsDescriptionTableViewCell", owner: self, options: nil)![0] as! SettingsDescriptionTableViewCell
                 cell.setDescription("Submit any comments or suggestions you may have to mateog@stanford.edu.")
                 return cell
             default:
@@ -151,9 +159,9 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.delegate = self
                 return cell
             }
-        case 2:
+        case 1:
             if indexPath.row == 0 {
-                let cell = self.tableView.dequeueReusableCellWithIdentifier("SettingsDescriptionCell") as! SettingsDescriptionTableViewCell
+                let cell = NSBundle.mainBundle().loadNibNamed("SettingsDescriptionTableViewCell", owner: self, options: nil)![0] as! SettingsDescriptionTableViewCell
                 cell.setDescription("Report any content you feel is inappropriate, or users you feel are abusing this service and should be blocked from The Delt.")
                 return cell
             } else {
@@ -164,12 +172,13 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
             }
         default:
             if indexPath.row == 0 {
-                let cell = self.tableView.dequeueReusableCellWithIdentifier("SettingsDescriptionCell") as! SettingsDescriptionTableViewCell
+                let cell = NSBundle.mainBundle().loadNibNamed("SettingsDescriptionTableViewCell", owner: self, options: nil)![0] as! SettingsDescriptionTableViewCell
                 cell.setDescription("Hate to see you go! Come back soon.")
                 return cell
             } else {
-                let cell = tableView.dequeueReusableCellWithIdentifier("LogoutCell", forIndexPath: indexPath) as! LogOutTableViewCell
+                let cell = NSBundle.mainBundle().loadNibNamed("ActionButtonTableViewCell", owner: self, options: nil)![0] as! ActionButtonTableViewCell
                 cell.delegate = self
+                cell.actionButton.setTitle("Log Out", forState: .Normal)
                 return cell
             }
         }
@@ -179,15 +188,15 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
 
 // MARK: - Log Out Delegate
 
-extension SettingsViewController: LoggedOutDelegate {
-    func loggedOutDelegate(logoutTableViewCell: LogOutTableViewCell) {
+extension SettingsViewController: ActionButtonCellDelegate {
+    func actionButtonCell(tappedBySender sender: AnyObject) {
         let alertVC = UIAlertController(title: "Log Out?", message: "Hate to see you go.", preferredStyle: UIAlertControllerStyle.Alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
         alertVC.addAction(cancelAction)
         if #available(iOS 9.0, *) {
             alertVC.preferredAction = cancelAction
         }
-        alertVC.addAction(UIAlertAction(title: "Log Out", style: .Default, handler: { (action: UIAlertAction) in
+        alertVC.addAction(UIAlertAction(title: "Log Out", style: .Destructive, handler: { (action: UIAlertAction) in
             let currentHUD = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
             currentHUD.label.text = "Logging Out..."
             PFUser.logOutInBackgroundWithBlock({ (error: NSError?) in

@@ -38,8 +38,8 @@ class PushHelper{
     
     func pushToChannel(message: NSString, channel:NSString){
         let push = PFPush()
-        push.setChannel(channel as! String)
-        push.setMessage(message as! String)
+        push.setChannel(channel as String)
+        push.setMessage(message as String)
         push.sendPushInBackgroundWithBlock { (success:Bool, error:NSError?) -> Void in
         }
     }

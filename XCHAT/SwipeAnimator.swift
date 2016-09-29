@@ -19,7 +19,7 @@ class SwipeAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     }
     
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        let containerView = transitionContext.containerView()!
+        let containerView = transitionContext.containerView()
         containerView.backgroundColor = UIColor.blackColor()
         
         let coverView = UIView(frame: containerView.frame)

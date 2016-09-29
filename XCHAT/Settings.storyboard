@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="aCT-5f-GZs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="aCT-5f-GZs">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--SETTINGS-->
@@ -14,57 +15,28 @@
                         <viewControllerLayoutGuide type="bottom" id="Bxg-DG-8fg"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Z2o-Hg-zN8">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="MZY-he-HZG">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="separatorColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="separatorColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="SettingsDescriptionCell" rowHeight="48" id="vre-qF-Zle" customClass="SettingsDescriptionTableViewCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="113.5" width="320" height="48"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vre-qF-Zle" id="FFF-ai-aa6">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="48"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select when you'd like to receive push notifications from The Delt." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I1B-qb-SI4">
-                                                    <rect key="frame" x="15" y="6" width="290" height="29"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="12"/>
-                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="I1B-qb-SI4" firstAttribute="top" secondItem="FFF-ai-aa6" secondAttribute="top" constant="6" id="ERr-df-Hps"/>
-                                                <constraint firstAttribute="trailing" secondItem="I1B-qb-SI4" secondAttribute="trailing" constant="15" id="GWN-NX-unx"/>
-                                                <constraint firstAttribute="bottom" secondItem="I1B-qb-SI4" secondAttribute="bottom" constant="13" id="Sv2-So-dER"/>
-                                                <constraint firstItem="I1B-qb-SI4" firstAttribute="leading" secondItem="FFF-ai-aa6" secondAttribute="leading" constant="15" id="iyh-Le-IDI"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                        <connections>
-                                            <outlet property="descriptionLabel" destination="I1B-qb-SI4" id="qfA-GV-9cM"/>
-                                        </connections>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NotificationCell" rowHeight="47" id="Zrl-6k-xCn" customClass="NotificationTableViewCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="161.5" width="320" height="47"/>
+                                        <rect key="frame" x="0.0" y="120" width="375" height="47"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Zrl-6k-xCn" id="iSx-GQ-eYL">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="47"/>
+                                            <frame key="frameInset" width="375" height="47"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OgP-aN-vhf">
-                                                    <rect key="frame" x="253" y="8" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="switchChanged:" destination="Zrl-6k-xCn" eventType="valueChanged" id="NjH-Xf-Ao6"/>
                                                     </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notification name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ae4-EL-Qtj">
-                                                    <rect key="frame" x="15" y="13" width="135" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -77,29 +49,28 @@
                                                 <constraint firstAttribute="centerY" secondItem="OgP-aN-vhf" secondAttribute="centerY" id="Ziq-ht-bWI"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="label" destination="ae4-EL-Qtj" id="dGz-AX-vDk"/>
                                             <outlet property="onSwitch" destination="OgP-aN-vhf" id="Tcd-ch-ueV"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedbackCell" rowHeight="47" id="GvW-fs-Uv9" customClass="FeedbackTableViewCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="208.5" width="320" height="47"/>
+                                        <rect key="frame" x="0.0" y="167" width="375" height="47"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GvW-fs-Uv9" id="7oC-AB-Ciw">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="47"/>
+                                            <frame key="frameInset" width="375" height="47"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q5P-Df-uh3">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="47"/>
-                                                    <color key="backgroundColor" red="0.40709350649999998" green="0.54860040290000001" blue="0.81752539700000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" red="0.40709350649999998" green="0.54860040290000001" blue="0.81752539700000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="47" id="1ZJ-Vf-R0q"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                     <state key="normal" title="Feedback">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
                                                     <connections>
                                                         <action selector="onFeedbackButtonTapped:" destination="GvW-fs-Uv9" eventType="touchUpInside" id="kZ2-ty-JVO"/>
@@ -117,41 +88,10 @@
                                             <outlet property="feedbackButton" destination="Q5P-Df-uh3" id="HBn-EP-jxl"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LogoutCell" rowHeight="47" id="UIR-oF-8es" customClass="LogOutTableViewCell" customModule="XCHAT" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="255.5" width="320" height="47"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UIR-oF-8es" id="HYg-F8-cQ2">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="47"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="On0-4y-RCU">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="47"/>
-                                                    <color key="backgroundColor" red="1" green="0.33362201470468567" blue="0.29625983909616016" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="47" id="dXR-2S-PXj"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                                    <state key="normal" title="Log out">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="logoutPressed:" destination="UIR-oF-8es" eventType="touchUpInside" id="XSe-II-eX6"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="On0-4y-RCU" secondAttribute="bottom" id="7JA-tS-Awj"/>
-                                                <constraint firstItem="On0-4y-RCU" firstAttribute="top" secondItem="HYg-F8-cQ2" secondAttribute="top" id="TTJ-Ht-Owm"/>
-                                                <constraint firstItem="On0-4y-RCU" firstAttribute="leading" secondItem="HYg-F8-cQ2" secondAttribute="leading" id="bj7-hO-YQM"/>
-                                                <constraint firstAttribute="trailing" secondItem="On0-4y-RCU" secondAttribute="trailing" id="oSD-iC-IaI"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="MZY-he-HZG" firstAttribute="top" secondItem="Z2o-Hg-zN8" secondAttribute="top" id="Aeu-KK-13r"/>
                             <constraint firstItem="Bxg-DG-8fg" firstAttribute="top" secondItem="MZY-he-HZG" secondAttribute="bottom" id="MC3-UD-lut"/>
@@ -188,4 +128,9 @@
             <point key="canvasLocation" x="304" y="381"/>
         </scene>
     </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
+    </simulatedMetricsContainer>
 </document>

@@ -21,7 +21,7 @@ class MessageView: UIView, UITextViewDelegate {
     @IBOutlet weak var sendButton: UIButton!
     
     weak var delegate: MessageViewDelegate?
-    var placeholder = ""
+    var placeholder = "Holler at your brothers."
     
     var defaultMessageViewHeight: CGFloat!
     let kMaxMessageViewHeight = CGFloat(150)
@@ -37,9 +37,11 @@ class MessageView: UIView, UITextViewDelegate {
     
     override func awakeFromNib() {
         self.messageTextView.delegate = self
+        self.messageTextView.returnKeyType = UIReturnKeyType.Done
+        self.messageTextView.text = self.placeholder
+        
         self.defaultMessageViewHeight = self.messageViewHeight.constant
         self.defaultMessageTextViewHeight = self.messageTextView.frame.height
-        self.messageTextView.returnKeyType = UIReturnKeyType.Done
     }
     
     
@@ -50,6 +52,12 @@ class MessageView: UIView, UITextViewDelegate {
             textView.text = ""
         }
     }
+    
+    
+    
+    // FIXME: Send button unusable until at least one non-whitespace character typed. (Show speech-to-text like iMessage?)
+    // FIXME: Don't hide placeholder until user types.
+    
     
 
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {

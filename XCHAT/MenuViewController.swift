@@ -13,7 +13,9 @@ protocol MenuDelegate {
     func menuButtonTapped()
 }
 
-class MenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MenuDelegate {
+// NOTE: Aux Admin code commented out.
+
+class MenuViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -21,7 +23,10 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     let kProfileCellHeight: CGFloat = 172
     let kMenuCellHeight: CGFloat = 55
-    var kNumCells = 6
+    
+    let kMinCells = 6
+    let kMaxCells = 7
+    var numCells = 6
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,31 +37,51 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
         
         self.tableView.canCancelContentTouches = false
-        
-        if let isAdmin = PFUser.currentUser()?.objectForKey("isAdmin") as? Bool {
-            if isAdmin {
-                self.kNumCells = 7
-            }
-        }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.checkAdmin()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+}
+
+
+// MARK: - Helpers
+
+extension MenuViewController {
+    func checkAdmin() {
+        if AppDelegate.isAdmin {
+            self.numCells = kMaxCells
+        } else {
+            self.numCells = kMinCells
+        }
+        if self.tableView != nil {
+            self.tableView.reloadData()
+        }
+    }
+}
+
     
-    
-    // MARK: Table View
-    
+// MARK: Table View
+
+extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UITableViewCell!
         switch indexPath.row {
         case 0:
             cell = tableView.dequeueReusableCellWithIdentifier("ProfileCell")!
         case 1:
-            cell = tableView.dequeueReusableCellWithIdentifier("ChatCell")!
-        case 2:
             cell = tableView.dequeueReusableCellWithIdentifier("ReelCell")!
+        case 2:
+            cell = tableView.dequeueReusableCellWithIdentifier("ChatCell")!
+        /*
+        case 3:
+            cell = tableView.dequeueReusableCellWithIdentifier("AuxCell")!
+        */
         case 3:
             cell = tableView.dequeueReusableCellWithIdentifier("CalendarCell")!
         case 4:
@@ -72,7 +97,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.kNumCells
+        return self.numCells
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -95,7 +120,16 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             self.hamburgerViewController?.contentViewController = profileController
             
-        case 1: // CHAT
+        case 1: // REEL
+            let reelStoryboard = UIStoryboard(name: "Reel", bundle: nil)
+            let reelNavigationController = reelStoryboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
+            let firstViewController = reelNavigationController.viewControllers[0] as! ReelViewController
+            firstViewController.menuDelegate = self
+            
+            UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
+            self.hamburgerViewController?.contentViewController = reelNavigationController
+            
+        case 2: // CHAT
             let chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
             let chatNavigationController = chatStoryboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
             let firstViewController = chatNavigationController.viewControllers[0] as! ChatViewController
@@ -104,14 +138,16 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
             self.hamburgerViewController?.contentViewController = chatNavigationController
             
-        case 2: // REEL
-            let reelStoryboard = UIStoryboard(name: "Reel", bundle: nil)
-            let reelNavigationController = reelStoryboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
-            let firstViewController = reelNavigationController.viewControllers[0] as! ReelViewController
-            firstViewController.menuDelegate = self
+        /*
+        case 3: // AUX
+            let storyboard = UIStoryboard(name: "Aux", bundle: nil)
+            let nc = storyboard.instantiateViewControllerWithIdentifier("AuxNC") as! AuxNavigationController
+            let firstVC = nc.viewControllers[0] as! AuxViewController
+            firstVC.menuDelegate = self
             
             UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
-            self.hamburgerViewController?.contentViewController = reelNavigationController
+            self.hamburgerViewController?.contentViewController = nc
+        */
             
         case 3: // CALENDAR
             let calendarStoryboard = UIStoryboard(name: "Calendar", bundle: nil)
@@ -158,8 +194,9 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
 
 // MARK: - Menu Delegate
 
-extension MenuViewController {
+extension MenuViewController: MenuDelegate {
     func menuButtonTapped() {
+        
         print("SHOW HIDE MENU")
         
         self.hamburgerViewController?.showOrHideMenu()
