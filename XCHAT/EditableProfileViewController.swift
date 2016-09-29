@@ -67,12 +67,24 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
         if !self.editable {
             self.backgroundPhotoTapGestureRecognizer.enabled = false
             self.photoButton.enabled = false
+            self.photoButton.hidden = true
             self.nameTextField.enabled = false
             self.usernameTextField.enabled = false
             self.yearTextField.enabled = false
             self.phoneNumberTextField.enabled = false
             self.emailTextField.enabled = false
             self.bioTextView.editable = false
+            
+            // Hide placeholders.
+            let textItems = [self.nameTextField, self.usernameTextField, self.yearTextField, self.bioTextView, self.phoneNumberTextField, self.emailTextField]
+            for textItem in textItems {
+                if let item = textItem as? UITextField {
+                    item.text = nil
+                    item.placeholder = nil
+                } else if let item = textItem as? UITextView {
+                    item.text = nil
+                }
+            }
         }
         
         self.photoImageView.layer.cornerRadius = 3

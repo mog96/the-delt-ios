@@ -196,7 +196,7 @@ extension SettingsViewController: ActionButtonCellDelegate {
         if #available(iOS 9.0, *) {
             alertVC.preferredAction = cancelAction
         }
-        alertVC.addAction(UIAlertAction(title: "Log Out", style: .Default, handler: { (action: UIAlertAction) in
+        alertVC.addAction(UIAlertAction(title: "Log Out", style: .Destructive, handler: { (action: UIAlertAction) in
             let currentHUD = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
             currentHUD.label.text = "Logging Out..."
             PFUser.logOutInBackgroundWithBlock({ (error: NSError?) in

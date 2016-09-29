@@ -58,6 +58,8 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
     }
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.addTarget(self, action: #selector(self.onRefresh), forControlEvents: UIControlEvents.ValueChanged)
         self.refreshControl!.tintColor = UIColor.redColor()
@@ -113,7 +115,7 @@ extension ReelViewController: UITableViewDelegate, UITableViewDataSource {
         let profileImageView = ProfileImageView(frame: CGRect(x: 8 , y: 8, width: kProfileWidthHeight, height: kProfileWidthHeight))
         // profileImageView.backgroundColor = UIColor.redColor()
         profileImageView.contentMode = UIViewContentMode.ScaleAspectFill
-        profileImageView.layer.cornerRadius = 1
+        profileImageView.layer.cornerRadius = 2
         profileImageView.clipsToBounds = true
         profileImageView.backgroundColor = UIColor.redColor()
         profileImageView.profilePresenterDelegate = self

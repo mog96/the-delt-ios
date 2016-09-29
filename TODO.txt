@@ -2,13 +2,9 @@
 * IMPROVEMENTS *
 ****************
 
-	ASAP
-	- login password reset
-	- login animation
-	
-
 	OFFLINE:
 	- Divide Chat messages by day.
+	- Redo message compose UI.
 	
 
 	
@@ -55,6 +51,7 @@
 	- showSignup() call in viewDidLoad() has animations that show when view appears... looks a little weird... but kinda cool...
 
 	PROFILE
+	- Make phone numbers tappable.
 	- Fix background photo upload by saving a copy to local storage after it's set.
 
 	REEL
@@ -71,6 +68,7 @@
 		- increment user's totalNumFaves when their photo is faved
 		- implement profile photos (user query)
 	- Large video upload causes crash ?
+	0 
 
 	CHAT
 	- Divide messages by day.
