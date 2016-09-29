@@ -55,7 +55,11 @@ class LoginViewController: UIViewController {
     var loginTextFieldConstraints: [NSLayoutConstraint]!
     var controlsHiddenOnLogin: [UIControl]!
     
-    let loginBackgroundImageNames = ["LOGIN BACKGROUND 1", "OUTER SPACE"]
+    let loginBackgroundImageNames = ["LOGIN BACKGROUND 1",
+                                     "OUTER SPACE",
+                                     "LOGIN BACKGROUND 2",
+                                     "LOGIN BACKGROUND 3",
+                                     "LOGIN BACKGROUND 4"]
     var loginBackgroundImageIndex = 0
     
     var lastFirstResponder: UITextField?

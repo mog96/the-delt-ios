@@ -21,7 +21,7 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
     var uploadVideo: PFFile?
     var commentPhoto: NSMutableDictionary?
     
-    var refreshControl: UIRefreshControl!
+    var refreshControl: UIRefreshControl?
     
     let kHeaderWidth = 320
     let kHeaderHeight = 46
@@ -31,21 +31,17 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
     
     let transition = SwipeAnimator()
     
+    let kWelcomeMessageKey = "ReelRefreshControlWelcomeMessageDisplayed"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
         self.setMenuButton(withColor: "red")
-        
-        self.refreshData()
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.estimatedRowHeight = 44.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        
-        self.refreshControl = UIRefreshControl()
-        self.refreshControl.addTarget(self, action: #selector(ReelViewController.onRefresh), forControlEvents: UIControlEvents.ValueChanged)
-        self.refreshControl.tintColor = UIColor.redColor()
-        self.tableView.insertSubview(refreshControl, atIndex: 0)
         
         // Navigation Bar Style
         // self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.redColor()]
@@ -58,12 +54,43 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
         self.navigationItem.titleView = titleView
         */
         
-        UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
+        self.refreshData()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl!.addTarget(self, action: #selector(self.onRefresh), forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl!.tintColor = UIColor.redColor()
+        if NSUserDefaults.standardUserDefaults().objectForKey(self.kWelcomeMessageKey) == nil || NSUserDefaults.standardUserDefaults().objectForKey(self.kWelcomeMessageKey) as? Bool == false {
+            self.refreshControl!.attributedTitle = NSAttributedString(string: "Welcome to The Delt. It's a little slow...", attributes: [NSForegroundColorAttributeName : UIColor.redColor()])
+            NSUserDefaults.standardUserDefaults().setObject(true, forKey: self.kWelcomeMessageKey)
+        }
+        self.tableView.insertSubview(self.refreshControl!, atIndex: 0)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+}
+
+
+// MARK: - Helpers
+
+extension ReelViewController {
+    private func presentImagePicker(usingPhotoLibrary photoLibrary: Bool) {
+        let imagePickerVC = UIImagePickerController()
+        imagePickerVC.delegate = self
+        imagePickerVC.allowsEditing = true
+        imagePickerVC.mediaTypes = [kUTTypeImage as String, kUTTypeMovie as String]
+        if photoLibrary {
+            imagePickerVC.sourceType = .PhotoLibrary
+            imagePickerVC.navigationBar.tintColor = UIColor.redColor()
+            imagePickerVC.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: imagePickerVC, action: nil)
+        } else {
+            imagePickerVC.sourceType = .Camera
+        }
+        self.presentViewController(imagePickerVC, animated: true, completion: nil)
     }
 }
 
@@ -221,6 +248,79 @@ extension ReelViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 
+// MARK: - Refresh Helpers
+
+extension ReelViewController {
+    
+    // TODO: Just pass around PFObject, no need to deserialize...
+    func refreshData() {
+        self.refreshControl?.beginRefreshing()
+        let query = PFQuery(className: "Photo")
+        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
+            if let error = error {
+                // Log details of the failure
+                print("Error: \(error) \(error.userInfo)")
+                
+            } else {
+                print("Successfully retrieved \(objects!.count) photos.")
+                
+                if let objects = objects {
+                    self.photos.removeAllObjects()
+                    
+                    print("Adding photos to array")
+                    var i = 0
+                    
+                    for object in objects {
+                        let photo = NSMutableDictionary()
+                        photo.setObject(object.objectId!, forKey: "objectId")
+                        
+                        photo.setObject(object.objectForKey("imageFile")!, forKey: "imageFile")
+                        
+                        // VIDEO
+                        if let videoFile = object.objectForKey("videoFile") {
+                            photo.setObject(videoFile, forKey: "videoFile")
+                        }
+                        
+                        if let username = object.objectForKey("username") as? String {
+                            photo.setObject(username, forKey: "username")
+                        }
+                        if let favedBy = object.objectForKey("favedBy") as? [String] {
+                            photo.setObject(favedBy, forKey: "favedBy")
+                        }
+                        if let numFaves = object.objectForKey("numFaves") as? Int {
+                            photo.setObject(numFaves, forKey: "numFaves")
+                        }
+                        if let flagged = object.objectForKey("flagged") as? Bool {
+                            photo.setObject(flagged, forKey: "flagged")
+                        }
+                        if let numFlags = object.objectForKey("numFlags") as? Int {
+                            photo.setObject(numFlags, forKey: "numFlags")
+                        }
+                        if let numComments = object.objectForKey("numComments") as? Int {
+                            photo.setObject(numComments, forKey: "numComments")
+                        }
+                        if let comments = object.objectForKey("comments") as? [[String]] {
+                            photo.setObject(comments, forKey: "comments")
+                        }
+                        
+                        print("\(i++)")
+                        
+                        self.photos.insertObject(photo, atIndex: 0)
+                    }
+                }
+                
+                self.tableView.reloadData()
+                self.refreshControl?.endRefreshing()
+            }
+        }
+    }
+    
+    func onRefresh() {
+        self.refreshData()
+    }
+}
+
+
 // MARK: - Button Cell Delegate
 
 extension ReelViewController: ButtonCellDelegate {
@@ -304,80 +404,6 @@ extension ReelViewController: ButtonCellDelegate {
 }
 
 
-// MARK: - Refresh
-
-extension ReelViewController {
-    
-    // TODO: Just pass around PFObject, no need to deserialize...
-    func refreshData() {
-        let query = PFQuery(className: "Photo")
-        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
-            if let error = error {
-                // Log details of the failure
-                print("Error: \(error) \(error.userInfo)")
-                
-            } else {
-                print("Successfully retrieved \(objects!.count) photos.")
-                
-                if let objects = objects {
-                    self.photos.removeAllObjects()
-                    
-                    print("Adding photos to array")
-                    var i = 0
-                    
-                    for object in objects {
-                        let photo = NSMutableDictionary()
-                        photo.setObject(object.objectId!, forKey: "objectId")
-                        
-                        photo.setObject(object.objectForKey("imageFile")!, forKey: "imageFile")
-                        
-                        // VIDEO
-                        if let videoFile = object.objectForKey("videoFile") {
-                            photo.setObject(videoFile, forKey: "videoFile")
-                        }
-                        
-                        if let username = object.objectForKey("username") as? String {
-                            photo.setObject(username, forKey: "username")
-                        }
-                        if let favedBy = object.objectForKey("favedBy") as? [String] {
-                            photo.setObject(favedBy, forKey: "favedBy")
-                        }
-                        if let numFaves = object.objectForKey("numFaves") as? Int {
-                            photo.setObject(numFaves, forKey: "numFaves")
-                        }
-                        if let flagged = object.objectForKey("flagged") as? Bool {
-                            photo.setObject(flagged, forKey: "flagged")
-                        }
-                        if let numFlags = object.objectForKey("numFlags") as? Int {
-                            photo.setObject(numFlags, forKey: "numFlags")
-                        }
-                        if let numComments = object.objectForKey("numComments") as? Int {
-                            photo.setObject(numComments, forKey: "numComments")
-                        }
-                        if let comments = object.objectForKey("comments") as? [[String]] {
-                            photo.setObject(comments, forKey: "comments")
-                        }
-                        
-                        print("\(i++)")
-                        
-                        self.photos.insertObject(photo, atIndex: 0)
-                    }
-                }
-                
-                self.tableView.reloadData()
-                
-                // FIXME: ADD ANIMATION FOR NEW PHOTO BEING ADDED
-            }
-        }
-    }
-    
-    func onRefresh() {
-        self.refreshData()
-        self.refreshControl.endRefreshing()
-    }
-}
-
-
 // MARK: - Actions
 
 extension ReelViewController {
@@ -390,21 +416,6 @@ extension ReelViewController {
             self.presentImagePicker(usingPhotoLibrary: true)
         }))
         self.presentViewController(alert, animated: true, completion: nil)
-    }
-    
-    private func presentImagePicker(usingPhotoLibrary photoLibrary: Bool) {
-        let imagePickerVC = UIImagePickerController()
-        imagePickerVC.delegate = self
-        imagePickerVC.allowsEditing = true
-        if photoLibrary {
-            imagePickerVC.sourceType = .PhotoLibrary
-            imagePickerVC.mediaTypes = [kUTTypeImage as String, kUTTypeMovie as String]
-        } else {
-            imagePickerVC.sourceType = .Camera
-        }
-        imagePickerVC.navigationBar.tintColor = UIColor.redColor()
-        imagePickerVC.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: imagePickerVC, action: nil)
-        self.presentViewController(imagePickerVC, animated: true, completion: nil)
     }
 }
 
