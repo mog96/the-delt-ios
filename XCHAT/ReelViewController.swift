@@ -54,12 +54,6 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
         self.navigationItem.titleView = titleView
         */
         
-        self.refreshData()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.addTarget(self, action: #selector(self.onRefresh), forControlEvents: UIControlEvents.ValueChanged)
         self.refreshControl!.tintColor = UIColor.redColor()
@@ -68,6 +62,8 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
             NSUserDefaults.standardUserDefaults().setObject(true, forKey: self.kWelcomeMessageKey)
         }
         self.tableView.insertSubview(self.refreshControl!, atIndex: 0)
+        
+        self.refreshData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -311,8 +307,8 @@ extension ReelViewController {
                     }
                 }
                 
-                self.tableView.reloadData()
                 self.refreshControl?.endRefreshing()
+                self.tableView.reloadData()
             }
         }
     }

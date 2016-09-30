@@ -8,7 +8,9 @@
 	
 
 	
-	GAME PLAN THRU 9/30:
+	UP NEXT:
+	- Push cloud code for user approval.
+	- Calendar refresh crashes.
 	- Implement Alert All Delts notification.
 	- Setup Facebook posting to secret group, submit for Facebook review. (https://developers.facebook.com/docs/graph-api/reference/v2.7/group/feed)
 		- Reading for admins. Will likely accompany Reel API revision.
@@ -55,6 +57,7 @@
 	- Fix background photo upload by saving a copy to local storage after it's set.
 
 	REEL
+	- Only dismiss caption vc once photo is posted.
 	- Usernames link to profiles.
 	- Add date Photo posted.
 	- IMPORTANT: show video player controls.

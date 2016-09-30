@@ -59,7 +59,8 @@ class LoginViewController: UIViewController {
                                      "OUTER SPACE",
                                      "LOGIN BACKGROUND 2",
                                      "LOGIN BACKGROUND 3",
-                                     "LOGIN BACKGROUND 4"]
+                                     "LOGIN BACKGROUND 4",
+                                     "MENU BACKGROUND 1"]
     var loginBackgroundImageIndex = 0
     
     var lastFirstResponder: UITextField?
