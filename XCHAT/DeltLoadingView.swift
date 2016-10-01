@@ -59,18 +59,31 @@ extension DeltLoadingView {
     }
     
     private func addDeltLabel() {
+        
+        print("ADD DELT LABEL")
+        
         let delt = self.deltLabel()
-        delt.hidden = true
+        delt.alpha = 0
         self.addSubview(delt)
-        UIView.transitionWithView(delt, duration: 0.5, options: .TransitionCrossDissolve, animations: {
-            delt.hidden = false
-            }, completion: { _ in
-                UIView.transitionWithView(delt, duration: 0.5, options: .TransitionCrossDissolve, animations: {
-                    delt.hidden = true
-                    }, completion: { _ in
-                        delt.removeFromSuperview()
-                })
-        })
+        let fadeDuration: NSTimeInterval = 0.5
+        UIView.animateWithDuration(fadeDuration, animations: { 
+            delt.alpha = 1
+            }) { _ in
+                UIView.animateWithDuration(fadeDuration, animations: { 
+                    delt.alpha = 0
+                }) { _ in
+                    delt.removeFromSuperview()
+                }
+        }
+//        UIView.transitionWithView(delt, duration: fadeDuration, options: [.ShowHideTransitionViews, .TransitionCrossDissolve], animations: {
+//            delt.hidden = true
+//            }, completion: { _ in
+//                UIView.transitionWithView(delt, duration: fadeDuration, options: [.ShowHideTransitionViews, .TransitionCrossDissolve], animations: {
+//                    delt.hidden = true
+//                    }, completion: { _ in
+//                        delt.removeFromSuperview()
+//                })
+//        })
     }
     
     // Returns ∆ label with random origin within this view's bounds.

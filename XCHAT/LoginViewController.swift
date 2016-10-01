@@ -57,10 +57,9 @@ class LoginViewController: UIViewController {
     
     let loginBackgroundImageNames = ["LOGIN BACKGROUND 1",
                                      "OUTER SPACE",
-                                     "LOGIN BACKGROUND 2",
-                                     "LOGIN BACKGROUND 3",
                                      "LOGIN BACKGROUND 4",
-                                     "MENU BACKGROUND 1"]
+                                     "LOGIN BACKGROUND 2",
+                                     "LOGIN BACKGROUND 3"]
     var loginBackgroundImageIndex = 0
     
     var lastFirstResponder: UITextField?
@@ -127,7 +126,7 @@ class LoginViewController: UIViewController {
         // Show login text fields on load.
         self.showSignup(false)
         // Must come after above line to ensure login view is proper height.
-        self.loginView.layer.cornerRadius = 3
+        self.loginView.layer.cornerRadius = 4
         self.loginView.layer.masksToBounds = true
         self.loginView.setNeedsLayout()
         self.loginView.layoutIfNeeded()
@@ -609,12 +608,12 @@ extension LoginViewController {
                                 ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
                                 self.presentViewController(ac, animated: true, completion: nil)
                             case "Could not connect to the server.":
-                                let ac = UIAlertController(title: "Unable to Connect", message: "Please try again later.", preferredStyle: UIAlertControllerStyle.Alert)
-                                ac.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+                                let ac = UIAlertController(title: "Server Error", message: "Apologies. Please try again later.", preferredStyle: UIAlertControllerStyle.Alert)
+                                ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
                                 self.presentViewController(ac, animated: true, completion: nil)
                             default:
-                                let ac = UIAlertController(title: "Server Error", message: "Please try again later.", preferredStyle: UIAlertControllerStyle.Alert)
-                                ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                                let ac = UIAlertController(title: "Unable to Connect", message: "Check your connection and try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                                ac.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
                                 self.presentViewController(ac, animated: true, completion: nil)
                             }
                         }
