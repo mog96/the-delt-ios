@@ -38,16 +38,13 @@ class CalendarViewController: ContentViewController, UITableViewDelegate, UITabl
         self.refreshControl.addTarget(self, action: #selector(self.onRefresh), forControlEvents: UIControlEvents.ValueChanged)
         self.refreshControl.tintColor = UIColor.redColor()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Loading Past Events...", attributes: [NSForegroundColorAttributeName : UIColor.redColor()])
-        self.tableView.insertSubview(refreshControl, atIndex: 0)
+        self.tableView.insertSubview(self.refreshControl, atIndex: 0)
         
         self.currentReloadIndex = self.kPageLength / 2
         
         self.noUpcomingEventsLabel.hidden = true
         
-        self.getEvents { (events: [PFObject]) in
-            self.events = events
-            self.tableView.reloadData()
-        }
+        self.refreshEvents()
     }
     
     override func didReceiveMemoryWarning() {
@@ -125,6 +122,17 @@ extension CalendarViewController {
 // MARK: - Refresh Helpers
 
 extension CalendarViewController {
+    func refreshEvents() {
+        self.getEvents { (events: [PFObject]) in
+            dispatch_async(dispatch_get_main_queue(), { 
+                self.events = events
+                self.tableView.contentOffset = CGPointZero
+                self.tableView.reloadData()
+                self.noUpcomingEventsLabel.hidden = self.events.count != 0
+            })
+        }
+    }
+    
     func getEvents(completion completion: ([PFObject] -> ())) {
         let currentHUD = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         currentHUD.label.text = "Loading Events..."
@@ -168,10 +176,7 @@ extension CalendarViewController {
 
 extension CalendarViewController: NewEventViewControllerDelegate {
     func refreshCurrentEvents() {
-        self.getEvents { (events: [PFObject]) in
-            self.events = events
-            self.tableView.reloadData()
-        }
+        self.refreshEvents()
     }
 }
 
@@ -180,23 +185,22 @@ extension CalendarViewController: NewEventViewControllerDelegate {
 
 extension CalendarViewController {
     func onRefresh() {
-        self.getPastEvents(before: self.events[0]["startTime"] as! NSDate, count: self.kPageLength) { (events: [PFObject]) in
+        var beforeDate: NSDate!
+        if self.events.count > 0 {
+            beforeDate = self.events[0]["startTime"] as! NSDate
+        } else {
+            beforeDate = NSDate()
+        }
+        self.getPastEvents(before: beforeDate, count: self.kPageLength) { (events: [PFObject]) in
             if events.count > 0 {
-                let previousContentOffset = self.tableView.contentOffset
-                let previousContentSize = self.tableView.contentSize
-                self.events.insertContentsOf(events, at: 0)
-                self.tableView.insertSections(NSIndexSet(indexesInRange: NSRange(location: 0, length: events.count)), withRowAnimation: .None)
-                let firstCurrentEventCellIndexPath = NSIndexPath(forRow: 0, inSection: events.count)
-                let rect = self.tableView.rectForSection(firstCurrentEventCellIndexPath.section)
-                let navBarBottomY = self.navigationController!.navigationBar.frame.origin.y + self.navigationController!.navigationBar.frame.height
-                let bottomYInset = UIScreen.mainScreen().bounds.height - (navBarBottomY + rect.height)
-                
-                // Adjust inset and offset so that first current event cell sits at top of table view.
-                if previousContentSize.height < self.tableView.frame.height {
+                dispatch_async(dispatch_get_main_queue(), {
+                    let previousContentOffset = self.tableView.contentOffset
+                    let previousContentSize = self.tableView.contentSize
                     
-                }
-                // self.tableView.contentInset = UIEdgeInsets(top: navBarBottomY, left: 0, bottom: bottomYInset, right: 0)
-                self.tableView.setContentOffset(CGPoint(x: 0, y: rect.origin.y - navBarBottomY), animated: false)
+                    self.events.insertContentsOf(events, at: 0)
+                    self.noUpcomingEventsLabel.hidden = self.events.count != 0
+                    self.tableView.insertSections(NSIndexSet(indexesInRange: NSRange(location: 0, length: events.count)), withRowAnimation: .Fade)
+                })
             }
         }
         self.refreshControl.endRefreshing()
