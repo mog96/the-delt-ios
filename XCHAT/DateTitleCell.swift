@@ -25,10 +25,6 @@ class DateTitleCell: UITableViewCell {
         self.artworkImageView.clipsToBounds = true
     }
     
-    override func prepareForReuse() {
-        self.artworkImageView.image = nil
-    }
-    
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
@@ -36,14 +32,10 @@ class DateTitleCell: UITableViewCell {
     }
     
     func setUpCell(event: PFObject) {
+        self.artworkImageView.image = nil
         let pfImageView = PFImageView()
-        
-        // JUST FOR LOLZ
-        pfImageView.image = UIImage(named: "ROONEY")
-        
         pfImageView.file = event.valueForKey("artwork") as? PFFile
-        
-        if let _ = pfImageView.file{
+        if let _ = pfImageView.file {
             pfImageView.loadInBackground { (artwork: UIImage?, error: NSError?) -> Void in
                 if let error = error {
                     // Log details of the failure
@@ -52,7 +44,8 @@ class DateTitleCell: UITableViewCell {
                     self.artworkImageView.image = artwork
                 }
             }
-
+        } else {
+            self.artworkImageView.image = UIImage(named: "LEOPARD PRINT")
         }
         
         let dateFormatter = NSDateFormatter()
