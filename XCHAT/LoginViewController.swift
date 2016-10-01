@@ -543,7 +543,11 @@ extension LoginViewController {
         if self.loginView.frame.height == self.loginViewLoginHeight {
             self.loginButton.sendActionsForControlEvents(.TouchUpInside)
         } else {
-            self.signupButton.sendActionsForControlEvents(.TouchUpInside)
+            if !resetPasswordButton.hidden {
+                self.resetPasswordButton.sendActionsForControlEvents(.TouchUpInside)
+            } else {
+                self.signupButton.sendActionsForControlEvents(.TouchUpInside)
+            }
         }
     }
     

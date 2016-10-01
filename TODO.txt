@@ -94,6 +94,7 @@
 
 	MEMBERS
 	- FIX: search bar exit not animating properly. Change search to same as Admin.
+		- Search bar stays embedded in nav bar when profile vc presented.
 	- photos not displaying
 	- If current user's cell is tapped, go to profile edit view
 

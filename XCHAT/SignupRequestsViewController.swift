@@ -199,7 +199,7 @@ extension SignupRequestsViewController: MFMailComposeViewControllerDelegate {
             let subject = "Signup Request Approved - " + AppDelegate.appName
             let bccRecipient = "thedeltusa@gmail.com"
             var body = "Hi \(user["name"]),\n\nWelcome to The Delt. Your login information is as follows:\n\n"
-            body += "Username: \(user.username)\n"
+            body += "Username: \(user.username!)\n"
             body += "Password: temp\n\n"
             body += "You may reset your password upon login.\n\n" // TODO: Embed link to thedelt://
             body += "Warm regards,\nPledge Mike"

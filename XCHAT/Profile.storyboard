@@ -80,7 +80,6 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="eN1-sJ-Pnu" firstAttribute="top" secondItem="7MR-wv-vVO" secondAttribute="bottom" constant="8" id="4VA-Cd-5Eh"/>
