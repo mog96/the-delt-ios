@@ -2,6 +2,34 @@
 * IMPROVEMENTS *
 ****************
 
+	10/2 SPRINT:
+	- Only dismiss caption vc once photo is posted.
+	- calendar detail view
+		- Photo in background
+		- date stenciled in white (i.e. 'Saturday 10/1' in white on top of photo)
+		- location/description in black?
+	- base profile menu cell num photos on photos in db
+	- update profile menu cell when item faved/unfaved
+	- tap screen to dismiss click/choose
+	- Sa and Su in calendar.
+	- login text fields shrink text instead of ...
+	- vids keep playing in background
+		- nil out vid player on reuse.
+	- Names vc for num faves.
+		- 1 faves --> 1 fave.
+	- Show loading for profile updating.
+		- Class year doesn't work.
+		- Bio doesn't always work.
+	- Change Members profile view placeholders
+		- Remove 6969
+	- Show photos in profile.
+	- Page with admins.
+		- Shown only to admins. Ability to add admins.
+	- Report content email compose currently says "Feedback"
+
+
+
+
 	OFFLINE:
 	- Divide Chat messages by day.
 	- Redo message compose UI.
@@ -9,14 +37,13 @@
 
 	
 	UP NEXT:
-	- Push cloud code for user approval.
-	- Calendar refresh crashes.
-	- Implement Alert All Delts notification.
-	- Setup Facebook posting to secret group, submit for Facebook review. (https://developers.facebook.com/docs/graph-api/reference/v2.7/group/feed)
-		- Reading for admins. Will likely accompany Reel API revision.
+	- All delts push.
 	- Add Camera and Filters, swanky UI (∆ snap/recording button).
 		- Facebook posting from within app.
 	- Start Chat cloud code and multiple conversartion topics.
+	- Implement Aux.
+	- Setup Facebook posting to secret group, submit for Facebook review. (https://developers.facebook.com/docs/graph-api/reference/v2.7/group/feed)
+		- Reading for admins. Will likely accompany Reel API revision.
 
 	
 
@@ -48,19 +75,17 @@
 
 
 	LOGIN
-	- Find more background images.
 	- Successful login transition causes button icons to appear in the top left corner at first.
-	- showSignup() call in viewDidLoad() has animations that show when view appears... looks a little weird... but kinda cool...
+	- login view kinda wiggles int place... looks a little weird... but kinda cool...
 
 	PROFILE
 	- Make phone numbers tappable.
 	- Fix background photo upload by saving a copy to local storage after it's set.
 
 	REEL
-	- Only dismiss caption vc once photo is posted.
-	- Usernames link to profiles.
-	- Add date Photo posted.
 	- IMPORTANT: show video player controls.
+	- Only dismiss caption vc once photo is posted.
+	- Add date Photo posted.
 	- don't hide placeholder text in caption/comment views until user starts typing
 	- change faved bool to favedBy array of users who have faved a given num        <********
 	- POSTING
@@ -71,7 +96,6 @@
 		- increment user's totalNumFaves when their photo is faved
 		- implement profile photos (user query)
 	- Large video upload causes crash ?
-	0 
 
 	CHAT
 	- Divide messages by day.
@@ -83,14 +107,13 @@
 	- Floating playback controls using another UIWindow...
 
 	CALENDAR
-	// - Add check that endDate succeed startDate
-	// - Reverse animate startDatePicker on endDatePicker changed?
+	- Ability to attend event.
 	- Push notification on new event created.
-	- Add loading to event create.
-	- Advance start time to next hour, not current.
-	- CHECK to make Thursday appear as Th (not T)
-	- Add unique color for each day of week?
-	- IDEA: Old events are linked to gallery of photos taken that day.
+	- Push when event starting.
+	- IDEAS:
+		- Add unique color for each day of week?
+		- Old events are linked to gallery of photos taken that day...
+	- Reverse animate startDatePicker on endDatePicker changed?
 
 	MEMBERS
 	- FIX: search bar exit not animating properly. Change search to same as Admin.
@@ -99,9 +122,9 @@
 	- If current user's cell is tapped, go to profile edit view
 
 	MENU
-	- implement numfaves and numphotos in menu
 	- prevent content view from moving when user tries to swipe to right with menu hidden
 	- Hide status bar on menu button tapped.
+	- @username in Profile cell?
 
 	EXTRA
 	- refactor code using Store (see @Nick Troccoli's YikkityYak project)
