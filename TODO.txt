@@ -2,30 +2,44 @@
 * IMPROVEMENTS *
 ****************
 
-	10/2 SPRINT:
+	10/4 SPRINT:
+	- Add sharing from Photos to the delt.
+	
+	- clear whitespace from username on account signup.
+
+	- Sending approval email from admin presents sign up alert.
+
+	- Report content email compose currently says "Feedback"
+
 	- Only dismiss caption vc once photo is posted.
+
+	- Sa and Su in calendar.
+
 	- calendar detail view
 		- Photo in background
 		- date stenciled in white (i.e. 'Saturday 10/1' in white on top of photo)
 		- location/description in black?
-	- base profile menu cell num photos on photos in db
-	- update profile menu cell when item faved/unfaved
-	- tap screen to dismiss click/choose
-	- Sa and Su in calendar.
-	- login text fields shrink text instead of ...
-	- vids keep playing in background
-		- nil out vid player on reuse.
+
 	- Names vc for num faves.
 		- 1 faves --> 1 fave.
-	- Show loading for profile updating.
+
+	- tap screen to dismiss click/choose
+
+	- login text fields shrink text instead of ...
+
+	- vids keep playing in background
+		- nil out vid player on reuse.
+
+	- Show loading for profile updating...
 		- Class year doesn't work.
 		- Bio doesn't always work.
+
+	EXTRA
 	- Change Members profile view placeholders
 		- Remove 6969
 	- Show photos in profile.
 	- Page with admins.
 		- Shown only to admins. Ability to add admins.
-	- Report content email compose currently says "Feedback"
 
 
 
@@ -67,12 +81,13 @@
 	- Add force touch menu.
 	- Handle case where app installed over previous version, but user forced to log in again.
 
+
+
 	GENERAL
+	- Images are bloating app size; download and store them on install.
 	- Check if Soundcloud pod has been updated to Swift 2.3
 	- Redo protocol naming scheme to className(didDoAction object: ...)
 	- Cache reel photos.
-
-
 
 	LOGIN
 	- Successful login transition causes button icons to appear in the top left corner at first.
@@ -125,6 +140,8 @@
 	- prevent content view from moving when user tries to swipe to right with menu hidden
 	- Hide status bar on menu button tapped.
 	- @username in Profile cell?
+	- base profile menu cell num photos on photos in db
+	- update profile menu cell when a photo faved/unfaved
 
 	EXTRA
 	- refactor code using Store (see @Nick Troccoli's YikkityYak project)
