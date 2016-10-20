@@ -58,6 +58,7 @@ class LoginViewController: UIViewController {
     let loginBackgroundImageNames = ["LOGIN BACKGROUND 1",
                                      "OUTER SPACE",
                                      "LOGIN BACKGROUND 4",
+                                     "TORTOISE",
                                      "LOGIN BACKGROUND 2",
                                      "LOGIN BACKGROUND 3"]
     var loginBackgroundImageIndex = 0
