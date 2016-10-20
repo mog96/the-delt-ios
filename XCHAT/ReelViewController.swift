@@ -97,7 +97,6 @@ extension ReelViewController {
 
 extension ReelViewController: UITableViewDelegate, UITableViewDataSource {    
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let photo = photos.objectAtIndex(section) as! NSMutableDictionary
         
         // Header.
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.kHeaderWidth, height: self.kHeaderHeight))
@@ -116,6 +115,7 @@ extension ReelViewController: UITableViewDelegate, UITableViewDataSource {
         profileImageView.backgroundColor = UIColor.redColor()
         profileImageView.profilePresenterDelegate = self
         
+        let photo = photos.objectAtIndex(section) as! NSMutableDictionary
         let query = PFUser.query()
         query?.whereKey("username", equalTo: photo.valueForKey("username") as! String)
         query?.findObjectsInBackgroundWithBlock({ (users: [PFObject]?, error: NSError?) -> Void in
@@ -254,6 +254,7 @@ extension ReelViewController {
     func refreshData() {
         self.refreshControl?.beginRefreshing()
         let query = PFQuery(className: "Photo")
+        query.orderByAscending("createdAt")
         query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
             if let error = error {
                 // Log details of the failure
