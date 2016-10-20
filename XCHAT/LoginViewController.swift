@@ -219,7 +219,11 @@ extension LoginViewController {
         
         UIView.transitionWithView(self.passwordTextField, duration: animationDuration - 1, options: .TransitionCrossDissolve, animations: {
             self.passwordTextField.hidden = show
-            }, completion: nil)
+            }, completion: { _ in
+                if show {
+                    self.passwordTextField.text =  nil
+                }
+        })
     }
 }
 

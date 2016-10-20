@@ -40,6 +40,7 @@
 	- Show photos in profile.
 	- Page with admins.
 		- Shown only to admins. Ability to add admins.
+	- Redo login flow so that users are pre-added from delt email list? ...
 
 
 
