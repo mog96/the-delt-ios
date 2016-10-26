@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 // Communicates to presenter the caption entered for the given photo.
 protocol CaptionViewControllerDelegate {
@@ -16,6 +17,7 @@ protocol CaptionViewControllerDelegate {
 class CaptionViewController: UIViewController {
     
     var photo: UIImage!
+    var video: PFFile?
     var delegate: CaptionViewControllerDelegate?
 
     @IBOutlet weak var photoImageView: UIImageView!
@@ -45,6 +47,59 @@ class CaptionViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+}
+
+
+// MARK: - Helpers
+
+extension CaptionViewController {
+    func uploadPost(caption: String?) {
+        let photo = PFObject(className: "Photo")
+        
+        let imageData = UIImageJPEGRepresentation(self.photo, 100)
+        let imageFile = PFFile(name: "image.jpeg", data: imageData!)
+        photo["imageFile"] = imageFile
+        
+        if let _ = self.video {
+            photo["videoFile"] = self.video
+        }
+        
+        photo["username"] = PFUser.currentUser()?.username
+        photo["faved"] = false
+        photo["numFaves"] = 0
+        photo["flagged"] = false
+        photo["numFlags"] = 0
+        
+        var comments = [[String]]()
+        if let caption = caption {
+            photo["numComments"] = 1
+            
+            comments.append([PFUser.currentUser()!.username!, caption])
+        } else {
+            photo["numComments"] = 0
+        }
+        photo["comments"] = comments
+        photo.saveInBackgroundWithBlock({ (completed: Bool, error: NSError?) -> Void in
+            if let error = error {
+                // Log details of the failure
+                print("Error: \(error) \(error.userInfo)")
+                
+            } else {
+                
+                
+                
+                // DELEGATE.REFRESH DATA 
+                self.refreshData()
+            }
+        })
+        
+        if let numPhotosPosted = PFUser.currentUser()!.objectForKey("numPhotosPosted") as? Int {
+            PFUser.currentUser()?.setObject(numPhotosPosted + 1, forKey: "numPhotosPosted")
+        } else {
+            PFUser.currentUser()?.setObject(1, forKey: "numPhotosPosted")
+        }
+        PFUser.currentUser()?.saveInBackground()
     }
 }
 
@@ -82,15 +137,17 @@ extension CaptionViewController {
         
         // Avoids sending delegate placeholder text.
         if captionTextView.text.characters.count > 0 {
-            delegate?.captionViewController(didEnterCaption: captionTextView.text)
+            self.uploadPost(self.captionTextView.text)
+            // delegate?.captionViewController(didEnterCaption: captionTextView.text)
         } else {
-            delegate?.captionViewController(didEnterCaption: nil)
+            self.uploadPost(nil)
+            // delegate?.captionViewController(didEnterCaption: nil)
         }
         
-        dismissViewControllerAnimated(true, completion: { () -> Void in
-            
-            // code
-        })
+//        dismissViewControllerAnimated(true, completion: { () -> Void in
+//            
+//            // code
+//        })
     }
     
     @IBAction func onCancelButtonTapped(sender: AnyObject) {

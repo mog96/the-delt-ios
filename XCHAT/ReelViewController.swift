@@ -450,6 +450,7 @@ extension ReelViewController: UIImagePickerControllerDelegate {
         let captionVC = captionNC.viewControllers[0] as! CaptionViewController
         captionVC.delegate = self
         captionVC.photo = self.uploadPhoto!
+        captionVC.video = self.uploadVideo
         picker.pushViewController(captionVC, animated: true)
     }
 }

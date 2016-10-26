@@ -3,6 +3,8 @@
 ****************
 
 	10/4 SPRINT:
+	- Video loading.
+	
 	- Add sharing from Photos to the delt.
 	
 	- clear whitespace from username on account signup.
@@ -40,6 +42,10 @@
 	- Show photos in profile.
 	- Page with admins.
 		- Shown only to admins. Ability to add admins.
+	- Change/reset password flow...
+
+	IDEAS
+	- Stylize login view text fields to have placeholders like [username] and [password]
 	- Redo login flow so that users are pre-added from delt email list? ...
 
 
