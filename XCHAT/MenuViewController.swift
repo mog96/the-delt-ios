@@ -22,7 +22,7 @@ class MenuViewController: UIViewController {
     var hamburgerViewController: HamburgerViewController?
     
     let kProfileCellHeight: CGFloat = 172
-    let kMenuCellHeight: CGFloat = 55
+    let kMenuCellHeight: CGFloat = 70
     
     let kMinCells = 6
     let kMaxCells = 7

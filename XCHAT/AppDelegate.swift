@@ -28,6 +28,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
+        
+        
+        // IOS FONTS
+        print("\n\n\n\n\n")
+        print("IOS FONTS")
+        
+        UIFont.familyNames().map {UIFont.fontNamesForFamilyName($0)}
+            .forEach {(n:[String]) in n.forEach {print($0)}}
+        
+        print("\n\n\n\n\n")
+        
+        
+        
         AppDelegate.appName = NSBundle.mainBundle().infoDictionary!["CFBundleDisplayName"] as! String
         
         if let path = NSBundle.mainBundle().pathForResource("Keys", ofType: "plist") {
