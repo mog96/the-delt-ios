@@ -16,18 +16,19 @@ import ParseUI
 
 class ReelViewController: ContentViewController, UINavigationControllerDelegate {
     
+    @IBOutlet weak var tableView: UITableView!
+    
     var photos = NSMutableArray()
     var uploadPhoto: UIImage?
     var uploadVideo: PFFile?
     var commentPhoto: NSMutableDictionary?
     
     var refreshControl: UIRefreshControl?
+    var chooseMediaAlertController: UIAlertController!
     
     let kHeaderWidth = 320
     let kHeaderHeight = 46
     let kProfileWidthHeight = 30
-    
-    @IBOutlet weak var tableView: UITableView!
     
     let transition = SwipeAnimator()
     
@@ -64,6 +65,17 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
         self.tableView.insertSubview(self.refreshControl!, atIndex: 0)
         
         self.refreshData()
+        
+        self.chooseMediaAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        self.chooseMediaAlertController.addAction(UIAlertAction(title: "CLICK", style: .Destructive, handler: { _ in      // FIXME: Using .Destructive to get red text color is a little hacky...
+            self.presentImagePicker(usingPhotoLibrary: false)
+        }))
+        self.chooseMediaAlertController.addAction(UIAlertAction(title: "CHOOSE", style: .Destructive, handler: { _ in
+            self.presentImagePicker(usingPhotoLibrary: true)
+        }))
+        self.chooseMediaAlertController.addAction(UIAlertAction(title: "CANCEL", style: .Cancel, handler: { _ in
+            self.chooseMediaAlertController.dismissViewControllerAnimated(true, completion: nil)
+        }))
     }
     
     override func didReceiveMemoryWarning() {
@@ -407,14 +419,7 @@ extension ReelViewController: ButtonCellDelegate {
 
 extension ReelViewController {
     @IBAction func onAddButtonTapped(sender: AnyObject) {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        alert.addAction(UIAlertAction(title: "CLICK", style: .Destructive, handler: { _ in      // FIXME: Using .Destructive to get red text color is a little hacky...
-            self.presentImagePicker(usingPhotoLibrary: false)
-        }))
-        alert.addAction(UIAlertAction(title: "CHOOSE", style: .Destructive, handler: { _ in
-            self.presentImagePicker(usingPhotoLibrary: true)
-        }))
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.presentViewController(self.chooseMediaAlertController, animated: true, completion: nil)
     }
 }
 
