@@ -15,14 +15,16 @@ import PureLayout
 class VideoDetailViewController: UIViewController {
     
     @IBOutlet weak var videoPlayerView: UIView!
-    var videoPlayer: MPMoviePlayerController!
-    var file: PFFile!
+    // var videoPlayer: MPMoviePlayerController!
+    var videoPlayer: AVPlayer!
+    var videoPlayerLayer: AVPlayerLayer!
+    var videoURL: NSURL?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("URL: ", file.url)
-        self.addVideoPlayer(contentUrl: NSURL(string: file.url!)!, containerView: self.videoPlayerView, preview: nil)
+        print("VIDEO URL: ", self.videoURL)
+        self.addVideoPlayer()
         self.videoPlayer.play()
 
         /*
@@ -59,13 +61,14 @@ class VideoDetailViewController: UIViewController {
     
     // MARK: - Video Player
     
-    func addVideoPlayer(contentUrl contentUrl: NSURL, containerView: UIView, preview: UIImageView?) {
-        self.videoPlayer = MPMoviePlayerController(contentURL: contentUrl)
-        self.videoPlayer.view.frame = CGRectMake(0, 0, containerView.frame.width, containerView.frame.height)
+    /*
+    func addVideoPlayer() {
+        self.videoPlayer = MPMoviePlayerController(contentURL: self.videoURL)
+        self.videoPlayer.view.frame = CGRectMake(0, 0, self.videoPlayerView.frame.width, self.videoPlayerView.frame.height)
         
-        self.videoPlayer.controlStyle = MPMovieControlStyle.Embedded
+        self.videoPlayer.controlStyle = MPMovieControlStyle.Fullscreen
         self.videoPlayer.scalingMode = MPMovieScalingMode.AspectFit
-        self.videoPlayer.contentURL = contentUrl
+        self.videoPlayer.contentURL = self.videoURL
         self.videoPlayer.backgroundView.backgroundColor = UIColor.clearColor()
         self.videoPlayer.shouldAutoplay = true
         
@@ -74,7 +77,7 @@ class VideoDetailViewController: UIViewController {
         // NSNotificationCenter.defaultCenter().addObserver(self, selector: "videoSizeAvailable", name: MPMovieNaturalSizeAvailableNotification, object: self.videoPlayer)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(VideoDetailViewController.videoFinished), name: MPMoviePlayerPlaybackDidFinishNotification, object: self.videoPlayer)
         
-        containerView.addSubview(self.videoPlayer.view)
+        self.videoPlayerView.addSubview(self.videoPlayer.view)
         self.videoPlayer.view.autoPinEdgesToSuperviewEdges()
         
         // Disable pinch gesture.
@@ -86,11 +89,19 @@ class VideoDetailViewController: UIViewController {
             }
         }
     }
-    
+     
     func videoFinished() {
         self.videoPlayer.stop()
         self.videoPlayer.currentPlaybackTime = 0
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    */
+    
+    func addVideoPlayer() {
+        self.videoPlayer = AVPlayer(URL: self.videoURL!)
+        self.videoPlayerLayer = AVPlayerLayer(player: self.videoPlayer)
+        self.videoPlayerLayer.frame = self.view.bounds
+        self.view.layer.addSublayer(self.videoPlayerLayer)
     }
     
 

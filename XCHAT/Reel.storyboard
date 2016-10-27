@@ -245,6 +245,7 @@
                     <connections>
                         <outlet property="tableView" destination="DWp-4s-K0I" id="aFT-Nh-Irn"/>
                         <segue destination="rgg-3g-vIM" kind="modal" identifier="addCommentSegue" id="6Nx-LW-Mbn"/>
+                        <segue destination="fV5-DK-yZw" kind="modal" identifier="VideoDetailSegue" id="NB6-y4-Awm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dzb-Dk-FgZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -266,11 +267,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2SI-fb-EQB">
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Amu-Zx-Xpp">
-                                <state key="normal" title="COOL">
-                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -278,8 +274,6 @@
                             <constraint firstItem="uEP-tT-dK6" firstAttribute="top" secondItem="2SI-fb-EQB" secondAttribute="bottom" id="Gap-2O-647"/>
                             <constraint firstItem="2SI-fb-EQB" firstAttribute="leading" secondItem="aYE-TI-qRU" secondAttribute="leading" id="e5P-Uy-Wv4"/>
                             <constraint firstItem="2SI-fb-EQB" firstAttribute="top" secondItem="JqG-FW-ma8" secondAttribute="bottom" id="rBP-U6-JqD"/>
-                            <constraint firstAttribute="trailing" secondItem="Amu-Zx-Xpp" secondAttribute="trailing" constant="27" id="tOR-Rf-i86"/>
-                            <constraint firstItem="Amu-Zx-Xpp" firstAttribute="top" secondItem="JqG-FW-ma8" secondAttribute="bottom" constant="23" id="znO-zZ-rFf"/>
                         </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>

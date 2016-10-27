@@ -26,6 +26,8 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
     var refreshControl: UIRefreshControl?
     var chooseMediaAlertController: UIAlertController!
     
+    var videoURL: NSURL?
+    
     let kHeaderWidth = 320
     let kHeaderHeight = 46
     let kProfileWidthHeight = 30
@@ -554,11 +556,15 @@ extension ReelViewController {
             let vc = nc.viewControllers.first as! CommentViewController
             vc.delegate = self
             vc.photo = self.commentPhoto
-        } else {
+        } else if segue.identifier == "VideoDetailSegue" {
+            let vc = segue.destinationViewController as! VideoDetailViewController
+            vc.videoURL = self.videoURL
+        }
+        /* else {
             let vc = segue.destinationViewController as! PhotoDetailsViewController
             let indexPath = self.tableView.indexPathForCell(sender as! UITableViewCell)!
             vc.selectedPhoto = self.photos[indexPath.section] as! NSMutableDictionary
-        }
+        } */
     }
 }
 
@@ -566,8 +572,12 @@ extension ReelViewController {
 // MARK: - Photo Video Cell Delegate
 
 extension ReelViewController: PhotoVideoCellDelegate {
-    func presentVideoDetailViewController(videoFile file: PFFile) {
+    func presentVideoDetailViewController(videoURL url: NSURL?) {
+        
         print("PRESENTING VIDEO DETAIL")
+        
+        self.videoURL = url
+        self.performSegueWithIdentifier("VideoDetailSegue", sender: self)
     }
 }
 

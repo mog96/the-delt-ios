@@ -13,7 +13,7 @@ import Parse
 import ParseUI
 
 @objc protocol PhotoVideoCellDelegate {
-    func presentVideoDetailViewController(videoFile file: PFFile)
+    func presentVideoDetailViewController(videoURL url: NSURL?)
 }
 
 class PhotoVideoCell: UITableViewCell {
@@ -23,7 +23,7 @@ class PhotoVideoCell: UITableViewCell {
     @IBOutlet weak var videoPlayerView: UIView!
     
     var videoPlayer: MPMoviePlayerController?
-    var videoUrl: NSURL?
+    var videoURL: NSURL?
     
     weak var delegate: PhotoVideoCellDelegate?
     
@@ -67,7 +67,11 @@ class PhotoVideoCell: UITableViewCell {
                     }
                 }
                 
-                self.videoUrl = NSURL(string: file.url!)!
+                self.videoURL = NSURL(string: file.url!)!
+                
+                print("VIDEO URL:", self.videoURL)
+                
+                // self.videoURL = NSURL(string: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")!
                 
                 // Enable cell tap.
                 let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(PhotoVideoCell.onControlsViewTapped))
@@ -104,16 +108,20 @@ class PhotoVideoCell: UITableViewCell {
     // MARK: - Actions
     
     func onControlsViewTapped() {
-        if self.photoImageView.hidden {
-            self.videoFinished()
-            
-        } else {
-            if self.videoPlayer == nil {
-                self.addVideoPlayer(contentUrl: self.videoUrl!, containerView: self.videoPlayerView, preview: self.photoImageView)
-            }
-            self.videoPlayer?.play()
-            self.photoImageView.hidden = true
-        }
+//        if self.photoImageView.hidden {
+//            self.videoFinished()
+//            
+//        } else {
+//            if self.videoPlayer == nil {
+//                self.addVideoPlayer(contentUrl: self.videoURL!, containerView: self.videoPlayerView, preview: self.photoImageView)
+//            }
+//            self.videoPlayer?.play()
+//            self.photoImageView.hidden = true
+//        }
+        
+        print("PRESENTING DETAIL VC FOR URL", self.videoURL!)
+        
+        self.delegate?.presentVideoDetailViewController(videoURL: self.videoURL)
     }
     
     
@@ -123,7 +131,7 @@ class PhotoVideoCell: UITableViewCell {
         self.videoPlayer = MPMoviePlayerController(contentURL: contentUrl)
         self.videoPlayer!.view.frame = CGRectMake(0, 0, containerView.frame.width, containerView.frame.height)
         
-        self.videoPlayer!.controlStyle = .None
+        self.videoPlayer!.controlStyle = .Embedded
         self.videoPlayer!.scalingMode = MPMovieScalingMode.AspectFit
         self.videoPlayer!.contentURL = contentUrl
         self.videoPlayer!.backgroundView.backgroundColor = UIColor.clearColor()
