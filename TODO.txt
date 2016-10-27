@@ -2,7 +2,9 @@
 * IMPROVEMENTS *
 ****************
 
-	10/4 SPRINT:
+	NEXT SPRINT:
+	- FIX VIDEO LOADING
+
 	- Add sharing from Photos to the delt.
 	
 	- clear whitespace from username on account signup.
