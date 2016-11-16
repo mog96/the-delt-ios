@@ -3,11 +3,9 @@
 ****************
 
 	NEXT SPRINT:
-	- UPGRADE EVERYTHING TO SWIFT 3
+	- INSTALL PUSH
 
 	- FIX VIDEO LOADING
-
-	- INSTALL PUSH
 
 	- Add sharing from Photos to the delt.
 	
@@ -33,6 +31,8 @@
 	- Show loading for profile updating...
 		- Class year doesn't work.
 		- Bio doesn't always work.
+
+	- UPGRADE EVERYTHING TO SWIFT 3
 
 	EXTRA
 	- Change Members profile view placeholders
