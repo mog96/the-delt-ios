@@ -3,7 +3,8 @@
 ****************
 
 	NEXT SPRINT:
-	- UPGRADE EVERYTHING 
+	- UPGRADE EVERYTHING TO SWIFT 3
+
 	- FIX VIDEO LOADING
 
 	- INSTALL PUSH
@@ -26,8 +27,6 @@
 	- Names vc for num faves.
 		- 1 faves --> 1 fave.
 
-	- login text fields shrink text instead of ...
-
 	- vids keep playing in background
 		- nil out vid player on reuse.
 
@@ -42,6 +41,8 @@
 	- Page with admins.
 		- Shown only to admins. Ability to add admins.
 	- Redo login flow so that users are pre-added from delt email list? ...
+	- Redo LoginViewController so that signup animation is smooth
+		- Calculate LoginView height and animate height change, rather than resizing based on textviews.
 
 
 

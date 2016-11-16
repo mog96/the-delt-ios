@@ -76,13 +76,13 @@ class LoginViewController: UIViewController {
         self.resetPasswordButton.hidden = true
         
         // Name text field.
-        self.nameTextField.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
+        self.nameTextField.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [NSForegroundColorAttributeName : UIColor.lightTextColor()])
         self.nameTextField.keyboardAppearance = UIKeyboardAppearance.Dark
         self.nameTextField.delegate = self
         self.nameTextField.returnKeyType = .Next
         
         // Email text field.
-        self.emailTextField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
+        self.emailTextField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSForegroundColorAttributeName : UIColor.lightTextColor()])
         self.emailTextField.keyboardAppearance = UIKeyboardAppearance.Dark
         self.emailTextField.delegate = self
         self.nameTextField.nextTextField = self.emailTextField
@@ -90,21 +90,21 @@ class LoginViewController: UIViewController {
         self.emailTextField.returnKeyType = .Next
         
         // Username text field.
-        self.usernameTextField.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
+        self.usernameTextField.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSForegroundColorAttributeName : UIColor.lightTextColor()])
         self.usernameTextField.keyboardAppearance = UIKeyboardAppearance.Dark
         usernameTextField.delegate = self
         self.emailTextField.nextTextField = self.usernameTextField
         self.usernameTextField.returnKeyType = .Next
         
         // Password text field.
-        self.passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
+        self.passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName : UIColor.lightTextColor()])
         self.passwordTextField.keyboardAppearance = UIKeyboardAppearance.Dark
         passwordTextField.delegate = self
         self.usernameTextField.nextTextField = self.passwordTextField
         self.passwordTextField.returnKeyType = .Go
         
         // Confirm password text field.
-        self.confirmPasswordTextField.attributedPlaceholder = NSAttributedString(string: "Confirm", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
+        self.confirmPasswordTextField.attributedPlaceholder = NSAttributedString(string: "Confirm", attributes: [NSForegroundColorAttributeName : UIColor.lightTextColor()])
         self.confirmPasswordTextField.keyboardAppearance = UIKeyboardAppearance.Dark
         self.confirmPasswordTextField.delegate = self
         self.passwordTextField.nextTextField = self.confirmPasswordTextField
