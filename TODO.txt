@@ -35,6 +35,7 @@
 	- UPGRADE EVERYTHING TO SWIFT 3
 
 	EXTRA
+	- On login page, 
 	- Change Members profile view placeholders
 		- Remove 6969
 	- Show photos in profile.
