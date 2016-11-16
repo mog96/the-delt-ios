@@ -34,8 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let keys = NSDictionary(contentsOfFile: path) {
                 // Parse config.
                 let configuration = ParseClientConfiguration {
-                    $0.applicationId = keys["parseApplicationId"] as? String
-                    $0.clientKey = keys["parseClientKey"] as? String
+                    $0.applicationId = keys["ParseApplicationID"] as? String
+                    $0.clientKey = keys["ParseClientKey"] as? String
                     
                     /*
                     /* DEVELOPMENT ONLY */

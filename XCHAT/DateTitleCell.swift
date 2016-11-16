@@ -73,9 +73,15 @@ class DateTitleCell: UITableViewCell {
         
         dateFormatter.dateFormat = "E"
         let weekday = dateFormatter.stringFromDate(startTime)
-        if weekday.hasPrefix("Th") {
-            self.weekdayLabel.text = "Th"
-        } else {
+        let prefix = weekday.substringToIndex(weekday.startIndex.advancedBy(2))
+        switch prefix {
+        case "Th":
+            fallthrough
+        case "Sa":
+            fallthrough
+        case "Su":
+            self.weekdayLabel.text = prefix
+        default:
             self.weekdayLabel.text = String(weekday[weekday.startIndex])
         }
         

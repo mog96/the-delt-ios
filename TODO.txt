@@ -3,7 +3,10 @@
 ****************
 
 	NEXT SPRINT:
+	- UPGRADE EVERYTHING 
 	- FIX VIDEO LOADING
+
+	- INSTALL PUSH
 
 	- Add sharing from Photos to the delt.
 	
@@ -14,8 +17,6 @@
 	- Report content email compose currently says "Feedback"
 
 	- Only dismiss caption vc once photo is posted.
-
-	- Sa and Su in calendar.
 
 	- calendar detail view
 		- Photo in background
