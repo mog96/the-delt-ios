@@ -1,1 +1,0 @@
-- Ability to zoom in on storyboards. Would help a lot with fine details of layout.
