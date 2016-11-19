@@ -3,9 +3,14 @@
 ****************
 
 	NEXT SPRINT:
-	- INSTALL PUSH
+	- INSTALL PUSH.
 
-	- FIX VIDEO LOADING
+	- FIX VIDEO LOADING.
+
+	- Smooth photo upload transition.
+		- Debug camera from shortcut...
+
+	- Shortcut icons.
 
 	- Add sharing from Photos to the delt.
 	
