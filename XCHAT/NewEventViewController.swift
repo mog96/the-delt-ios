@@ -13,7 +13,7 @@ import Parse
 // FIXME: ADD EVENT SCROLL VIEW NOT WORKING
 
 @objc protocol NewEventViewControllerDelegate {
-    optional func refreshCurrentEvents()
+    func refreshCurrentEvents(completion completion: (() -> ()))
 }
 
 class NewEventViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, NewEventDelegate {
@@ -42,14 +42,22 @@ class NewEventViewController: UIViewController, UITableViewDelegate, UITableView
         self.startDatePickerCell.startDateDelegate = self.endDatePickerCell
     }
     
+    override func viewDidAppear(animated: Bool) {
+        if self.eventDescriptionCell.nameTextField.text?.characters.count == 0 {
+            self.eventDescriptionCell.nameTextField.becomeFirstResponder()
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
-    // MARK: Table View
-    
+}
+
+
+// MARK: - Table View
+
+extension NewEventViewController {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }
@@ -65,12 +73,30 @@ class NewEventViewController: UIViewController, UITableViewDelegate, UITableView
             return self.endDatePickerCell
         }
     }
+}
+
+
+// MARK: - ImagePickerController
+
+extension NewEventViewController {
+    // Triggered when the user finishes taking an image. Saves the chosen image to our temporary
+    // uploadPhoto variable, and dismisses the image picker view controller. Once the image picker
+    // view controller is dismissed (a.k.a. inside the completion handler) we modally segue to
+    // show the "Location selection" screen. --Nick Troccoli
     
-    
-    // MARK: Actions
-    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        self.artworkImage = info[UIImagePickerControllerEditedImage] as? UIImage
+        self.eventDescriptionCell.artworkButton.setImage(self.artworkImage, forState: .Normal)
+        self.eventDescriptionCell.artworkButton.setTitle("", forState: .Normal)
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+}
+
+
+// MARK: - Actions
+
+extension NewEventViewController {
     @IBAction func onPostButtonTapped(sender: AnyObject) {
-        
         print("POSTING")
         
         // User forgets to enter name.
@@ -84,10 +110,10 @@ class NewEventViewController: UIViewController, UITableViewDelegate, UITableView
             
             event["name"] = self.eventDescriptionCell.nameTextField.text
             
-            if self.eventDescriptionCell.locationTextField.text != "" {
+            if self.eventDescriptionCell.locationTextField.text?.characters.count > 0 {
                 event["location"] = self.eventDescriptionCell.locationTextField.text
             }
-            if self.eventDescriptionCell.descriptionTextView.text != self.eventDescriptionCell.descriptionTextViewPlaceholder {
+            if self.eventDescriptionCell.descriptionTextView.text.characters.count > 0 {
                 event["description"] = self.eventDescriptionCell.descriptionTextView.text
             }
             
@@ -104,15 +130,17 @@ class NewEventViewController: UIViewController, UITableViewDelegate, UITableView
             let currentHUD = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
             currentHUD.label.text = "Posting Event..."
             event.saveInBackgroundWithBlock { (result: Bool, error: NSError?) -> Void in
-                currentHUD.hideAnimated(true)
                 if error != nil {
+                    currentHUD.hideAnimated(true)
                     print(error?.description)
                     let alertVC = UIAlertController(title: "Unable to Post Event", message: "Please try again.", preferredStyle: .Alert)
                     alertVC.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
                     self.presentViewController(alertVC, animated: true, completion: nil)
                 } else {
-                    self.delegate?.refreshCurrentEvents?()
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                    self.delegate?.refreshCurrentEvents(completion: {
+                        currentHUD.hideAnimated(true)
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    })
                 }
             }
         }
@@ -126,6 +154,10 @@ class NewEventViewController: UIViewController, UITableViewDelegate, UITableView
         self.view.endEditing(true)
     }
     
+    @IBAction func onPanGesture(sender: AnyObject) {
+        self.view.endEditing(true)
+    }
+    
     func onArtworkButtonTapped() {
         let imageVC = UIImagePickerController()
         imageVC.delegate = self
@@ -133,32 +165,4 @@ class NewEventViewController: UIViewController, UITableViewDelegate, UITableView
         imageVC.sourceType = .PhotoLibrary
         presentViewController(imageVC, animated: true, completion: nil)  // FIXME: Causes warning 'Presenting view controllers on detached view controllers is discouraged'
     }
-    
-    
-    // MARK: ImagePickerController
-    
-    // Triggered when the user finishes taking an image. Saves the chosen image to our temporary
-    // uploadPhoto variable, and dismisses the image picker view controller. Once the image picker
-    // view controller is dismissed (a.k.a. inside the completion handler) we modally segue to
-    // show the "Location selection" screen. --Nick Troccoli
-    
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        self.artworkImage = info[UIImagePickerControllerEditedImage] as? UIImage
-        dismissViewControllerAnimated(true, completion: { () -> Void in
-            
-            self.eventDescriptionCell.artworkButton.setBackgroundImage(self.artworkImage, forState: UIControlState.Normal)
-            self.eventDescriptionCell.artworkButton.setTitle("", forState: UIControlState.Normal)
-        })
-    }
-    
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
-    */
-    
 }

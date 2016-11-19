@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2515CDDB1C58BDD40008A2B2 /* LayoutUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2515CDDA1C58BDD40008A2B2 /* LayoutUtils.swift */; };
-		252208991C5DF532004FAE9A /* CalendarCells.xib in Resources */ = {isa = PBXBuildFile; fileRef = 252208981C5DF532004FAE9A /* CalendarCells.xib */; };
 		252237751C991AA20077AC77 /* PhotoVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252237741C991AA20077AC77 /* PhotoVideoCell.swift */; };
 		252A6B401C4C950500FA1F75 /* SettingsDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252A6B3F1C4C950500FA1F75 /* SettingsDescriptionTableViewCell.swift */; };
 		252A6B431C4C9BAE00FA1F75 /* SettingsHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 252A6B421C4C9BAE00FA1F75 /* SettingsHeaderView.xib */; };
@@ -36,6 +35,7 @@
 		258D498A1B15AEB900A632D3 /* MemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258D49891B15AEB900A632D3 /* MemberCell.swift */; };
 		25966C241C99978100D56DFF /* SwipeAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25966C221C99978100D56DFF /* SwipeAnimator.swift */; };
 		25966C251C99978100D56DFF /* VideoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25966C231C99978100D56DFF /* VideoDetailViewController.swift */; };
+		259A16B81DDFB4C500C23DD0 /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259A16B71DDFB4C500C23DD0 /* CustomTextView.swift */; };
 		259FBA431B02F5A5006F1650 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259FBA421B02F5A5006F1650 /* AppDelegate.swift */; };
 		259FBA481B02F5A5006F1650 /* Menu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 259FBA461B02F5A5006F1650 /* Menu.storyboard */; };
 		259FBA4A1B02F5A6006F1650 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 259FBA491B02F5A6006F1650 /* Images.xcassets */; };
@@ -121,7 +121,6 @@
 
 /* Begin PBXFileReference section */
 		2515CDDA1C58BDD40008A2B2 /* LayoutUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutUtils.swift; sourceTree = "<group>"; };
-		252208981C5DF532004FAE9A /* CalendarCells.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalendarCells.xib; sourceTree = "<group>"; };
 		252237741C991AA20077AC77 /* PhotoVideoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoVideoCell.swift; sourceTree = "<group>"; };
 		252A6B3F1C4C950500FA1F75 /* SettingsDescriptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		252A6B421C4C9BAE00FA1F75 /* SettingsHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsHeaderView.xib; sourceTree = "<group>"; };
@@ -150,6 +149,7 @@
 		258D49891B15AEB900A632D3 /* MemberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberCell.swift; sourceTree = "<group>"; };
 		25966C221C99978100D56DFF /* SwipeAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeAnimator.swift; sourceTree = "<group>"; };
 		25966C231C99978100D56DFF /* VideoDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoDetailViewController.swift; sourceTree = "<group>"; };
+		259A16B71DDFB4C500C23DD0 /* CustomTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextView.swift; sourceTree = "<group>"; };
 		259FBA3D1B02F5A5006F1650 /* XCHAT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XCHAT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		259FBA411B02F5A5006F1650 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		259FBA421B02F5A5006F1650 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -267,15 +267,6 @@
 				38F655E01B0D235700C5586A /* ReelGridViewController.swift */,
 			);
 			name = Future;
-			sourceTree = "<group>";
-		};
-		2522089A1C5DF618004FAE9A /* Layout */ = {
-			isa = PBXGroup;
-			children = (
-				D55496041D8A5C0A00090E76 /* Calendar.storyboard */,
-				252208981C5DF532004FAE9A /* CalendarCells.xib */,
-			);
-			name = Layout;
 			sourceTree = "<group>";
 		};
 		252A6B411C4C9B7F00FA1F75 /* Layout */ = {
@@ -417,6 +408,7 @@
 				D525F1B81D874CB30002D8B6 /* UITextField+NextTextField.swift */,
 				D55496061D8A862600090E76 /* ActionButtonTableViewCell.xib */,
 				38F655E41B0D521200C5586A /* ActionButtonTableViewCell.swift */,
+				259A16B71DDFB4C500C23DD0 /* CustomTextView.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -504,7 +496,7 @@
 		3890A1CB1B0B17B900B4FF00 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
-				2522089A1C5DF618004FAE9A /* Layout */,
+				D55496041D8A5C0A00090E76 /* Calendar.storyboard */,
 				38D9FB8D1B1557F40030B6D9 /* CalendarViewController.swift */,
 				38D9FB8F1B15582E0030B6D9 /* DateTitleCell.swift */,
 				38D9FB911B15583B0030B6D9 /* LocationCell.swift */,
@@ -682,7 +674,6 @@
 				2540A3931C2B9CC7003E4B31 /* Login.storyboard in Resources */,
 				252A6B481C4CA98F00FA1F75 /* MessageView.xib in Resources */,
 				259FBA4A1B02F5A6006F1650 /* Images.xcassets in Resources */,
-				252208991C5DF532004FAE9A /* CalendarCells.xib in Resources */,
 				252A6B431C4C9BAE00FA1F75 /* SettingsHeaderView.xib in Resources */,
 				D5FB88A71D87F6F600984C19 /* Aux.storyboard in Resources */,
 				254A19AA1B18768E0030F316 /* Keys.plist in Resources */,
@@ -791,6 +782,7 @@
 				384F22F81B0AE17900A04081 /* FirstMessageCell.swift in Sources */,
 				D525F1B31D8693F20002D8B6 /* EditUsersViewController.swift in Sources */,
 				25E5252A1C59C8B600477C3D /* GestureUtils.swift in Sources */,
+				259A16B81DDFB4C500C23DD0 /* CustomTextView.swift in Sources */,
 				D58252211D839340008313DF /* AddUserViewController.swift in Sources */,
 				25518A3F1B0ECFF200550DE9 /* ButtonCell.swift in Sources */,
 				252A6B541C4CF13400FA1F75 /* EventDescriptionTableViewCell.swift in Sources */,

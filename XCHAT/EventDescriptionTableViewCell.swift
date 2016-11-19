@@ -12,26 +12,35 @@ protocol NewEventDelegate {
     func onArtworkButtonTapped()
 }
 
-class EventDescriptionTableViewCell: UITableViewCell, UITextViewDelegate {
+class EventDescriptionTableViewCell: UITableViewCell {
     
     @IBOutlet weak var artworkButton: UIButton!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var locationTextField: UITextField!
-    @IBOutlet weak var descriptionTextView: UITextView!
+    @IBOutlet weak var descriptionTextView: CustomTextView!
     @IBOutlet weak var descriptionTextViewHeight: NSLayoutConstraint!
-    let descriptionTextViewPlaceholder = "Describe."
-    let kMaxDescriptionTextViewHeight = CGFloat(150)
+    
+    let kDescriptionTextViewMaxHeight = CGFloat(150)
+    
     var defaultDescriptionTextViewHeight: CGFloat!
     
     var newEventDelegate: NewEventDelegate?
 
     override func awakeFromNib() {
-        self.descriptionTextView.delegate = self
-        self.descriptionTextView.text = self.descriptionTextViewPlaceholder
-        self.defaultDescriptionTextViewHeight = self.descriptionTextViewHeight.constant
-        
         self.artworkButton.layer.cornerRadius = 2
         self.artworkButton.clipsToBounds = true
+        self.artworkButton.imageView?.contentMode = .ScaleAspectFill
+        
+        self.nameTextField.delegate = self
+        self.nameTextField.returnKeyType = .Next
+        self.nameTextField.nextTextField = self.locationTextField
+        
+        self.locationTextField.delegate = self
+        self.locationTextField.returnKeyType = .Next
+        
+        self.descriptionTextView.delegate = self
+        self.descriptionTextView.placeholder = "Describe."
+        self.defaultDescriptionTextViewHeight = self.descriptionTextViewHeight.constant
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -39,26 +48,16 @@ class EventDescriptionTableViewCell: UITableViewCell, UITextViewDelegate {
 
         // Configure the view for the selected state
     }
-    
-    // MARK: - Text View Delegate
-    
-    func textViewDidBeginEditing(textView: UITextView) {
-        if textView.text == self.descriptionTextViewPlaceholder {
-            textView.text = ""
-            textView.textColor = UIColor.blackColor()
-        }
-    }
-    
-    func textViewDidEndEditing(textView: UITextView) {
-        if textView.text == "" {
-            textView.text = self.descriptionTextViewPlaceholder
-            textView.textColor = UIColor.lightGrayColor()
-        }
-    }
-    
-    // TODO: Resize table view cell as text view grows.
+}
+
+
+// MARK: - Text View Delegate
+
+extension EventDescriptionTableViewCell: UITextViewDelegate {
     
     /*
+    // TODO: Resize table view cell as text view grows.
+    
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
             self.descriptionTextViewHeight.constant = min(self.kMaxDescriptionTextViewHeight,  self.descriptionTextViewHeight.constant + textView.font!.lineHeight)
@@ -68,12 +67,27 @@ class EventDescriptionTableViewCell: UITableViewCell, UITextViewDelegate {
         return true
     }
     */
-    
-    
-    // MARK: - Actions
-    
+}
+
+
+// MARK: - Text Field Delegate
+
+extension EventDescriptionTableViewCell: UITextFieldDelegate {
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField == self.locationTextField {
+            self.locationTextField.endEditing(true)
+        } else {
+            textField.nextTextField?.becomeFirstResponder()
+        }
+        return true
+    }
+}
+
+
+// MARK: - Actions
+
+extension EventDescriptionTableViewCell {
     @IBAction func onArtworkButtonTapped(sender: AnyObject) {
         self.newEventDelegate?.onArtworkButtonTapped()
     }
-
 }

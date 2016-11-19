@@ -44,7 +44,7 @@ class CalendarViewController: ContentViewController, UITableViewDelegate, UITabl
         
         self.noUpcomingEventsLabel.hidden = true
         
-        self.refreshEvents()
+        self.refreshEvents(completion: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -122,7 +122,7 @@ extension CalendarViewController {
 // MARK: - Refresh Helpers
 
 extension CalendarViewController {
-    func refreshEvents() {
+    func refreshEvents(completion completion: (() -> ())?) {
         self.getEvents { (events: [PFObject]) in
             dispatch_async(dispatch_get_main_queue(), { 
                 self.events = events
@@ -130,6 +130,7 @@ extension CalendarViewController {
                 self.tableView.reloadData()
                 self.noUpcomingEventsLabel.hidden = self.events.count != 0
             })
+            completion?()
         }
     }
     
@@ -175,8 +176,8 @@ extension CalendarViewController {
 // New Event Delegate
 
 extension CalendarViewController: NewEventViewControllerDelegate {
-    func refreshCurrentEvents() {
-        self.refreshEvents()
+    func refreshCurrentEvents(completion completion: (() -> ())) {
+        self.refreshEvents(completion: completion)
     }
 }
 
