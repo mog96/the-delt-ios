@@ -49,5 +49,30 @@
 	<false/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>For posting.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>For posting.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>For posting videos.</string>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemType</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER).Post</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>post.</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemType</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER).Chat</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>chat.</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemType</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER).Calendar</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>calendar.</string>
+		</dict>
+	</array>
 </dict>
 </plist>

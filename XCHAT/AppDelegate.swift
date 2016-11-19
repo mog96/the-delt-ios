@@ -25,44 +25,54 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             appDelegate?.menuViewController?.checkAdmin()
         }
     }
+    
+    enum ShortcutIdentifier: String {
+        case Post
+        case Chat
+        case Calendar
+        init?(fullIdentifier: String) {
+            guard let suffix = fullIdentifier.componentsSeparatedByString(".").last else {
+                return nil
+            }
+            self.init(rawValue: suffix)
+        }
+    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         AppDelegate.appName = NSBundle.mainBundle().infoDictionary!["CFBundleDisplayName"] as! String
         
-        if let path = NSBundle.mainBundle().pathForResource("Keys", ofType: "plist") {
-            if let keys = NSDictionary(contentsOfFile: path) {
-                // Parse config.
-                let configuration = ParseClientConfiguration {
-                    $0.applicationId = keys["ParseApplicationID"] as? String
-                    $0.clientKey = keys["ParseClientKey"] as? String
-                    
-                    /*
-                    /* DEVELOPMENT ONLY */
-                    #if TARGET_IPHONE_SIMULATOR
-                        $0.server = "http://localhost:1337/parse"
-                    #else
-                        $0.server = "http://mog.local:1337/parse"
-                    #endif
-                    /* END DEVELOPMENT ONLY */
-                    */
-                    
-                    $0.server = "http://thedelt.herokuapp.com/parse"
-                }
-                Parse.initializeWithConfiguration(configuration)
+        if let keys = NSDictionary(contentsOfFile: NSBundle.mainBundle().pathForResource("Keys", ofType: "plist")!) {
+            // Parse config.
+            let configuration = ParseClientConfiguration {
+                $0.applicationId = keys["ParseApplicationID"] as? String
+                $0.clientKey = keys["ParseClientKey"] as? String
                 
-                PFUser.enableRevocableSessionInBackgroundWithBlock { (error: NSError?) -> Void in
-                    print("enableRevocableSessionInBackgroundWithBlock completion")
-                }
+                // /*
+                /* DEVELOPMENT ONLY */
+                #if TARGET_IPHONE_SIMULATOR
+                    $0.server = "http://localhost:1337/parse"
+                #else
+                    $0.server = "http://mog.local:1337/parse"
+                #endif
+                /* END DEVELOPMENT ONLY */
+                // */
                 
-                // SoundCloud config.
-                // Soundcloud.clientIdentifier = "COOL"
-                // let soundcloud = Soundcloud()
-                // Soundcloud.clientIdentifier = keys["soundCloudClientID"] as String
-                
-            } else {
-                print("Error: Unable to load Keys.plist.")
+                // $0.server = "http://thedelt.herokuapp.com/parse"
             }
+            Parse.initializeWithConfiguration(configuration)
+            
+            PFUser.enableRevocableSessionInBackgroundWithBlock { (error: NSError?) -> Void in
+                print("enableRevocableSessionInBackgroundWithBlock completion")
+            }
+            
+            // SoundCloud config.
+            // Soundcloud.clientIdentifier = "COOL"
+            // let soundcloud = Soundcloud()
+            // Soundcloud.clientIdentifier = keys["soundCloudClientID"] as String
+            
+        } else {
+            print("Error: Unable to load Keys.plist.")
         }
         
         // Set up hamburger menu.
@@ -91,10 +101,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Set up initial view (REEL).
         let storyboard = UIStoryboard(name: "Reel", bundle: nil)
-        let firstNC = storyboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
-        self.hamburgerViewController!.contentViewController = firstNC
-        let firstVC = firstNC.viewControllers[0] as! ReelViewController
-        firstVC.menuDelegate = self.menuViewController
+        let reelNC = storyboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
+        self.hamburgerViewController!.contentViewController = reelNC
+        let reelVC = reelNC.viewControllers[0] as! ReelViewController
+        reelVC.menuDelegate = self.menuViewController
         
         // Check if user is logged in.
         if PFUser.currentUser() == nil {
@@ -228,6 +238,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         return UIInterfaceOrientationMask.Portrait
+    }
+    
+    @available(iOS 9.0, *)
+    func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
+        guard let identifier = ShortcutIdentifier.init(fullIdentifier: shortcutItem.type) else {
+            return
+        }
+        switch identifier {
+        case .Post:
+            self.menuViewController?.presentContentView(.Reel)
+            let reelVC = (self.hamburgerViewController?.contentViewController as! UINavigationController).viewControllers[0] as! ReelViewController
+            reelVC.presentImagePicker(usingPhotoLibrary: false)
+        case .Chat:
+            self.menuViewController?.presentContentView(.Chat)
+        case .Calendar:
+            self.menuViewController?.presentContentView(.Calendar)
+        }
     }
 }
 

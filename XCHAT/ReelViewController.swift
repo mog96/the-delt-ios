@@ -88,7 +88,7 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
 // MARK: - Helpers
 
 extension ReelViewController {
-    private func presentImagePicker(usingPhotoLibrary photoLibrary: Bool) {
+    func presentImagePicker(usingPhotoLibrary photoLibrary: Bool) {
         let imagePickerVC = UIImagePickerController()
         imagePickerVC.delegate = self
         imagePickerVC.allowsEditing = true

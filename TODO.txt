@@ -11,7 +11,7 @@
 	
 	- clear whitespace from username on account signup.
 
-	- Sending approval email from admin presents sign up alert.
+	- Sending approval email from admin presents confirmation alert.
 
 	- Report content email compose currently says "Feedback"
 
@@ -132,7 +132,6 @@
 	- IDEAS:
 		- Add unique color for each day of week?
 		- Old events are linked to gallery of photos taken that day...
-	- Reverse animate startDatePicker on endDatePicker changed?
 
 	MEMBERS
 	- FIX: search bar exit not animating properly. Change search to same as Admin.
