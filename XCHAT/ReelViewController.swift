@@ -285,7 +285,9 @@ extension ReelViewController {
                         let photo = NSMutableDictionary()
                         photo.setObject(object.objectId!, forKey: "objectId")
                         
-                        photo.setObject(object.objectForKey("imageFile")!, forKey: "imageFile")
+                        if let imageFile = object.objectForKey("imageFile") {
+                            photo.setObject(imageFile, forKey: "imageFile")
+                        }
                         
                         // VIDEO
                         if let videoFile = object.objectForKey("videoFile") {

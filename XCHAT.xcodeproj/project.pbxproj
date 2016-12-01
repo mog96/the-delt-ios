@@ -29,6 +29,12 @@
 		255BE9821B170E9C0001B160 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 255BE9801B170E9C0001B160 /* Chat.storyboard */; };
 		255BE9841B172E550001B160 /* MessageLeadingSpaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255BE9831B172E550001B160 /* MessageLeadingSpaceCell.swift */; };
 		255BE9881B1737940001B160 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255BE9871B1737940001B160 /* MessageCell.swift */; };
+		2568C86E1DEF898100C55859 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2568C86C1DEF898100C55859 /* MainInterface.storyboard */; };
+		2568C8731DEF898100C55859 /* ShareToReel.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2568C8681DEF898100C55859 /* ShareToReel.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2568C87B1DEF8A4900C55859 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2568C87A1DEF8A4900C55859 /* ShareViewController.swift */; };
+		2568C8851DEF9DB500C55859 /* UploadImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2568C8841DEF9DB500C55859 /* UploadImageService.swift */; };
+		2568C8871DEFB5C100C55859 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2568C8861DEFB5C100C55859 /* SwiftyJSON.swift */; };
+		2568C8891DEFD47B00C55859 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2568C8881DEFD47B00C55859 /* Keys.plist */; };
 		257A6B721B056D5B00996A56 /* HamburgerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257A6B711B056D5B00996A56 /* HamburgerViewController.swift */; };
 		258040B21C54DF00002D1F08 /* FeedbackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258040B11C54DF00002D1F08 /* FeedbackTableViewCell.swift */; };
 		258D49881B15AC6B00A632D3 /* ThreadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258D49871B15AC6B00A632D3 /* ThreadsViewController.swift */; };
@@ -68,7 +74,6 @@
 		3887E9F81B043ACE00D16CF6 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3887E9F71B043ACE00D16CF6 /* MobileCoreServices.framework */; };
 		3887E9FA1B043ADA00D16CF6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3887E9F91B043ADA00D16CF6 /* QuartzCore.framework */; };
 		3887E9FC1B043AE000D16CF6 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3887E9FB1B043AE000D16CF6 /* Security.framework */; };
-		3887E9FE1B043AE500D16CF6 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3887E9FD1B043AE500D16CF6 /* StoreKit.framework */; };
 		3887EA001B043AEA00D16CF6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3887E9FF1B043AEA00D16CF6 /* SystemConfiguration.framework */; };
 		3887EA021B043AEF00D16CF6 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3887EA011B043AEF00D16CF6 /* libz.dylib */; };
 		3887EA041B043AF600D16CF6 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3887EA031B043AF600D16CF6 /* libsqlite3.dylib */; };
@@ -110,6 +115,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2568C8701DEF898100C55859 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 259FBA351B02F5A5006F1650 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2568C8671DEF898100C55859;
+			remoteInfo = ShareToReel;
+		};
 		259FBA531B02F5A6006F1650 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 259FBA351B02F5A5006F1650 /* Project object */;
@@ -118,6 +130,20 @@
 			remoteInfo = XCHAT;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2568C8721DEF898100C55859 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				2568C8731DEF898100C55859 /* ShareToReel.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		2515CDDA1C58BDD40008A2B2 /* LayoutUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutUtils.swift; sourceTree = "<group>"; };
@@ -143,6 +169,16 @@
 		255BE9801B170E9C0001B160 /* Chat.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Chat.storyboard; sourceTree = "<group>"; };
 		255BE9831B172E550001B160 /* MessageLeadingSpaceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageLeadingSpaceCell.swift; sourceTree = "<group>"; };
 		255BE9871B1737940001B160 /* MessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		2568C8681DEF898100C55859 /* ShareToReel.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareToReel.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		2568C86D1DEF898100C55859 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		2568C86F1DEF898100C55859 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2568C8771DEF89A100C55859 /* ShareToReel.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShareToReel.entitlements; sourceTree = "<group>"; };
+		2568C8781DEF89B700C55859 /* XCHAT.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XCHAT.entitlements; sourceTree = "<group>"; };
+		2568C8791DEF8A4800C55859 /* ShareToReel-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ShareToReel-Bridging-Header.h"; sourceTree = "<group>"; };
+		2568C87A1DEF8A4900C55859 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		2568C8841DEF9DB500C55859 /* UploadImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadImageService.swift; sourceTree = "<group>"; };
+		2568C8861DEFB5C100C55859 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		2568C8881DEFD47B00C55859 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		257A6B711B056D5B00996A56 /* HamburgerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HamburgerViewController.swift; sourceTree = "<group>"; };
 		258040B11C54DF00002D1F08 /* FeedbackTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackTableViewCell.swift; sourceTree = "<group>"; };
 		258D49871B15AC6B00A632D3 /* ThreadsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadsViewController.swift; sourceTree = "<group>"; };
@@ -185,7 +221,6 @@
 		3887E9F71B043ACE00D16CF6 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		3887E9F91B043ADA00D16CF6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3887E9FB1B043AE000D16CF6 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		3887E9FD1B043AE500D16CF6 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		3887E9FF1B043AEA00D16CF6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3887EA011B043AEF00D16CF6 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		3887EA031B043AF600D16CF6 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -229,6 +264,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2568C8651DEF898100C55859 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		259FBA3A1B02F5A5006F1650 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -238,7 +280,6 @@
 				3887EA041B043AF600D16CF6 /* libsqlite3.dylib in Frameworks */,
 				3887EA021B043AEF00D16CF6 /* libz.dylib in Frameworks */,
 				3887EA001B043AEA00D16CF6 /* SystemConfiguration.framework in Frameworks */,
-				3887E9FE1B043AE500D16CF6 /* StoreKit.framework in Frameworks */,
 				3887E9FC1B043AE000D16CF6 /* Security.framework in Frameworks */,
 				3887E9FA1B043ADA00D16CF6 /* QuartzCore.framework in Frameworks */,
 				3887E9F81B043ACE00D16CF6 /* MobileCoreServices.framework in Frameworks */,
@@ -309,6 +350,21 @@
 			name = Login;
 			sourceTree = "<group>";
 		};
+		2568C8691DEF898100C55859 /* ShareToReel */ = {
+			isa = PBXGroup;
+			children = (
+				2568C8771DEF89A100C55859 /* ShareToReel.entitlements */,
+				2568C8841DEF9DB500C55859 /* UploadImageService.swift */,
+				2568C8861DEFB5C100C55859 /* SwiftyJSON.swift */,
+				2568C87A1DEF8A4900C55859 /* ShareViewController.swift */,
+				2568C86C1DEF898100C55859 /* MainInterface.storyboard */,
+				2568C86F1DEF898100C55859 /* Info.plist */,
+				2568C8881DEFD47B00C55859 /* Keys.plist */,
+				2568C8791DEF8A4800C55859 /* ShareToReel-Bridging-Header.h */,
+			);
+			path = ShareToReel;
+			sourceTree = "<group>";
+		};
 		258D49861B15AC5700A632D3 /* Threads */ = {
 			isa = PBXGroup;
 			children = (
@@ -333,6 +389,7 @@
 			children = (
 				259FBA3F1B02F5A5006F1650 /* XCHAT */,
 				259FBA551B02F5A6006F1650 /* XCHATTests */,
+				2568C8691DEF898100C55859 /* ShareToReel */,
 				259FBA3E1B02F5A5006F1650 /* Products */,
 				3E0F26945D5D8483DE7A5FFC /* Frameworks */,
 				E1B1EAB2321B937C8A1DA55A /* Pods */,
@@ -344,6 +401,7 @@
 			children = (
 				259FBA3D1B02F5A5006F1650 /* XCHAT.app */,
 				259FBA521B02F5A6006F1650 /* XCHATTests.xctest */,
+				2568C8681DEF898100C55859 /* ShareToReel.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -351,6 +409,7 @@
 		259FBA3F1B02F5A5006F1650 /* XCHAT */ = {
 			isa = PBXGroup;
 			children = (
+				2568C8781DEF89B700C55859 /* XCHAT.entitlements */,
 				2540A3911C2B9C84003E4B31 /* Login */,
 				384F23011B0AE90C00A04081 /* Menu */,
 				385C74501B0ECB70009BAC7A /* Profile */,
@@ -515,7 +574,6 @@
 				3887EA031B043AF600D16CF6 /* libsqlite3.dylib */,
 				3887EA011B043AEF00D16CF6 /* libz.dylib */,
 				3887E9FF1B043AEA00D16CF6 /* SystemConfiguration.framework */,
-				3887E9FD1B043AE500D16CF6 /* StoreKit.framework */,
 				3887E9FB1B043AE000D16CF6 /* Security.framework */,
 				3887E9F91B043ADA00D16CF6 /* QuartzCore.framework */,
 				3887E9F71B043ACE00D16CF6 /* MobileCoreServices.framework */,
@@ -575,6 +633,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2568C8671DEF898100C55859 /* ShareToReel */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2568C8761DEF898100C55859 /* Build configuration list for PBXNativeTarget "ShareToReel" */;
+			buildPhases = (
+				2568C8641DEF898100C55859 /* Sources */,
+				2568C8651DEF898100C55859 /* Frameworks */,
+				2568C8661DEF898100C55859 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ShareToReel;
+			productName = ShareToReel;
+			productReference = 2568C8681DEF898100C55859 /* ShareToReel.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		259FBA3C1B02F5A5006F1650 /* XCHAT */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 259FBA5C1B02F5A6006F1650 /* Build configuration list for PBXNativeTarget "XCHAT" */;
@@ -585,10 +660,12 @@
 				259FBA3B1B02F5A5006F1650 /* Resources */,
 				BB1CFC6A0494DCE374FF4960 /* [CP] Embed Pods Frameworks */,
 				79E2EC0BEDCF2CD30DDE9FAA /* [CP] Copy Pods Resources */,
+				2568C8721DEF898100C55859 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				2568C8711DEF898100C55859 /* PBXTargetDependency */,
 			);
 			name = XCHAT;
 			productName = XCHAT;
@@ -619,14 +696,33 @@
 		259FBA351B02F5A5006F1650 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 0800;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Mateo Garcia";
 				TargetAttributes = {
+					2568C8671DEF898100C55859 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = 9VEX7Q727F;
+						LastSwiftMigration = 0800;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
 					259FBA3C1B02F5A5006F1650 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = 9VEX7Q727F;
 						LastSwiftMigration = 0800;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.InAppPurchase = {
+								enabled = 0;
+							};
+						};
 					};
 					259FBA511B02F5A6006F1650 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -651,11 +747,21 @@
 			targets = (
 				259FBA3C1B02F5A5006F1650 /* XCHAT */,
 				259FBA511B02F5A6006F1650 /* XCHATTests */,
+				2568C8671DEF898100C55859 /* ShareToReel */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2568C8661DEF898100C55859 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2568C8891DEFD47B00C55859 /* Keys.plist in Resources */,
+				2568C86E1DEF898100C55859 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		259FBA3B1B02F5A5006F1650 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -740,6 +846,16 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2568C8641DEF898100C55859 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2568C8871DEFB5C100C55859 /* SwiftyJSON.swift in Sources */,
+				2568C8851DEF9DB500C55859 /* UploadImageService.swift in Sources */,
+				2568C87B1DEF8A4900C55859 /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		259FBA391B02F5A5006F1650 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -824,6 +940,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		2568C8711DEF898100C55859 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2568C8671DEF898100C55859 /* ShareToReel */;
+			targetProxy = 2568C8701DEF898100C55859 /* PBXContainerItemProxy */;
+		};
 		259FBA541B02F5A6006F1650 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 259FBA3C1B02F5A5006F1650 /* XCHAT */;
@@ -832,6 +953,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		2568C86C1DEF898100C55859 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2568C86D1DEF898100C55859 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		259FBA461B02F5A5006F1650 /* Menu.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -851,6 +980,56 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		2568C8741DEF898100C55859 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_ENTITLEMENTS = ShareToReel/ShareToReel.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 9VEX7Q727F;
+				INFOPLIST_FILE = ShareToReel/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tdx.thedelt.ShareToReel;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "ShareToReel/ShareToReel-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
+			};
+			name = Debug;
+		};
+		2568C8751DEF898100C55859 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_ENTITLEMENTS = ShareToReel/ShareToReel.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 9VEX7Q727F;
+				INFOPLIST_FILE = ShareToReel/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tdx.thedelt.ShareToReel;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "ShareToReel/ShareToReel-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 2.3;
+			};
+			name = Release;
+		};
 		259FBA5A1B02F5A6006F1650 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -943,8 +1122,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C13DA56B626E1D28B7220808 /* Pods-XCHAT.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = XCHAT/XCHAT.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
@@ -965,8 +1146,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 712757A71E38977C88B0E46E /* Pods-XCHAT.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = XCHAT/XCHAT.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
@@ -1031,6 +1214,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2568C8761DEF898100C55859 /* Build configuration list for PBXNativeTarget "ShareToReel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2568C8741DEF898100C55859 /* Debug */,
+				2568C8751DEF898100C55859 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		259FBA381B02F5A5006F1650 /* Build configuration list for PBXProject "XCHAT" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

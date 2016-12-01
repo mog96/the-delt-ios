@@ -599,6 +599,9 @@ extension LoginViewController {
                             self.endLoginAnmation(withResetPassword: false)
                             self.view.endEditing(true)
                             self.transitionToApp()
+                            
+                            // Store username in defaults.
+                            NSUserDefaults(suiteName: "group.com.tdx.thedelt")?.setObject(user!.username!, forKey: "Username")
                         }
                         
                     } else {

@@ -204,6 +204,8 @@ extension SettingsViewController: ActionButtonCellDelegate {
                 let loginStoryboard = UIStoryboard(name: "Login", bundle: nil)
                 let loginViewController = loginStoryboard.instantiateViewControllerWithIdentifier("LoginViewController") as? LoginViewController
                 
+                NSUserDefaults(suiteName: "group.com.tdx.thedelt")?.removeObjectForKey("Username")
+                
                 UIView.transitionWithView(self.view.window!, duration: 0.5, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
                     self.view.window!.rootViewController = loginViewController
                     }, completion: nil)
