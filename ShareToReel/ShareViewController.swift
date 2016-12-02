@@ -52,7 +52,7 @@ class ShareViewController: SLComposeServiceViewController {
         if let username = PFUser.currentUser()?.username {
             self.username = username
         } else if let cachedUsername = NSUserDefaults(suiteName: "group.com.tdx.thedelt")?.objectForKey("Username") as? String {
-            // self.username = cachedUsername
+            self.username = cachedUsername
         }
         
         print("USERNAME", self.username)
@@ -81,6 +81,8 @@ class ShareViewController: SLComposeServiceViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
         if self.username == nil {
             let alert = UIAlertController(title: "Unable to Post", message: "Please go to 'the delt.' and log in.", preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: { _ in
@@ -98,8 +100,6 @@ class ShareViewController: SLComposeServiceViewController {
     }
 
     override func didSelectPost() {
-        // UploadImageService.sharedService.uploadImage(self.selectedImage, caption: self.contentText)
-        
         guard self.username != nil else {
             return
         }

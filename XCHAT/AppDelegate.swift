@@ -54,11 +54,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     $0.server = "http://localhost:1337/parse"
                 #else
                     $0.server = "http://mog.local:1337/parse"
+                    // $0.server = "http://192.168.1.243:1337/parse"
                 #endif
                 /* END DEVELOPMENT ONLY */
                 // */
-                
-                // $0.server = "http://192.168.1.243:1337/parse"
                 
                 $0.server = "http://thedelt.herokuapp.com/parse"
             }
