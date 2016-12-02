@@ -12,7 +12,7 @@ import MobileCoreServices
 
 class ShareViewController: SLComposeServiceViewController {
     
-    var selectedImageURL: NSURL!
+    var selectedImage: UIImage!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +34,11 @@ class ShareViewController: SLComposeServiceViewController {
                 attatchment.loadItemForTypeIdentifier(contentTypeImage, options: nil, completionHandler: { (data: NSSecureCoding?, error: NSError!) in
                     if error == nil {
                         if let url = data as? NSURL {
-                            self.selectedImageURL = url
+                            if let imageData = NSData(contentsOfURL: url) {
+                                self.selectedImage = UIImage(data: imageData)
+                            } else {
+                                self.presentLoadImageError()
+                            }
                         } else {
                             self.presentLoadImageError()
                         }
@@ -47,14 +51,14 @@ class ShareViewController: SLComposeServiceViewController {
     }
 
     override func isContentValid() -> Bool {
-        if self.selectedImageURL != nil {
+        if self.selectedImage != nil {
             return true
         }
         return false
     }
 
     override func didSelectPost() {
-        UploadImageService.sharedService.uploadImage(self.selectedImageURL, caption: self.contentText)
+        UploadImageService.sharedService.uploadImage(self.selectedImage, caption: self.contentText)
         self.extensionContext!.completeRequestReturningItems([], completionHandler: nil)
     }
 

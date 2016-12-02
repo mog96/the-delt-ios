@@ -74,8 +74,7 @@ class PhotoVideoCell: UITableViewCell {
                 self.controlsView.addGestureRecognizer(tapGestureRecognizer)
                 
             // Photo.
-            } else {
-                let file = photo.valueForKey("imageFile") as! PFFile
+            } else if let file = photo.valueForKey("imageFile") as? PFFile {
                 let pfImageView = PFImageView()
                 
                 // JUST FOR LOLZ

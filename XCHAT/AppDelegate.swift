@@ -48,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 $0.applicationId = keys["ParseApplicationID"] as? String
                 $0.clientKey = keys["ParseClientKey"] as? String
                 
-                /*
+                // /*
                 /* DEVELOPMENT ONLY */
                 #if TARGET_IPHONE_SIMULATOR
                     $0.server = "http://localhost:1337/parse"
@@ -56,11 +56,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     $0.server = "http://mog96.local:1337/parse"
                 #endif
                 /* END DEVELOPMENT ONLY */
-                */
+                // */
                 
                 // $0.server = "http://192.168.1.243:1337/parse"
                 
-                $0.server = "http://thedelt.herokuapp.com/parse"
+                // $0.server = "http://thedelt.herokuapp.com/parse"
             }
             Parse.initializeWithConfiguration(configuration)
             
