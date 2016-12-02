@@ -10,6 +10,7 @@ import UIKit
 import Social
 import MobileCoreServices
 import Parse
+import MBProgressHUD
 
 class ShareViewController: SLComposeServiceViewController {
     
@@ -100,6 +101,9 @@ class ShareViewController: SLComposeServiceViewController {
     }
 
     override func didSelectPost() {
+        let currentHUD = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        currentHUD.label.text = "Uploading..."
+        
         guard self.username != nil else {
             return
         }
@@ -137,6 +141,7 @@ class ShareViewController: SLComposeServiceViewController {
                 print("Error: \(error) \(error.userInfo)")
                 
             } else {
+                currentHUD.hide(true)
                 print("UPLOADED IMAGE FROM SHARE EXTENSION")
                 self.extensionContext!.completeRequestReturningItems([], completionHandler: nil)
             }

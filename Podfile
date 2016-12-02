@@ -20,5 +20,6 @@ end
 target "ShareToReel" do
 	use_frameworks!
 	
+	pod 'MBProgressHUD'
 	pod 'Parse'
 end
