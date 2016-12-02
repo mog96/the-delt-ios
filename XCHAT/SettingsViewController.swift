@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import FBSDKLoginKit
 import MBProgressHUD
 import MessageUI
 import Parse

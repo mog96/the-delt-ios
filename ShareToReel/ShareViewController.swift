@@ -9,6 +9,7 @@
 import UIKit
 import Social
 import MobileCoreServices
+import Parse
 
 class ShareViewController: SLComposeServiceViewController {
     

@@ -91,6 +91,7 @@
 		38F655E11B0D235700C5586A /* ReelGridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F655E01B0D235700C5586A /* ReelGridViewController.swift */; };
 		38F655E31B0D236900C5586A /* ReelGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F655E21B0D236900C5586A /* ReelGridCell.swift */; };
 		38F655E51B0D521200C5586A /* ActionButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F655E41B0D521200C5586A /* ActionButtonTableViewCell.swift */; };
+		A9EE1C7A73C762447ED38839 /* Pods_ShareToReel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3051BF61332FBC40DA859DEF /* Pods_ShareToReel.framework */; };
 		D525F1B31D8693F20002D8B6 /* EditUsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525F1B21D8693F20002D8B6 /* EditUsersViewController.swift */; };
 		D525F1B51D86960E0002D8B6 /* EditUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525F1B41D86960E0002D8B6 /* EditUserTableViewCell.swift */; };
 		D525F1B91D874CB30002D8B6 /* UITextField+NextTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525F1B81D874CB30002D8B6 /* UITextField+NextTextField.swift */; };
@@ -199,6 +200,7 @@
 		25E525291C59C8B600477C3D /* GestureUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GestureUtils.swift; sourceTree = "<group>"; };
 		25F016051B045882004D78F6 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		25F016091B045D83004D78F6 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		3051BF61332FBC40DA859DEF /* Pods_ShareToReel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ShareToReel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		381125AC1B0C1CD200DBBAD2 /* ReelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReelViewController.swift; sourceTree = "<group>"; };
 		381125B21B0C1DB400DBBAD2 /* Reel.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Reel.storyboard; sourceTree = "<group>"; };
 		381BD6C71B158C5F005C6D1C /* Members.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Members.storyboard; sourceTree = "<group>"; };
@@ -261,6 +263,8 @@
 		D5E001121D959FE900ABEFBE /* DeltLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeltLoadingView.swift; sourceTree = "<group>"; };
 		D5FB88A61D87F6F600984C19 /* Aux.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Aux.storyboard; sourceTree = "<group>"; };
 		D5FB88A81D88054200984C19 /* QueueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueViewController.swift; sourceTree = "<group>"; };
+		DDF7B849692F4D155B19A6A7 /* Pods-ShareToReel.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShareToReel.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ShareToReel/Pods-ShareToReel.debug.xcconfig"; sourceTree = "<group>"; };
+		F48A45C2EDBB3FAD1DA7B86E /* Pods-ShareToReel.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShareToReel.release.xcconfig"; path = "Pods/Target Support Files/Pods-ShareToReel/Pods-ShareToReel.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -268,6 +272,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9EE1C7A73C762447ED38839 /* Pods_ShareToReel.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -582,6 +587,7 @@
 				3887E9F11B043ABE00D16CF6 /* CFNetwork.framework */,
 				3887E9EF1B043AB900D16CF6 /* AudioToolbox.framework */,
 				AA26B4F882840903BF5F9FF4 /* Pods_XCHAT.framework */,
+				3051BF61332FBC40DA859DEF /* Pods_ShareToReel.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -626,6 +632,8 @@
 			children = (
 				C13DA56B626E1D28B7220808 /* Pods-XCHAT.debug.xcconfig */,
 				712757A71E38977C88B0E46E /* Pods-XCHAT.release.xcconfig */,
+				DDF7B849692F4D155B19A6A7 /* Pods-ShareToReel.debug.xcconfig */,
+				F48A45C2EDBB3FAD1DA7B86E /* Pods-ShareToReel.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -637,9 +645,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2568C8761DEF898100C55859 /* Build configuration list for PBXNativeTarget "ShareToReel" */;
 			buildPhases = (
+				3593AE51ECE817E2EB39EF9B /* [CP] Check Pods Manifest.lock */,
 				2568C8641DEF898100C55859 /* Sources */,
 				2568C8651DEF898100C55859 /* Frameworks */,
 				2568C8661DEF898100C55859 /* Resources */,
+				DDC52ACB43E7B49CA1429C16 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -798,6 +808,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		3593AE51ECE817E2EB39EF9B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		372C54C5C0162E8B4EA6C7D6 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -841,6 +866,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-XCHAT/Pods-XCHAT-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DDC52ACB43E7B49CA1429C16 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ShareToReel/Pods-ShareToReel-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -982,6 +1022,7 @@
 /* Begin XCBuildConfiguration section */
 		2568C8741DEF898100C55859 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DDF7B849692F4D155B19A6A7 /* Pods-ShareToReel.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -994,7 +1035,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 9VEX7Q727F;
 				INFOPLIST_FILE = ShareToReel/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tdx.thedelt.ShareToReel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1008,6 +1049,7 @@
 		};
 		2568C8751DEF898100C55859 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F48A45C2EDBB3FAD1DA7B86E /* Pods-ShareToReel.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -1019,7 +1061,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 9VEX7Q727F;
 				INFOPLIST_FILE = ShareToReel/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tdx.thedelt.ShareToReel;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1221,6 +1263,7 @@
 				2568C8751DEF898100C55859 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		259FBA381B02F5A5006F1650 /* Build configuration list for PBXProject "XCHAT" */ = {
 			isa = XCConfigurationList;
