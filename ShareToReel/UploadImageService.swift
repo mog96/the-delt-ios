@@ -56,6 +56,9 @@ public class UploadImageService: NSObject {
         
         let session = NSURLSession(configuration: sessionConfig, delegate: UploadImageService.sharedService, delegateQueue: NSOperationQueue.mainQueue())
         let url = NSURL(string: self.baseURL + "/files/image.jpeg")!
+        
+        print("URL:", url)
+        
         let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "POST"
         
@@ -63,6 +66,7 @@ public class UploadImageService: NSObject {
 //        task.resume()
         
         let completionBlock = { (fileURL: NSURL?, error: NSError?, tempContainerURL: NSURL?) in
+            print("OUT HERE")
             if error == nil {
                 let sessionConfig = NSURLSessionConfiguration.defaultSessionConfiguration()
                 sessionConfig.sharedContainerIdentifier = "group.com.tdx.thedelt"
@@ -84,6 +88,7 @@ public class UploadImageService: NSObject {
                 let request = NSMutableURLRequest(URL: url)
                 request.HTTPMethod = "POST"
                 
+                /*
                 let task = session.dataTaskWithRequest(request)
                 /*
                 self.completionCallbacks[task] = { (error: NSError?) in
@@ -96,6 +101,7 @@ public class UploadImageService: NSObject {
                 }
                 */
                 task.resume()
+                */
                 
             } else {
                 print("FILE UPLOAD ERROR:", error?.userInfo["error"])
@@ -135,6 +141,8 @@ public class UploadImageService: NSObject {
             return nil
         }
     }
+    
+    
 }
 
 
@@ -149,14 +157,14 @@ extension UploadImageService: NSURLSessionDataDelegate, NSURLSessionTaskDelegate
         
         print("TASK COMPLETED")
         
-        if let completionCallback = completionCallbacks[task] {
+        if let completionCallback = completionCallbacks.first?.1 {
             completionCallbacks.removeValueForKey(task)
             completionCallback(nil, error, self.containerURL)
         }
     }
     
     public func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
-        if let completionBlock = completionCallbacks[dataTask] {
+        if let completionBlock = completionCallbacks.first?.1 {
             var error: NSError?
             
             print("BANANA")

@@ -53,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 #if TARGET_IPHONE_SIMULATOR
                     $0.server = "http://localhost:1337/parse"
                 #else
-                    $0.server = "http://mog96.local:1337/parse"
+                    $0.server = "http://mog.local:1337/parse"
                 #endif
                 /* END DEVELOPMENT ONLY */
                 // */
