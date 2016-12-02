@@ -11,8 +11,6 @@
 		- Debug camera from shortcut...
 
 	- Shortcut icons.
-
-	- Add sharing from Photos to the delt.
 	
 	- clear whitespace from username on account signup.
 
@@ -43,7 +41,7 @@
 	- On login page, 
 	- Change Members profile view placeholders
 		- Remove 6969
-	- Show photos in profile.
+	- Show user's photo thumbnails in profile.
 	- Page with admins.
 		- Shown only to admins. Ability to add admins.
 	- Redo login flow so that users are pre-added from delt email list? ...
