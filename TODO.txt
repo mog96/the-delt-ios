@@ -99,6 +99,7 @@
 	- Cache reel photos.
 
 	LOGIN
+	- Handled timeouts by cancelling login request and displaying alert.
 	- Successful login transition causes button icons to appear in the top left corner at first.
 	- login view kinda wiggles int place... looks a little weird... but kinda cool...
 

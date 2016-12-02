@@ -54,12 +54,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     $0.server = "http://localhost:1337/parse"
                 #else
                     $0.server = "http://mog.local:1337/parse"
+                    // $0.server = "http://192.168.1.243:1337/parse"
                 #endif
                 /* END DEVELOPMENT ONLY */
                 // */
                 
-                // $0.server = "http://thedelt.herokuapp.com/parse"
+                $0.server = "http://thedelt.herokuapp.com/parse"
             }
+            Parse.enableDataSharingWithApplicationGroupIdentifier("group.com.tdx.thedelt")
+            Parse.enableLocalDatastore()
             Parse.initializeWithConfiguration(configuration)
             
             PFUser.enableRevocableSessionInBackgroundWithBlock { (error: NSError?) -> Void in
@@ -120,6 +123,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             } else {
                 AppDelegate.isAdmin = false
             }
+            
+            NSUserDefaults(suiteName: "group.com.tdx.thedelt")?.setObject(PFUser.currentUser()!.username!, forKey: "Username")
             
             // Does exactly the same as arrow in storyboard. ("100% parity." --Tim Lee)
             window?.rootViewController = self.hamburgerViewController
