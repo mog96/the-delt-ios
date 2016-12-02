@@ -60,8 +60,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 // $0.server = "http://192.168.1.243:1337/parse"
                 
-                // $0.server = "http://thedelt.herokuapp.com/parse"
+                $0.server = "http://thedelt.herokuapp.com/parse"
             }
+            Parse.enableDataSharingWithApplicationGroupIdentifier("group.com.tdx.thedelt")
+            Parse.enableLocalDatastore()
             Parse.initializeWithConfiguration(configuration)
             
             PFUser.enableRevocableSessionInBackgroundWithBlock { (error: NSError?) -> Void in
