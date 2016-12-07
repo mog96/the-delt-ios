@@ -5,8 +5,6 @@
 	NEXT SPRINT:
 	- INSTALL PUSH.
 
-	- FIX VIDEO LOADING.
-
 	- Smooth photo upload transition.
 		- Debug camera from shortcut...
 
@@ -32,6 +30,7 @@
 		- nil out vid player on reuse.
 
 	- Show loading for profile updating...
+		- Profile photo: fade in after upload.
 		- Class year doesn't work.
 		- Bio doesn't always work.
 

@@ -59,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 /* END DEVELOPMENT ONLY */
                 // */
                 
-                $0.server = "http://thedelt.herokuapp.com/parse"
+                $0.server = "https://thedelt.herokuapp.com/parse"
             }
             Parse.enableDataSharingWithApplicationGroupIdentifier("group.com.tdx.thedelt")
             Parse.enableLocalDatastore()

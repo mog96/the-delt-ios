@@ -75,6 +75,8 @@ class PhotoVideoCell: UITableViewCell {
                 
             // Photo.
             } else if let file = photo.valueForKey("imageFile") as? PFFile {
+                print("IMAGE URL:", file.url)
+                
                 let pfImageView = PFImageView()
                 
                 // JUST FOR LOLZ
@@ -110,6 +112,9 @@ class PhotoVideoCell: UITableViewCell {
             if self.videoPlayer == nil {
                 self.addVideoPlayer(contentUrl: self.videoUrl!, containerView: self.videoPlayerView, preview: self.photoImageView)
             }
+            
+            print("PLAYING VIDEO WITH URL", self.videoUrl!)
+            
             self.videoPlayer?.play()
             self.photoImageView.hidden = true
         }
