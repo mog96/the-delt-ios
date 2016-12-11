@@ -39,7 +39,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
         AppDelegate.appName = NSBundle.mainBundle().infoDictionary!["CFBundleDisplayName"] as! String
         
         if let keys = NSDictionary(contentsOfFile: NSBundle.mainBundle().pathForResource("Keys", ofType: "plist")!) {
@@ -48,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 $0.applicationId = keys["ParseApplicationID"] as? String
                 $0.clientKey = keys["ParseClientKey"] as? String
                 
-                // /*
+                // /***/
                 /* DEVELOPMENT ONLY */
                 #if TARGET_IPHONE_SIMULATOR
                     $0.server = "http://localhost:1337/parse"
@@ -77,6 +76,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             print("Error: Unable to load Keys.plist.")
         }
+        
+        // Register for push.
+        self.registerForPushNoitifications(application)
         
         // Set up hamburger menu.
         let menuStoryboard = UIStoryboard(name: "Menu", bundle: nil)
@@ -130,88 +132,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = self.hamburgerViewController
         }
         
-        
-        
-        
-        
-        
-        /** SCRAP **/
-        
-        /*
-        // PUSH STUFF
-        let appId = "cEpg8HAH75eVLcqfp9VfbQIdUJ1lz7XVMwrZ5EYc"
-        let clientKey = "Ldbj47H9IXlzbIKkW1W7DkK2YvbeAfdCTVyregTL"
-        Parse.setApplicationId(appId as String,
-            clientKey: clientKey as String)
-        
-        // Register for Push Notitications
-        if application.applicationState != UIApplicationState.Background {
-            // Track an app open here if we launch with a push, unless
-            // "content_available" was used to trigger a background push (introduced in iOS 7).
-            // In that case, we skip tracking here to avoid double counting the app-open.
-            
-            let preBackgroundPush = !application.respondsToSelector("backgroundRefreshStatus")
-            let oldPushHandlerOnly = !self.respondsToSelector("application:didReceiveRemoteNotification:fetchCompletionHandler:")
-            var pushPayload = false
-            if let options = launchOptions {
-                pushPayload = options[UIApplicationLaunchOptionsRemoteNotificationKey] != nil
-            }
-            if (preBackgroundPush || oldPushHandlerOnly || pushPayload) {
-                PFAnalytics.trackAppOpenedWithLaunchOptionsInBackground(launchOptions, block: nil)
-                //                        .trackAppOpenedWithLaunchOptions(launchOptions)
-            }
-        }
-        
-        if application.respondsToSelector("registerUserNotificationSettings:") {
-            let userNotificationTypes = UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound
-            let settings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
-            application.registerUserNotificationSettings(settings)
-            application.registerForRemoteNotifications()
-        } else {
-            let types = UIRemoteNotificationType.Badge | UIRemoteNotificationType.Alert | UIRemoteNotificationType.Sound
-            application.registerForRemoteNotificationTypes(types)
-        }
-        */
-        
         return true
     }
     
-    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-        /*
-        let installation = PFInstallation.currentInstallation()
-        installation.setDeviceTokenFromData(deviceToken)
-        //there's no empty saveInBackground method
-        installation.saveInBackgroundWithBlock { (success:Bool, error:NSError?) -> Void in
-                       //nothing here for callback
+    // @param notificationSettings Tells us what the user has allowed for our app in Settings.
+    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
+        if notificationSettings.types != .None {
+            application.registerForRemoteNotifications()
         }
-        */
     }
     
-            
+    // Push notification registration successful.
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        /***/
+        let tokenChars = UnsafePointer<CChar>(deviceToken.bytes)
+        var tokenString = ""
+        
+        for i in 0..<deviceToken.length {
+            tokenString += String(format: "%02.2hhx", arguments: [tokenChars[i]])
+        }
+        
+        print("PUSH DEVICE TOKEN:", tokenString)
+        /***/
+        
+        // IMPORTANT: Saves this app installation under '_Installation' collection in MongoDB.
+        let installation = PFInstallation.currentInstallation()!
+        installation.setDeviceTokenFromData(deviceToken)
+        installation.saveInBackground()
+    }
    
-    
+    // Push notification registration error.
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
-        /*
         if error.code == 3010 {
             print("Push notifications are not supported in the iOS Simulator.")
         } else {
             print("application:didFailToRegisterForRemoteNotificationsWithError: %@", error)
         }
-        */
     }
-
         
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        /*
+        print("PUSH RECEIVED!!")
         PFPush.handlePush(userInfo)
-        if application.applicationState == UIApplicationState.Inactive {
-            PFAnalytics.trackAppOpenedWithRemoteNotificationPayloadInBackground(userInfo, block: { (success:Bool, error:NSError?) -> Void in
-                //nothing here for callback
-
-            })
-        }
-        */
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -260,6 +222,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case .Calendar:
             self.menuViewController?.presentContentView(.Calendar)
         }
+    }
+}
+
+
+// MARK: - Helpers
+
+extension AppDelegate {
+    func registerForPushNoitifications(application: UIApplication) {
+        let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
+        application.registerUserNotificationSettings(notificationSettings)
     }
 }
 
