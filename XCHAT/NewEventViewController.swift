@@ -119,7 +119,7 @@ extension NewEventViewController {
             
             event["startTime"] = self.startDatePickerCell.eventDatePicker.date
             event["endTime"] = self.endDatePickerCell.eventDatePicker.date
-            event["ceatedBy"] = PFUser.currentUser()?.valueForKey("username")
+            event["createdBy"] = PFUser.currentUser()?.valueForKey("username")
             
             if artworkImage != nil {
                 let artworkImageData = UIImageJPEGRepresentation(artworkImage!, 100)

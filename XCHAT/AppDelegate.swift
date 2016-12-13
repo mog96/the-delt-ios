@@ -150,13 +150,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 let aps = notification["aps"] as! [String: AnyObject]
                 if let pushType = aps["pushType"] as? String {
-                    if pushType == "Chat" {
-                        // Set initial view to CHAT.
-                        let storyboard = UIStoryboard(name: "Chat", bundle: nil)
-                        let nc = storyboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
-                        self.hamburgerViewController!.contentViewController = nc
-                        let firstVC = nc.viewControllers[0] as! ChatViewController
-                        firstVC.menuDelegate = self.menuViewController
+                    if let identifier = PushIdentifier.init(fullIdentifier: pushType) {
+                        switch identifier {
+                        case .Reel:
+                            break
+                        case .Chat:
+                            self.menuViewController?.presentContentView(.Chat)
+                        case .Calendar:
+                            self.menuViewController?.presentContentView(.Calendar)
+                        }
                     }
                 }
             }
@@ -221,28 +223,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         print("NOTIFICATION:", userInfo["aps"])
         
-        let aps = userInfo["aps"] as! [String: AnyObject]
-        if let pushType = aps["pushType"] as? String {
-            guard let identifier = PushIdentifier.init(fullIdentifier: pushType) else {
-                return
-            }
-            switch identifier {
-            case .Reel:
-                // Set initial view to Reel.
-                let storyboard = UIStoryboard(name: "Reel", bundle: nil)
-                let reelNC = storyboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
-                self.hamburgerViewController!.contentViewController = reelNC
-                let reelVC = reelNC.viewControllers[0] as! ReelViewController
-                reelVC.menuDelegate = self.menuViewController
-            case .Chat:
-                // Set initial view to CHAT.
-                let storyboard = UIStoryboard(name: "Chat", bundle: nil)
-                let nc = storyboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
-                self.hamburgerViewController!.contentViewController = nc
-                let firstVC = nc.viewControllers[0] as! ChatViewController
-                firstVC.menuDelegate = self.menuViewController
-            case .Calendar:
-                self.menuViewController?.presentContentView(.Calendar)
+        if UIApplication.sharedApplication().applicationState != .Active {
+            let aps = userInfo["aps"] as! [String: AnyObject]
+            if let pushType = aps["pushType"] as? String {
+                guard let identifier = PushIdentifier.init(fullIdentifier: pushType) else {
+                    return
+                }
+                let topVC = (self.hamburgerViewController?.contentViewController as? UINavigationController)?.topViewController
+                switch identifier {
+                case .Reel:
+                    if topVC == nil || !topVC!.isKindOfClass(ReelViewController) {
+                        self.menuViewController?.presentContentView(.Reel)
+                    }
+                case .Chat:
+                    if topVC == nil || !topVC!.isKindOfClass(ChatViewController) {
+                        self.menuViewController?.presentContentView(.Chat)
+                    }
+                case .Calendar:
+                    if topVC == nil || !topVC!.isKindOfClass(CalendarViewController) {
+                        self.menuViewController?.presentContentView(.Calendar)
+                    }
+                }
             }
         }
     }
