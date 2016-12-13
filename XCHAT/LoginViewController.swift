@@ -598,6 +598,11 @@ extension LoginViewController {
                         } else {
                             // Save username to NSUserDefaults in case PFUser.currentUser() fails in share extension.
                             NSUserDefaults(suiteName: "group.com.tdx.thedelt")?.setObject(user!.username!, forKey: "Username")
+                            let installation = PFInstallation.currentInstallation()!
+                            installation["user"] = PFUser.currentUser()!
+                            installation.saveInBackgroundWithBlock({ (completed: Bool, error: NSError?) in
+                                print("USER SAVED TO INSTALLATION")
+                            })
                             
                             self.endLoginAnmation(withResetPassword: false)
                             self.view.endEditing(true)
