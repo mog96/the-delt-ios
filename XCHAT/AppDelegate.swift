@@ -37,7 +37,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.init(rawValue: suffix)
         }
     }
-
+    
+    /**
+        @param launchOptions Contains push notification if your app wasn’t running and the user launches it by tapping the push notification.
+    */
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         AppDelegate.appName = NSBundle.mainBundle().infoDictionary!["CFBundleDisplayName"] as! String
         
@@ -58,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 /* END DEVELOPMENT ONLY */
                 // */
                 
-                $0.server = "https://thedelt.herokuapp.com/parse"
+                // $0.server = "https://thedelt.herokuapp.com/parse"
             }
             Parse.enableDataSharingWithApplicationGroupIdentifier("group.com.tdx.thedelt")
             Parse.enableLocalDatastore()
@@ -77,8 +80,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Error: Unable to load Keys.plist.")
         }
         
+        // TODO: MOVE
         // Register for push.
-        self.registerForPushNoitifications(application)
+        self.registerForPushNotifications(application)
         
         // Set up hamburger menu.
         let menuStoryboard = UIStoryboard(name: "Menu", bundle: nil)
@@ -102,7 +106,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         */
         
         
-        /** SET START VIEW **/
+        /** SET DEFAULT START VIEW **/
         
         // Set up initial view (REEL).
         let storyboard = UIStoryboard(name: "Reel", bundle: nil)
@@ -120,13 +124,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = loginViewController
             
         } else {
+            // Save username to NSUserDefaults in case PFUser.currentUser() fails in share extension.
+            NSUserDefaults(suiteName: "group.com.tdx.thedelt")?.setObject(PFUser.currentUser()!.username!, forKey: "Username")
+            
             if let isAdmin = PFUser.currentUser()!.objectForKey("is_admin") as? Bool {
                 AppDelegate.isAdmin = isAdmin
             } else {
                 AppDelegate.isAdmin = false
             }
             
-            NSUserDefaults(suiteName: "group.com.tdx.thedelt")?.setObject(PFUser.currentUser()!.username!, forKey: "Username")
+            if let notification = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? [String: AnyObject] {
+                print("NOTIFICATION:", notification)
+                
+                let aps = notification["aps"] as! [String: AnyObject]
+                
+                // Set initial view to CHAT.
+                let storyboard = UIStoryboard(name: "Chat", bundle: nil)
+                let nc = storyboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
+                self.hamburgerViewController!.contentViewController = nc
+                let firstVC = nc.viewControllers[0] as! ChatViewController
+                firstVC.menuDelegate = self.menuViewController
+            }
             
             // Does exactly the same as arrow in storyboard. ("100% parity." --Tim Lee)
             window?.rootViewController = self.hamburgerViewController
@@ -135,14 +153,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    // @param notificationSettings Tells us what the user has allowed for our app in Settings.
+    /**
+        @param notificationSettings Tells us what the user has allowed for our app in Settings.
+     */
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
         if notificationSettings.types != .None {
             application.registerForRemoteNotifications()
         }
     }
     
-    // Push notification registration successful.
+    /**
+        Push notification registration successful.
+     */
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         /***/
         let tokenChars = UnsafePointer<CChar>(deviceToken.bytes)
@@ -161,7 +183,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         installation.saveInBackground()
     }
    
-    // Push notification registration error.
+    /**
+        Push notification registration error.
+     */
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
         if error.code == 3010 {
             print("Push notifications are not supported in the iOS Simulator.")
@@ -170,10 +194,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
         
-    
+    /**
+        Called if your app was running and in the foreground when push notification received
+        OR if your app was running or suspended in the background and the user brings it to the foreground by tapping the push notification.
+     
+        Use version with completion handler to do background fetching/processing on silent push received.
+     */
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         print("PUSH RECEIVED!!")
-        PFPush.handlePush(userInfo)
+        // PFPush.handlePush(userInfo) //
+        
+        print("NOTIFICATION:", userInfo["aps"])
+        
+        // Set initial view to CHAT.
+        let storyboard = UIStoryboard(name: "Chat", bundle: nil)
+        let nc = storyboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
+        self.hamburgerViewController!.contentViewController = nc
+        let firstVC = nc.viewControllers[0] as! ChatViewController
+        firstVC.menuDelegate = self.menuViewController
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -229,7 +267,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 // MARK: - Helpers
 
 extension AppDelegate {
-    func registerForPushNoitifications(application: UIApplication) {
+    func registerForPushNotifications(application: UIApplication) {
         let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
         application.registerUserNotificationSettings(notificationSettings)
     }

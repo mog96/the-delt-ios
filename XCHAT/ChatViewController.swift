@@ -66,12 +66,19 @@ class ChatViewController: ContentViewController {
         // Notify when app going into background to save message drafts.
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.saveMessageDraft), name: UIApplicationDidEnterBackgroundNotification, object: nil)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.willEnterForeground), name: UIApplicationDidBecomeActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.willEnterForeground), name: UIApplicationWillEnterForegroundNotification, object: nil)
+        
         // Fetch messages.
         self.fetchMessages()
         
         // SET MESSAGE REFRESH
         // Refetch messages every 15 seconds. 
         self.refreshTimer = NSTimer.scheduledTimerWithTimeInterval(15, target: self, selector: #selector(ChatViewController.fetchMessages), userInfo: nil, repeats: true)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        self.clearApplicationIconBadge()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -392,6 +399,31 @@ extension ChatViewController: MessageViewDelegate {
             }
             
         }
+    }
+}
+
+
+// MARK: - Application Icon Badge Helpers
+
+extension ChatViewController {
+    func willEnterForeground() {
+        // Only clear badge if Chat vc onscreen.
+        if self.isViewLoaded() && self.view.window != nil {
+            self.clearApplicationIconBadge()
+        }
+    }
+    
+    func clearApplicationIconBadge() {
+        let installation = PFInstallation.currentInstallation()!
+        let badge = installation.badge
+        print("BADGE NUM", badge)
+        if installation.badge != 0 {
+            installation.badge = 0
+            installation.saveInBackgroundWithBlock({ (saved: Bool, error: NSError?) in
+                print("BADGE SAVED")
+            })
+        }
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
     }
 }
 

@@ -596,12 +596,12 @@ extension LoginViewController {
                             self.endLoginAnmation(withResetPassword: true)
                             
                         } else {
+                            // Save username to NSUserDefaults in case PFUser.currentUser() fails in share extension.
+                            NSUserDefaults(suiteName: "group.com.tdx.thedelt")?.setObject(user!.username!, forKey: "Username")
+                            
                             self.endLoginAnmation(withResetPassword: false)
                             self.view.endEditing(true)
                             self.transitionToApp()
-                            
-                            // Store username in defaults.
-                            NSUserDefaults(suiteName: "group.com.tdx.thedelt")?.setObject(user!.username!, forKey: "Username")
                         }
                         
                     } else {
