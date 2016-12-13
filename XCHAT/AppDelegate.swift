@@ -38,6 +38,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    enum PushIdentifier: String {
+        case Reel
+        case Chat
+        case Calendar
+        init?(fullIdentifier: String) {
+            guard let suffix = fullIdentifier.componentsSeparatedByString(".").last else {
+                return nil
+            }
+            self.init(rawValue: suffix)
+        }
+    }
+    
     /**
         @param launchOptions Contains push notification if your app wasn’t running and the user launches it by tapping the push notification.
     */
@@ -211,24 +223,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let aps = userInfo["aps"] as! [String: AnyObject]
         if let pushType = aps["pushType"] as? String {
-            switch pushType {
-            case "Chat":
-                // Set initial view to CHAT.
-                let storyboard = UIStoryboard(name: "Chat", bundle: nil)
-                let nc = storyboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
-                self.hamburgerViewController!.contentViewController = nc
-                let firstVC = nc.viewControllers[0] as! ChatViewController
-                firstVC.menuDelegate = self.menuViewController
-            default: // case "Reel":
+            guard let identifier = PushIdentifier.init(fullIdentifier: pushType) else {
+                return
+            }
+            switch identifier {
+            case .Reel:
                 // Set initial view to Reel.
                 let storyboard = UIStoryboard(name: "Reel", bundle: nil)
                 let reelNC = storyboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
                 self.hamburgerViewController!.contentViewController = reelNC
                 let reelVC = reelNC.viewControllers[0] as! ReelViewController
                 reelVC.menuDelegate = self.menuViewController
+            case .Chat:
+                // Set initial view to CHAT.
+                let storyboard = UIStoryboard(name: "Chat", bundle: nil)
+                let nc = storyboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
+                self.hamburgerViewController!.contentViewController = nc
+                let firstVC = nc.viewControllers[0] as! ChatViewController
+                firstVC.menuDelegate = self.menuViewController
+            case .Calendar:
+                self.menuViewController?.presentContentView(.Calendar)
             }
         }
     }
+
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
