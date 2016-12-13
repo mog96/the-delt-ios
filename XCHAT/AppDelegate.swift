@@ -108,7 +108,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         /** SET DEFAULT START VIEW **/
         
-        // Set up initial view (REEL).
+        // Set initial view to Reel.
         let storyboard = UIStoryboard(name: "Reel", bundle: nil)
         let reelNC = storyboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
         self.hamburgerViewController!.contentViewController = reelNC
@@ -137,13 +137,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("NOTIFICATION:", notification)
                 
                 let aps = notification["aps"] as! [String: AnyObject]
-                
-                // Set initial view to CHAT.
-                let storyboard = UIStoryboard(name: "Chat", bundle: nil)
-                let nc = storyboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
-                self.hamburgerViewController!.contentViewController = nc
-                let firstVC = nc.viewControllers[0] as! ChatViewController
-                firstVC.menuDelegate = self.menuViewController
+                if let pushType = aps["pushType"] as? String {
+                    if pushType == "Chat" {
+                        // Set initial view to CHAT.
+                        let storyboard = UIStoryboard(name: "Chat", bundle: nil)
+                        let nc = storyboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
+                        self.hamburgerViewController!.contentViewController = nc
+                        let firstVC = nc.viewControllers[0] as! ChatViewController
+                        firstVC.menuDelegate = self.menuViewController
+                    }
+                }
             }
             
             // Does exactly the same as arrow in storyboard. ("100% parity." --Tim Lee)
@@ -202,16 +205,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
      */
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         print("PUSH RECEIVED!!")
-        // PFPush.handlePush(userInfo) //
+        // PFPush.handlePush(userInfo)
         
         print("NOTIFICATION:", userInfo["aps"])
         
-        // Set initial view to CHAT.
-        let storyboard = UIStoryboard(name: "Chat", bundle: nil)
-        let nc = storyboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
-        self.hamburgerViewController!.contentViewController = nc
-        let firstVC = nc.viewControllers[0] as! ChatViewController
-        firstVC.menuDelegate = self.menuViewController
+        let aps = userInfo["aps"] as! [String: AnyObject]
+        if let pushType = aps["pushType"] as? String {
+            switch pushType {
+            case "Chat":
+                // Set initial view to CHAT.
+                let storyboard = UIStoryboard(name: "Chat", bundle: nil)
+                let nc = storyboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
+                self.hamburgerViewController!.contentViewController = nc
+                let firstVC = nc.viewControllers[0] as! ChatViewController
+                firstVC.menuDelegate = self.menuViewController
+            default: // case "Reel":
+                // Set initial view to Reel.
+                let storyboard = UIStoryboard(name: "Reel", bundle: nil)
+                let reelNC = storyboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
+                self.hamburgerViewController!.contentViewController = reelNC
+                let reelVC = reelNC.viewControllers[0] as! ReelViewController
+                reelVC.menuDelegate = self.menuViewController
+            }
+        }
     }
 
     func applicationWillResignActive(application: UIApplication) {
