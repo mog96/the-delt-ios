@@ -565,7 +565,7 @@ extension LoginViewController {
             
         } else {
             if let email = self.emailTextField.text {
-                if email.hasSuffix("@stanford.edu") {
+                if email.lowercaseString.hasSuffix("@stanford.edu") {
                     self.submitSignupRequest()
                     
                 } else {
