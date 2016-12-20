@@ -30,43 +30,43 @@ class AddUserViewController: UIViewController {
         super.viewDidLoad()
 
         // Name text field.
-        self.nameTextField.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
-        self.nameTextField.keyboardAppearance = UIKeyboardAppearance.Dark
+        self.nameTextField.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [NSForegroundColorAttributeName : UIColor.white])
+        self.nameTextField.keyboardAppearance = UIKeyboardAppearance.dark
         self.nameTextField.delegate = self
-        self.nameTextField.returnKeyType = .Next
+        self.nameTextField.returnKeyType = .next
         
         // Email text field.
-        self.emailTextField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
-        self.emailTextField.keyboardAppearance = UIKeyboardAppearance.Dark
+        self.emailTextField.attributedPlaceholder = NSAttributedString(string: "Email", attributes: [NSForegroundColorAttributeName : UIColor.white])
+        self.emailTextField.keyboardAppearance = UIKeyboardAppearance.dark
         self.emailTextField.delegate = self
         self.nameTextField.nextTextField = self.emailTextField
-        self.emailTextField.keyboardType = .EmailAddress
-        self.emailTextField.returnKeyType = .Next
+        self.emailTextField.keyboardType = .emailAddress
+        self.emailTextField.returnKeyType = .next
         
         // Username text field.
-        self.usernameTextField.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
-        self.usernameTextField.keyboardAppearance = UIKeyboardAppearance.Dark
+        self.usernameTextField.attributedPlaceholder = NSAttributedString(string: "Username", attributes: [NSForegroundColorAttributeName : UIColor.white])
+        self.usernameTextField.keyboardAppearance = UIKeyboardAppearance.dark
         usernameTextField.delegate = self
         self.emailTextField.nextTextField = self.usernameTextField
-        self.usernameTextField.returnKeyType = .Next
+        self.usernameTextField.returnKeyType = .next
         
         // Password text field.
-        self.passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()])
-        self.passwordTextField.keyboardAppearance = UIKeyboardAppearance.Dark
+        self.passwordTextField.attributedPlaceholder = NSAttributedString(string: "Password", attributes: [NSForegroundColorAttributeName : UIColor.white])
+        self.passwordTextField.keyboardAppearance = UIKeyboardAppearance.dark
         passwordTextField.delegate = self
         self.usernameTextField.nextTextField = self.passwordTextField
-        self.passwordTextField.returnKeyType = .Go
+        self.passwordTextField.returnKeyType = .go
     }
     
-    override func viewWillAppear(animated: Bool) {
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.translucent = true
-        self.navigationController?.view.backgroundColor = UIColor.clearColor()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = UIColor.clear
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         self.navigationController?.navigationBar.shadowImage = nil
     }
 
@@ -80,8 +80,8 @@ class AddUserViewController: UIViewController {
 // MARK: - Helpers
 
 extension AddUserViewController {
-    func dismiss() {
-        self.navigationController?.popViewControllerAnimated(true)
+    func dismissByPopping() {
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
@@ -89,10 +89,10 @@ extension AddUserViewController {
 // MARK: - Text Field Delegate
 
 extension AddUserViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switch textField.returnKeyType {
-        case .Go:
-            self.addUserButton.sendActionsForControlEvents(.TouchUpInside)
+        case .go:
+            self.addUserButton.sendActions(for: .touchUpInside)
         default:
             textField.nextTextField?.becomeFirstResponder()
         }
@@ -104,7 +104,7 @@ extension AddUserViewController: UITextFieldDelegate {
 // MARK: - Actions
 
 extension AddUserViewController {
-    @IBAction func onAddUserButtonTapped(sender: AnyObject) {
+    @IBAction func onAddUserButtonTapped(_ sender: AnyObject) {
         
         print("ADD USER")
         
@@ -118,20 +118,20 @@ extension AddUserViewController {
         // other fields can be set just like with PFObject
         // user["phone"] = "415-392-0202"
         
-        let currentHUD = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        let currentHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
         currentHUD.label.text = "Adding User..."
         
-        user.signUpInBackgroundWithBlock { (succeeded: Bool, error: NSError?) -> Void in
+        user.signUpInBackground { (succeeded: Bool, error: Error?) -> Void in
             if let error = error {
-                let errorString = error.userInfo["error"] as? NSString
+                let errorString = error.localizedDescription
                 
                 // Show the errorString somewhere and let the user try again.
                 print("Signup error: \(errorString)")
                 
-                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-                let invalidSignupAlertVC = UIAlertController(title: "Email or Username Taken", message: "Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
-                invalidSignupAlertVC.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                self.presentViewController(invalidSignupAlertVC, animated: true, completion: nil)
+                MBProgressHUD.hideAllHUDs(for: self.view, animated: true)
+                let invalidSignupAlertVC = UIAlertController(title: "Email or Username Taken", message: "Please try again.", preferredStyle: UIAlertControllerStyle.alert)
+                invalidSignupAlertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(invalidSignupAlertVC, animated: true, completion: nil)
                 
             } else {
                 
@@ -139,16 +139,16 @@ extension AddUserViewController {
                 print("SIGNUP SUCCESSFUL")
                 
                 currentHUD.label.text = "User Added!"
-                currentHUD.mode = MBProgressHUDMode.CustomView
+                currentHUD.mode = MBProgressHUDMode.customView
                 currentHUD.customView =  UIImageView(image: UIImage(named: "reset_success"))
-                let delay: NSTimeInterval = 2.0
-                currentHUD.hideAnimated(true, afterDelay: delay)
-                self.performSelector(#selector(self.dismiss), withObject: self, afterDelay: delay)
+                let delay: TimeInterval = 2.0
+                currentHUD.hide(animated: true, afterDelay: delay)
+                self.perform(#selector(self.dismissByPopping), with: self, afterDelay: delay)
             }
         }
     }
     
-    @IBAction func onBackgroundTapped(sender: AnyObject) {
+    @IBAction func onBackgroundTapped(_ sender: AnyObject) {
         self.view.endEditing(true)
     }
 }

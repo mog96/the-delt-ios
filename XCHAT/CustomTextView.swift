@@ -28,7 +28,7 @@ class CustomTextView: UITextView {
     }
     var placeholderTextColor = LayoutUtils.textFieldPlaceholderTextColor
     
-    private var shouldRemovePlaceholderOnTextChange = false
+    fileprivate var shouldRemovePlaceholderOnTextChange = false
     
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
@@ -40,16 +40,16 @@ class CustomTextView: UITextView {
         self.commonInit()
     }
     
-    private func commonInit() {
+    fileprivate func commonInit() {
         self.placeholderLabel = UILabel()
         self.placeholderLabel.font = self.font
         self.placeholderLabel.textColor = self.placeholderTextColor
         self.addSubview(self.placeholderLabel)
         self.placeholderLabel.frame.origin = CGPoint(x: 5, y: self.font!.pointSize / 2 + 1)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.textDidChange), name: UITextViewTextDidChangeNotification, object: self)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.didBeginEditing), name: UITextViewTextDidBeginEditingNotification, object: self)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.didEndEditing), name: UITextViewTextDidEndEditingNotification, object: self)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.textDidChange), name: NSNotification.Name.UITextViewTextDidChange, object: self)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didBeginEditing), name: NSNotification.Name.UITextViewTextDidBeginEditing, object: self)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.didEndEditing), name: NSNotification.Name.UITextViewTextDidEndEditing, object: self)
     }
 }
 
@@ -57,16 +57,16 @@ class CustomTextView: UITextView {
 // MARK: - Notification Listeners
 
 extension CustomTextView {
-    @objc private func didBeginEditing() {
-        self.placeholderLabel.hidden = self.text.characters.count != 0
+    @objc fileprivate func didBeginEditing() {
+        self.placeholderLabel.isHidden = self.text.characters.count != 0
     }
     
-    @objc private func textDidChange() {
-        self.placeholderLabel.hidden = self.text.characters.count != 0
+    @objc fileprivate func textDidChange() {
+        self.placeholderLabel.isHidden = self.text.characters.count != 0
     }
     
-    @objc private func didEndEditing() {
-        self.placeholderLabel.hidden = self.text.characters.count != 0
+    @objc fileprivate func didEndEditing() {
+        self.placeholderLabel.isHidden = self.text.characters.count != 0
     }
 }
 

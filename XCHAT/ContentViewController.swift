@@ -18,12 +18,12 @@ class ContentViewController: UIViewController {
     var hamburgerViewController: HamburgerViewController!
     
     override func viewDidLoad() {
-        self.appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        self.appDelegate = UIApplication.shared.delegate as! AppDelegate
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         // For when profile vc is presented.
-        self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         self.navigationController?.navigationBar.shadowImage = nil
     }
 }
@@ -33,11 +33,11 @@ class ContentViewController: UIViewController {
 
 extension ContentViewController {
     func setMenuButton(withColor color: String) {
-        let menuButton = UIButton(type: UIButtonType.Custom)
+        let menuButton = UIButton(type: UIButtonType.custom)
         let menuImage = UIImage(named: "menu_icon_" + color + ".png")
-        menuButton.setImage(menuImage, forState: UIControlState.Normal)
-        menuButton.frame = CGRectMake(5, 0, 17, 11)
-        menuButton.addTarget(self, action: #selector(ContentViewController.menuTapped), forControlEvents: UIControlEvents.TouchUpInside)
+        menuButton.setImage(menuImage, for: UIControlState())
+        menuButton.frame = CGRect(x: 5, y: 0, width: 17, height: 11)
+        menuButton.addTarget(self, action: #selector(ContentViewController.menuTapped), for: UIControlEvents.touchUpInside)
         
         let menuBarButton = UIBarButtonItem(customView: menuButton)
         self.navigationItem.leftBarButtonItem = menuBarButton
@@ -57,7 +57,7 @@ extension ContentViewController {
 extension ContentViewController: ProfilePresenterDelegate {
     func profilePresenter(wasTappedWithUser user: PFUser?) {
         let storyboard = UIStoryboard(name: "Profile", bundle: nil)
-        let profileVC = storyboard.instantiateViewControllerWithIdentifier("EditableProfileViewController") as! EditableProfileViewController
+        let profileVC = storyboard.instantiateViewController(withIdentifier: "EditableProfileViewController") as! EditableProfileViewController
         profileVC.editable = false
         profileVC.user = user
         self.navigationController?.pushViewController(profileVC, animated: true)
@@ -65,7 +65,7 @@ extension ContentViewController: ProfilePresenterDelegate {
     
     func profilePresenter(wasTappedWithUsername username: String?) {
         let storyboard = UIStoryboard(name: "Profile", bundle: nil)
-        let profileVC = storyboard.instantiateViewControllerWithIdentifier("EditableProfileViewController") as! EditableProfileViewController
+        let profileVC = storyboard.instantiateViewController(withIdentifier: "EditableProfileViewController") as! EditableProfileViewController
         profileVC.editable = false
         profileVC.username = username
         self.navigationController?.pushViewController(profileVC, animated: true)

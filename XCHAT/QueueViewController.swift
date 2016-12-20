@@ -31,20 +31,20 @@ class QueueViewController: ContentViewController {
 // MARK: - Table View
 
 extension QueueViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
         case 0:
-            let cell = self.tableView.dequeueReusableCellWithIdentifier("SoundCloudCell")!
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: "SoundCloudCell")!
             return cell
         case 1:
-            let cell = self.tableView.dequeueReusableCellWithIdentifier("SpotifyCell")!
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: "SpotifyCell")!
             return cell
         default:
-            let cell = self.tableView.dequeueReusableCellWithIdentifier("AppleMusicCell")!
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: "AppleMusicCell")!
             return cell
         }
     }

@@ -10,7 +10,7 @@ import UIKit
 
 class GestureUtils: NSObject {
     
-    class func pointIsWithinFrame(point: CGPoint, frame: CGRect) -> Bool {
+    class func pointIsWithinFrame(_ point: CGPoint, frame: CGRect) -> Bool {
         let frameX = frame.origin.x
         let frameY = frame.origin.y
         

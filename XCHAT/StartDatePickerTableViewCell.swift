@@ -9,7 +9,7 @@
 import UIKit
 
 protocol StartDateDelegate {
-    func onDateChanged(date: NSDate)
+    func onDateChanged(_ date: Date)
 }
 
 class StartDatePickerTableViewCell: UITableViewCell {
@@ -21,10 +21,10 @@ class StartDatePickerTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.eventDatePicker.addTarget(self, action: #selector(StartDatePickerTableViewCell.onDateChanged), forControlEvents: UIControlEvents.ValueChanged)
+        self.eventDatePicker.addTarget(self, action: #selector(StartDatePickerTableViewCell.onDateChanged), for: UIControlEvents.valueChanged)
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
@@ -46,10 +46,10 @@ extension StartDatePickerTableViewCell {
         print("DATE:", self.eventDatePicker.date)
     }
     
-    private func getNextHourDate() -> NSDate {
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Era, .Year, .Month, .Day, .Hour], fromDate: NSDate())
-        components.hour = components.hour + 1
-        return calendar.dateFromComponents(components)!
+    fileprivate func getNextHourDate() -> Date {
+        let calendar = Calendar.current
+        var components = (calendar as NSCalendar).components([.era, .year, .month, .day, .hour], from: Date())
+        components.hour = components.hour! + 1
+        return calendar.date(from: components)!
     }
 }

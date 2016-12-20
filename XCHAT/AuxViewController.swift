@@ -15,7 +15,7 @@ class AuxViewController: ContentViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setMenuButton(withColor: "white")
-        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+        UIApplication.shared.setStatusBarStyle(.lightContent, animated: true)
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -33,47 +33,47 @@ class AuxViewController: ContentViewController {
 // MARK: - Table View
 
 extension AuxViewController: UITableViewDelegate, UITableViewDataSource {
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = NSBundle.mainBundle().loadNibNamed("SettingsHeaderView", owner: self, options: nil)![0] as! SettingsHeaderView
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = Bundle.main.loadNibNamed("SettingsHeaderView", owner: self, options: nil)![0] as! SettingsHeaderView
         switch section {
         case 0:
             headerView.headerLabel.text = "QUEUE"
         default:
             headerView.headerLabel.text = "PLAYLISTS"
         }
-        headerView.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, headerView.frame.height)
+        headerView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: headerView.frame.height)
         return headerView
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
-            let cell = self.tableView.dequeueReusableCellWithIdentifier("CurrentQueueCell")!
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: "CurrentQueueCell")!
             return cell
         default:
-            let cell = self.tableView.dequeueReusableCellWithIdentifier("PlaylistCell")!
+            let cell = self.tableView.dequeueReusableCell(withIdentifier: "PlaylistCell")!
             return cell
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
         switch indexPath.section {
         case 0:
-            self.performSegueWithIdentifier("CurrentQueueSegue", sender: self)
+            self.performSegue(withIdentifier: "CurrentQueueSegue", sender: self)
         default:
             return
         }

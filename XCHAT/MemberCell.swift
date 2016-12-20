@@ -25,7 +25,7 @@ class MemberCell: UITableViewCell {
         self.photoImageView.clipsToBounds = true
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
@@ -37,7 +37,7 @@ class MemberCell: UITableViewCell {
     
     // MARK: Setup
     
-    func setUpCell(user: PFUser, photo: UIImage?) {
+    func setUpCell(_ user: PFUser, photo: UIImage?) {
         if let username = user["username"] as? String {
             self.usernameLabel.text = "@" + username
         }
@@ -50,24 +50,24 @@ class MemberCell: UITableViewCell {
         }
         if let year = user["class"] as? String {
             if hasName {
-                nameAndYearString += ", '" + year.substringFromIndex(year.startIndex.advancedBy(2))
+                nameAndYearString += ", '" + year.substring(from: year.characters.index(year.startIndex, offsetBy: 2))
             } else {
                 nameAndYearString = "Class of " + year
             }
         }
         self.nameAndYearLabel.text = nameAndYearString
         
-        phoneNumberButton.setTitle(user["phone"] as? String, forState: UIControlState.Normal)
-        emailButton.setTitle(user["email"] as? String, forState: UIControlState.Normal)
+        phoneNumberButton.setTitle(user["phone"] as? String, for: UIControlState())
+        emailButton.setTitle(user["email"] as? String, for: UIControlState())
         
         if let photo = user["photo"] as? PFFile {
             let pfImageView = PFImageView()
             
             pfImageView.file = photo
-            pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
+            pfImageView.load { (image: UIImage?, error: Error?) -> Void in
                 if let error = error {
                     // Log details of the failure
-                    print("Error: \(error) \(error.userInfo)")
+                    print("Error: \(error) \(error.localizedDescription)")
                     
                 } else {
                     self.photoImageView.image = image
@@ -79,7 +79,7 @@ class MemberCell: UITableViewCell {
     
     // MARK: - Actions
     
-    @IBAction func onPhoneNumberTapped(sender: AnyObject) {
+    @IBAction func onPhoneNumberTapped(_ sender: AnyObject) {
         /*
         let phoneNumber = self.phoneNumberButton.titleLabel!.text!
         print(phoneNumber)
@@ -89,7 +89,7 @@ class MemberCell: UITableViewCell {
         */
     }
     
-    @IBAction func onEmailButtonTapped(sender: AnyObject) {
+    @IBAction func onEmailButtonTapped(_ sender: AnyObject) {
         
         // TODO: Present mail view.
     }

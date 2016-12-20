@@ -24,7 +24,7 @@ class FirstMessageCell: UITableViewCell {
         authorProfileImageView.clipsToBounds = true
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
@@ -39,13 +39,13 @@ class FirstMessageCell: UITableViewCell {
         messageLabel.preferredMaxLayoutWidth = messageLabel.frame.width
     }
     
-    func setUpCellWithPictures(message: PFObject, pictures: NSMutableDictionary) {
-        let dateFormatter = NSDateFormatter()
-        let calendar = NSCalendar.currentCalendar()
-        let comp = calendar.components([.Hour, .Minute], fromDate: message.createdAt!)
+    func setUpCellWithPictures(_ message: PFObject, pictures: NSMutableDictionary) {
+        let dateFormatter = DateFormatter()
+        let calendar = Calendar.current
+        let comp = (calendar as NSCalendar).components([.hour, .minute], from: message.createdAt!)
         
-        dateFormatter.AMSymbol = "a"
-        dateFormatter.PMSymbol = "p"
+        dateFormatter.amSymbol = "a"
+        dateFormatter.pmSymbol = "p"
         dateFormatter.dateFormat = "h:mma"
         if comp.minute == 0 {
             dateFormatter.dateFormat = "ha"
@@ -55,7 +55,7 @@ class FirstMessageCell: UITableViewCell {
         
         self.usernameLabel.username = username
         self.usernameLabel.text = username
-        self.timestampLabel.text = dateFormatter.stringFromDate(message.createdAt!)
+        self.timestampLabel.text = dateFormatter.string(from: message.createdAt!)
         self.messageLabel.text = (message["content"] as! String)
 
         if let profilePic = pictures[usernameLabel.text!]{
@@ -87,13 +87,13 @@ class FirstMessageCell: UITableViewCell {
 //        })
     }
     
-    func setUpCell(message: PFObject) {
-        let dateFormatter = NSDateFormatter()
-        let calendar = NSCalendar.currentCalendar()
-        let comp = calendar.components([.Hour, .Minute], fromDate: message.createdAt!)
+    func setUpCell(_ message: PFObject) {
+        let dateFormatter = DateFormatter()
+        let calendar = Calendar.current
+        let comp = (calendar as NSCalendar).components([.hour, .minute], from: message.createdAt!)
         
-        dateFormatter.AMSymbol = "a"
-        dateFormatter.PMSymbol = "p"
+        dateFormatter.amSymbol = "a"
+        dateFormatter.pmSymbol = "p"
         dateFormatter.dateFormat = "h:mma"
         if comp.minute == 0 {
             dateFormatter.dateFormat = "ha"
@@ -102,23 +102,23 @@ class FirstMessageCell: UITableViewCell {
         let username = message["authorUsername"] as! String
         self.usernameLabel.username = username
         self.usernameLabel.text = username
-        self.timestampLabel.text = dateFormatter.stringFromDate(message.createdAt!)
+        self.timestampLabel.text = dateFormatter.string(from: message.createdAt!)
         self.messageLabel.text = (message["content"] as! String)
         
         let query = PFUser.query()
-        query?.whereKey("username", equalTo: message.valueForKey("authorUsername") as! String)
-        query?.findObjectsInBackgroundWithBlock({ (users: [PFObject]?, error: NSError?) -> Void in
+        query?.whereKey("username", equalTo: message.value(forKey: "authorUsername") as! String)
+        query?.findObjectsInBackground(block: { (users: [PFObject]?, error: Error?) -> Void in
             if let users = users {
                 let pfImageView = PFImageView()
                 let user = users[0]
                 self.authorProfileImageView.user = user as? PFUser
-                pfImageView.file = user.valueForKey("photo") as? PFFile
+                pfImageView.file = user.value(forKey: "photo") as? PFFile
                 if let _ = pfImageView.file {
-                    pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
+                    pfImageView.load { (image: UIImage?, error: Error?) -> Void in
                         if let error = error {
                         
                             // Log details of the failure
-                            print("Error: \(error) \(error.userInfo)")
+                            print("Error: \(error) \(error.localizedDescription)")
                             
                         } else {
                             self.authorProfileImageView.image = image

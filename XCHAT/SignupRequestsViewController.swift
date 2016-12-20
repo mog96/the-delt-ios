@@ -21,11 +21,11 @@ class SignupRequestsViewController: UIViewController {
     
     var swipedCell: SignupRequestTableViewCell?
     var previousSwipedCell: SignupRequestTableViewCell?
-    var infoViewOriginalOrigin = CGPointZero
+    var infoViewOriginalOrigin = CGPoint.zero
     
     var signupRequests = [PFObject]()
     
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,19 +35,19 @@ class SignupRequestsViewController: UIViewController {
         self.tableView.estimatedRowHeight = 95
         
         self.refreshControl = UIRefreshControl()
-        self.refreshControl.addTarget(self, action: #selector(self.onRefresh), forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl.addTarget(self, action: #selector(self.onRefresh), for: UIControlEvents.valueChanged)
         self.refreshControl.tintColor = LayoutUtils.blueColor
-        self.tableView.insertSubview(refreshControl, atIndex: 0)
+        self.tableView.insertSubview(refreshControl, at: 0)
         
         self.fetchSignupRequests()
     }
     
-    override func viewWillAppear(animated: Bool) {
-        self.appDelegate.hamburgerViewController?.panGestureRecognizer.enabled = false
+    override func viewWillAppear(_ animated: Bool) {
+        self.appDelegate.hamburgerViewController?.panGestureRecognizer.isEnabled = false
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        self.appDelegate.hamburgerViewController?.panGestureRecognizer.enabled = true
+    override func viewWillDisappear(_ animated: Bool) {
+        self.appDelegate.hamburgerViewController?.panGestureRecognizer.isEnabled = true
     }
     
     override func didReceiveMemoryWarning() {
@@ -62,9 +62,9 @@ class SignupRequestsViewController: UIViewController {
 extension SignupRequestsViewController {
     func fetchSignupRequests() {
         let query = PFQuery(className: "SignupRequest")
-        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) in
+        query.findObjectsInBackground { (objects: [PFObject]?, error: Error?) in
             if error != nil {
-                print("Error:", error?.userInfo["error"])
+                print("Error:", error!.localizedDescription)
             } else {
                 if let objects = objects {
                     self.signupRequests = objects
@@ -84,20 +84,20 @@ extension SignupRequestsViewController {
 // MARK: - Table View
 
 extension SignupRequestsViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.signupRequests.count
     }
     
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return self.tableView(tableView, heightForRowAtIndexPath: indexPath)
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return self.tableView(tableView, heightForRowAt: indexPath)
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 95
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCellWithIdentifier("SignupRequestCell") as! SignupRequestTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: "SignupRequestCell") as! SignupRequestTableViewCell
         cell.setupCell(signupRequest: self.signupRequests[indexPath.row])
         cell.delegate = self
         return cell
@@ -109,7 +109,7 @@ extension SignupRequestsViewController: UITableViewDelegate, UITableViewDataSour
 
 extension SignupRequestsViewController: SignupRequestTableViewCellDelegate {
     func signupRequestTableViewCell(didApproveUser object: PFObject) {
-        let currentHUD = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        let currentHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
         currentHUD.label.text = "Approving User..."
         
         /*
@@ -149,19 +149,20 @@ extension SignupRequestsViewController: SignupRequestTableViewCellDelegate {
                             "email": object["email"],
                             "username": object["username"],
                             "tempPass": "temp"]
-        PFCloud.callFunctionInBackground("approveUser", withParameters: approvedUser) { (createdUser: AnyObject?, error: NSError?) in
+        // PFCloud.callFunction(inBackground: "approveUser", withParameters: approvedUser,
+        PFCloud.callFunction(inBackground: "approveUser", withParameters: approvedUser) { (createdUser: Any?, error: Error?) in
             if error != nil {
-                print("Error:", error?.userInfo["error"])
-                currentHUD.hideAnimated(true)
+                print("Error:", error!.localizedDescription)
+                currentHUD.hide(animated: true)
             } else {
                 if let user = createdUser as? PFUser {
                     currentHUD.label.text = "Approved!"
-                    currentHUD.hideAnimated(true, afterDelay: 1.0)
+                    currentHUD.hide(animated: true, afterDelay: 1.0)
                     
                     self.presentSignupApprovedMailCompose(forUser: user)
-                    object.deleteInBackgroundWithBlock({ (completed: Bool, error: NSError?) in
+                    object.deleteInBackground(block: { (completed: Bool, error: Error?) in
                         if error != nil {
-                            print("Error:", error?.userInfo["error"])
+                            print("Error:", error!.localizedDescription)
                         } else {
                             print("USER", user.username, "DELETED")
                             self.fetchSignupRequests()
@@ -181,15 +182,15 @@ extension SignupRequestsViewController: SignupRequestTableViewCellDelegate {
 // MARK: - Mail Compose View Controller Delegate
 
 extension SignupRequestsViewController: MFMailComposeViewControllerDelegate {
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         
         // TODO: Handle each mail case? i.e. sent, not sent, etc.
         
-        controller.dismissViewControllerAnimated(true) {
-            if result == .Sent {
-                let alert = UIAlertController(title: "Thanks for Signing Up!", message: "If your charge has already been added to The Delt, you'll be added immediately. If your charge is not yet using The Delt, we'll be in touch as soon as possible about signing up your charge.", preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
+        controller.dismiss(animated: true) {
+            if result == .sent {
+                let alert = UIAlertController(title: "Thanks for Signing Up!", message: "If your charge has already been added to The Delt, you'll be added immediately. If your charge is not yet using The Delt, we'll be in touch as soon as possible about signing up your charge.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
         }
     }
@@ -213,13 +214,13 @@ extension SignupRequestsViewController: MFMailComposeViewControllerDelegate {
             mailComposeVC.setBccRecipients([bccRecipient])
             mailComposeVC.setMessageBody(body, isHTML: false)
             
-            self.presentViewController(mailComposeVC, animated: true, completion: nil)
+            self.present(mailComposeVC, animated: true, completion: nil)
             
         } else {
-            let alert = UIAlertController(title: "Mail Not Enabled", message: "Could not send signup approval message. Please set up a mail account for your device and try again.", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+            let alert = UIAlertController(title: "Mail Not Enabled", message: "Could not send signup approval message. Please set up a mail account for your device and try again.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
         }
     }
 }
@@ -228,14 +229,14 @@ extension SignupRequestsViewController: MFMailComposeViewControllerDelegate {
 // MARK: - Actions
 
 extension SignupRequestsViewController {
-    @IBAction func onPanGesture(sender: AnyObject) {
-        let location = sender.locationInView(self.tableView)
-        let translation = sender.translationInView(self.tableView)
-        let velocity = sender.velocityInView(self.tableView)
+    @IBAction func onPanGesture(_ sender: AnyObject) {
+        let location = sender.location(in: self.tableView)
+        let translation = sender.translation(in: self.tableView)
+        let velocity = sender.velocity(in: self.tableView)
         
-        if let indexPath = self.tableView.indexPathForRowAtPoint(location) {
-            if sender.state == .Began {
-                self.swipedCell = self.tableView.cellForRowAtIndexPath(indexPath) as? SignupRequestTableViewCell
+        if let indexPath = self.tableView.indexPathForRow(at: location) {
+            if sender.state == .began {
+                self.swipedCell = self.tableView.cellForRow(at: indexPath) as? SignupRequestTableViewCell
                 if self.previousSwipedCell == nil {
                     self.previousSwipedCell = self.swipedCell
                 }
@@ -246,14 +247,14 @@ extension SignupRequestsViewController {
                     self.resetTableView()
                 }
                 
-            } else if sender.state == .Changed {
+            } else if sender.state == .changed {
                 self.previousSwipedCell?.infoView.frame.origin.x = self.infoViewOriginalOrigin.x + translation.x
                 
-            } else if sender.state == .Ended {
+            } else if sender.state == .ended {
                 if velocity.x < 0 {
                     self.previousSwipedCell?.showApproveButton()
-                    self.tableView.scrollEnabled = false
-                    self.tableViewTapGestureRecognizer.enabled = true
+                    self.tableView.isScrollEnabled = false
+                    self.tableViewTapGestureRecognizer.isEnabled = true
                 } else {
                     self.resetTableView()
                 }
@@ -261,14 +262,14 @@ extension SignupRequestsViewController {
         }
     }
     
-    @IBAction func onViewTapped(sender: AnyObject) {
+    @IBAction func onViewTapped(_ sender: AnyObject) {
         self.resetTableView()
     }
     
     func resetTableView() {
         self.previousSwipedCell?.hideApproveButton()
         self.previousSwipedCell = nil
-        self.tableView.scrollEnabled = true
-        self.tableViewTapGestureRecognizer.enabled = false
+        self.tableView.isScrollEnabled = true
+        self.tableViewTapGestureRecognizer.isEnabled = false
     }
 }

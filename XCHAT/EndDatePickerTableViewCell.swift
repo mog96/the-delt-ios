@@ -17,18 +17,18 @@ class EndDatePickerTableViewCell: UITableViewCell, StartDateDelegate {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
-    func onDateChanged(date: NSDate) {
-        let calendar = NSCalendar.currentCalendar()
-        let components = NSDateComponents()
+    func onDateChanged(_ date: Date) {
+        let calendar = Calendar.current
+        var components = DateComponents()
         components.hour = 1
         
-        let endDate = calendar.dateByAddingComponents(components, toDate: date, options: [])
+        let endDate = (calendar as NSCalendar).date(byAdding: components, to: date, options: [])
         self.eventDatePicker.setDate(endDate!, animated: true)
     }
 

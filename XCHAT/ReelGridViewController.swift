@@ -33,11 +33,11 @@ class ReelGridViewController: UIViewController, UICollectionViewDataSource, UICo
     
     func refreshData() {
         let query = PFQuery(className:"Photo")
-        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
+        query.findObjectsInBackground { (objects: [PFObject]?, error: Error?) -> Void in
             
             if let error = error {
                 // Log details of the failure
-                print("Error: \(error) \(error.userInfo)")
+                print("Error: \(error) \(error._userInfo)")
                 
             } else {
                 
@@ -50,15 +50,15 @@ class ReelGridViewController: UIViewController, UICollectionViewDataSource, UICo
                     var i = 0
                     for object in objects {
                         let photo = NSMutableDictionary()
-                        if let imageName = object.objectForKey("imageName") as? String {
-                            photo.setObject(imageName, forKey: "imageName")
+                        if let imageName = object.object(forKey: "imageName") as? String {
+                            photo.setObject(imageName, forKey: "imageName" as NSCopying)
                         }
-                        if let imageFile = object.objectForKey("imageFile") as? PFFile {
-                            photo.setObject(imageFile, forKey: "imageFile")
-                            print("\(i++)")
+                        if let imageFile = object.object(forKey: "imageFile") as? PFFile {
+                            photo.setObject(imageFile, forKey: "imageFile" as NSCopying)
+                            print("\(i += 1)")
                         }
-                        photo.setObject(object.objectId!, forKey: "objectId")
-                        self.photos.addObject(photo)
+                        photo.setObject(object.objectId!, forKey: "objectId" as NSCopying)
+                        self.photos.add(photo)
                     }
                 }
                 self.collectionView.reloadData()
@@ -68,20 +68,20 @@ class ReelGridViewController: UIViewController, UICollectionViewDataSource, UICo
     
     // MARK: CollectionView
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photos.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ReelCell", forIndexPath: indexPath) as! ReelGridCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ReelCell", for: indexPath) as! ReelGridCell
         print("\(photos.count) PHOTOS")
-        let photo = photos.objectAtIndex(indexPath.item) as? NSMutableDictionary
+        let photo = photos.object(at: indexPath.item) as? NSMutableDictionary
         cell.setUpCell(photo)
         
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         // open up selected photo
         
@@ -89,12 +89,12 @@ class ReelGridViewController: UIViewController, UICollectionViewDataSource, UICo
     
     // MARK: Actions
     
-    @IBAction func onAddButtonTapped(sender: AnyObject) {
+    @IBAction func onAddButtonTapped(_ sender: AnyObject) {
         let imageVC = UIImagePickerController()
         imageVC.delegate = self
         imageVC.allowsEditing = true
-        imageVC.sourceType = .PhotoLibrary
-        presentViewController(imageVC, animated: true, completion: nil) // FIXME: Causes warning 'Presenting view controllers on detached view controllers is discouraged'
+        imageVC.sourceType = .photoLibrary
+        present(imageVC, animated: true, completion: nil) // FIXME: Causes warning 'Presenting view controllers on detached view controllers is discouraged'
     }
     
     // MARK: ImagePickerControler
@@ -104,9 +104,9 @@ class ReelGridViewController: UIViewController, UICollectionViewDataSource, UICo
     // image picker view controller.  Once the image picker view controller is
     // dismissed (a.k.a. inside the completion handler) we modally segue to
     // show the "Location selection" screen
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         chosenImage = info[UIImagePickerControllerEditedImage] as? UIImage
-        dismissViewControllerAnimated(true, completion: { () -> Void in
+        dismiss(animated: true, completion: { () -> Void in
             
             // self.performSegueWithIdentifier("addCaptionSegue", sender: self) // segue to CaptionViewController
             
@@ -118,7 +118,7 @@ class ReelGridViewController: UIViewController, UICollectionViewDataSource, UICo
             let photo = PFObject(className:"Photo")
             photo["imageName"] = "Dis a picture!" // set to caption name
             photo["imageFile"] = imageFile
-            photo.saveInBackgroundWithBlock(nil)
+            photo.saveInBackground(block: nil)
             
         })
     }

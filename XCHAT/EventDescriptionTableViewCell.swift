@@ -29,21 +29,21 @@ class EventDescriptionTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         self.artworkButton.layer.cornerRadius = 2
         self.artworkButton.clipsToBounds = true
-        self.artworkButton.imageView?.contentMode = .ScaleAspectFill
+        self.artworkButton.imageView?.contentMode = .scaleAspectFill
         
         self.nameTextField.delegate = self
-        self.nameTextField.returnKeyType = .Next
+        self.nameTextField.returnKeyType = .next
         self.nameTextField.nextTextField = self.locationTextField
         
         self.locationTextField.delegate = self
-        self.locationTextField.returnKeyType = .Next
+        self.locationTextField.returnKeyType = .next
         
         self.descriptionTextView.delegate = self
         self.descriptionTextView.placeholder = "Describe."
         self.defaultDescriptionTextViewHeight = self.descriptionTextViewHeight.constant
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
@@ -73,7 +73,7 @@ extension EventDescriptionTableViewCell: UITextViewDelegate {
 // MARK: - Text Field Delegate
 
 extension EventDescriptionTableViewCell: UITextFieldDelegate {
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == self.locationTextField {
             self.locationTextField.endEditing(true)
         } else {
@@ -87,7 +87,7 @@ extension EventDescriptionTableViewCell: UITextFieldDelegate {
 // MARK: - Actions
 
 extension EventDescriptionTableViewCell {
-    @IBAction func onArtworkButtonTapped(sender: AnyObject) {
+    @IBAction func onArtworkButtonTapped(_ sender: AnyObject) {
         self.newEventDelegate?.onArtworkButtonTapped()
     }
 }

@@ -25,7 +25,7 @@ class ChatViewController: ContentViewController {
     var numOfMessagesToLoad: Int = 20
     var numOfTotalMessages: Int?
     
-    var refreshTimer: NSTimer!
+    var refreshTimer: Timer!
     var presentedConnectionError = false
     
     // This should be changed if we want to allow thread selection
@@ -36,7 +36,7 @@ class ChatViewController: ContentViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
+        UIApplication.shared.setStatusBarStyle(.default, animated: true)
         self.setMenuButton(withColor: "red")
         
         // Setup TableView.
@@ -44,44 +44,44 @@ class ChatViewController: ContentViewController {
         messageTableView.dataSource = self
         messageTableView.rowHeight = UITableViewAutomaticDimension
         messageTableView.estimatedRowHeight = 90
-        messageTableView.tableFooterView = UIView(frame: CGRectZero)
+        messageTableView.tableFooterView = UIView(frame: CGRect.zero)
         
         // Setup message view.
-        self.messageView = NSBundle.mainBundle().loadNibNamed("MessageView", owner: self, options: nil)![0] as! MessageView
-        self.messageView.frame = CGRectMake(0, UIScreen.mainScreen().bounds.height - self.messageView.frame.height, self.messageView.frame.height, UIScreen.mainScreen().bounds.width)
-        if let messageDraft = NSUserDefaults.standardUserDefaults().objectForKey(self.kMessageDraftKey) as? String {
+        self.messageView = Bundle.main.loadNibNamed("MessageView", owner: self, options: nil)![0] as! MessageView
+        self.messageView.frame = CGRect(x: 0, y: UIScreen.main.bounds.height - self.messageView.frame.height, width: self.messageView.frame.height, height: UIScreen.main.bounds.width)
+        if let messageDraft = UserDefaults.standard.object(forKey: self.kMessageDraftKey) as? String {
             self.messageView.messageTextView.text = messageDraft
         }
         self.messageView.delegate = self
         self.view.addSubview(self.messageView)
-        self.messageView.autoPinEdgeToSuperviewEdge(.Left)
-        self.messageView.autoPinEdgeToSuperviewEdge(.Right)
-        self.messageViewBottomConstraint = self.messageView.autoPinEdgeToSuperviewEdge(.Bottom)
-        self.messageView.autoPinEdge(.Top, toEdge: .Bottom, ofView: self.messageTableView)
+        self.messageView.autoPinEdge(toSuperviewEdge: .left)
+        self.messageView.autoPinEdge(toSuperviewEdge: .right)
+        self.messageViewBottomConstraint = self.messageView.autoPinEdge(toSuperviewEdge: .bottom)
+        self.messageView.autoPinEdge(.top, to: .bottom, of: self.messageTableView)
         
         // Add keyboard observers.
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         // Notify when app going into background to save message drafts.
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.saveMessageDraft), name: UIApplicationDidEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.saveMessageDraft), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.willEnterForeground), name: UIApplicationDidBecomeActiveNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.willEnterForeground), name: UIApplicationWillEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.willEnterForeground), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.willEnterForeground), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
         
         // Fetch messages.
         self.fetchMessages()
         
         // SET MESSAGE REFRESH
         // Refetch messages every 15 seconds. 
-        self.refreshTimer = NSTimer.scheduledTimerWithTimeInterval(15, target: self, selector: #selector(ChatViewController.fetchMessages), userInfo: nil, repeats: true)
+        self.refreshTimer = Timer.scheduledTimer(timeInterval: 15, target: self, selector: #selector(ChatViewController.fetchMessages), userInfo: nil, repeats: true)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         self.clearApplicationIconBadge()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         self.saveMessageDraft()
     }
     
@@ -98,20 +98,20 @@ extension ChatViewController {
     func scrollToBottom() {
         let bottomSection = messageTableView.numberOfSections - 1
         if bottomSection >= 0 {
-            let bottomRow = messageTableView.numberOfRowsInSection(bottomSection) - 1
+            let bottomRow = messageTableView.numberOfRows(inSection: bottomSection) - 1
             // let lastIndexPath = NSIndexPath(forRow: bottomRow, inSection: bottomSection)
             if bottomRow >= 1 {
                 
-                let lastIndexPath = NSIndexPath(forRow: bottomRow, inSection: bottomSection)
+                let lastIndexPath = IndexPath(row: bottomRow, section: bottomSection)
                 
                 messageTableView.layoutIfNeeded()
-                messageTableView.scrollToRowAtIndexPath(lastIndexPath, atScrollPosition: UITableViewScrollPosition.Bottom, animated: true)
+                messageTableView.scrollToRow(at: lastIndexPath, at: UITableViewScrollPosition.bottom, animated: true)
             }
         }
     }
     
-    func trimmedMessage(message: String, placeholder: String?) -> String? {
-        let trimmedMessage = message.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+    func trimmedMessage(_ message: String, placeholder: String?) -> String? {
+        let trimmedMessage = message.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         if trimmedMessage.characters.count > 0 && trimmedMessage != placeholder {
             return trimmedMessage
         } else {
@@ -119,11 +119,11 @@ extension ChatViewController {
         }
     }
     
-    @objc private func saveMessageDraft() {
+    @objc fileprivate func saveMessageDraft() {
         if let messageDraft = self.trimmedMessage(self.messageView.messageTextView.text, placeholder: self.messageView.placeholder) {
-            NSUserDefaults.standardUserDefaults().setObject(messageDraft, forKey: self.kMessageDraftKey)
+            UserDefaults.standard.set(messageDraft, forKey: self.kMessageDraftKey)
         } else {
-            NSUserDefaults.standardUserDefaults().removeObjectForKey(self.kMessageDraftKey)
+            UserDefaults.standard.removeObject(forKey: self.kMessageDraftKey)
         }
     }
 }
@@ -132,12 +132,12 @@ extension ChatViewController {
 // MARK: - Keyboard Helpers
 
 extension ChatViewController {
-    func keyboardWillShow(notification: NSNotification){
+    func keyboardWillShow(_ notification: Notification){
         let userInfo = notification.userInfo
-        let kbSize = userInfo?[UIKeyboardFrameBeginUserInfoKey]?.CGRectValue
+        let kbSize = (userInfo?[UIKeyboardFrameBeginUserInfoKey] as AnyObject).cgRectValue
         self.messageViewBottomConstraint.constant = -kbSize!.height
         
-        UIView.animateWithDuration(0.2, animations: { () -> Void in
+        UIView.animate(withDuration: 0.2, animations: { () -> Void in
             
             self.view.layoutIfNeeded()
             }, completion: { (Bool) -> Void in
@@ -145,11 +145,11 @@ extension ChatViewController {
         })
     }
     
-    func keyboardWillHide(notification: NSNotification){
+    func keyboardWillHide(_ notification: Notification){
         
         self.messageViewBottomConstraint.constant = 0
         
-        UIView.animateWithDuration(0.2, animations: { () -> Void in
+        UIView.animate(withDuration: 0.2, animations: { () -> Void in
             
             self.view.layoutIfNeeded()
             }, completion: { (Bool) -> Void in
@@ -165,15 +165,15 @@ extension ChatViewController {
     func fetchMessages() {
         let query = PFQuery(className: "message")
         query.whereKey("threadId", equalTo: self.threadId)
-        query.orderByDescending("createdAt")
+        query.order(byDescending: "createdAt")
         
         query.limit = self.numOfMessagesToLoad
         
         // Server side code that checks whether there are any messages and retrieves them if so.
-        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
+        query.findObjectsInBackground { (objects: [PFObject]?, error: Error?) -> Void in
             if let objects = objects {
                 if self.messages.count - 1 < objects.count {
-                    self.messages = objects.reverse()
+                    self.messages = objects.reversed()
                     
                     // get rid of the welcome message
                     // self.messageTableView.tableHeaderView = UIView(frame: CGRectZero)
@@ -186,15 +186,15 @@ extension ChatViewController {
             } else {
                 
                 // Print error message.
-                print("Error fetching Chat messages:", error?.userInfo["error"] as? String)
-                if let errorString = error?.userInfo["error"] as? String {
+                print("Error fetching Chat messages:", error?.localizedDescription)
+                if let errorString = error?.localizedDescription {
                     if errorString == "Could not connect to the server." && !self.presentedConnectionError {
                         self.refreshTimer.invalidate()
                         
                         self.view.endEditing(true)
-                        let alertVC = UIAlertController(title: "Unable to Connect", message: "Please try again later.", preferredStyle: UIAlertControllerStyle.Alert)
-                        alertVC.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
-                        self.presentViewController(alertVC, animated: true, completion: nil)
+                        let alertVC = UIAlertController(title: "Unable to Connect", message: "Please try again later.", preferredStyle: UIAlertControllerStyle.alert)
+                        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                        self.present(alertVC, animated: true, completion: nil)
                         
                         self.presentedConnectionError = true
                     }
@@ -204,20 +204,16 @@ extension ChatViewController {
     }
     
     // Refreshes messages.
-    func delay(delay: Double, closure: () -> ()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(), closure)
+    func delay(_ delay: Double, closure: @escaping () -> ()) {
+        DispatchQueue.main.asyncAfter(
+            deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure)
     }
     
     // FIXME: ENCAPSULATE
     func fetchUserPics(){
         let usernames = NSMutableSet()
         for message in self.messages{
-            usernames.addObject((message["authorUsername"] as? String)!)
+            usernames.add((message["authorUsername"] as? String)!)
         }
         
         let username_list = usernames.allObjects as! [NSString]
@@ -227,7 +223,7 @@ extension ChatViewController {
         userQuery?.whereKey("username", containedIn: username_list)
         
         //print(userQuery?.getFirstObject())
-        userQuery!.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
+        userQuery!.findObjectsInBackground { (objects: [PFObject]?, error: Error?) -> Void in
             if let objects = objects {
                 let profiles = objects as! [PFUser]
                 for profile in profiles {
@@ -236,12 +232,12 @@ extension ChatViewController {
                         print("PHOTO FOUND")
                         let pfImageView = PFImageView()
                         pfImageView.file = pic
-                        pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
+                        pfImageView.load { (image: UIImage?, error: Error?) -> Void in
                             if let error = error {
                                 self.messageTableView.reloadData()
                                 
                                 // Log details of the failure
-                                print("Error: \(error) \(error.userInfo)")
+                                print("Error: \(error) \(error.localizedDescription)")
                                 
                             } else {
                                 self.pictures[profile.username!] = image
@@ -258,16 +254,16 @@ extension ChatViewController {
 // MARK: - Table View
 
 extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count + 1// + 1
     }
     
     // NOTE: LoadMessagesCell code commented out.
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         switch indexPath.row {
         case 0:
-            let cell = tableView.dequeueReusableCellWithIdentifier("MessageLeadingSpaceCell") as! MessageLeadingSpaceCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MessageLeadingSpaceCell") as! MessageLeadingSpaceCell
             /*
             var cell = tableView.dequeueReusableCellWithIdentifier("LoadMessagesCell") as! MessageLoadMoreCell
             if numOfTotalMessages <= numOfMessagesToLoad {
@@ -302,7 +298,7 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
             */
             
             // Message sent by different user.
-            let cell = tableView.dequeueReusableCellWithIdentifier("FirstMessageCell", forIndexPath: indexPath) as! FirstMessageCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "FirstMessageCell", for: indexPath) as! FirstMessageCell
             cell.usernameLabel.profilePresenterDelegate = self
             cell.authorProfileImageView.profilePresenterDelegate = self
             cell.setUpCellWithPictures(message, pictures: self.pictures)
@@ -310,7 +306,7 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         
         switch indexPath.row {
         case 0:
@@ -336,7 +332,7 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
             
             textInCell.addAttribute(NSFontAttributeName, value: UIFont(name: "Helvetica Neue", size: 15)!, range: all)
             
-            var cellSize: CGSize = textInCell.boundingRectWithSize(CGSizeMake(200, CGFloat(MAXFLOAT)), options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil).size
+            var cellSize: CGSize = textInCell.boundingRect(with: CGSize(width: 200, height: CGFloat(MAXFLOAT)), options: NSStringDrawingOptions.usesLineFragmentOrigin, context: nil).size
             
             if cellSize.height == 0 {
                 cellSize.height = 80
@@ -352,7 +348,7 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension ChatViewController: LoadMoreMessagesDelegate {
     
-    func LoadMoreMessages(messageLoadMoreCell: MessageLoadMoreCell) {
+    func LoadMoreMessages(_ messageLoadMoreCell: MessageLoadMoreCell) {
         
         // Do we need to impose the limit? Or it doesn't matter b/c parse
         print("LOAD MORE MESSAGES")
@@ -372,26 +368,26 @@ extension ChatViewController: MessageViewDelegate {
             
             // FIXME: CACHE USERNAME in NSUserDefaults.
             // Dummy authorId and threadId
-            if let username = PFUser.currentUser()?.valueForKey("username") as? String {
+            if let username = PFUser.current()?.value(forKey: "username") as? String {
                 message["authorUsername"] = username
             }
             message["threadId"] = self.threadId
             message["content"] = sentMessage
             
-            NSUserDefaults.standardUserDefaults().setObject(sentMessage, forKey: self.kLastSentMessageKey)
+            UserDefaults.standard.set(sentMessage, forKey: self.kLastSentMessageKey)
             
             self.messageView.messageTextView.text = ""
             
-            message.saveInBackgroundWithBlock { (result: Bool, error: NSError?) -> Void in
+            message.saveInBackground { (result: Bool, error: Error?) -> Void in
                 if error != nil {
-                    print("Error sending message \"\(sentMessage)\":", error?.userInfo["error"] as? String)
+                    print("Error sending message \"\(sentMessage)\":", error?.localizedDescription)
                     
                     if self.trimmedMessage(self.messageView.messageTextView.text, placeholder: self.messageView.placeholder) == nil {
-                        self.messageView.messageTextView.text = NSUserDefaults.standardUserDefaults().objectForKey(self.kLastSentMessageKey) as? String
+                        self.messageView.messageTextView.text = UserDefaults.standard.object(forKey: self.kLastSentMessageKey) as? String
                     }
-                    let alertVC = UIAlertController(title: "Send Failed", message: "Please try again later.", preferredStyle: UIAlertControllerStyle.Alert)
-                    alertVC.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
-                    self.presentViewController(alertVC, animated: true, completion: nil)
+                    let alertVC = UIAlertController(title: "Send Failed", message: "Please try again later.", preferredStyle: UIAlertControllerStyle.alert)
+                    alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                    self.present(alertVC, animated: true, completion: nil)
                 } else {
                     // Succeed - reload
                     self.fetchMessages()
@@ -408,22 +404,22 @@ extension ChatViewController: MessageViewDelegate {
 extension ChatViewController {
     func willEnterForeground() {
         // Only clear badge if Chat vc onscreen.
-        if self.isViewLoaded() && self.view.window != nil {
+        if self.isViewLoaded && self.view.window != nil {
             self.clearApplicationIconBadge()
         }
     }
     
     func clearApplicationIconBadge() {
-        let installation = PFInstallation.currentInstallation()!
+        let installation = PFInstallation.current()!
         let badge = installation.badge
         print("BADGE NUM", badge)
         if installation.badge != 0 {
             installation.badge = 0
-            installation.saveInBackgroundWithBlock({ (saved: Bool, error: NSError?) in
+            installation.saveInBackground(block: { (saved: Bool, error: Error?) in
                 print("BADGE SAVED")
             })
         }
-        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+        UIApplication.shared.applicationIconBadgeNumber = 0
     }
 }
 
@@ -431,7 +427,7 @@ extension ChatViewController {
 // MARK: - Actions
 
 extension ChatViewController {
-    @IBAction func onScreenTapped(sender: AnyObject) {
+    @IBAction func onScreenTapped(_ sender: AnyObject) {
         self.view.endEditing(true)
         self.messageView.resetMessageTextView()
     }

@@ -36,7 +36,7 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
+        UIApplication.shared.setStatusBarStyle(.default, animated: true)
         self.setMenuButton(withColor: "red")
         
         self.tableView.delegate = self
@@ -56,31 +56,31 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
         */
         
         self.refreshControl = UIRefreshControl()
-        self.refreshControl!.addTarget(self, action: #selector(self.onRefresh), forControlEvents: UIControlEvents.ValueChanged)
-        self.refreshControl!.tintColor = UIColor.redColor()
-        if NSUserDefaults.standardUserDefaults().objectForKey(self.kWelcomeMessageKey) == nil || NSUserDefaults.standardUserDefaults().objectForKey(self.kWelcomeMessageKey) as? Bool == false {
-            self.refreshControl!.attributedTitle = NSAttributedString(string: "Welcome to The Delt. It's a little slow...", attributes: [NSForegroundColorAttributeName : UIColor.redColor()])
-            NSUserDefaults.standardUserDefaults().setObject(true, forKey: self.kWelcomeMessageKey)
+        self.refreshControl!.addTarget(self, action: #selector(self.onRefresh), for: UIControlEvents.valueChanged)
+        self.refreshControl!.tintColor = UIColor.red
+        if UserDefaults.standard.object(forKey: self.kWelcomeMessageKey) == nil || UserDefaults.standard.object(forKey: self.kWelcomeMessageKey) as? Bool == false {
+            self.refreshControl!.attributedTitle = NSAttributedString(string: "Welcome to The Delt. It's a little slow...", attributes: [NSForegroundColorAttributeName : UIColor.red])
+            UserDefaults.standard.set(true, forKey: self.kWelcomeMessageKey)
         }
-        self.tableView.insertSubview(self.refreshControl!, atIndex: 0)
+        self.tableView.insertSubview(self.refreshControl!, at: 0)
         
         self.refreshData()
         
-        self.chooseMediaAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        self.chooseMediaAlertController.addAction(UIAlertAction(title: "CLICK", style: .Destructive, handler: { _ in      // FIXME: Using .Destructive to get red text color is a little hacky...
+        self.chooseMediaAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        self.chooseMediaAlertController.addAction(UIAlertAction(title: "CLICK", style: .destructive, handler: { _ in      // FIXME: Using .Destructive to get red text color is a little hacky...
             self.presentImagePicker(usingPhotoLibrary: false)
         }))
-        self.chooseMediaAlertController.addAction(UIAlertAction(title: "CHOOSE", style: .Destructive, handler: { _ in
+        self.chooseMediaAlertController.addAction(UIAlertAction(title: "CHOOSE", style: .destructive, handler: { _ in
             self.presentImagePicker(usingPhotoLibrary: true)
         }))
-        self.chooseMediaAlertController.addAction(UIAlertAction(title: "CANCEL", style: .Cancel, handler: { _ in
-            self.chooseMediaAlertController.dismissViewControllerAnimated(true, completion: nil)
+        self.chooseMediaAlertController.addAction(UIAlertAction(title: "CANCEL", style: .cancel, handler: { _ in
+            self.chooseMediaAlertController.dismiss(animated: true, completion: nil)
         }))
     }
     
-    override func viewDidAppear(animated: Bool) {
-        if !UIApplication.sharedApplication().isRegisteredForRemoteNotifications() {
-            AppDelegate.registerForPushNotifications(UIApplication.sharedApplication())
+    override func viewDidAppear(_ animated: Bool) {
+        if !UIApplication.shared.isRegisteredForRemoteNotifications {
+            AppDelegate.registerForPushNotifications(UIApplication.shared)
         }
     }
     
@@ -100,13 +100,13 @@ extension ReelViewController {
         imagePickerVC.allowsEditing = true
         imagePickerVC.mediaTypes = [kUTTypeImage as String, kUTTypeMovie as String]
         if photoLibrary {
-            imagePickerVC.sourceType = .PhotoLibrary
-            imagePickerVC.navigationBar.tintColor = UIColor.redColor()
-            imagePickerVC.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Stop, target: imagePickerVC, action: nil)
+            imagePickerVC.sourceType = .photoLibrary
+            imagePickerVC.navigationBar.tintColor = UIColor.red
+            imagePickerVC.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: imagePickerVC, action: nil)
         } else {
-            imagePickerVC.sourceType = .Camera
+            imagePickerVC.sourceType = .camera
         }
-        self.presentViewController(imagePickerVC, animated: true, completion: nil)
+        self.present(imagePickerVC, animated: true, completion: nil)
     }
 }
 
@@ -114,40 +114,40 @@ extension ReelViewController {
 // MARK: - Table View
 
 extension ReelViewController: UITableViewDelegate, UITableViewDataSource {    
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         // Header.
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: self.kHeaderWidth, height: self.kHeaderHeight))
-        headerView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.7)
+        headerView.backgroundColor = UIColor.white.withAlphaComponent(0.7)
         
         // Blur.
-        let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Light))
+        let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
         blurView.frame = headerView.frame
         
         // Profile image.
         let profileImageView = ProfileImageView(frame: CGRect(x: 8 , y: 8, width: kProfileWidthHeight, height: kProfileWidthHeight))
         // profileImageView.backgroundColor = UIColor.redColor()
-        profileImageView.contentMode = UIViewContentMode.ScaleAspectFill
+        profileImageView.contentMode = UIViewContentMode.scaleAspectFill
         profileImageView.layer.cornerRadius = 2
         profileImageView.clipsToBounds = true
-        profileImageView.backgroundColor = UIColor.redColor()
+        profileImageView.backgroundColor = UIColor.red
         profileImageView.profilePresenterDelegate = self
         
-        let photo = photos.objectAtIndex(section) as! NSMutableDictionary
+        let photo = photos.object(at: section) as! NSMutableDictionary
         let query = PFUser.query()
-        query?.whereKey("username", equalTo: photo.valueForKey("username") as! String)
-        query?.findObjectsInBackgroundWithBlock({ (users: [PFObject]?, error: NSError?) -> Void in
+        query?.whereKey("username", equalTo: photo.value(forKey: "username") as! String)
+        query?.findObjectsInBackground(block: { (users: [PFObject]?, error: Error?) -> Void in
             if let users = users {
                 let pfImageView = PFImageView()
                 if users.count > 0 {
                     let user = users[0]
                     profileImageView.user = user as? PFUser
-                    if let _ = user.valueForKey("photo"){
-                        pfImageView.file = users[0].valueForKey("photo") as? PFFile
-                        pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
+                    if let _ = user.value(forKey: "photo"){
+                        pfImageView.file = users[0].value(forKey: "photo") as? PFFile
+                        pfImageView.load { (image: UIImage?, error: Error?) -> Void in
                             if let error = error {
                                 // Log details of the failure
-                                print("Error: \(error) \(error.userInfo)")
+                                print("Error: \(error) \(error.localizedDescription)")
                                 
                             } else {
                                 profileImageView.image = image
@@ -162,11 +162,11 @@ extension ReelViewController: UITableViewDelegate, UITableViewDataSource {
         
         // Username label.
         let usernameLabel = UsernameLabel(frame: CGRect(x: 8 + self.kProfileWidthHeight + 8, y: 12, width: 200, height: 16))
-        let username = photo.valueForKey("username") as? String
+        let username = photo.value(forKey: "username") as? String
         usernameLabel.username = username
         usernameLabel.text = username
         usernameLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 16.5)
-        usernameLabel.textColor = UIColor.redColor()
+        usernameLabel.textColor = UIColor.red
         usernameLabel.sizeToFit()
         usernameLabel.profilePresenterDelegate = self
         
@@ -178,23 +178,23 @@ extension ReelViewController: UITableViewDelegate, UITableViewDataSource {
          usernameBoxView.backgroundColor = UIColor.redColor()
          */
         
-        headerView.insertSubview(profileImageView, atIndex: 0)
-        headerView.insertSubview(usernameLabel, atIndex: 0)
-        headerView.insertSubview(blurView, atIndex: 0)
+        headerView.insertSubview(profileImageView, at: 0)
+        headerView.insertSubview(usernameLabel, at: 0)
+        headerView.insertSubview(blurView, at: 0)
         blurView.autoPinEdgesToSuperviewEdges()
         
         return headerView
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return CGFloat(self.kHeaderHeight)
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let photo = self.photos.objectAtIndex(indexPath.section) as? NSMutableDictionary
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let photo = self.photos.object(at: indexPath.section) as? NSMutableDictionary
         var commentOffset = 2
         var hasFaves = false
-        if let numFaves = photo?.valueForKey("numFaves") as? Int {
+        if let numFaves = photo?.value(forKey: "numFaves") as? Int {
             if numFaves > 0 {
                 hasFaves = true
                 commentOffset += 1
@@ -202,13 +202,13 @@ extension ReelViewController: UITableViewDelegate, UITableViewDataSource {
         }
         switch indexPath.row {
         case 0:
-            let cell = tableView.dequeueReusableCellWithIdentifier("PhotoVideoCell", forIndexPath: indexPath) as! PhotoVideoCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PhotoVideoCell", for: indexPath) as! PhotoVideoCell
             
             cell.setUpCell(photo)
             cell.delegate = self
             return cell
         case 1:
-            let cell = tableView.dequeueReusableCellWithIdentifier("ButtonCell", forIndexPath: indexPath) as! ButtonCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ButtonCell", for: indexPath) as! ButtonCell
             
             cell.delegate = self
             cell.setUpCell(photo)
@@ -216,12 +216,12 @@ extension ReelViewController: UITableViewDelegate, UITableViewDataSource {
         default:
             if indexPath.row == 2 && hasFaves {
                 
-                let cell = tableView.dequeueReusableCellWithIdentifier("FavesCell", forIndexPath: indexPath) as! FavesCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "FavesCell", for: indexPath) as! FavesCell
                 
                 cell.setUpCell(photo)
                 return cell
             } else {
-                let cell = tableView.dequeueReusableCellWithIdentifier("CommentCell", forIndexPath: indexPath) as! CommentCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as! CommentCell
                 cell.commentIndex = indexPath.row - commentOffset
                 cell.usernameLabel.profilePresenterDelegate = self
                 cell.setUpCell(photo)
@@ -231,32 +231,32 @@ extension ReelViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var numRows = 2
-        let photo = photos.objectAtIndex(section) as? NSMutableDictionary
-        if let numFaves = photo?.valueForKey("numFaves") as? Int {
+        let photo = photos.object(at: section) as? NSMutableDictionary
+        if let numFaves = photo?.value(forKey: "numFaves") as? Int {
             if numFaves > 0 {
                 numRows += 1
             }
         }
-        if let numComments = photo?.valueForKey("numComments") as? Int {
+        if let numComments = photo?.value(forKey: "numComments") as? Int {
             numRows += numComments
         }
         return numRows
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return photos.count
     }
     
-    func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? PhotoVideoCell {
-            let photo = self.photos.objectAtIndex(indexPath.section) as! NSMutableDictionary
-            if let _ = photo.valueForKey("videoFile") as? PFFile {
+            let photo = self.photos.object(at: indexPath.section) as! NSMutableDictionary
+            if let _ = photo.value(forKey: "videoFile") as? PFFile {
                 cell.removeVideoPlayer()
             }
         }
@@ -272,11 +272,11 @@ extension ReelViewController {
     func refreshData() {
         self.refreshControl?.beginRefreshing()
         let query = PFQuery(className: "Photo")
-        query.orderByAscending("createdAt")
-        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
+        query.order(byAscending: "createdAt")
+        query.findObjectsInBackground { (objects: [PFObject]?, error: Error?) -> Void in
             if let error = error {
                 // Log details of the failure
-                print("Error: \(error) \(error.userInfo)")
+                print("Error: \(error) \(error.localizedDescription)")
                 
             } else {
                 print("Successfully retrieved \(objects!.count) photos.")
@@ -289,42 +289,42 @@ extension ReelViewController {
                     
                     for object in objects {
                         let photo = NSMutableDictionary()
-                        photo.setObject(object.objectId!, forKey: "objectId")
+                        photo.setObject(object.objectId!, forKey: "objectId" as NSCopying)
                         
-                        if let imageFile = object.objectForKey("imageFile") {
-                            photo.setObject(imageFile, forKey: "imageFile")
+                        if let imageFile = object.object(forKey: "imageFile") {
+                            photo.setObject(imageFile, forKey: "imageFile" as NSCopying)
                         }
                         
                         // VIDEO
-                        if let videoFile = object.objectForKey("videoFile") {
-                            photo.setObject(videoFile, forKey: "videoFile")
+                        if let videoFile = object.object(forKey: "videoFile") {
+                            photo.setObject(videoFile, forKey: "videoFile" as NSCopying)
                         }
                         
-                        if let username = object.objectForKey("username") as? String {
-                            photo.setObject(username, forKey: "username")
+                        if let username = object.object(forKey: "username") as? String {
+                            photo.setObject(username, forKey: "username" as NSCopying)
                         }
-                        if let favedBy = object.objectForKey("favedBy") as? [String] {
-                            photo.setObject(favedBy, forKey: "favedBy")
+                        if let favedBy = object.object(forKey: "favedBy") as? [String] {
+                            photo.setObject(favedBy, forKey: "favedBy" as NSCopying)
                         }
-                        if let numFaves = object.objectForKey("numFaves") as? Int {
-                            photo.setObject(numFaves, forKey: "numFaves")
+                        if let numFaves = object.object(forKey: "numFaves") as? Int {
+                            photo.setObject(numFaves, forKey: "numFaves" as NSCopying)
                         }
-                        if let flagged = object.objectForKey("flagged") as? Bool {
-                            photo.setObject(flagged, forKey: "flagged")
+                        if let flagged = object.object(forKey: "flagged") as? Bool {
+                            photo.setObject(flagged, forKey: "flagged" as NSCopying)
                         }
-                        if let numFlags = object.objectForKey("numFlags") as? Int {
-                            photo.setObject(numFlags, forKey: "numFlags")
+                        if let numFlags = object.object(forKey: "numFlags") as? Int {
+                            photo.setObject(numFlags, forKey: "numFlags" as NSCopying)
                         }
-                        if let numComments = object.objectForKey("numComments") as? Int {
-                            photo.setObject(numComments, forKey: "numComments")
+                        if let numComments = object.object(forKey: "numComments") as? Int {
+                            photo.setObject(numComments, forKey: "numComments" as NSCopying)
                         }
-                        if let comments = object.objectForKey("comments") as? [[String]] {
-                            photo.setObject(comments, forKey: "comments")
+                        if let comments = object.object(forKey: "comments") as? [[String]] {
+                            photo.setObject(comments, forKey: "comments" as NSCopying)
                         }
                         
-                        print("\(i++)")
+                        print("\(i += 1)")
                         
-                        self.photos.insertObject(photo, atIndex: 0)
+                        self.photos.insert(photo, at: 0)
                     }
                 }
                 
@@ -343,35 +343,34 @@ extension ReelViewController {
 // MARK: - Button Cell Delegate
 
 extension ReelViewController: ButtonCellDelegate {
-    func addComment(photo: NSMutableDictionary?) {
+    func addComment(_ photo: NSMutableDictionary?) {
         commentPhoto = photo
-        self.performSegueWithIdentifier("addCommentSegue", sender: self) // segue to CommentViewController
+        self.performSegue(withIdentifier: "addCommentSegue", sender: self) // segue to CommentViewController
     }
     
-    func updateFaved(photo: NSMutableDictionary?, didUpdateFaved faved: Bool) {
+    func updateFaved(_ photo: NSMutableDictionary?, didUpdateFaved faved: Bool) {
         let query = PFQuery(className: "Photo")
-        let objectId = photo?.valueForKey("objectId") as! String
-        query.getObjectInBackgroundWithId(objectId) {
-            (photo: PFObject?, error: NSError?) -> Void in
+        let objectId = photo?.value(forKey: "objectId") as! String
+        query.getObjectInBackground(withId: objectId) { (photo: PFObject?, error: Error?) -> Void in
             if error != nil {
                 print(error)
             } else if let photo = photo {
                 
-                if let username = PFUser.currentUser()?.username {
+                if let username = PFUser.current()?.username {
                     // Increment or decrement fave count accordingly.
                     if faved {
-                        photo.addObject(username, forKey: "favedBy")
+                        photo.add(username, forKey: "favedBy")
                         photo.incrementKey("numFaves")
                     } else {
-                        photo.removeObject(username, forKey: "favedBy")
+                        photo.remove(username, forKey: "favedBy")
                         photo.incrementKey("numFaves", byAmount: -1)
                     }
                 }
                 
-                photo.saveInBackgroundWithBlock({ (completed: Bool, eror: NSError?) -> Void in
+                photo.saveInBackground(block: { (completed: Bool, eror: Error?) -> Void in
                     if let error = error {
                         // Log details of the failure
-                        print("Error: \(error) \(error.userInfo)")
+                        print("Error: \(error) \(error.localizedDescription)")
                         
                     } else {
                         self.refreshData() // FIXME: Makes for glitchy scrolling.
@@ -381,17 +380,16 @@ extension ReelViewController: ButtonCellDelegate {
         }
     }
     
-    func updateFlagged(photo: NSMutableDictionary?, flagged: Bool) {
+    func updateFlagged(_ photo: NSMutableDictionary?, flagged: Bool) {
         if flagged {
-            let alert = UIAlertController(title: "Post Flagged", message: "Administrators will be notified and this post will be reviewed.", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
+            let alert = UIAlertController(title: "Post Flagged", message: "Administrators will be notified and this post will be reviewed.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
         
         let query = PFQuery(className: "Photo")
-        let objectId = photo?.valueForKey("objectId") as! String
-        query.getObjectInBackgroundWithId(objectId) {
-            (photo: PFObject?, error: NSError?) -> Void in
+        let objectId = photo?.value(forKey: "objectId") as! String
+        query.getObjectInBackground(withId: objectId) { (photo: PFObject?, error: Error?) -> Void in
             if error != nil {
                 print(error)
             } else if let photo = photo {
@@ -408,10 +406,10 @@ extension ReelViewController: ButtonCellDelegate {
                     photo.incrementKey("numFlags", byAmount: -1)
                 }
                 
-                photo.saveInBackgroundWithBlock({ (completed: Bool, eror: NSError?) -> Void in
+                photo.saveInBackground(block: { (completed: Bool, eror: Error?) -> Void in
                     if let error = error {
                         // Log details of the failure
-                        print("Error: \(error) \(error.userInfo)")
+                        print("Error: \(error) \(error.localizedDescription)")
                         
                     } else {
                         self.refreshData() // FIXME: Makes for glitchy scrolling.
@@ -426,8 +424,8 @@ extension ReelViewController: ButtonCellDelegate {
 // MARK: - Actions
 
 extension ReelViewController {
-    @IBAction func onAddButtonTapped(sender: AnyObject) {
-        self.presentViewController(self.chooseMediaAlertController, animated: true, completion: nil)
+    @IBAction func onAddButtonTapped(_ sender: AnyObject) {
+        self.present(self.chooseMediaAlertController, animated: true, completion: nil)
     }
 }
 
@@ -439,27 +437,27 @@ extension ReelViewController: UIImagePickerControllerDelegate {
     // uploadPhoto variable, and dismisses the image picker view controller. Once the image picker
     // view controller is dismissed (a.k.a. inside the completion handler) we modally segue to
     // show the "Location selection" screen. --Nick Troccoli
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         // Photo.
         if info[UIImagePickerControllerMediaType] as! String == kUTTypeImage as String {
             self.uploadPhoto = info[UIImagePickerControllerEditedImage] as? UIImage
             
             // Video.
         } else {
-            let videoUrl = info[UIImagePickerControllerMediaURL] as! NSURL
-            let videoData = NSData(contentsOfURL: videoUrl)
+            let videoUrl = info[UIImagePickerControllerMediaURL] as! URL
+            let videoData = try? Data(contentsOf: videoUrl)
             self.uploadVideo = PFFile(name: "video.mp4", data: videoData!)
             
             // Set video thumbnail image.
-            let asset = AVAsset(URL: videoUrl)
+            let asset = AVAsset(url: videoUrl)
             let generator: AVAssetImageGenerator = AVAssetImageGenerator(asset: asset)
             let time = CMTimeMake(1, 1)
-            let imageRef = try! generator.copyCGImageAtTime(time, actualTime: nil)
-            self.uploadPhoto = UIImage(CGImage: imageRef)
+            let imageRef = try! generator.copyCGImage(at: time, actualTime: nil)
+            self.uploadPhoto = UIImage(cgImage: imageRef)
         }
         
         let storyboard = UIStoryboard(name: "Reel", bundle: nil)
-        let captionNC = storyboard.instantiateViewControllerWithIdentifier("CaptionNC") as! UINavigationController
+        let captionNC = storyboard.instantiateViewController(withIdentifier: "CaptionNC") as! UINavigationController
         let captionVC = captionNC.viewControllers[0] as! CaptionViewController
         captionVC.delegate = self
         captionVC.photo = self.uploadPhoto!
@@ -482,7 +480,7 @@ extension ReelViewController: CaptionViewControllerDelegate {
             photo["videoFile"] = self.uploadVideo
         }
         
-        photo["username"] = PFUser.currentUser()?.username
+        photo["username"] = PFUser.current()?.username
         photo["faved"] = false
         photo["numFaves"] = 0
         photo["flagged"] = false
@@ -492,27 +490,27 @@ extension ReelViewController: CaptionViewControllerDelegate {
         if let caption = caption {
             photo["numComments"] = 1
             
-            comments.append([PFUser.currentUser()!.username!, caption])
+            comments.append([PFUser.current()!.username!, caption])
         } else {
             photo["numComments"] = 0
         }
         photo["comments"] = comments
-        photo.saveInBackgroundWithBlock({ (completed: Bool, error: NSError?) -> Void in
+        photo.saveInBackground(block: { (completed: Bool, error: Error?) -> Void in
             if let error = error {
                 // Log details of the failure
-                print("Error: \(error) \(error.userInfo)")
+                print("Error: \(error) \(error.localizedDescription)")
                 
             } else {
                 self.refreshData()
             }
         })
         
-        if let numPhotosPosted = PFUser.currentUser()!.objectForKey("numPhotosPosted") as? Int {
-            PFUser.currentUser()?.setObject(numPhotosPosted + 1, forKey: "numPhotosPosted")
+        if let numPhotosPosted = PFUser.current()!.object(forKey: "numPhotosPosted") as? Int {
+            PFUser.current()?.setObject(numPhotosPosted + 1, forKey: "numPhotosPosted")
         } else {
-            PFUser.currentUser()?.setObject(1, forKey: "numPhotosPosted")
+            PFUser.current()?.setObject(1, forKey: "numPhotosPosted")
         }
-        PFUser.currentUser()?.saveInBackground()
+        PFUser.current()?.saveInBackground()
     }
 }
 
@@ -522,26 +520,25 @@ extension ReelViewController: CaptionViewControllerDelegate {
 extension ReelViewController: CommentViewControllerDelegate {
     func commentViewController(didEnterComment comment: String) {
         let query = PFQuery(className: "Photo")
-        let objectId = commentPhoto?.valueForKey("objectId") as! String
-        query.getObjectInBackgroundWithId(objectId) {
-            (photo: PFObject?, error: NSError?) -> Void in
+        let objectId = commentPhoto?.value(forKey: "objectId") as! String
+        query.getObjectInBackground(withId: objectId) { (photo: PFObject?, error: Error?) -> Void in
             if error != nil {
                 print(error)
             } else if let photo = photo {
                 var commentPair: [String]
-                if let username = PFUser.currentUser()?.username {
+                if let username = PFUser.current()?.username {
                     commentPair = [username, comment]
                 } else {
                     commentPair = ["", comment]
                 }
                 
-                photo.addObject(commentPair, forKey: "comments")   // Add comment
+                photo.add(commentPair, forKey: "comments")   // Add comment
                 photo.incrementKey("numComments")                  // Increment comment count
                 
-                photo.saveInBackgroundWithBlock({ (completed: Bool, eror: NSError?) -> Void in
+                photo.saveInBackground(block: { (completed: Bool, eror: Error?) -> Void in
                     if let error = error {
                         // Log details of the failure
-                        print("Error: \(error) \(error.userInfo)")
+                        print("Error: \(error) \(error.localizedDescription)")
                         
                     } else {
                         self.refreshData()
@@ -556,15 +553,15 @@ extension ReelViewController: CommentViewControllerDelegate {
 // MARK: - Navigation
 
 extension ReelViewController {
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addCommentSegue" {
-            let nc = segue.destinationViewController as! UINavigationController
+            let nc = segue.destination as! UINavigationController
             let vc = nc.viewControllers.first as! CommentViewController
             vc.delegate = self
             vc.photo = self.commentPhoto
         } else {
-            let vc = segue.destinationViewController as! PhotoDetailsViewController
-            let indexPath = self.tableView.indexPathForCell(sender as! UITableViewCell)!
+            let vc = segue.destination as! PhotoDetailsViewController
+            let indexPath = self.tableView.indexPath(for: sender as! UITableViewCell)!
             vc.selectedPhoto = self.photos[indexPath.section] as! NSMutableDictionary
         }
     }
@@ -583,7 +580,7 @@ extension ReelViewController: PhotoVideoCellDelegate {
 // MARK: - Transition
 
 extension ReelViewController: UIViewControllerTransitioningDelegate {
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
         /*
         if presented.isKindOfClass(PhotoDetailViewController) || presented.isKindOfClass(VideoDetailViewController) {
@@ -596,7 +593,7 @@ extension ReelViewController: UIViewControllerTransitioningDelegate {
         return nil
     }
     
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         self.transition.presenting = false
         return self.transition
     }

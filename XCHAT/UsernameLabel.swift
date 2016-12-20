@@ -41,8 +41,8 @@ class UsernameLabel: UILabel {
         self.commonInit()
     }
     
-    private func commonInit() {
-        self.userInteractionEnabled = true
+    fileprivate func commonInit() {
+        self.isUserInteractionEnabled = true
         self.tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.onTap))
         self.addGestureRecognizer(self.tapGestureRecognizer)
     }

@@ -14,30 +14,30 @@ class SwipeAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     var presenting = true
     var originFrame = CGRect.zero
     
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return self.duration
     }
     
-    func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        let containerView = transitionContext.containerView()
-        containerView.backgroundColor = UIColor.blackColor()
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        let containerView = transitionContext.containerView
+        containerView.backgroundColor = UIColor.black
         
         let coverView = UIView(frame: containerView.frame)
-        coverView.backgroundColor = UIColor.blackColor()
+        coverView.backgroundColor = UIColor.black
         containerView.addSubview(coverView)
         
-        let toView = transitionContext.viewForKey(UITransitionContextToViewKey)!
+        let toView = transitionContext.view(forKey: UITransitionContextViewKey.to)!
         
-        let fromView = transitionContext.viewForKey(UITransitionContextFromViewKey)!
+        let fromView = transitionContext.view(forKey: UITransitionContextViewKey.from)!
         
         // Add toView to transition container.
         containerView.addSubview(toView)
-        containerView.bringSubviewToFront(toView)
+        containerView.bringSubview(toFront: toView)
         
         // Add black cover view on top to make toView fade-in smoother.
-        containerView.bringSubviewToFront(coverView)
+        containerView.bringSubview(toFront: coverView)
         
-        UIView.animateWithDuration(self.duration, delay: 0, options: [], animations: { () -> Void in
+        UIView.animate(withDuration: self.duration, delay: 0, options: [], animations: { () -> Void in
             fromView.alpha = 0
             coverView.alpha = 0
         }) { _ in

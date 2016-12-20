@@ -15,7 +15,7 @@ class AuxNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.auxPlayerView = NSBundle.mainBundle().loadNibNamed("AuxPlayerView", owner: self, options: nil)![0] as! AuxPlayerView
+        self.auxPlayerView = Bundle.main.loadNibNamed("AuxPlayerView", owner: self, options: nil)![0] as! AuxPlayerView
         self.auxPlayerView.frame.origin = CGPoint(x: 0, y: self.view.frame.height - self.auxPlayerView.thumbnailControlsViewHeight.constant)
         self.auxPlayerView.frame.size = CGSize(width: self.view.frame.width, height: self.view.frame.height + self.auxPlayerView.thumbnailControlsViewHeight.constant)
         self.view.addSubview(self.auxPlayerView)

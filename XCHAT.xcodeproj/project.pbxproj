@@ -35,7 +35,6 @@
 		2568C8891DEFD47B00C55859 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2568C8881DEFD47B00C55859 /* Keys.plist */; };
 		257A6B721B056D5B00996A56 /* HamburgerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257A6B711B056D5B00996A56 /* HamburgerViewController.swift */; };
 		258040B21C54DF00002D1F08 /* FeedbackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258040B11C54DF00002D1F08 /* FeedbackTableViewCell.swift */; };
-		258D49881B15AC6B00A632D3 /* ThreadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258D49871B15AC6B00A632D3 /* ThreadsViewController.swift */; };
 		258D498A1B15AEB900A632D3 /* MemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258D49891B15AEB900A632D3 /* MemberCell.swift */; };
 		25966C241C99978100D56DFF /* SwipeAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25966C221C99978100D56DFF /* SwipeAnimator.swift */; };
 		25966C251C99978100D56DFF /* VideoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25966C231C99978100D56DFF /* VideoDetailViewController.swift */; };
@@ -54,13 +53,10 @@
 		381125B31B0C1DB400DBBAD2 /* Reel.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 381125B21B0C1DB400DBBAD2 /* Reel.storyboard */; };
 		381BD6C81B158C5F005C6D1C /* Members.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 381BD6C71B158C5F005C6D1C /* Members.storyboard */; };
 		381BD6CA1B158C70005C6D1C /* MembersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381BD6C91B158C70005C6D1C /* MembersViewController.swift */; };
-		384F22F41B0AE13A00A04081 /* ThreadTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384F22F31B0AE13A00A04081 /* ThreadTableViewCell.swift */; };
 		384F22F81B0AE17900A04081 /* FirstMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384F22F71B0AE17900A04081 /* FirstMessageCell.swift */; };
-		384F22FA1B0AE18D00A04081 /* NewThreadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384F22F91B0AE18D00A04081 /* NewThreadViewController.swift */; };
 		385C74521B0ECB8A009BAC7A /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 385C74511B0ECB8A009BAC7A /* Profile.storyboard */; };
 		385C74561B0ECD42009BAC7A /* EditableProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C74551B0ECD42009BAC7A /* EditableProfileViewController.swift */; };
 		385C74581B0ECD4C009BAC7A /* ViewOnlyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C74571B0ECD4C009BAC7A /* ViewOnlyProfileViewController.swift */; };
-		3878660E1B0475B500623BC1 /* PushHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3878660D1B0475B500623BC1 /* PushHelper.swift */; };
 		387866101B0478C400623BC1 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3878660F1B0478C400623BC1 /* Settings.storyboard */; };
 		387866121B0479D100623BC1 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387866111B0479D100623BC1 /* SettingsViewController.swift */; };
 		387866141B047A2100623BC1 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387866131B047A2100623BC1 /* NotificationTableViewCell.swift */; };
@@ -178,7 +174,6 @@
 		2568C8881DEFD47B00C55859 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		257A6B711B056D5B00996A56 /* HamburgerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HamburgerViewController.swift; sourceTree = "<group>"; };
 		258040B11C54DF00002D1F08 /* FeedbackTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackTableViewCell.swift; sourceTree = "<group>"; };
-		258D49871B15AC6B00A632D3 /* ThreadsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadsViewController.swift; sourceTree = "<group>"; };
 		258D49891B15AEB900A632D3 /* MemberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberCell.swift; sourceTree = "<group>"; };
 		25966C221C99978100D56DFF /* SwipeAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeAnimator.swift; sourceTree = "<group>"; };
 		25966C231C99978100D56DFF /* VideoDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoDetailViewController.swift; sourceTree = "<group>"; };
@@ -201,13 +196,10 @@
 		381125B21B0C1DB400DBBAD2 /* Reel.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Reel.storyboard; sourceTree = "<group>"; };
 		381BD6C71B158C5F005C6D1C /* Members.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Members.storyboard; sourceTree = "<group>"; };
 		381BD6C91B158C70005C6D1C /* MembersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MembersViewController.swift; sourceTree = "<group>"; };
-		384F22F31B0AE13A00A04081 /* ThreadTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreadTableViewCell.swift; sourceTree = "<group>"; };
 		384F22F71B0AE17900A04081 /* FirstMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstMessageCell.swift; sourceTree = "<group>"; };
-		384F22F91B0AE18D00A04081 /* NewThreadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewThreadViewController.swift; sourceTree = "<group>"; };
 		385C74511B0ECB8A009BAC7A /* Profile.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		385C74551B0ECD42009BAC7A /* EditableProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditableProfileViewController.swift; sourceTree = "<group>"; };
 		385C74571B0ECD4C009BAC7A /* ViewOnlyProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewOnlyProfileViewController.swift; sourceTree = "<group>"; };
-		3878660D1B0475B500623BC1 /* PushHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushHelper.swift; sourceTree = "<group>"; };
 		3878660F1B0478C400623BC1 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		387866111B0479D100623BC1 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		387866131B047A2100623BC1 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
@@ -364,16 +356,6 @@
 			path = ShareToReel;
 			sourceTree = "<group>";
 		};
-		258D49861B15AC5700A632D3 /* Threads */ = {
-			isa = PBXGroup;
-			children = (
-				258D49871B15AC6B00A632D3 /* ThreadsViewController.swift */,
-				384F22F31B0AE13A00A04081 /* ThreadTableViewCell.swift */,
-				384F22F91B0AE18D00A04081 /* NewThreadViewController.swift */,
-			);
-			name = Threads;
-			sourceTree = "<group>";
-		};
 		25966C211C99976E00D56DFF /* Video Detail */ = {
 			isa = PBXGroup;
 			children = (
@@ -426,7 +408,6 @@
 				259FBA4B1B02F5A6006F1650 /* LaunchScreen.xib */,
 				252A6B4E1C4CB15B00FA1F75 /* XCHAT-Bridging-Header.h */,
 				259FBA401B02F5A5006F1650 /* Supporting Files */,
-				258D49861B15AC5700A632D3 /* Threads */,
 			);
 			path = XCHAT;
 			sourceTree = "<group>";
@@ -509,7 +490,6 @@
 				252A6B3F1C4C950500FA1F75 /* SettingsDescriptionTableViewCell.swift */,
 				387866131B047A2100623BC1 /* NotificationTableViewCell.swift */,
 				258040B11C54DF00002D1F08 /* FeedbackTableViewCell.swift */,
-				3878660D1B0475B500623BC1 /* PushHelper.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -707,7 +687,7 @@
 					2568C8671DEF898100C55859 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 9VEX7Q727F;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -721,7 +701,7 @@
 					259FBA3C1B02F5A5006F1650 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = 9VEX7Q727F;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0820;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -740,7 +720,7 @@
 					259FBA511B02F5A6006F1650 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = 9VEX7Q727F;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0820;
 						TestTargetID = 259FBA3C1B02F5A5006F1650;
 					};
 				};
@@ -926,14 +906,11 @@
 				25C6CCDC1B12FF1600EADB5B /* CommentViewController.swift in Sources */,
 				25518A451B0ED06300550DE9 /* FavesCell.swift in Sources */,
 				38D9FB981B155C780030B6D9 /* MessageLoadMoreCell.swift in Sources */,
-				3878660E1B0475B500623BC1 /* PushHelper.swift in Sources */,
 				255BE9881B1737940001B160 /* MessageCell.swift in Sources */,
 				38F655E51B0D521200C5586A /* ActionButtonTableViewCell.swift in Sources */,
 				38D9FB8E1B1557F40030B6D9 /* CalendarViewController.swift in Sources */,
 				381125AD1B0C1CD200DBBAD2 /* ReelViewController.swift in Sources */,
-				258D49881B15AC6B00A632D3 /* ThreadsViewController.swift in Sources */,
 				385C74581B0ECD4C009BAC7A /* ViewOnlyProfileViewController.swift in Sources */,
-				384F22F41B0AE13A00A04081 /* ThreadTableViewCell.swift in Sources */,
 				38F655E31B0D236900C5586A /* ReelGridCell.swift in Sources */,
 				258040B21C54DF00002D1F08 /* FeedbackTableViewCell.swift in Sources */,
 				384F22F81B0AE17900A04081 /* FirstMessageCell.swift in Sources */,
@@ -959,7 +936,6 @@
 				38D9FB941B1558490030B6D9 /* DescriptionCell.swift in Sources */,
 				38F655DD1B0D231B00C5586A /* PhotoCell.swift in Sources */,
 				252237751C991AA20077AC77 /* PhotoVideoCell.swift in Sources */,
-				384F22FA1B0AE18D00A04081 /* NewThreadViewController.swift in Sources */,
 				D5ABCD5A1D9BB895001BA92E /* SignupRequestTableViewCell.swift in Sources */,
 				387866121B0479D100623BC1 /* SettingsViewController.swift in Sources */,
 				D525F1B91D874CB30002D8B6 /* UITextField+NextTextField.swift in Sources */,
@@ -1044,7 +1020,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "ShareToReel/ShareToReel-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1069,7 +1045,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "ShareToReel/ShareToReel-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -1173,14 +1149,14 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = XCHAT/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tdx.thedelt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XCHAT/XCHAT-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1197,13 +1173,13 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = XCHAT/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tdx.thedelt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "XCHAT/XCHAT-Bridging-Header.h";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -1228,7 +1204,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.codepath.XCHAT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XCHAT.app/XCHAT";
 			};
 			name = Debug;
@@ -1249,7 +1225,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.codepath.XCHAT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XCHAT.app/XCHAT";
 			};
 			name = Release;

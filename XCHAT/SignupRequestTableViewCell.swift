@@ -39,7 +39,7 @@ class SignupRequestTableViewCell: UITableViewCell {
         self.emailLabelColor = self.emailLabel.textColor
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
@@ -59,25 +59,25 @@ extension SignupRequestTableViewCell {
     func setupCell(signupRequest object: PFObject?) {
         self.signupRequest = object
         
-        if let name = self.signupRequest?.objectForKey("name") as? String {
+        if let name = self.signupRequest?.object(forKey: "name") as? String {
             self.nameLabel.text = name
         } else {
             self.nameLabel.text = "[No name]"
-            self.nameLabel.textColor = UIColor.darkGrayColor()
+            self.nameLabel.textColor = UIColor.darkGray
         }
         
-        if let email = self.signupRequest?.objectForKey("email") as? String {
+        if let email = self.signupRequest?.object(forKey: "email") as? String {
             self.emailLabel.text = email
         } else {
             self.nameLabel.text = "[No email]"
-            self.nameLabel.textColor = UIColor.darkGrayColor()
+            self.nameLabel.textColor = UIColor.darkGray
         }
         
-        if let username = self.signupRequest?.objectForKey("username") as? String {
+        if let username = self.signupRequest?.object(forKey: "username") as? String {
             self.usernameLabel.text = "@" + username
         } else {
             self.nameLabel.text = "[No username]"
-            self.nameLabel.textColor = UIColor.darkGrayColor()
+            self.nameLabel.textColor = UIColor.darkGray
         }
     }
 }
@@ -86,22 +86,22 @@ extension SignupRequestTableViewCell {
 // MARK: - Actions
 
 extension SignupRequestTableViewCell {
-    @IBAction func onApproveButtonTapped(sender: AnyObject) {
+    @IBAction func onApproveButtonTapped(_ sender: AnyObject) {
         if let object = self.signupRequest {
             self.delegate?.signupRequestTableViewCell(didApproveUser: object)
         }
     }
     
     func showApproveButton() {
-        UIView.animateWithDuration(0.2, delay: 0, options: .CurveEaseOut, animations: {
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
             let newOrigin = CGPoint(x: -(self.contentView.frame.width - self.approveButton.frame.origin.x), y: 0)
             self.infoView.frame.origin = newOrigin
             }, completion: nil)
     }
     
     func hideApproveButton() {
-        UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseOut, animations: {
-            self.infoView.frame.origin = CGPointZero
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+            self.infoView.frame.origin = CGPoint.zero
             }, completion: nil)
     }
 }

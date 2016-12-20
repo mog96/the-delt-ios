@@ -13,15 +13,15 @@ protocol FeedbackDelegate {
 }
 
 enum FeedbackType {
-    case Feedback
-    case ReportUser
+    case feedback
+    case reportUser
 }
 
 class FeedbackTableViewCell: UITableViewCell {
     
     @IBOutlet weak var feedbackButton: UIButton!
     
-    var feedbackType: FeedbackType = .Feedback
+    var feedbackType: FeedbackType = .feedback
     var delegate: FeedbackDelegate?
     
     override func awakeFromNib() {
@@ -29,11 +29,11 @@ class FeedbackTableViewCell: UITableViewCell {
         // Initialization code
     }
     
-    @IBAction func onFeedbackButtonTapped(sender: AnyObject) {
+    @IBAction func onFeedbackButtonTapped(_ sender: AnyObject) {
         self.delegate?.sendFeedback(type: self.feedbackType)
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state

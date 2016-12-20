@@ -18,16 +18,16 @@ class ProfileTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        if let photo: PFFile=PFUser.currentUser()?.objectForKey("photo") as! PFFile?{
+        if let photo: PFFile=PFUser.current()?.object(forKey: "photo") as! PFFile?{
             let pfImageView = PFImageView()
             pfImageView.image = UIImage(named: "profilePic")
             print(photo)
             pfImageView.file = photo
-            pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
+            pfImageView.load { (image: UIImage?, error: Error?) -> Void in
                 if let error = error {
                     
                     // Log details of the failure
-                    print("Error: \(error) \(error.userInfo)")
+                    print("Error: \(error) \(error._userInfo)")
                 } else {
                     
                     print("Setting cell photo.")
@@ -38,12 +38,12 @@ class ProfileTableViewCell: UITableViewCell {
 
         }
         
-        PFUser.currentUser()?.fetchInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
+        PFUser.current()?.fetchInBackground(block: { (object: PFObject?, error: Error?) -> Void in
             if let error = error {
                 self.setDefaults()
                 
                 // Log failure.
-                print("Error refreshing current user: \(error.description)")
+                print("Error refreshing current user: \(error._userInfo)")
             } else {
                 
                 print("LALALALALALALABANANANANANANA")
@@ -79,7 +79,7 @@ class ProfileTableViewCell: UITableViewCell {
         self.realName.text = ""
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

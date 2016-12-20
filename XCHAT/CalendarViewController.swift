@@ -27,7 +27,7 @@ class CalendarViewController: ContentViewController, UITableViewDelegate, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setMenuButton(withColor: "red")
-        UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
+        UIApplication.shared.setStatusBarStyle(.default, animated: true)
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
@@ -35,14 +35,14 @@ class CalendarViewController: ContentViewController, UITableViewDelegate, UITabl
         self.tableView.rowHeight = UITableViewAutomaticDimension
         
         self.refreshControl = UIRefreshControl()
-        self.refreshControl.addTarget(self, action: #selector(self.onRefresh), forControlEvents: UIControlEvents.ValueChanged)
-        self.refreshControl.tintColor = UIColor.redColor()
-        self.refreshControl.attributedTitle = NSAttributedString(string: "Loading Past Events...", attributes: [NSForegroundColorAttributeName : UIColor.redColor()])
-        self.tableView.insertSubview(self.refreshControl, atIndex: 0)
+        self.refreshControl.addTarget(self, action: #selector(self.onRefresh), for: UIControlEvents.valueChanged)
+        self.refreshControl.tintColor = UIColor.red
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Loading Past Events...", attributes: [NSForegroundColorAttributeName : UIColor.red])
+        self.tableView.insertSubview(self.refreshControl, at: 0)
         
         self.currentReloadIndex = self.kPageLength / 2
         
-        self.noUpcomingEventsLabel.hidden = true
+        self.noUpcomingEventsLabel.isHidden = true
         
         self.refreshEvents(completion: nil)
     }
@@ -58,11 +58,11 @@ class CalendarViewController: ContentViewController, UITableViewDelegate, UITabl
 // MARK: Table View
 
 extension CalendarViewController {
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return events.count
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         // Two required components: DateTitleCell and SpaceCell.
         var numEventComponents = 2
@@ -78,7 +78,7 @@ extension CalendarViewController {
         return numEventComponents
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let event = events[indexPath.section] as PFObject
         
         var hasLocation = false
@@ -92,29 +92,29 @@ extension CalendarViewController {
         
         switch indexPath.row {
         case 0:
-            let cell = tableView.dequeueReusableCellWithIdentifier("DateTitleCell", forIndexPath: indexPath) as! DateTitleCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "DateTitleCell", for: indexPath) as! DateTitleCell
             cell.setUpCell(event)
             return cell
         default:
             if indexPath.row == 1 && hasLocation {
-                let cell = tableView.dequeueReusableCellWithIdentifier("LocationCell", forIndexPath: indexPath) as! LocationCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "LocationCell", for: indexPath) as! LocationCell
                 cell.locationLabel.text = event["location"] as? String
                 return cell
                 
             } else if (indexPath.row == 1 && hasDescription) || (indexPath.row == 2 && hasDescription) {
-                let cell = tableView.dequeueReusableCellWithIdentifier("DescriptionCell", forIndexPath: indexPath) as! DescriptionCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "DescriptionCell", for: indexPath) as! DescriptionCell
                 cell.descriptionLabel.text = event["description"] as? String
                 return cell
                 
             } else {
-                let cell = tableView.dequeueReusableCellWithIdentifier("SpaceCell", forIndexPath: indexPath) as! SpaceCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "SpaceCell", for: indexPath) as! SpaceCell
                 return cell
             }
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: false)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
     }
 }
 
@@ -122,51 +122,51 @@ extension CalendarViewController {
 // MARK: - Refresh Helpers
 
 extension CalendarViewController {
-    func refreshEvents(completion completion: (() -> ())?) {
+    func refreshEvents(completion: (() -> ())?) {
         self.getEvents { (events: [PFObject]) in
-            dispatch_async(dispatch_get_main_queue(), { 
+            DispatchQueue.main.async(execute: { 
                 self.events = events
-                self.tableView.contentOffset = CGPointZero
+                self.tableView.contentOffset = CGPoint.zero
                 self.tableView.reloadData()
-                self.noUpcomingEventsLabel.hidden = self.events.count != 0
+                self.noUpcomingEventsLabel.isHidden = self.events.count != 0
             })
             completion?()
         }
     }
     
-    func getEvents(completion completion: ([PFObject] -> ())) {
-        let currentHUD = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+    func getEvents(completion: @escaping (([PFObject]) -> ())) {
+        let currentHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
         currentHUD.label.text = "Loading Events..."
         
         let query = PFQuery(className: "Event")
-        query.whereKey("startTime", greaterThan: NSDate())
-        query.orderByAscending("startTime")
-        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
-            currentHUD.hideAnimated(true)
+        query.whereKey("startTime", greaterThan: Date())
+        query.order(byAscending: "startTime")
+        query.findObjectsInBackground { (objects: [PFObject]?, error: Error?) -> Void in
+            currentHUD.hide(animated: true)
             if let objects = objects {
                 completion(objects)
             } else {
                 print("object is nil")
-                print(error?.description)
+                print(error!.localizedDescription)
             }
         }
     }
     
-    func getPastEvents(before date: NSDate, count: Int, completion: ([PFObject] -> ())) {
-        let currentHUD = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+    func getPastEvents(before date: Date, count: Int, completion: @escaping (([PFObject]) -> ())) {
+        let currentHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
         currentHUD.label.text = "Loading Events..."
         
         let query = PFQuery(className: "Event")
         query.whereKey("startTime", lessThan: date)
-        query.orderByDescending("startTime")
+        query.order(byDescending: "startTime")
         query.limit = count
-        query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
-            currentHUD.hideAnimated(true)
+        query.findObjectsInBackground { (objects: [PFObject]?, error: Error?) -> Void in
+            currentHUD.hide(animated: true)
             if let objects = objects {
-                completion(objects.reverse())
+                completion(objects.reversed())
             } else {
                 print("object is nil")
-                print(error?.description)
+                print(error?.localizedDescription)
             }
         }
     }
@@ -176,7 +176,7 @@ extension CalendarViewController {
 // New Event Delegate
 
 extension CalendarViewController: NewEventViewControllerDelegate {
-    func refreshCurrentEvents(completion completion: (() -> ())) {
+    func refreshCurrentEvents(completion: @escaping (() -> ())) {
         self.refreshEvents(completion: completion)
     }
 }
@@ -186,21 +186,21 @@ extension CalendarViewController: NewEventViewControllerDelegate {
 
 extension CalendarViewController {
     func onRefresh() {
-        var beforeDate: NSDate!
+        var beforeDate: Date!
         if self.events.count > 0 {
-            beforeDate = self.events[0]["startTime"] as! NSDate
+            beforeDate = self.events[0]["startTime"] as! Date
         } else {
-            beforeDate = NSDate()
+            beforeDate = Date()
         }
         self.getPastEvents(before: beforeDate, count: self.kPageLength) { (events: [PFObject]) in
             if events.count > 0 {
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     let previousContentOffset = self.tableView.contentOffset
                     let previousContentSize = self.tableView.contentSize
                     
-                    self.events.insertContentsOf(events, at: 0)
-                    self.noUpcomingEventsLabel.hidden = self.events.count != 0
-                    self.tableView.insertSections(NSIndexSet(indexesInRange: NSRange(location: 0, length: events.count)), withRowAnimation: .Fade)
+                    self.events.insert(contentsOf: events, at: 0)
+                    self.noUpcomingEventsLabel.isHidden = self.events.count != 0
+                    self.tableView.insertSections(IndexSet(integersIn: NSRange(location: 0, length: events.count).toRange() ?? 0..<0), with: .fade)
                 })
             }
         }
@@ -212,9 +212,9 @@ extension CalendarViewController {
 // MARK: - Navigation
 
 extension CalendarViewController {
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "NewEventSegue" {
-            let nc = segue.destinationViewController as! UINavigationController
+            let nc = segue.destination as! UINavigationController
             let newEventVC = nc.viewControllers[0] as! NewEventViewController
             newEventVC.delegate = self
         }

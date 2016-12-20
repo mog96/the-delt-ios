@@ -32,13 +32,13 @@ class CaptionViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         captionTextView.becomeFirstResponder()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         self.view.endEditing(true)
     }
 
@@ -54,18 +54,18 @@ class CaptionViewController: UIViewController {
 extension CaptionViewController: UITextViewDelegate {
     func setPlaceholderText() {
         captionTextView.text = "Why is this dope?"
-        captionTextView.textColor = UIColor.lightGrayColor()
+        captionTextView.textColor = UIColor.lightGray
     }
     
-    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
-        if textView.textColor == UIColor.lightGrayColor() {
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        if textView.textColor == UIColor.lightGray {
             captionTextView.text = ""
-            captionTextView.textColor = UIColor.blackColor()
+            captionTextView.textColor = UIColor.black
         }
         return true
     }
     
-    func textViewDidChange(textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         if captionTextView.text!.characters.count == 0 {
             setPlaceholderText()
             captionTextView.resignFirstResponder()
@@ -77,7 +77,7 @@ extension CaptionViewController: UITextViewDelegate {
 // MARK: - Actions
 
 extension CaptionViewController {
-    @IBAction func onPostButtonTapped(sender: AnyObject) {
+    @IBAction func onPostButtonTapped(_ sender: AnyObject) {
         captionTextView.resignFirstResponder()
         
         // Avoids sending delegate placeholder text.
@@ -87,17 +87,17 @@ extension CaptionViewController {
             delegate?.captionViewController(didEnterCaption: nil)
         }
         
-        dismissViewControllerAnimated(true, completion: { () -> Void in
+        dismiss(animated: true, completion: { () -> Void in
             
             // code
         })
     }
     
-    @IBAction func onCancelButtonTapped(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func onCancelButtonTapped(_ sender: AnyObject) {
+        self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func onScreenTapped(sender: AnyObject) {
+    @IBAction func onScreenTapped(_ sender: AnyObject) {
         self.view.endEditing(true)
     }
 }

@@ -21,9 +21,9 @@ class ShareViewController: SLComposeServiceViewController {
         super.viewDidLoad()
         
         if !Parse.isLocalDatastoreEnabled() {
-            let keys = NSDictionary(contentsOfFile: NSBundle.mainBundle().pathForResource("Keys", ofType: "plist")!)!
+            let keys = NSDictionary(contentsOfFile: Bundle.main.path(forResource: "Keys", ofType: "plist")!)!
             // Parse config.
-            Parse.enableDataSharingWithApplicationGroupIdentifier("group.com.tdx.thedelt", containingApplication: "com.tdx.thedelt")
+            Parse.enableDataSharing(withApplicationGroupIdentifier: "group.com.tdx.thedelt", containingApplication: "com.tdx.thedelt")
             Parse.enableLocalDatastore()
             let configuration = ParseClientConfiguration {
                 $0.applicationId = keys["ParseApplicationID"] as? String
@@ -41,18 +41,21 @@ class ShareViewController: SLComposeServiceViewController {
                 
                 $0.server = "https://thedelt.herokuapp.com/parse"
             }
-            Parse.initializeWithConfiguration(configuration)
+            Parse.initialize(with: configuration)
             
-            PFUser.enableRevocableSessionInBackgroundWithBlock { (error: NSError?) -> Void in
+            PFUser.enableRevocableSessionInBackground(block: { (error: Error?) in
                 print("enableRevocableSessionInBackgroundWithBlock completion")
-            }
+                if error != nil {
+                    print("Error enableRevocableSessionInBackgroundWithBlock:", error as Any)
+                }
+            })
         }
         
-        print("CURRENT USER:", PFUser.currentUser()?.username)
+        print("CURRENT USER:", PFUser.current()?.username)
         
-        if let username = PFUser.currentUser()?.username {
+        if let username = PFUser.current()?.username {
             self.username = username
-        } else if let cachedUsername = NSUserDefaults(suiteName: "group.com.tdx.thedelt")?.objectForKey("Username") as? String {
+        } else if let cachedUsername = UserDefaults(suiteName: "group.com.tdx.thedelt")?.object(forKey: "Username") as? String {
             self.username = cachedUsername
         }
         
@@ -60,12 +63,12 @@ class ShareViewController: SLComposeServiceViewController {
         
         let content = self.extensionContext!.inputItems[0] as! NSExtensionItem
         let contentTypeImage = kUTTypeImage as String
-        for attatchment in content.attachments as! [NSItemProvider] {
-            if attatchment.hasItemConformingToTypeIdentifier(contentTypeImage) {
-                attatchment.loadItemForTypeIdentifier(contentTypeImage, options: nil, completionHandler: { (data: NSSecureCoding?, error: NSError!) in
+        for attachment in content.attachments as! [NSItemProvider] {
+            if attachment.hasItemConformingToTypeIdentifier(contentTypeImage) {
+                attachment.loadItem(forTypeIdentifier: contentTypeImage, options: nil, completionHandler: { (data: NSSecureCoding?, error: Error!) in
                     if error == nil {
-                        if let url = data as? NSURL {
-                            if let imageData = NSData(contentsOfURL: url) {
+                        if let url = data as? URL {
+                            if let imageData = try? Data(contentsOf: url) {
                                 self.selectedImage = UIImage(data: imageData)
                             } else {
                                 self.presentLoadImageError()
@@ -77,19 +80,20 @@ class ShareViewController: SLComposeServiceViewController {
                         self.presentLoadImageError()
                     }
                 })
+                // attatchment.loadItem(forTypeIdentifier: contentTypeImage, options: nil, completionHandler: )
             }
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         if self.username == nil {
-            let alert = UIAlertController(title: "Unable to Post", message: "Please go to 'the delt.' and log in.", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: { _ in
-                self.extensionContext!.completeRequestReturningItems([], completionHandler: nil)
+            let alert = UIAlertController(title: "Unable to Post", message: "Please go to 'the delt.' and log in.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { _ in
+                self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
             }))
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
         }
     }
 
@@ -101,7 +105,7 @@ class ShareViewController: SLComposeServiceViewController {
     }
 
     override func didSelectPost() {
-        let currentHUD = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        let currentHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
         currentHUD.label.text = "Uploading..."
         
         guard self.username != nil else {
@@ -135,20 +139,20 @@ class ShareViewController: SLComposeServiceViewController {
             photo["numComments"] = 0
         }
         photo["comments"] = comments
-        photo.saveInBackgroundWithBlock({ (completed: Bool, error: NSError?) -> Void in
+        photo.saveInBackground(block: { (completed: Bool, error: Error?) -> Void in
             if let error = error {
                 // Log details of the failure
-                print("Error: \(error) \(error.userInfo)")
+                print("Error: \(error)")
                 
             } else {
-                currentHUD.hide(true)
+                currentHUD.hide(animated: true)
                 print("UPLOADED IMAGE FROM SHARE EXTENSION")
-                self.extensionContext!.completeRequestReturningItems([], completionHandler: nil)
+                self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
             }
         })
     }
 
-    func configurationItems() -> [Any]! {
+    override func configurationItems() -> [Any]! {
         // To add configuration options via table cells at the bottom of the sheet, return an array of SLComposeSheetConfigurationItem here.
         return []
     }
@@ -158,10 +162,10 @@ class ShareViewController: SLComposeServiceViewController {
 
 extension ShareViewController {
     func presentLoadImageError() {
-        let alert = UIAlertController(title: "Error", message: "Unable to load image.", preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: { _ in
-            self.dismissViewControllerAnimated(true, completion: nil)
+        let alert = UIAlertController(title: "Error", message: "Unable to load image.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { _ in
+            self.dismiss(animated: true, completion: nil)
         }))
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
 }

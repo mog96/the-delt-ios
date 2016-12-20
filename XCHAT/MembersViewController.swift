@@ -32,9 +32,9 @@ class MembersViewController: ContentViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setMenuButton(withColor: "white")
-        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+        UIApplication.shared.setStatusBarStyle(.lightContent, animated: true)
         
-        screenSize = UIScreen.mainScreen().bounds
+        screenSize = UIScreen.main.bounds
         
         searchBar.delegate = self
         searchBar.showsCancelButton = true
@@ -46,7 +46,7 @@ class MembersViewController: ContentViewController, UITableViewDelegate, UITable
         self.tableView.estimatedRowHeight = 44
         self.tableView.rowHeight = UITableViewAutomaticDimension
 
-        self.navigationController?.navigationBar.barStyle = UIBarStyle.BlackTranslucent
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.blackTranslucent
         self.navigationBar = self.navigationController?.navigationBar
         
         self.fetchUsers()
@@ -57,24 +57,24 @@ class MembersViewController: ContentViewController, UITableViewDelegate, UITable
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(animated: Bool) {
-        self.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: .Default)
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         self.navigationController?.navigationBar.shadowImage = nil
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
+    override func viewWillDisappear(_ animated: Bool) {
+        UIApplication.shared.setStatusBarStyle(.default, animated: true)
     }
     
     
     // MARK: Table View
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return usersToDisplay.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("MemberCell", forIndexPath: indexPath) as! MemberCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MemberCell", for: indexPath) as! MemberCell
         
         let user = usersToDisplay[indexPath.row]
         let photo = photos[indexPath.row] as? UIImage
@@ -82,12 +82,12 @@ class MembersViewController: ContentViewController, UITableViewDelegate, UITable
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
         self.member = usersToDisplay[indexPath.row]
         let profileStoryboard = UIStoryboard(name: "Profile", bundle: nil)
-        let profileViewController = profileStoryboard.instantiateViewControllerWithIdentifier("EditableProfileViewController") as! EditableProfileViewController
+        let profileViewController = profileStoryboard.instantiateViewController(withIdentifier: "EditableProfileViewController") as! EditableProfileViewController
         profileViewController.editable = false
         profileViewController.user = self.member
         self.navigationController?.pushViewController(profileViewController, animated: true)
@@ -99,8 +99,8 @@ class MembersViewController: ContentViewController, UITableViewDelegate, UITable
     // Stores users in [PFObject] and photos separately in NSMutableDictionary().
     func fetchUsers() {
         let query = PFUser.query()
-        query!.orderByAscending("username")
-        query!.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
+        query!.order(byAscending: "username")
+        query!.findObjectsInBackground { (objects: [PFObject]?, error: Error?) -> Void in
             if let objects = objects {
                 self.users = objects as! [PFUser]
                 self.usersToDisplay = self.users
@@ -113,26 +113,26 @@ class MembersViewController: ContentViewController, UITableViewDelegate, UITable
     
     // MARK: Actions
     
-    @IBAction func onSearchButtonTapped(sender: AnyObject) {
+    @IBAction func onSearchButtonTapped(_ sender: AnyObject) {
         searchBar.frame = searchBarHiddenFrame
         self.navigationController?.navigationBar.addSubview(self.searchBar)
         self.leftBarButtonItemCopy = self.navigationItem.leftBarButtonItem
         self.rightBarButtonItemCopy = rightBarButtonItem
         
-        UIView.animateWithDuration(0.2, animations: { () -> Void in
+        UIView.animate(withDuration: 0.2, animations: { () -> Void in
             self.navigationItem.rightBarButtonItem = nil
             self.navigationItem.leftBarButtonItem = nil
             self.searchBar.frame = self.searchBarFrame
-        }) { (completed: Bool) -> Void in
+        }, completion: { (completed: Bool) -> Void in
             self.searchBar.becomeFirstResponder()
-        }
+        }) 
         
     }
     
     
     // MARK: Search Bar
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         usersToDisplay = self.users
         if searchText != "" {
             sortUsers(searchText)
@@ -140,32 +140,32 @@ class MembersViewController: ContentViewController, UITableViewDelegate, UITable
         tableView.reloadData()
     }
     
-    func sortUsers(searchText: String) {
-        let text = searchText.lowercaseString
-        for var i = self.usersToDisplay.count - 1; i >= 0; i -= 1 {
+    func sortUsers(_ searchText: String) {
+        let text = searchText.lowercased()
+        for i in stride(from: self.usersToDisplay.count - 1, to: 0, by: -1) {
             var shouldIncludeUser = false
             if var name = usersToDisplay[i]["name"] as? String {
-                name = name.lowercaseString
-                shouldIncludeUser = name.rangeOfString(text, options: [], range: nil, locale: nil) != nil
+                name = name.lowercased()
+                shouldIncludeUser = name.range(of: text, options: [], range: nil, locale: nil) != nil
             }
             if var username = usersToDisplay[i]["username"] as? String {
-                username = username.lowercaseString
-                shouldIncludeUser = username.rangeOfString(text, options: [], range: nil, locale: nil) != nil
+                username = username.lowercased()
+                shouldIncludeUser = username.range(of: text, options: [], range: nil, locale: nil) != nil
             }
             if !shouldIncludeUser {
-                usersToDisplay.removeAtIndex(i)
+                usersToDisplay.remove(at: i)
             }
         }
     }
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.searchBar.resignFirstResponder()
         
-        UIView.transitionWithView(self.searchBar, duration: 0.2, options: .TransitionCrossDissolve, animations: { () -> Void in
+        UIView.transition(with: self.searchBar, duration: 0.2, options: .transitionCrossDissolve, animations: { () -> Void in
             //
             }) { _ in
-                self.navigationItem.setRightBarButtonItem(self.rightBarButtonItemCopy, animated: true)
-                self.navigationItem.setLeftBarButtonItem(self.leftBarButtonItemCopy, animated: true)
+                self.navigationItem.setRightBarButton(self.rightBarButtonItemCopy, animated: true)
+                self.navigationItem.setLeftBarButton(self.leftBarButtonItemCopy, animated: true)
                 self.searchBar.removeFromSuperview()
                 
                 self.usersToDisplay = self.users

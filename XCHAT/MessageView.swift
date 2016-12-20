@@ -11,7 +11,7 @@ import UIKit
 @objc
 protocol MessageViewDelegate {
     func onSendButtonTapped()
-    optional func returned()
+    @objc optional func returned()
 }
 
 class MessageView: UIView, UITextViewDelegate {
@@ -37,7 +37,7 @@ class MessageView: UIView, UITextViewDelegate {
     
     override func awakeFromNib() {
         self.messageTextView.delegate = self
-        self.messageTextView.returnKeyType = UIReturnKeyType.Done
+        self.messageTextView.returnKeyType = UIReturnKeyType.done
         self.messageTextView.text = self.placeholder
         
         self.defaultMessageViewHeight = self.messageViewHeight.constant
@@ -47,7 +47,7 @@ class MessageView: UIView, UITextViewDelegate {
     
     // MARK: - Text View Delegate
     
-    func textViewDidBeginEditing(textView: UITextView) {
+    func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.text == self.placeholder {
             textView.text = ""
         }
@@ -60,7 +60,7 @@ class MessageView: UIView, UITextViewDelegate {
     
     
 
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" {
             self.messageViewHeight.constant = min(self.kMaxMessageViewHeight,  messageViewHeight.constant + textView.font!.lineHeight)
         } else {
@@ -72,7 +72,7 @@ class MessageView: UIView, UITextViewDelegate {
     
     // MARK: - Actions
     
-    @IBAction func onSendButtonTapped(sender: AnyObject) {
+    @IBAction func onSendButtonTapped(_ sender: AnyObject) {
         delegate?.onSendButtonTapped()
         self.messageTextView.text = ""
         self.messageViewHeight.constant = self.defaultMessageViewHeight

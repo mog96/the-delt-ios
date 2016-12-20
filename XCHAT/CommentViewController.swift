@@ -35,11 +35,11 @@ class CommentViewController: UIViewController, UITextViewDelegate {
         
         pfImageView.image = UIImage(named: "ROONEY")
         
-        pfImageView.file = photo?.valueForKey("imageFile") as? PFFile
-        pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
+        pfImageView.file = photo?.value(forKey: "imageFile") as? PFFile
+        pfImageView.load { (image: UIImage?, error: Error?) -> Void in
             if let error = error {
                 // Log details of the failure
-                print("Error: \(error) \(error.userInfo)")
+                print("Error: \(error) \(error._userInfo)")
                 
             } else {
                 self.photoImageView.image = image
@@ -50,7 +50,7 @@ class CommentViewController: UIViewController, UITextViewDelegate {
         self.commentTextView.delegate = self
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         commentTextView.becomeFirstResponder()
@@ -67,18 +67,18 @@ class CommentViewController: UIViewController, UITextViewDelegate {
     
     func setPlaceholderText() {
         commentTextView.text = "What do you think?"
-        commentTextView.textColor = UIColor.lightGrayColor()
+        commentTextView.textColor = UIColor.lightGray
     }
     
-    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
-        if textView.textColor == UIColor.lightGrayColor() {
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        if textView.textColor == UIColor.lightGray {
             commentTextView.text = ""
-            commentTextView.textColor = UIColor.blackColor()
+            commentTextView.textColor = UIColor.black
         }
         return true
     }
     
-    func textViewDidChange(textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         if commentTextView.text!.characters.count == 0 {
             setPlaceholderText()
             commentTextView.resignFirstResponder()
@@ -88,24 +88,24 @@ class CommentViewController: UIViewController, UITextViewDelegate {
     
     // MARK: Actions
     
-    @IBAction func onPostButtonTapped(sender: AnyObject) {
+    @IBAction func onPostButtonTapped(_ sender: AnyObject) {
         commentTextView.resignFirstResponder()
         
         // Prevents posting of blank comments
-        if commentTextView.textColor != UIColor.grayColor() {
+        if commentTextView.textColor != UIColor.gray {
             delegate?.commentViewController(didEnterComment: commentTextView.text)
-            dismissViewControllerAnimated(true, completion: { () -> Void in
+            dismiss(animated: true, completion: { () -> Void in
                 
                 // code
             })
         }
     }
-    @IBAction func onCancelButtonTapped(sender: AnyObject) {
+    @IBAction func onCancelButtonTapped(_ sender: AnyObject) {
         commentTextView.resignFirstResponder()
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func onScreenTapped(sender: AnyObject) {
+    @IBAction func onScreenTapped(_ sender: AnyObject) {
         view.endEditing(true)
     }
     

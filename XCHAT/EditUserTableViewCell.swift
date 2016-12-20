@@ -24,7 +24,7 @@ class EditUserTableViewCell: UITableViewCell {
         self.photoImageView.clipsToBounds = true
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
@@ -36,15 +36,15 @@ class EditUserTableViewCell: UITableViewCell {
 // MARK: - Setup
 
 extension EditUserTableViewCell {
-    func setupCell(user user: PFUser) {
-        if let photo = user.objectForKey("photo") as? PFFile {
+    func setupCell(user: PFUser) {
+        if let photo = user.object(forKey: "photo") as? PFFile {
             let pfImageView = PFImageView()
             pfImageView.image = UIImage(named: "LOGIN BACKGROUND 1")
             pfImageView.file = photo as PFFile
-            pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
+            pfImageView.load { (image: UIImage?, error: Error?) -> Void in
                 if let error = error {
                     // Log details of the failure
-                    print("Error: \(error) \(error.userInfo)")
+                    print("Error: \(error) \(error.localizedDescription)")
                     
                 } else {
                     self.photoImageView.image = image

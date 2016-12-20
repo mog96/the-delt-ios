@@ -10,9 +10,9 @@ import UIKit
 import Parse
 
 protocol ButtonCellDelegate {
-    func addComment(photo: NSMutableDictionary?)
-    func updateFaved(photo: NSMutableDictionary?, didUpdateFaved faved: Bool)
-    func updateFlagged(photo: NSMutableDictionary?, flagged: Bool)
+    func addComment(_ photo: NSMutableDictionary?)
+    func updateFaved(_ photo: NSMutableDictionary?, didUpdateFaved faved: Bool)
+    func updateFlagged(_ photo: NSMutableDictionary?, flagged: Bool)
 }
 
 class ButtonCell: UITableViewCell {
@@ -30,7 +30,7 @@ class ButtonCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
@@ -41,10 +41,10 @@ class ButtonCell: UITableViewCell {
         self.flagged = false
     }
     
-    func setUpCell(photo: NSMutableDictionary?) {
+    func setUpCell(_ photo: NSMutableDictionary?) {
         self.photo = photo
-        if let favedBy = photo?.valueForKey("favedBy") as? [String] {
-            if let username = PFUser.currentUser()?.username {
+        if let favedBy = photo?.value(forKey: "favedBy") as? [String] {
+            if let username = PFUser.current()?.username {
                 
                 print("IS FAVED: \(favedBy.contains(username))")
                 
@@ -61,27 +61,27 @@ class ButtonCell: UITableViewCell {
         
         print("FAVED: \(self.faved)")
         
-        self.faveButton.selected = self.faved
-        self.flagButton.selected = self.flagged
+        self.faveButton.isSelected = self.faved
+        self.flagButton.isSelected = self.flagged
     }
     
     
     // MARK: Actions
 
-    @IBAction func onFaveButtonTapped(sender: AnyObject) {
-        self.faveButton.selected = !self.faved
+    @IBAction func onFaveButtonTapped(_ sender: AnyObject) {
+        self.faveButton.isSelected = !self.faved
         delegate?.updateFaved(photo, didUpdateFaved: !self.faved)
     }
     
-    @IBAction func onCommentButtonTapped(sender: AnyObject) {
+    @IBAction func onCommentButtonTapped(_ sender: AnyObject) {
         delegate?.addComment(photo)
     }
     
-    @IBAction func onFlagButtonTapped(sender: AnyObject) {
+    @IBAction func onFlagButtonTapped(_ sender: AnyObject) {
         
         print("FLAGGED: \(self.flagged)")
         
-        self.flagButton.selected = !self.flagged
+        self.flagButton.isSelected = !self.flagged
         self.delegate?.updateFlagged(self.photo, flagged: !self.flagged)
     }
     

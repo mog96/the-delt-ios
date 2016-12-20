@@ -8,7 +8,7 @@
 
 import UIKit
 protocol SwitchDelegate{
-    func switchDelegate(switchtableViewCell: NotificationTableViewCell, switchValue:Bool)
+    func switchDelegate(_ switchtableViewCell: NotificationTableViewCell, switchValue:Bool)
 }
 
 class NotificationTableViewCell: UITableViewCell{
@@ -22,11 +22,11 @@ class NotificationTableViewCell: UITableViewCell{
         self.onSwitch.tintColor = LayoutUtils.blueColor
     }
     
-    @IBAction func switchChanged(sender: AnyObject) {
-        delegate?.switchDelegate(self, switchValue: onSwitch.on)
+    @IBAction func switchChanged(_ sender: AnyObject) {
+        delegate?.switchDelegate(self, switchValue: onSwitch.isOn)
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

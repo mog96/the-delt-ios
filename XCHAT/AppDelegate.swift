@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     static var allowRotation = false
     static var isAdmin = false {
         didSet {
-            let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
             appDelegate?.menuViewController?.checkAdmin()
         }
     }
@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case Chat
         case Calendar
         init?(fullIdentifier: String) {
-            guard let suffix = fullIdentifier.componentsSeparatedByString(".").last else {
+            guard let suffix = fullIdentifier.components(separatedBy: ".").last else {
                 return nil
             }
             self.init(rawValue: suffix)
@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case Chat
         case Calendar
         init?(fullIdentifier: String) {
-            guard let suffix = fullIdentifier.componentsSeparatedByString(".").last else {
+            guard let suffix = fullIdentifier.components(separatedBy: ".").last else {
                 return nil
             }
             self.init(rawValue: suffix)
@@ -51,12 +51,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     /**
         @param launchOptions Contains push notification if your app wasn’t running and the user launches it by tapping the push notification.
     */
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        AppDelegate.appName = NSBundle.mainBundle().infoDictionary!["CFBundleDisplayName"] as! String
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        AppDelegate.appName = Bundle.main.infoDictionary!["CFBundleDisplayName"] as! String
         
         /** CONNECT TO PARSE **/
         
-        if let keys = NSDictionary(contentsOfFile: NSBundle.mainBundle().pathForResource("Keys", ofType: "plist")!) {
+        if let keys = NSDictionary(contentsOfFile: Bundle.main.path(forResource: "Keys", ofType: "plist")!) {
             // Parse config.
             let configuration = ParseClientConfiguration {
                 $0.applicationId = keys["ParseApplicationID"] as? String
@@ -75,11 +75,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 // $0.server = "https://thedelt.herokuapp.com/parse"
             }
-            Parse.enableDataSharingWithApplicationGroupIdentifier("group.com.tdx.thedelt")
+            Parse.enableDataSharing(withApplicationGroupIdentifier: "group.com.tdx.thedelt")
             Parse.enableLocalDatastore()
-            Parse.initializeWithConfiguration(configuration)
+            Parse.initialize(with: configuration)
             
-            PFUser.enableRevocableSessionInBackgroundWithBlock { (error: NSError?) -> Void in
+            PFUser.enableRevocableSessionInBackground { (error: Error?) -> Void in
                 print("enableRevocableSessionInBackgroundWithBlock completion")
             }
             
@@ -112,23 +112,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Set up hamburger menu.
         let menuStoryboard = UIStoryboard(name: "Menu", bundle: nil)
-        self.hamburgerViewController = menuStoryboard.instantiateViewControllerWithIdentifier("HamburgerViewController") as? HamburgerViewController
-        self.menuViewController = menuStoryboard.instantiateViewControllerWithIdentifier("MenuViewController") as? MenuViewController
+        self.hamburgerViewController = menuStoryboard.instantiateViewController(withIdentifier: "HamburgerViewController") as? HamburgerViewController
+        self.menuViewController = menuStoryboard.instantiateViewController(withIdentifier: "MenuViewController") as? MenuViewController
         self.hamburgerViewController!.menuViewController = self.menuViewController
         self.menuViewController?.hamburgerViewController = hamburgerViewController
         
         // Set initial view to Reel.
         let storyboard = UIStoryboard(name: "Reel", bundle: nil)
-        let reelNC = storyboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
+        let reelNC = storyboard.instantiateViewController(withIdentifier: "ReelNavigationController") as! UINavigationController
         self.hamburgerViewController!.contentViewController = reelNC
         let reelVC = reelNC.viewControllers[0] as! ReelViewController
         reelVC.menuDelegate = self.menuViewController
         
         /** CHECK IF USER LOGGED IN **/
         
-        if PFUser.currentUser() == nil {
+        if PFUser.current() == nil {
             let loginStoryboard = UIStoryboard(name: "Login", bundle: nil)
-            let loginViewController = loginStoryboard.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
+            let loginViewController = loginStoryboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
             
             // Does exactly the same as arrow in storyboard. ("100% parity." --Tim Lee)
             window?.rootViewController = loginViewController
@@ -139,9 +139,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             AppDelegate.registerForPushNotifications(application)
             
             // Save username to NSUserDefaults in case PFUser.currentUser() fails in share extension.
-            NSUserDefaults(suiteName: "group.com.tdx.thedelt")?.setObject(PFUser.currentUser()!.username!, forKey: "Username")
+            UserDefaults(suiteName: "group.com.tdx.thedelt")?.set(PFUser.current()!.username!, forKey: "Username")
             
-            if let isAdmin = PFUser.currentUser()!.objectForKey("is_admin") as? Bool {
+            if let isAdmin = PFUser.current()!.object(forKey: "is_admin") as? Bool {
                 AppDelegate.isAdmin = isAdmin
             } else {
                 AppDelegate.isAdmin = false
@@ -149,7 +149,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             /** HANDLE APP LAUNCH FROM NOTIFICATION **/
             
-            if let notification = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? [String: AnyObject] {
+            if let notification = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? [String: AnyObject] {
                 print("NOTIFICATION:", notification)
                 
                 let aps = notification["aps"] as! [String: AnyObject]
@@ -174,39 +174,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func applicationWillResignActive(application: UIApplication) {
+    func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
 
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
 
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
 
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
 
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask {
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         
         if AppDelegate.allowRotation {
-            return [UIInterfaceOrientationMask.Portrait, UIInterfaceOrientationMask.LandscapeLeft, UIInterfaceOrientationMask.LandscapeRight]
+            return [UIInterfaceOrientationMask.portrait, UIInterfaceOrientationMask.landscapeLeft, UIInterfaceOrientationMask.landscapeRight]
         }
         
-        return UIInterfaceOrientationMask.Portrait
+        return UIInterfaceOrientationMask.portrait
     }
     
     @available(iOS 9.0, *)
-    func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
+    func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         guard let identifier = ShortcutIdentifier.init(fullIdentifier: shortcutItem.type) else {
             return
         }
@@ -227,8 +227,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 // MARK: - Push Notifications
 
 extension AppDelegate {
-    static func registerForPushNotifications(application: UIApplication) {
-        let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
+    static func registerForPushNotifications(_ application: UIApplication) {
+        let notificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
         application.registerUserNotificationSettings(notificationSettings)
         
         print("REGISTERED FOR PUSH NOTIFICATIONS")
@@ -237,8 +237,8 @@ extension AppDelegate {
     /**
      @param notificationSettings Tells us what notifications the user has allowed for our app in Settings.
      */
-    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
-        if notificationSettings.types != .None {
+    func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings) {
+        if notificationSettings.types != UIUserNotificationType() {
             application.registerForRemoteNotifications()
         }
     }
@@ -246,12 +246,12 @@ extension AppDelegate {
     /**
      Push notification registration successful.
      */
-    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         /***/
-        let tokenChars = UnsafePointer<CChar>(deviceToken.bytes)
+        let tokenChars = (deviceToken as NSData).bytes.bindMemory(to: CChar.self, capacity: deviceToken.count)
         var tokenString = ""
         
-        for i in 0..<deviceToken.length {
+        for i in 0..<deviceToken.count {
             tokenString += String(format: "%02.2hhx", arguments: [tokenChars[i]])
         }
         
@@ -261,16 +261,16 @@ extension AppDelegate {
         /** SET INSTALLATION PUSH TOKEN **/
         
         // IMPORTANT: Saves this app installation under '_Installation' collection in MongoDB.
-        let installation = PFInstallation.currentInstallation()!
-        installation.setDeviceTokenFromData(deviceToken)
+        let installation = PFInstallation.current()!
+        installation.setDeviceTokenFrom(deviceToken)
         installation.saveInBackground()
     }
     
     /**
      Push notification registration error.
      */
-    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
-        if error.code == 3010 {
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        if error._code == 3010 {
             print("Push notifications are not supported in the iOS Simulator.")
         } else {
             print("application:didFailToRegisterForRemoteNotificationsWithError: %@", error)
@@ -283,13 +283,13 @@ extension AppDelegate {
      
      Use version with completion handler to do background fetching/processing on silent push received.
      */
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
         print("PUSH RECEIVED!!")
         // PFPush.handlePush(userInfo)
         
         print("NOTIFICATION:", userInfo["aps"])
         
-        if UIApplication.sharedApplication().applicationState != .Active {
+        if UIApplication.shared.applicationState != .active {
             let aps = userInfo["aps"] as! [String: AnyObject]
             if let pushType = aps["pushType"] as? String {
                 guard let identifier = PushIdentifier.init(fullIdentifier: pushType) else {
@@ -298,15 +298,15 @@ extension AppDelegate {
                 let topVC = (self.hamburgerViewController?.contentViewController as? UINavigationController)?.topViewController
                 switch identifier {
                 case .Reel:
-                    if topVC == nil || !topVC!.isKindOfClass(ReelViewController) {
+                    if topVC == nil || !topVC!.isKind(of: ReelViewController.self) {
                         self.menuViewController?.presentContentView(.Reel)
                     }
                 case .Chat:
-                    if topVC == nil || !topVC!.isKindOfClass(ChatViewController) {
+                    if topVC == nil || !topVC!.isKind(of: ChatViewController.self) {
                         self.menuViewController?.presentContentView(.Chat)
                     }
                 case .Calendar:
-                    if topVC == nil || !topVC!.isKindOfClass(CalendarViewController) {
+                    if topVC == nil || !topVC!.isKind(of: CalendarViewController.self) {
                         self.menuViewController?.presentContentView(.Calendar)
                     }
                 }

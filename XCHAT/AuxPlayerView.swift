@@ -28,9 +28,9 @@ class AuxPlayerView: UIView {
     @IBOutlet weak var thumbnailControlsTapGestureRecognizer: UITapGestureRecognizer!
     @IBOutlet weak var panGestureRecognizer: UIPanGestureRecognizer!
     
-    var previousButtons: [UIButton]!
-    var playButtons: [UIButton]!
-    var nextButtons: [UIButton]!
+    var previousButtons = [UIButton]()
+    var playButtons = [UIButton]()
+    var nextButtons = [UIButton]()
     
     var originalOrigin: CGPoint!
     
@@ -58,7 +58,7 @@ class AuxPlayerView: UIView {
 
 extension AuxPlayerView {
     func showAuxPlayerView() {
-        UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: { () -> Void in
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: { () -> Void in
             self.frame.origin = CGPoint(x: 0, y: -self.thumbnailControlsViewHeight.constant)
             }, completion: { (finished: Bool) -> Void in
                 // Completion.
@@ -66,7 +66,7 @@ extension AuxPlayerView {
     }
     
     func hideAuxPlayerView() {
-        UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: { () -> Void in
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: { () -> Void in
             self.frame.origin = CGPoint(x: 0, y: self.superview!.frame.height - self.thumbnailControlsViewHeight.constant)
             }, completion: { (finished: Bool) -> Void in
                 // Completion.
@@ -79,28 +79,28 @@ extension AuxPlayerView {
 
 extension AuxPlayerView {
     
-    @IBAction func onThumbnailControlsTapped(sender: AnyObject) {
+    @IBAction func onThumbnailControlsTapped(_ sender: AnyObject) {
         self.showAuxPlayerView()
     }
     
     // Assumes this view has superview.
-    @IBAction func onPanGesture(sender: AnyObject) {
+    @IBAction func onPanGesture(_ sender: AnyObject) {
         print("PANNED")
         
-        let translation = sender.translationInView(self.superview)
-        let velocity = sender.velocityInView(self.superview)
+        let translation = sender.translation(in: self.superview)
+        let velocity = sender.velocity(in: self.superview)
         
-        if sender.state == UIGestureRecognizerState.Began {
+        if sender.state == UIGestureRecognizerState.began {
             self.originalOrigin = self.frame.origin
             
-        } else if sender.state == UIGestureRecognizerState.Changed {
+        } else if sender.state == UIGestureRecognizerState.changed {
             let newY = self.originalOrigin.y + translation.y
             let offsetNewY = newY + self.thumbnailControlsViewHeight.constant
             if offsetNewY >= 0 && newY <= self.superview!.frame.height  {
                 self.frame.origin.y = newY
             }
             
-        } else if sender.state == UIGestureRecognizerState.Ended {
+        } else if sender.state == UIGestureRecognizerState.ended {
             if velocity.y < 0 {
                 self.showAuxPlayerView()
                 self.superview?.endEditing(true)
@@ -110,7 +110,7 @@ extension AuxPlayerView {
         }
     }
     
-    func onPlayButtonTapped(sender: UIButton) {
-        sender.selected = !sender.selected
+    func onPlayButtonTapped(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
     }
 }

@@ -24,7 +24,7 @@ class HamburgerViewController: UIViewController {
         super.viewDidLoad()
         
         // FOR SCREEN SIZE-DEPENDENT MENU WIDTH
-        screenSize = UIScreen.mainScreen().bounds
+        screenSize = UIScreen.main.bounds
         
         self.configureContentViewController()
         self.configureMenuViewController()
@@ -85,13 +85,13 @@ class HamburgerViewController: UIViewController {
 
 extension HamburgerViewController {
     func showMenu() {
-        UIView.animateWithDuration(0.35, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: { () -> Void in
+        UIView.animate(withDuration: 0.35, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: { () -> Void in
             self.contentView.frame.origin = CGPoint(x: 280, y: 0)
             }, completion: { (finished: Bool) -> Void in
                 self.menuShown = true
-                self.tapGestureRecognizer.enabled = true
+                self.tapGestureRecognizer.isEnabled = true
                 for subview in self.contentView.subviews {
-                    subview.userInteractionEnabled = false
+                    subview.isUserInteractionEnabled = false
                 }
                 // self.performSelector(#selector(self.hideStatusBar), withObject: self, afterDelay: 10)
         })
@@ -99,16 +99,16 @@ extension HamburgerViewController {
     
     
     func hideMenu() {
-        UIView.animateWithDuration(0.35, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: { () -> Void in
+        UIView.animate(withDuration: 0.35, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0, options: [], animations: { () -> Void in
             self.contentView.frame.origin = CGPoint(x: 0, y: 0)
             }, completion: { (finished: Bool) -> Void in
-                if !self.contentViewController!.isKindOfClass(EditableProfileViewController) {
-                    UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
+                if !self.contentViewController!.isKind(of: EditableProfileViewController.self) {
+                    UIApplication.shared.setStatusBarHidden(false, with: .slide)
                 }
                 self.menuShown = false
-                self.tapGestureRecognizer.enabled = false
+                self.tapGestureRecognizer.isEnabled = false
                 for subview in self.contentView.subviews {
-                    subview.userInteractionEnabled = true
+                    subview.isUserInteractionEnabled = true
                 }
         })
     }
@@ -122,7 +122,7 @@ extension HamburgerViewController {
     }
     
     func hideStatusBar() {
-        UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: .None)
+        UIApplication.shared.setStatusBarHidden(true, with: .none)
     }
 }
 
@@ -139,14 +139,14 @@ extension HamburgerViewController {
 // MARK: - Actions
 
 extension HamburgerViewController {
-    @IBAction func onPanGesture(sender: UIPanGestureRecognizer) {
-        let translation = sender.translationInView(view)
-        let velocity = sender.velocityInView(view)
+    @IBAction func onPanGesture(_ sender: UIPanGestureRecognizer) {
+        let translation = sender.translation(in: view)
+        let velocity = sender.velocity(in: view)
         
-        if sender.state == UIGestureRecognizerState.Began {
-            UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: .Slide)
+        if sender.state == UIGestureRecognizerState.began {
+            UIApplication.shared.setStatusBarHidden(true, with: .slide)
             contentViewOriginalOrigin = contentView.frame.origin
-        } else if sender.state == UIGestureRecognizerState.Changed {
+        } else if sender.state == UIGestureRecognizerState.changed {
             
             // enables sliding in both directions (adding negative translation when going to the left)
             let newX = contentViewOriginalOrigin.x + translation.x
@@ -156,7 +156,7 @@ extension HamburgerViewController {
                 contentView.frame.origin.x =  newX
             }
             
-        } else if sender.state == UIGestureRecognizerState.Ended {
+        } else if sender.state == UIGestureRecognizerState.ended {
             if velocity.x > 0 {
                 self.showMenu()
                 self.view.endEditing(true)
@@ -166,7 +166,7 @@ extension HamburgerViewController {
         }
     }
     
-    @IBAction func onContentViewTapped(sender: AnyObject) {
+    @IBAction func onContentViewTapped(_ sender: AnyObject) {
         print("CONTENT VIEW TAPED")
         self.hideMenu()
     }

@@ -19,7 +19,7 @@ class PhotoCell: UITableViewCell {
         // Initialization code
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
@@ -29,17 +29,17 @@ class PhotoCell: UITableViewCell {
         self.photoImageView.image = nil
     }
     
-    func setUpCell(photo: NSMutableDictionary?) {
+    func setUpCell(_ photo: NSMutableDictionary?) {
         let pfImageView = PFImageView()
         
         // JUST FOR LOLZ
         pfImageView.image = UIImage(named: "ROONEY")
         
-        pfImageView.file = photo?.valueForKey("imageFile") as? PFFile
-        pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
+        pfImageView.file = photo?.value(forKey: "imageFile") as? PFFile
+        pfImageView.load { (image: UIImage?, error: Error?) -> Void in
             if let error = error {
                 // Log details of the failure
-                print("Error: \(error) \(error.userInfo)")
+                print("Error: \(error) \(error.localizedDescription)")
                 
             } else {
                 self.photoImageView.image = image

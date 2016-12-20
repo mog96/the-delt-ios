@@ -9,11 +9,35 @@
 import UIKit
 import MBProgressHUD
 import Parse
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 // FIXME: ADD EVENT SCROLL VIEW NOT WORKING
 
 @objc protocol NewEventViewControllerDelegate {
-    func refreshCurrentEvents(completion completion: (() -> ()))
+    func refreshCurrentEvents(completion: @escaping (() -> ()))
 }
 
 class NewEventViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, NewEventDelegate {
@@ -35,14 +59,14 @@ class NewEventViewController: UIViewController, UITableViewDelegate, UITableView
         self.tableView.estimatedRowHeight = 126
         self.tableView.rowHeight = UITableViewAutomaticDimension
         
-        self.eventDescriptionCell = self.tableView.dequeueReusableCellWithIdentifier("EventDescriptionCell") as! EventDescriptionTableViewCell
+        self.eventDescriptionCell = self.tableView.dequeueReusableCell(withIdentifier: "EventDescriptionCell") as! EventDescriptionTableViewCell
         self.eventDescriptionCell.newEventDelegate = self
-        self.startDatePickerCell = self.tableView.dequeueReusableCellWithIdentifier("StartDatePickerCell") as! StartDatePickerTableViewCell
-        self.endDatePickerCell = self.tableView.dequeueReusableCellWithIdentifier("EndDatePickerCell") as! EndDatePickerTableViewCell
+        self.startDatePickerCell = self.tableView.dequeueReusableCell(withIdentifier: "StartDatePickerCell") as! StartDatePickerTableViewCell
+        self.endDatePickerCell = self.tableView.dequeueReusableCell(withIdentifier: "EndDatePickerCell") as! EndDatePickerTableViewCell
         self.startDatePickerCell.startDateDelegate = self.endDatePickerCell
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         if self.eventDescriptionCell.nameTextField.text?.characters.count == 0 {
             self.eventDescriptionCell.nameTextField.becomeFirstResponder()
         }
@@ -58,11 +82,11 @@ class NewEventViewController: UIViewController, UITableViewDelegate, UITableView
 // MARK: - Table View
 
 extension NewEventViewController {
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
         case 0:
             return self.eventDescriptionCell
@@ -84,11 +108,11 @@ extension NewEventViewController {
     // view controller is dismissed (a.k.a. inside the completion handler) we modally segue to
     // show the "Location selection" screen. --Nick Troccoli
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         self.artworkImage = info[UIImagePickerControllerEditedImage] as? UIImage
-        self.eventDescriptionCell.artworkButton.setImage(self.artworkImage, forState: .Normal)
-        self.eventDescriptionCell.artworkButton.setTitle("", forState: .Normal)
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.eventDescriptionCell.artworkButton.setImage(self.artworkImage, for: UIControlState())
+        self.eventDescriptionCell.artworkButton.setTitle("", for: UIControlState())
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -96,14 +120,14 @@ extension NewEventViewController {
 // MARK: - Actions
 
 extension NewEventViewController {
-    @IBAction func onPostButtonTapped(sender: AnyObject) {
+    @IBAction func onPostButtonTapped(_ sender: AnyObject) {
         print("POSTING")
         
         // User forgets to enter name.
         if self.eventDescriptionCell.nameTextField.text == "" {
-            let alert = UIAlertController(title: "Add Event Title", message: "Give your event a name!", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
+            let alert = UIAlertController(title: "Add Event Title", message: "Give your event a name!", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
             
         } else {
             let event = PFObject(className: "Event")
@@ -119,7 +143,7 @@ extension NewEventViewController {
             
             event["startTime"] = self.startDatePickerCell.eventDatePicker.date
             event["endTime"] = self.endDatePickerCell.eventDatePicker.date
-            event["createdBy"] = PFUser.currentUser()?.valueForKey("username")
+            event["createdBy"] = PFUser.current()?.value(forKey: "username")
             
             if artworkImage != nil {
                 let artworkImageData = UIImageJPEGRepresentation(artworkImage!, 100)
@@ -127,34 +151,34 @@ extension NewEventViewController {
                 event["artwork"] = artwork
             }
             
-            let currentHUD = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            let currentHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
             currentHUD.label.text = "Posting Event..."
-            event.saveInBackgroundWithBlock { (result: Bool, error: NSError?) -> Void in
+            event.saveInBackground { (result: Bool, error: Error?) -> Void in
                 if error != nil {
-                    currentHUD.hideAnimated(true)
-                    print(error?.description)
-                    let alertVC = UIAlertController(title: "Unable to Post Event", message: "Please try again.", preferredStyle: .Alert)
-                    alertVC.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                    self.presentViewController(alertVC, animated: true, completion: nil)
+                    currentHUD.hide(animated: true)
+                    print(error!.localizedDescription)
+                    let alertVC = UIAlertController(title: "Unable to Post Event", message: "Please try again.", preferredStyle: .alert)
+                    alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alertVC, animated: true, completion: nil)
                 } else {
                     self.delegate?.refreshCurrentEvents(completion: {
-                        currentHUD.hideAnimated(true)
-                        self.dismissViewControllerAnimated(true, completion: nil)
+                        currentHUD.hide(animated: true)
+                        self.dismiss(animated: true, completion: nil)
                     })
                 }
             }
         }
     }
     
-    @IBAction func onCancelButtonTapped(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func onCancelButtonTapped(_ sender: AnyObject) {
+        dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func onScreenTapped(sender: AnyObject) {
+    @IBAction func onScreenTapped(_ sender: AnyObject) {
         self.view.endEditing(true)
     }
     
-    @IBAction func onPanGesture(sender: AnyObject) {
+    @IBAction func onPanGesture(_ sender: AnyObject) {
         self.view.endEditing(true)
     }
     
@@ -162,7 +186,7 @@ extension NewEventViewController {
         let imageVC = UIImagePickerController()
         imageVC.delegate = self
         imageVC.allowsEditing = true
-        imageVC.sourceType = .PhotoLibrary
-        presentViewController(imageVC, animated: true, completion: nil)  // FIXME: Causes warning 'Presenting view controllers on detached view controllers is discouraged'
+        imageVC.sourceType = .photoLibrary
+        present(imageVC, animated: true, completion: nil)  // FIXME: Causes warning 'Presenting view controllers on detached view controllers is discouraged'
     }
 }

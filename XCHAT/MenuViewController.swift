@@ -44,12 +44,12 @@ class MenuViewController: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.tableFooterView = UIView(frame: CGRectZero)
+        self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         
         self.tableView.canCancelContentTouches = false
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         self.checkAdmin()
     }
     
@@ -74,31 +74,31 @@ extension MenuViewController {
         }
     }
     
-    func presentContentView(type: ContentView) {
+    func presentContentView(_ type: ContentView) {
         switch type {
         case .Profile: // PROFILE
             let profileStoryboard = UIStoryboard(name: "Profile", bundle: nil)
-            let profileController = profileStoryboard.instantiateViewControllerWithIdentifier("ProfileNavigationController") as! UINavigationController
-            PFUser.currentUser()?.fetchInBackground()
+            let profileController = profileStoryboard.instantiateViewController(withIdentifier: "ProfileNavigationController") as! UINavigationController
+            PFUser.current()?.fetchInBackground()
             
             self.hamburgerViewController?.contentViewController = profileController
             
         case .Reel: // REEL
             let reelStoryboard = UIStoryboard(name: "Reel", bundle: nil)
-            let reelNavigationController = reelStoryboard.instantiateViewControllerWithIdentifier("ReelNavigationController") as! UINavigationController
+            let reelNavigationController = reelStoryboard.instantiateViewController(withIdentifier: "ReelNavigationController") as! UINavigationController
             let firstViewController = reelNavigationController.viewControllers[0] as! ReelViewController
             firstViewController.menuDelegate = self
             
-            UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
+            UIApplication.shared.setStatusBarHidden(false, with: .slide)
             self.hamburgerViewController?.contentViewController = reelNavigationController
             
         case .Chat: // CHAT
             let chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
-            let chatNavigationController = chatStoryboard.instantiateViewControllerWithIdentifier("ChatNavigationController") as! UINavigationController
+            let chatNavigationController = chatStoryboard.instantiateViewController(withIdentifier: "ChatNavigationController") as! UINavigationController
             let firstViewController = chatNavigationController.viewControllers[0] as! ChatViewController
             firstViewController.menuDelegate = self
             
-            UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
+            UIApplication.shared.setStatusBarHidden(false, with: .slide)
             self.hamburgerViewController?.contentViewController = chatNavigationController
         
         /*
@@ -114,40 +114,40 @@ extension MenuViewController {
             
         case .Calendar: // CALENDAR
             let calendarStoryboard = UIStoryboard(name: "Calendar", bundle: nil)
-            let calendarNavigationController = calendarStoryboard.instantiateViewControllerWithIdentifier("Nav") as! UINavigationController
+            let calendarNavigationController = calendarStoryboard.instantiateViewController(withIdentifier: "Nav") as! UINavigationController
             let firstViewController = calendarNavigationController.viewControllers[0] as! CalendarViewController
             firstViewController.menuDelegate = self
             
-            UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
+            UIApplication.shared.setStatusBarHidden(false, with: .slide)
             self.hamburgerViewController?.contentViewController = calendarNavigationController
             
         case .Members: // MEMBERS
             let storyboard = UIStoryboard(name: "Members", bundle: nil)
-            let nc = storyboard.instantiateViewControllerWithIdentifier("Members") as! UINavigationController
+            let nc = storyboard.instantiateViewController(withIdentifier: "Members") as! UINavigationController
             let firstViewController = nc.viewControllers[0] as! MembersViewController
             firstViewController.menuDelegate = self
             firstViewController.hamburgerViewController = self.hamburgerViewController
             
-            UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
+            UIApplication.shared.setStatusBarHidden(false, with: .slide)
             self.hamburgerViewController?.contentViewController = nc
             
         case .Admin: // ADMIN
             let storyboard = UIStoryboard(name: "Admin", bundle: nil)
-            let nc = storyboard.instantiateViewControllerWithIdentifier("AdminNC") as! UINavigationController
+            let nc = storyboard.instantiateViewController(withIdentifier: "AdminNC") as! UINavigationController
             let firstVC = nc.viewControllers[0] as! AdminViewController
             firstVC.menuDelegate = self
             firstVC.hamburgerViewController = self.hamburgerViewController
             
-            UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
+            UIApplication.shared.setStatusBarHidden(false, with: .slide)
             self.hamburgerViewController?.contentViewController = nc
             
         case .Settings: // SETTINGS
             let settingsStoryboard = UIStoryboard(name: "Settings", bundle: nil)
-            let settingsNavigationController = settingsStoryboard.instantiateViewControllerWithIdentifier("SettingsNavigationController") as! UINavigationController
+            let settingsNavigationController = settingsStoryboard.instantiateViewController(withIdentifier: "SettingsNavigationController") as! UINavigationController
             let firstViewController = settingsNavigationController.viewControllers[0] as! SettingsViewController
             firstViewController.menuDelegate = self
             
-            UIApplication.sharedApplication().setStatusBarHidden(false, withAnimation: .Slide)
+            UIApplication.shared.setStatusBarHidden(false, with: .slide)
             self.hamburgerViewController?.contentViewController = settingsNavigationController
         }
     }
@@ -157,38 +157,38 @@ extension MenuViewController {
 // MARK: Table View
 
 extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell!
         switch indexPath.row {
         case 0:
-            cell = tableView.dequeueReusableCellWithIdentifier("ProfileCell")!
+            cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCell")!
         case 1:
-            cell = tableView.dequeueReusableCellWithIdentifier("ReelCell")!
+            cell = tableView.dequeueReusableCell(withIdentifier: "ReelCell")!
         case 2:
-            cell = tableView.dequeueReusableCellWithIdentifier("ChatCell")!
+            cell = tableView.dequeueReusableCell(withIdentifier: "ChatCell")!
         /*
         case 3:
             cell = tableView.dequeueReusableCellWithIdentifier("AuxCell")!
         */
         case 3:
-            cell = tableView.dequeueReusableCellWithIdentifier("CalendarCell")!
+            cell = tableView.dequeueReusableCell(withIdentifier: "CalendarCell")!
         case 4:
-            cell = tableView.dequeueReusableCellWithIdentifier("MembersCell")!
+            cell = tableView.dequeueReusableCell(withIdentifier: "MembersCell")!
         case 6:
-            cell = tableView.dequeueReusableCellWithIdentifier("AdminCell")!
+            cell = tableView.dequeueReusableCell(withIdentifier: "AdminCell")!
         default:
-            cell = tableView.dequeueReusableCellWithIdentifier("SettingsCell")!
+            cell = tableView.dequeueReusableCell(withIdentifier: "SettingsCell")!
         }
         
         cell.frame.size.height = self.kMenuCellHeight
         return cell
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.numCells
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
         case 0:
             return self.kProfileCellHeight
@@ -197,10 +197,10 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         print(indexPath.row)
-        let cellType = tableView.cellForRowAtIndexPath(indexPath)!.reuseIdentifier!.stringByReplacingOccurrencesOfString("Cell", withString: "")
+        let cellType = tableView.cellForRow(at: indexPath)!.reuseIdentifier!.replacingOccurrences(of: "Cell", with: "")
         self.presentContentView(ContentView.init(rawValue: cellType)!)
     }
 }

@@ -9,14 +9,14 @@
 import UIKit
 
 protocol LoadMoreMessagesDelegate {
-    func LoadMoreMessages(MessageLoadMoreCell: MessageLoadMoreCell)
+    func LoadMoreMessages(_ MessageLoadMoreCell: MessageLoadMoreCell)
 }
 
 class MessageLoadMoreCell: UITableViewCell {
     
     var delegate:LoadMoreMessagesDelegate?
     
-    @IBAction func loadMoreMessagesAction(sender: AnyObject) {
+    @IBAction func loadMoreMessagesAction(_ sender: AnyObject) {
         delegate?.LoadMoreMessages(self)
     }
     
@@ -25,7 +25,7 @@ class MessageLoadMoreCell: UITableViewCell {
         // Initialization code
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state

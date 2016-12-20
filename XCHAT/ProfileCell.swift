@@ -27,7 +27,7 @@ class ProfileCell: UITableViewCell {
         self.setUpCell()
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
@@ -37,17 +37,17 @@ class ProfileCell: UITableViewCell {
     // MARK: - Helpers
     
     func setUpCell() {
-        if let photo = PFUser.currentUser()?.objectForKey("photo") as? PFFile {
+        if let photo = PFUser.current()?.object(forKey: "photo") as? PFFile {
             let pfImageView = PFImageView()
             pfImageView.image = UIImage(named: "LOGIN BACKGROUND 1")
             
             print(photo)
             
             pfImageView.file = photo as PFFile
-            pfImageView.loadInBackground { (image: UIImage?, error: NSError?) -> Void in
+            pfImageView.load { (image: UIImage?, error: Error?) -> Void in
                 if let error = error {
                     // Log details of the failure
-                    print("Error: \(error) \(error.userInfo)")
+                    print("Error: \(error) \(error._userInfo)")
                     
                 } else {
                     self.photoImageView.image = image
@@ -60,19 +60,19 @@ class ProfileCell: UITableViewCell {
         self.photoImageView.clipsToBounds = true
         
         // Set name/prompt to set up profile.
-        if let name = PFUser.currentUser()?.objectForKey("name") as? String {
+        if let name = PFUser.current()?.object(forKey: "name") as? String {
             self.nameLabel.text = name
             self.nameLabel.textColor = LayoutUtils.blueColor
         } else {
             self.nameLabel.text = "Tap here to setup profile"
-            self.nameLabel.textColor = UIColor.redColor()
+            self.nameLabel.textColor = UIColor.red
         }
         
-        if let username = PFUser.currentUser()?.objectForKey("username") as? String {
+        if let username = PFUser.current()?.object(forKey: "username") as? String {
             self.usernameLabel.text = username
         }
         
-        if let numPhotos = PFUser.currentUser()?.objectForKey("numPhotosPosted") as? Int {
+        if let numPhotos = PFUser.current()?.object(forKey: "numPhotosPosted") as? Int {
             self.numPhotosLabel.text = "\(numPhotos) photos"
         } else {
             self.numPhotosLabel.text = "0 photos"
@@ -80,9 +80,9 @@ class ProfileCell: UITableViewCell {
         
         // Update user's total num faves by fetching from server, summing, and saving to user's table entry.
         let query = PFQuery(className: "Photo")
-        if let username = PFUser.currentUser()?.username {
+        if let username = PFUser.current()?.username {
             query.whereKey("username", equalTo: username)
-            query.findObjectsInBackgroundWithBlock { (objects: [PFObject]?, error: NSError?) -> Void in
+            query.findObjectsInBackground { (objects: [PFObject]?, error: Error?) -> Void in
                 if let error = error {
                     print(error)
                 } else {
@@ -93,10 +93,10 @@ class ProfileCell: UITableViewCell {
                         }
                         
                         // Save current user's total num faves.
-                        PFUser.currentUser()?.setObject(totalFaves, forKey: "totalNumFavesReceived")
-                        PFUser.currentUser()?.saveInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
+                        PFUser.current()?.setObject(totalFaves, forKey: "totalNumFavesReceived")
+                        PFUser.current()?.saveInBackground(block: { (success: Bool, error: Error?) -> Void in
                             if error == nil {
-                                if let numFaves = PFUser.currentUser()?.objectForKey("totalNumFavesReceived") as? Int {
+                                if let numFaves = PFUser.current()?.object(forKey: "totalNumFavesReceived") as? Int {
                                     if numFaves == 1 {
                                         self.numFavesLabel.text = "1 fave received"
                                     } else {

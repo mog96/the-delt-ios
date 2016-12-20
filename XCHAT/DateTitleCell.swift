@@ -25,21 +25,21 @@ class DateTitleCell: UITableViewCell {
         self.artworkImageView.clipsToBounds = true
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
     }
     
-    func setUpCell(event: PFObject) {
+    func setUpCell(_ event: PFObject) {
         self.artworkImageView.image = nil
         let pfImageView = PFImageView()
-        pfImageView.file = event.valueForKey("artwork") as? PFFile
+        pfImageView.file = event.value(forKey: "artwork") as? PFFile
         if let _ = pfImageView.file {
-            pfImageView.loadInBackground { (artwork: UIImage?, error: NSError?) -> Void in
+            pfImageView.load { (artwork: UIImage?, error: Error?) -> Void in
                 if let error = error {
                     // Log details of the failure
-                    print("Error: \(error) \(error.userInfo)")
+                    print("Error: \(error) \(error._userInfo)")
                 } else {
                     self.artworkImageView.image = artwork
                 }
@@ -48,32 +48,32 @@ class DateTitleCell: UITableViewCell {
             self.artworkImageView.image = UIImage(named: "LEOPARD PRINT")
         }
         
-        let dateFormatter = NSDateFormatter()
-        let calendar = NSCalendar.currentCalendar()
+        let dateFormatter = DateFormatter()
+        let calendar = Calendar.current
         
-        dateFormatter.AMSymbol = "a"
-        dateFormatter.PMSymbol = "p"
+        dateFormatter.amSymbol = "a"
+        dateFormatter.pmSymbol = "p"
         
-        let startTime = event["startTime"] as! NSDate
-        var comp = calendar.components([.Hour, .Minute], fromDate: startTime)
+        let startTime = event["startTime"] as! Date
+        var comp = (calendar as NSCalendar).components([.hour, .minute], from: startTime)
         dateFormatter.dateFormat = "h:mma"
         if comp.minute == 0 {
             dateFormatter.dateFormat = "ha"
         }
-        var date = dateFormatter.stringFromDate(event["startTime"] as! NSDate) + "-"
+        var date = dateFormatter.string(from: event["startTime"] as! Date) + "-"
         
-        let endTime = event["endTime"] as! NSDate
-        comp = calendar.components([.Hour, .Minute], fromDate: endTime)
+        let endTime = event["endTime"] as! Date
+        comp = (calendar as NSCalendar).components([.hour, .minute], from: endTime)
         dateFormatter.dateFormat = "h:mma"
         if comp.minute == 0 {
             dateFormatter.dateFormat = "ha"
         }
-        date += dateFormatter.stringFromDate(event["endTime"] as! NSDate)
+        date += dateFormatter.string(from: event["endTime"] as! Date)
         timeLabel.text = date
         
         dateFormatter.dateFormat = "E"
-        let weekday = dateFormatter.stringFromDate(startTime)
-        let prefix = weekday.substringToIndex(weekday.startIndex.advancedBy(2))
+        let weekday = dateFormatter.string(from: startTime)
+        let prefix = weekday.substring(to: weekday.characters.index(weekday.startIndex, offsetBy: 2))
         switch prefix {
         case "Th":
             fallthrough
@@ -86,7 +86,7 @@ class DateTitleCell: UITableViewCell {
         }
         
         dateFormatter.dateFormat = "M/d"
-        dateLabel.text = dateFormatter.stringFromDate(startTime)
+        dateLabel.text = dateFormatter.string(from: startTime)
         
         titleLabel.text = event["name"] as? String
     }

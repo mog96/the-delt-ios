@@ -22,15 +22,15 @@ extension UITextField {
     
     internal func resizeText() {
         if let text = self.text{
-            self.font = UIFont.systemFontOfSize(14)
+            self.font = UIFont.systemFont(ofSize: 14)
             let textString = text as NSString
-            var widthOfText = textString.sizeWithAttributes([NSFontAttributeName : self.font!]).width
+            var widthOfText = textString.size(attributes: [NSFontAttributeName : self.font!]).width
             var widthOfFrame = self.frame.size.width
             // decrease font size until it fits
             while widthOfFrame - 5 < widthOfText {
                 let fontSize = self.font!.pointSize
-                self.font = self.font?.fontWithSize(fontSize - 0.5)
-                widthOfText = textString.sizeWithAttributes([NSFontAttributeName : self.font!]).width
+                self.font = self.font?.withSize(fontSize - 0.5)
+                widthOfText = textString.size(attributes: [NSFontAttributeName : self.font!]).width
                 widthOfFrame = self.frame.size.width
             }
         }

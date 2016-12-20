@@ -22,7 +22,7 @@ class SettingsViewController: ContentViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+        UIApplication.shared.setStatusBarStyle(.lightContent, animated: true)
         self.setMenuButton(withColor: "white")
         
         self.tableView.dataSource = self
@@ -36,8 +36,8 @@ class SettingsViewController: ContentViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
+    override func viewWillDisappear(_ animated: Bool) {
+        UIApplication.shared.setStatusBarStyle(.default, animated: true)
     }
 }
 
@@ -85,12 +85,12 @@ extension SettingsViewController {
 // NOTE: Push notification settings commented out.
 
 extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         // return 4
         return 3
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         /*
         case 0:
@@ -105,8 +105,8 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = NSBundle.mainBundle().loadNibNamed("SettingsHeaderView", owner: self, options: nil)![0] as! SettingsHeaderView
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = Bundle.main.loadNibNamed("SettingsHeaderView", owner: self, options: nil)![0] as! SettingsHeaderView
         switch section {
         /*
         case 0:
@@ -119,15 +119,15 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         default:
             headerView.headerLabel.text = "LOG OUT"
         }
-        headerView.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, headerView.frame.height)
+        headerView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: headerView.frame.height)
         return headerView
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         /*
         case 0:
@@ -150,34 +150,34 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         case 0:
             switch indexPath.row {
             case 0:
-                let cell = NSBundle.mainBundle().loadNibNamed("SettingsDescriptionTableViewCell", owner: self, options: nil)![0] as! SettingsDescriptionTableViewCell
+                let cell = Bundle.main.loadNibNamed("SettingsDescriptionTableViewCell", owner: self, options: nil)![0] as! SettingsDescriptionTableViewCell
                 cell.setDescription("Submit any comments or suggestions you may have to mateog@stanford.edu.")
                 return cell
             default:
-                let cell = tableView.dequeueReusableCellWithIdentifier("FeedbackCell", forIndexPath: indexPath) as! FeedbackTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "FeedbackCell", for: indexPath) as! FeedbackTableViewCell
                 cell.delegate = self
                 return cell
             }
         case 1:
             if indexPath.row == 0 {
-                let cell = NSBundle.mainBundle().loadNibNamed("SettingsDescriptionTableViewCell", owner: self, options: nil)![0] as! SettingsDescriptionTableViewCell
+                let cell = Bundle.main.loadNibNamed("SettingsDescriptionTableViewCell", owner: self, options: nil)![0] as! SettingsDescriptionTableViewCell
                 cell.setDescription("Report any content you feel is inappropriate, or users you feel are abusing this service and should be blocked from The Delt.")
                 return cell
             } else {
-                let cell = tableView.dequeueReusableCellWithIdentifier("FeedbackCell", forIndexPath: indexPath) as! FeedbackTableViewCell
-                cell.feedbackButton.setTitle("Report Content or User", forState: .Normal)
+                let cell = tableView.dequeueReusableCell(withIdentifier: "FeedbackCell", for: indexPath) as! FeedbackTableViewCell
+                cell.feedbackButton.setTitle("Report Content or User", for: UIControlState())
                 cell.delegate = self
                 return cell
             }
         default:
             if indexPath.row == 0 {
-                let cell = NSBundle.mainBundle().loadNibNamed("SettingsDescriptionTableViewCell", owner: self, options: nil)![0] as! SettingsDescriptionTableViewCell
+                let cell = Bundle.main.loadNibNamed("SettingsDescriptionTableViewCell", owner: self, options: nil)![0] as! SettingsDescriptionTableViewCell
                 cell.setDescription("Hate to see you go! Come back soon.")
                 return cell
             } else {
-                let cell = NSBundle.mainBundle().loadNibNamed("ActionButtonTableViewCell", owner: self, options: nil)![0] as! ActionButtonTableViewCell
+                let cell = Bundle.main.loadNibNamed("ActionButtonTableViewCell", owner: self, options: nil)![0] as! ActionButtonTableViewCell
                 cell.delegate = self
-                cell.actionButton.setTitle("Log Out", forState: .Normal)
+                cell.actionButton.setTitle("Log Out", for: UIControlState())
                 return cell
             }
         }
@@ -189,28 +189,28 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension SettingsViewController: ActionButtonCellDelegate {
     func actionButtonCell(tappedBySender sender: AnyObject) {
-        let alertVC = UIAlertController(title: "Log Out?", message: "Hate to see you go.", preferredStyle: UIAlertControllerStyle.Alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let alertVC = UIAlertController(title: "Log Out?", message: "Hate to see you go.", preferredStyle: UIAlertControllerStyle.alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertVC.addAction(cancelAction)
         if #available(iOS 9.0, *) {
             alertVC.preferredAction = cancelAction
         }
-        alertVC.addAction(UIAlertAction(title: "Log Out", style: .Destructive, handler: { (action: UIAlertAction) in
-            let currentHUD = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        alertVC.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { (action: UIAlertAction) in
+            let currentHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
             currentHUD.label.text = "Logging Out..."
-            PFUser.logOutInBackgroundWithBlock({ (error: NSError?) in
-                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+            PFUser.logOutInBackground(block: { (error: Error?) in
+                MBProgressHUD.hideAllHUDs(for: self.view, animated: true)
                 let loginStoryboard = UIStoryboard(name: "Login", bundle: nil)
-                let loginViewController = loginStoryboard.instantiateViewControllerWithIdentifier("LoginViewController") as? LoginViewController
+                let loginViewController = loginStoryboard.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController
                 
-                NSUserDefaults(suiteName: "group.com.tdx.thedelt")?.removeObjectForKey("Username")
+                UserDefaults(suiteName: "group.com.tdx.thedelt")?.removeObject(forKey: "Username")
                 
-                UIView.transitionWithView(self.view.window!, duration: 0.5, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: { () -> Void in
+                UIView.transition(with: self.view.window!, duration: 0.5, options: UIViewAnimationOptions.transitionCrossDissolve, animations: { () -> Void in
                     self.view.window!.rootViewController = loginViewController
                     }, completion: nil)
             })
         }))
-        self.presentViewController(alertVC, animated: true, completion: nil)
+        self.present(alertVC, animated: true, completion: nil)
     }
 }
 
@@ -218,13 +218,13 @@ extension SettingsViewController: ActionButtonCellDelegate {
 // MARK: - Switch Delegate
 
 extension SettingsViewController: SwitchDelegate {
-    func switchDelegate(switchtableViewCell: NotificationTableViewCell, switchValue: Bool) {
+    func switchDelegate(_ switchtableViewCell: NotificationTableViewCell, switchValue: Bool) {
         savedSettings[switchtableViewCell.label.text!] = switchValue
         if switchValue{
-            PushHelper.subscribeToChannel(switchtableViewCell.label.text!)
+            // PushHelper.subscribeToChannel(switchtableViewCell.label.text!)
         }
         else{
-            PushHelper.unsubscribeFromChannel(switchtableViewCell.label.text!)
+            // PushHelper.unsubscribeFromChannel(switchtableViewCell.label.text!)
             
         }
     }
@@ -234,11 +234,11 @@ extension SettingsViewController: SwitchDelegate {
 // MARK: - Feedback Mail Compose
 
 extension SettingsViewController: MFMailComposeViewControllerDelegate, FeedbackDelegate {
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         
         // TODO: Handle each mail case? i.e. sent, not sent, etc.
         
-        controller.dismissViewControllerAnimated(true, completion: nil)
+        controller.dismiss(animated: true, completion: nil)
     }
     
     func sendFeedback(type feedbackType: FeedbackType) {
@@ -248,14 +248,14 @@ extension SettingsViewController: MFMailComposeViewControllerDelegate, FeedbackD
             var body = ""
             
             switch feedbackType {
-            case .ReportUser:
+            case .reportUser:
                 subject = "Report User - " + AppDelegate.appName
                 body = "Name: "
-                if let name = PFUser.currentUser()?.objectForKey("name") as? String {
+                if let name = PFUser.current()?.object(forKey: "name") as? String {
                     body += name
                 }
                 body += "\n" + "Username: "
-                if let username = PFUser.currentUser()?.username {
+                if let username = PFUser.current()?.username {
                     body += username
                 }
                 body += "\n\nUser in question: [enter username]"
@@ -264,11 +264,11 @@ extension SettingsViewController: MFMailComposeViewControllerDelegate, FeedbackD
             default:
                 subject = "Feedback - " + AppDelegate.appName
                 body = "Name: "
-                if let name = PFUser.currentUser()?.objectForKey("name") as? String {
+                if let name = PFUser.current()?.object(forKey: "name") as? String {
                     body += name
                 }
                 body += "\n" + "Username: "
-                if let username = PFUser.currentUser()?.username {
+                if let username = PFUser.current()?.username {
                     body += username
                 }
                 body += "\nFeedback: "
@@ -284,13 +284,13 @@ extension SettingsViewController: MFMailComposeViewControllerDelegate, FeedbackD
             // mailComposeVC.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.blackColor()]
             // UINavigationBar.appearance().barStyle = .Black
             
-            self.presentViewController(mailComposeVC, animated: true, completion: nil)
+            self.present(mailComposeVC, animated: true, completion: nil)
             
         } else {
-            let alert = UIAlertController(title: "Mail Not Enabled", message: "Could not send message. Set up a mail account for your device and try again.", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            let alert = UIAlertController(title: "Mail Not Enabled", message: "Could not send message. Set up a mail account for your device and try again.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
         }
     }
 }

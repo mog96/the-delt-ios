@@ -17,14 +17,14 @@ class FavesCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
-    func setUpCell(photo: NSMutableDictionary?) {
-        if let numFaves = photo?.valueForKey("numFaves") as? Int {
+    func setUpCell(_ photo: NSMutableDictionary?) {
+        if let numFaves = photo?.value(forKey: "numFaves") as? Int {
             numFavesLabel.text = "\(numFaves) faves"
         }
     }
