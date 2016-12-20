@@ -25,7 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             appDelegate?.menuViewController?.checkAdmin()
         }
     }
-    
     enum ShortcutIdentifier: String {
         case Post
         case Chat
@@ -37,7 +36,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.init(rawValue: suffix)
         }
     }
-    
     enum PushIdentifier: String {
         case Reel
         case Chat
@@ -55,6 +53,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     */
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         AppDelegate.appName = NSBundle.mainBundle().infoDictionary!["CFBundleDisplayName"] as! String
+        
+        /** CONNECT TO PARSE **/
         
         if let keys = NSDictionary(contentsOfFile: NSBundle.mainBundle().pathForResource("Keys", ofType: "plist")!) {
             // Parse config.
@@ -92,19 +92,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Error: Unable to load Keys.plist.")
         }
         
-        // TODO: MOVE
-        // Register for push.
-        self.registerForPushNotifications(application)
-        
-        // Set up hamburger menu.
-        let menuStoryboard = UIStoryboard(name: "Menu", bundle: nil)
-        self.hamburgerViewController = menuStoryboard.instantiateViewControllerWithIdentifier("HamburgerViewController") as? HamburgerViewController
-        self.menuViewController = menuStoryboard.instantiateViewControllerWithIdentifier("MenuViewController") as? MenuViewController
-        self.hamburgerViewController!.menuViewController = self.menuViewController
-        self.menuViewController?.hamburgerViewController = hamburgerViewController
+        /** TODO: USE REACHABILITY TO DETECT NETWORK CONNECTION **/
         
         /*
-        // Set up Reachability. TODO: Use Whisper...
+        // Set up Reachability. TODO: Present using Whisper...
         let reachability = Reachability(hostName: Parse.currentConfiguration()?.server)
         reachability.unreachableBlock = { Void in
             let alertVC = UIAlertController(title: "Unable to Connect", message: "Please check your network connection", preferredStyle: .Alert)
@@ -117,8 +108,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         reachability.startNotifier()
         */
         
-        
         /** SET DEFAULT START VIEW **/
+        
+        // Set up hamburger menu.
+        let menuStoryboard = UIStoryboard(name: "Menu", bundle: nil)
+        self.hamburgerViewController = menuStoryboard.instantiateViewControllerWithIdentifier("HamburgerViewController") as? HamburgerViewController
+        self.menuViewController = menuStoryboard.instantiateViewControllerWithIdentifier("MenuViewController") as? MenuViewController
+        self.hamburgerViewController!.menuViewController = self.menuViewController
+        self.menuViewController?.hamburgerViewController = hamburgerViewController
         
         // Set initial view to Reel.
         let storyboard = UIStoryboard(name: "Reel", bundle: nil)
@@ -127,7 +124,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let reelVC = reelNC.viewControllers[0] as! ReelViewController
         reelVC.menuDelegate = self.menuViewController
         
-        // Check if user is logged in.
+        /** CHECK IF USER LOGGED IN **/
+        
         if PFUser.currentUser() == nil {
             let loginStoryboard = UIStoryboard(name: "Login", bundle: nil)
             let loginViewController = loginStoryboard.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
@@ -136,6 +134,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = loginViewController
             
         } else {
+            // Register for push.
+            self.registerForPushNotifications(application)
+            
             // Save username to NSUserDefaults in case PFUser.currentUser() fails in share extension.
             NSUserDefaults(suiteName: "group.com.tdx.thedelt")?.setObject(PFUser.currentUser()!.username!, forKey: "Username")
             
@@ -144,6 +145,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             } else {
                 AppDelegate.isAdmin = false
             }
+            
+            /** HANDLE APP LAUNCH FROM NOTIFICATION **/
             
             if let notification = launchOptions?[UIApplicationLaunchOptionsRemoteNotificationKey] as? [String: AnyObject] {
                 print("NOTIFICATION:", notification)
@@ -169,85 +172,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
-    
-    /**
-        @param notificationSettings Tells us what the user has allowed for our app in Settings.
-     */
-    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
-        if notificationSettings.types != .None {
-            application.registerForRemoteNotifications()
-        }
-    }
-    
-    /**
-        Push notification registration successful.
-     */
-    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-        /***/
-        let tokenChars = UnsafePointer<CChar>(deviceToken.bytes)
-        var tokenString = ""
-        
-        for i in 0..<deviceToken.length {
-            tokenString += String(format: "%02.2hhx", arguments: [tokenChars[i]])
-        }
-        
-        print("PUSH DEVICE TOKEN:", tokenString)
-        /***/
-        
-        // IMPORTANT: Saves this app installation under '_Installation' collection in MongoDB.
-        let installation = PFInstallation.currentInstallation()!
-        installation.setDeviceTokenFromData(deviceToken)
-        installation.saveInBackground()
-    }
-   
-    /**
-        Push notification registration error.
-     */
-    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
-        if error.code == 3010 {
-            print("Push notifications are not supported in the iOS Simulator.")
-        } else {
-            print("application:didFailToRegisterForRemoteNotificationsWithError: %@", error)
-        }
-    }
-        
-    /**
-        Called if your app was running and in the foreground when push notification received
-        OR if your app was running or suspended in the background and the user brings it to the foreground by tapping the push notification.
-     
-        Use version with completion handler to do background fetching/processing on silent push received.
-     */
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-        print("PUSH RECEIVED!!")
-        // PFPush.handlePush(userInfo)
-        
-        print("NOTIFICATION:", userInfo["aps"])
-        
-        if UIApplication.sharedApplication().applicationState != .Active {
-            let aps = userInfo["aps"] as! [String: AnyObject]
-            if let pushType = aps["pushType"] as? String {
-                guard let identifier = PushIdentifier.init(fullIdentifier: pushType) else {
-                    return
-                }
-                let topVC = (self.hamburgerViewController?.contentViewController as? UINavigationController)?.topViewController
-                switch identifier {
-                case .Reel:
-                    if topVC == nil || !topVC!.isKindOfClass(ReelViewController) {
-                        self.menuViewController?.presentContentView(.Reel)
-                    }
-                case .Chat:
-                    if topVC == nil || !topVC!.isKindOfClass(ChatViewController) {
-                        self.menuViewController?.presentContentView(.Chat)
-                    }
-                case .Calendar:
-                    if topVC == nil || !topVC!.isKindOfClass(CalendarViewController) {
-                        self.menuViewController?.presentContentView(.Calendar)
-                    }
-                }
-            }
-        }
-    }
-
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -299,12 +223,90 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 
-// MARK: - Helpers
+// MARK: - Push Notifications
 
 extension AppDelegate {
     func registerForPushNotifications(application: UIApplication) {
         let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
         application.registerUserNotificationSettings(notificationSettings)
+    }
+    
+    /**
+     @param notificationSettings Tells us what notifications the user has allowed for our app in Settings.
+     */
+    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
+        if notificationSettings.types != .None {
+            application.registerForRemoteNotifications()
+        }
+    }
+    
+    /**
+     Push notification registration successful.
+     */
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        /***/
+        let tokenChars = UnsafePointer<CChar>(deviceToken.bytes)
+        var tokenString = ""
+        
+        for i in 0..<deviceToken.length {
+            tokenString += String(format: "%02.2hhx", arguments: [tokenChars[i]])
+        }
+        
+        print("PUSH DEVICE TOKEN:", tokenString)
+        /***/
+        
+        // IMPORTANT: Saves this app installation under '_Installation' collection in MongoDB.
+        let installation = PFInstallation.currentInstallation()!
+        installation.setDeviceTokenFromData(deviceToken)
+        installation.saveInBackground()
+    }
+    
+    /**
+     Push notification registration error.
+     */
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        if error.code == 3010 {
+            print("Push notifications are not supported in the iOS Simulator.")
+        } else {
+            print("application:didFailToRegisterForRemoteNotificationsWithError: %@", error)
+        }
+    }
+    
+    /**
+     Called if your app was running and in the foreground when push notification received
+     OR if your app was running or suspended in the background and the user brings it to the foreground by tapping the push notification.
+     
+     Use version with completion handler to do background fetching/processing on silent push received.
+     */
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        print("PUSH RECEIVED!!")
+        // PFPush.handlePush(userInfo)
+        
+        print("NOTIFICATION:", userInfo["aps"])
+        
+        if UIApplication.sharedApplication().applicationState != .Active {
+            let aps = userInfo["aps"] as! [String: AnyObject]
+            if let pushType = aps["pushType"] as? String {
+                guard let identifier = PushIdentifier.init(fullIdentifier: pushType) else {
+                    return
+                }
+                let topVC = (self.hamburgerViewController?.contentViewController as? UINavigationController)?.topViewController
+                switch identifier {
+                case .Reel:
+                    if topVC == nil || !topVC!.isKindOfClass(ReelViewController) {
+                        self.menuViewController?.presentContentView(.Reel)
+                    }
+                case .Chat:
+                    if topVC == nil || !topVC!.isKindOfClass(ChatViewController) {
+                        self.menuViewController?.presentContentView(.Chat)
+                    }
+                case .Calendar:
+                    if topVC == nil || !topVC!.isKindOfClass(CalendarViewController) {
+                        self.menuViewController?.presentContentView(.Calendar)
+                    }
+                }
+            }
+        }
     }
 }
 
