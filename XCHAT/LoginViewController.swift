@@ -166,20 +166,21 @@ extension LoginViewController {
                 
                 print("LOGIN SUCCESSFUL")
                 
+                /** SAVE DEVICE INSTALLATION **/
+                
+                // Save username to NSUserDefaults in case PFUser.currentUser() fails in share extension.
+                NSUserDefaults(suiteName: "group.com.tdx.thedelt")?.setObject(user!.username!, forKey: "Username")
+                let installation = PFInstallation.currentInstallation()!
+                installation["user"] = PFUser.currentUser()!
+                installation.saveInBackgroundWithBlock({ (completed: Bool, error: NSError?) in
+                    print("USER SAVED TO INSTALLATION")
+                })
+                
                 if password == "temp" {
                     self.passwordTextField.text = nil
-                    self.endLoginAnmation(withResetPassword: true)
-                    
+                    self.endLoginAnmation(inResetPasswordMode: true)
                 } else {
-                    // Save username to NSUserDefaults in case PFUser.currentUser() fails in share extension.
-                    NSUserDefaults(suiteName: "group.com.tdx.thedelt")?.setObject(user!.username!, forKey: "Username")
-                    let installation = PFInstallation.currentInstallation()!
-                    installation["user"] = PFUser.currentUser()!
-                    installation.saveInBackgroundWithBlock({ (completed: Bool, error: NSError?) in
-                        print("USER SAVED TO INSTALLATION")
-                    })
-                    
-                    self.endLoginAnmation(withResetPassword: false)
+                    self.endLoginAnmation(inResetPasswordMode: false)
                     self.view.endEditing(true)
                     self.transitionToApp()
                 }
@@ -188,8 +189,7 @@ extension LoginViewController {
                 
                 print("LOGIN FAILED")
                 
-                self.endLoginAnmation(withResetPassword: false)
-                
+                self.endLoginAnmation(inResetPasswordMode: false)
                 if let errorString = error?.userInfo["error"] as? String {
                     
                     print("LOGIN ERROR:", errorString)
@@ -213,13 +213,17 @@ extension LoginViewController {
         }
     }
     
+    /**
+     After user logs in with temporary password,
+     resets user's password and transitions to the app.
+     */
     private func resetCurrentUserPassword(password: String) {
         PFUser.currentUser()?.password = password
         PFUser.currentUser()?.saveInBackgroundWithBlock({ (completed: Bool, error: NSError?) in
             if error != nil {
                 print("Error:", error?.userInfo["error"])
             } else {
-                self.endLoginAnmation(withResetPassword: true)
+                self.endLoginAnmation(inResetPasswordMode: true)
                 self.view.endEditing(true)
                 self.transitionToApp()
             }
@@ -296,11 +300,10 @@ extension LoginViewController {
                             self.presentErrorSubmittingRequestAlert()
                             
                         } else {
-                            let alert = UIAlertController(title: "Signup Request Submitted", message: "The Admin has received your request and will be in touch soon.", preferredStyle: UIAlertControllerStyle.Alert)
+                            let alert = UIAlertController(title: "Signup Request Submitted", message: "The Admin has received your request and will notify you by email when you are approved.", preferredStyle: UIAlertControllerStyle.Alert)
                             alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: { _ in
                                 self.showSignupMode(false)
-                                self.nameTextField.text = nil
-                                self.emailTextField.text = nil
+                                self.clearTextFields()
                             }))
                             self.presentViewController(alert, animated: true, completion: nil)
                         }
@@ -368,6 +371,12 @@ extension LoginViewController {
                     self.passwordTextField.text =  nil
                 }
         })
+    }
+    
+    private func clearTextFields() {
+        self.nameTextField.text = nil
+        self.usernameTextField.text = nil
+        self.emailTextField.text = nil
     }
 }
 
@@ -460,11 +469,11 @@ extension LoginViewController {
         }
     }
     
-    private func endLoginAnmation(withResetPassword resetPassword: Bool) {
+    private func endLoginAnmation(inResetPasswordMode endInResetPasswordMode: Bool) {
         let animationDuration = 0.5
         self.shouldContinueAnimating = false
         
-        if resetPassword {
+        if endInResetPasswordMode {
             // Use login label to animate to reset password button.
             self.loginLabel.hidden = false
             self.loginButton.hidden = true
@@ -652,7 +661,10 @@ extension LoginViewController {
                 } else {
                     let alert = UIAlertController(title: "Email Required", message: "Please enter a valid email address.", preferredStyle: UIAlertControllerStyle.Alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    self.presentViewController(alert, animated: true, completion: { _ in
+                        self.showSignupMode(false)
+                        self.clearTextFields()
+                    })
                 }
             }
         } else {

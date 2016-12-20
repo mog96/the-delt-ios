@@ -78,6 +78,12 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
         }))
     }
     
+    override func viewDidAppear(animated: Bool) {
+        if !UIApplication.sharedApplication().isRegisteredForRemoteNotifications() {
+            AppDelegate.registerForPushNotifications(UIApplication.sharedApplication())
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

@@ -73,7 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 /* END DEVELOPMENT ONLY */
                 // */
                 
-                $0.server = "https://thedelt.herokuapp.com/parse"
+                // $0.server = "https://thedelt.herokuapp.com/parse"
             }
             Parse.enableDataSharingWithApplicationGroupIdentifier("group.com.tdx.thedelt")
             Parse.enableLocalDatastore()
@@ -132,10 +132,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             // Does exactly the same as arrow in storyboard. ("100% parity." --Tim Lee)
             window?.rootViewController = loginViewController
+            // Will register for push after successful login.
             
         } else {
             // Register for push.
-            self.registerForPushNotifications(application)
+            AppDelegate.registerForPushNotifications(application)
             
             // Save username to NSUserDefaults in case PFUser.currentUser() fails in share extension.
             NSUserDefaults(suiteName: "group.com.tdx.thedelt")?.setObject(PFUser.currentUser()!.username!, forKey: "Username")
@@ -226,9 +227,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 // MARK: - Push Notifications
 
 extension AppDelegate {
-    func registerForPushNotifications(application: UIApplication) {
+    static func registerForPushNotifications(application: UIApplication) {
         let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
         application.registerUserNotificationSettings(notificationSettings)
+        
+        print("REGISTERED FOR PUSH NOTIFICATIONS")
     }
     
     /**
@@ -254,6 +257,8 @@ extension AppDelegate {
         
         print("PUSH DEVICE TOKEN:", tokenString)
         /***/
+        
+        /** SET INSTALLATION PUSH TOKEN **/
         
         // IMPORTANT: Saves this app installation under '_Installation' collection in MongoDB.
         let installation = PFInstallation.currentInstallation()!
