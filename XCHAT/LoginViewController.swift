@@ -125,7 +125,7 @@ class LoginViewController: UIViewController {
         self.signupButtonOriginalColor = self.signupButton.titleColorForState(.Normal)
         
         // Show login text fields on load.
-        self.showSignup(false)
+        self.showSignupMode(false)
         // Must come after above line to ensure login view is proper height.
         self.loginView.layer.cornerRadius = 4
         self.loginView.layer.masksToBounds = true
@@ -157,36 +157,182 @@ class LoginViewController: UIViewController {
 }
 
 
+// MARK: - Login Helpers
+
+extension LoginViewController {
+    private func logInUser(username: String, password: String) {
+        PFUser.logInWithUsernameInBackground(username, password: password) { (user: PFUser?, error: NSError?) -> Void in
+            if user != nil {
+                
+                print("LOGIN SUCCESSFUL")
+                
+                /** SAVE DEVICE INSTALLATION **/
+                
+                // Save username to NSUserDefaults in case PFUser.currentUser() fails in share extension.
+                NSUserDefaults(suiteName: "group.com.tdx.thedelt")?.setObject(user!.username!, forKey: "Username")
+                let installation = PFInstallation.currentInstallation()!
+                installation["user"] = PFUser.currentUser()!
+                installation.saveInBackgroundWithBlock({ (completed: Bool, error: NSError?) in
+                    print("USER SAVED TO INSTALLATION")
+                })
+                
+                if password == "temp" {
+                    self.passwordTextField.text = nil
+                    self.endLoginAnmation(inResetPasswordMode: true)
+                } else {
+                    self.endLoginAnmation(inResetPasswordMode: false)
+                    self.view.endEditing(true)
+                    self.transitionToApp()
+                }
+                
+            } else {
+                
+                print("LOGIN FAILED")
+                
+                self.endLoginAnmation(inResetPasswordMode: false)
+                if let errorString = error?.userInfo["error"] as? String {
+                    
+                    print("LOGIN ERROR:", errorString)
+                    
+                    switch errorString {
+                    case "Invalid username/password.":
+                        let ac = UIAlertController(title: "Invalid Username or Password", message: "Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                        ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                        self.presentViewController(ac, animated: true, completion: nil)
+                    case "Could not connect to the server.":
+                        let ac = UIAlertController(title: "Server Error", message: "Apologies. Please try again later.", preferredStyle: UIAlertControllerStyle.Alert)
+                        ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                        self.presentViewController(ac, animated: true, completion: nil)
+                    default:
+                        let ac = UIAlertController(title: "Unable to Connect", message: "Check your connection and try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                        ac.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+                        self.presentViewController(ac, animated: true, completion: nil)
+                    }
+                }
+            }
+        }
+    }
+    
+    /**
+     After user logs in with temporary password,
+     resets user's password and transitions to the app.
+     */
+    private func resetCurrentUserPassword(password: String) {
+        PFUser.currentUser()?.password = password
+        PFUser.currentUser()?.saveInBackgroundWithBlock({ (completed: Bool, error: NSError?) in
+            if error != nil {
+                print("Error:", error?.userInfo["error"])
+            } else {
+                self.endLoginAnmation(inResetPasswordMode: true)
+                self.view.endEditing(true)
+                self.transitionToApp()
+            }
+        })
+    }
+}
+
+
+// MARK: - Signup Helpers
+
+/**
+ NOTE: Current signup flow has poor function organization, due to chained callback functions.
+       /** TODO **/ Future implementation should make use of promises.
+ */
+extension LoginViewController {
+    private func isValidEmail(testStr: String) -> Bool {
+        // print("validate calendar: \(testStr)")
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluateWithObject(testStr)
+    }
+    
+    private func beginSignupRequest(email: String) {
+        if email.lowercaseString.hasSuffix("@stanford.edu") {
+            let signupRequest = PFObject(className: "SignupRequest")
+            signupRequest["name"] = self.nameTextField.text
+            self.checkEmail(email, forRequest: signupRequest)
+        } else {
+            self.presentUnrecognizedUserSignupRequestMailCompose()
+        }
+    }
+    
+    private func checkEmail(email: String, forRequest signupRequest: PFObject) {
+        let query = PFUser.query()
+        query?.whereKey("email", equalTo: email)
+        query?.findObjectsInBackgroundWithBlock({ (objects: [PFObject]?, error: NSError?) in
+            if error != nil {
+                print("Error:", error?.userInfo["error"])
+                self.presentErrorSubmittingRequestAlert()
+            } else {
+                if objects?.count == 0 {
+                    signupRequest["email"] = email
+                    if let username = self.usernameTextField.text {
+                        self.checkUsername(username, forRequest: signupRequest)
+                    } else {
+                        let alert = UIAlertController(title: "Username Required", message: "Please enter a username.", preferredStyle: UIAlertControllerStyle.Alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    }
+                } else {
+                    let alert = UIAlertController(title: "Email In Use", message: "The email you entered is already associated with an account. If that doesn't sound right, please contact your Admin.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            }
+        })
+    }
+    
+    private func checkUsername(username: String, forRequest signupRequest: PFObject) {
+        let query = PFUser.query()
+        query?.whereKey("username", equalTo: username)
+        query?.findObjectsInBackgroundWithBlock({ (objects: [PFObject]?, error: NSError?) in
+            if error != nil {
+                print("Error:", error?.userInfo["error"])
+                self.presentErrorSubmittingRequestAlert()
+            } else {
+                if objects?.count == 0 {
+                    signupRequest["username"] = username
+                    signupRequest.saveInBackgroundWithBlock({ (completed: Bool, error: NSError?) -> Void in
+                        if let error = error {
+                            // Log details of the failure
+                            print("Error: \(error) \(error.userInfo)")
+                            self.presentErrorSubmittingRequestAlert()
+                            
+                        } else {
+                            let alert = UIAlertController(title: "Signup Request Submitted", message: "The Admin has received your request and will notify you by email when you are approved.", preferredStyle: UIAlertControllerStyle.Alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: { _ in
+                                self.showSignupMode(false)
+                                self.clearTextFields()
+                            }))
+                            self.presentViewController(alert, animated: true, completion: nil)
+                        }
+                    })
+                } else {
+                    let alert = UIAlertController(title: "Username Taken", message: "The username you requested is already taken. Please choose another.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            }
+        })
+    }
+    
+    private func presentErrorSubmittingRequestAlert() {
+        let alert = UIAlertController(title: "Error Submitting Request", message: "Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+}
+
+
 // MARK: - Helpers
 
 extension LoginViewController {
-    
-    // Login label used as duplicate of login button title label for animations.
-    private func addLoginLabel() {
-        self.loginLabel = UILabel()
-        self.loginLabel.text = self.loginButton.titleLabel!.text
-        self.loginLabel.textColor = self.loginButton.titleLabel!.textColor
-        self.loginLabel.font = self.loginButton.titleLabel!.font
-        let loginButtonTitleLabelFrame = self.loginButton.convertRect(self.loginButton.titleLabel!.frame, toView: self.view)
-        self.loginLabel.frame = CGRect(x: loginButtonTitleLabelFrame.origin.x, y: loginButtonTitleLabelFrame.origin.y, width: loginButtonTitleLabelFrame.width, height: loginButtonTitleLabelFrame.height)
-        self.loginLabelOriginalOrigin = self.loginLabel.frame.origin
-        self.loginLabel.hidden = true
-        self.view.addSubview(self.loginLabel)
-        
-        self.exemptLoginLabelFrameFromDeltAnimation()
+    private func inSignupMode() -> Bool {
+        return !(self.loginView.frame.height == self.loginViewLoginHeight)
     }
     
-    private func exemptLoginLabelFrameFromDeltAnimation() {
-        self.loginLabel.text = self.loggingInString
-        self.loginLabel.sizeToFit()
-        self.loginLabel.center.x = self.loginView.center.x
-        self.deltLoadingView.addExemptFrames(self.loginLabel.frame)
-        self.loginLabel.text = self.loginString
-        self.loginLabel.sizeToFit()
-        self.loginLabel.frame.origin.x = self.loginLabelOriginalOrigin.x
-    }
-    
-    private func showSignup(show: Bool) {
+    private func showSignupMode(show: Bool) {
         self.view.endEditing(true)
         
         let animationDuration = 0.35
@@ -226,13 +372,44 @@ extension LoginViewController {
                 }
         })
     }
+    
+    private func clearTextFields() {
+        self.nameTextField.text = nil
+        self.usernameTextField.text = nil
+        self.emailTextField.text = nil
+    }
 }
 
 
 // MARK: - Delt Animation Helpers
 
 extension LoginViewController {
-    private func startLoginAnimation(fromResetPassword fromResetPassword: Bool) {
+    // Login label used as duplicate of login button title label for animations.
+    private func addLoginLabel() {
+        self.loginLabel = UILabel()
+        self.loginLabel.text = self.loginButton.titleLabel!.text
+        self.loginLabel.textColor = self.loginButton.titleLabel!.textColor
+        self.loginLabel.font = self.loginButton.titleLabel!.font
+        let loginButtonTitleLabelFrame = self.loginButton.convertRect(self.loginButton.titleLabel!.frame, toView: self.view)
+        self.loginLabel.frame = CGRect(x: loginButtonTitleLabelFrame.origin.x, y: loginButtonTitleLabelFrame.origin.y, width: loginButtonTitleLabelFrame.width, height: loginButtonTitleLabelFrame.height)
+        self.loginLabelOriginalOrigin = self.loginLabel.frame.origin
+        self.loginLabel.hidden = true
+        self.view.addSubview(self.loginLabel)
+        
+        self.exemptLoginLabelFrameFromDeltAnimation()
+    }
+    
+    private func exemptLoginLabelFrameFromDeltAnimation() {
+        self.loginLabel.text = self.loggingInString
+        self.loginLabel.sizeToFit()
+        self.loginLabel.center.x = self.loginView.center.x
+        self.deltLoadingView.addExemptFrames(self.loginLabel.frame)
+        self.loginLabel.text = self.loginString
+        self.loginLabel.sizeToFit()
+        self.loginLabel.frame.origin.x = self.loginLabelOriginalOrigin.x
+    }
+    
+    private func startLoginAnimation(fromResetPasswordMode fromResetPasswordMode: Bool) {
         self.view.endEditing(true)
         
         let animationDuration = 0.5
@@ -242,7 +419,7 @@ extension LoginViewController {
         self.loginButton.hidden = true
         self.resetPasswordButton.hidden = true
         UIView.animateWithDuration(animationDuration, animations: {
-            if fromResetPassword {
+            if fromResetPasswordMode {
                 self.loginLabel.text = self.resettingPasswordString
             } else {
                 self.loginLabel.text = self.loggingInString
@@ -261,7 +438,7 @@ extension LoginViewController {
                 self.backgroundImageView.image = UIImage(named: self.loginBackgroundImageNames[self.loginBackgroundImageIndex])
         })
         var controlsToHide: [UIControl]!
-        if fromResetPassword {
+        if fromResetPasswordMode {
             controlsToHide = [self.usernameTextField, self.passwordTextField, self.confirmPasswordTextField]
         } else {
             controlsToHide = self.controlsHiddenOnLogin
@@ -292,11 +469,11 @@ extension LoginViewController {
         }
     }
     
-    private func endLoginAnmation(withResetPassword resetPassword: Bool) {
+    private func endLoginAnmation(inResetPasswordMode endInResetPasswordMode: Bool) {
         let animationDuration = 0.5
         self.shouldContinueAnimating = false
         
-        if resetPassword {
+        if endInResetPasswordMode {
             // Use login label to animate to reset password button.
             self.loginLabel.hidden = false
             self.loginButton.hidden = true
@@ -380,91 +557,6 @@ extension LoginViewController {
 }
 
 
-// MARK: - Signup Helpers
-
-extension LoginViewController {
-    private func submitSignupRequest() {
-        let signupRequest = PFObject(className: "SignupRequest")
-        signupRequest["name"] = self.nameTextField.text
-        if let email = self.emailTextField.text {
-            self.checkEmail(email, forRequest: signupRequest)
-        } else {
-            let alert = UIAlertController(title: "Email Required", message: "Please enter an email address.", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
-        }
-    }
-    
-    private func checkEmail(email: String, forRequest signupRequest: PFObject) {
-        let query = PFUser.query()
-        query?.whereKey("email", equalTo: email)
-        query?.findObjectsInBackgroundWithBlock({ (objects: [PFObject]?, error: NSError?) in
-            if error != nil {
-                print("Error:", error?.userInfo["error"])
-                self.presentErrorSubmittingRequestAlert()
-            } else {
-                if objects?.count == 0 {
-                    signupRequest["email"] = email
-                    if let username = self.usernameTextField.text {
-                        self.checkUsername(username, forRequest: signupRequest)
-                    } else {
-                        let alert = UIAlertController(title: "Username Required", message: "Please enter a username.", preferredStyle: UIAlertControllerStyle.Alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
-                        self.presentViewController(alert, animated: true, completion: nil)
-                    }
-                    
-                } else {
-                    let alert = UIAlertController(title: "Email In Use", message: "The email you entered is already associated with an account. If that doesn't sound right, please contact your Admin.", preferredStyle: UIAlertControllerStyle.Alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
-                    self.presentViewController(alert, animated: true, completion: nil)
-                }
-            }
-        })
-    }
-    
-    private func checkUsername(username: String, forRequest signupRequest: PFObject) {
-        let query = PFUser.query()
-        query?.whereKey("username", equalTo: username)
-        query?.findObjectsInBackgroundWithBlock({ (objects: [PFObject]?, error: NSError?) in
-            if error != nil {
-                print("Error:", error?.userInfo["error"])
-                self.presentErrorSubmittingRequestAlert()
-            } else {
-                if objects?.count == 0 {
-                    signupRequest["username"] = username
-                    signupRequest.saveInBackgroundWithBlock({ (completed: Bool, error: NSError?) -> Void in
-                        if let error = error {
-                            // Log details of the failure
-                            print("Error: \(error) \(error.userInfo)")
-                            self.presentErrorSubmittingRequestAlert()
-                            
-                        } else {
-                            let alert = UIAlertController(title: "Signup Request Submitted", message: "The Admin has received your request and will be in touch soon.", preferredStyle: UIAlertControllerStyle.Alert)
-                            alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: { _ in
-                                self.showSignup(false)
-                                self.nameTextField.text = nil
-                                self.emailTextField.text = nil
-                            }))
-                            self.presentViewController(alert, animated: true, completion: nil)
-                        }
-                    })
-                } else {
-                    let alert = UIAlertController(title: "Username Taken", message: "The username you requested is already taken. Please choose another.", preferredStyle: UIAlertControllerStyle.Alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
-                    self.presentViewController(alert, animated: true, completion: nil)
-                }
-            }
-        })
-    }
-    
-    private func presentErrorSubmittingRequestAlert() {
-        let alert = UIAlertController(title: "Error Submitting Request", message: "Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
-    }
-}
-
-
 // MARK: - Text Field Delegate
 
 extension LoginViewController: UITextFieldDelegate {
@@ -493,14 +585,12 @@ extension LoginViewController: MFMailComposeViewControllerDelegate {
         
         controller.dismissViewControllerAnimated(true) {
             if result == .Sent {
-                let alert = UIAlertController(title: "Thanks for Signing Up!", message: "If your charge has already been added to The Delt, you'll be added immediately. If your charge is not yet using The Delt, we'll be in touch as soon as possible about signing up your charge.", preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.presentUnrecognizedUserSignupRequestSubmittedAlert()
             }
         }
     }
     
-    func presentSignupRequestMailCompose() {
+    private func presentUnrecognizedUserSignupRequestMailCompose() {
         if MFMailComposeViewController.canSendMail() {
             let subject = "Signup Request - " + AppDelegate.appName
             let recipient = "thedeltusa@gmail.com"
@@ -538,10 +628,16 @@ extension LoginViewController: MFMailComposeViewControllerDelegate {
             self.presentViewController(alert, animated: true, completion: nil)
         }
     }
+    
+    func presentUnrecognizedUserSignupRequestSubmittedAlert() {
+        let alert = UIAlertController(title: "Thanks for Signing Up!", message: "If your charge has already been added to The Delt, you'll be added immediately. If your charge is not yet using The Delt, we'll be in touch as soon as possible about signing up your charge.", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
 }
 
 
-// MARK: Actions
+// MARK: - Actions
 
 extension LoginViewController {
     func goKeyPressed() {
@@ -556,85 +652,34 @@ extension LoginViewController {
         }
     }
     
-    // Records login/signup information.
     @IBAction func signupPressed(sender: AnyObject) {
         self.view.endEditing(true)
-        
-        if self.loginView.frame.height == self.loginViewLoginHeight {
-            self.showSignup(true)
-            
-        } else {
+        if self.inSignupMode() {
             if let email = self.emailTextField.text {
-                if email.hasSuffix("@stanford.edu") {
-                    self.submitSignupRequest()
-                    
+                if self.isValidEmail(email) {
+                    self.beginSignupRequest(email)
                 } else {
-                    self.presentSignupRequestMailCompose()
+                    let alert = UIAlertController(title: "Email Required", message: "Please enter a valid email address.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+                    self.presentViewController(alert, animated: true, completion: { _ in
+                        self.showSignupMode(false)
+                        self.clearTextFields()
+                    })
                 }
-                
-            } else {
-                self.presentSignupRequestMailCompose()
             }
+        } else {
+            self.showSignupMode(true)
         }
     }
     
-    // Logs in with username (not email) and password.
     @IBAction func loginPressed(sender: AnyObject) {
-        if self.loginView.frame.height == self.loginViewLoginHeight {
-            if let username = self.usernameTextField.text, password = self.passwordTextField.text {
-                self.startLoginAnimation(fromResetPassword: false)
-                
-                // TODO: Check that text field text is not null.
-                PFUser.logInWithUsernameInBackground(username, password: password) { (user: PFUser?, error: NSError?) -> Void in
-                    
-                    if user != nil {
-                        
-                        print("LOGIN SUCCESSFUL")
-                        
-                        if password == "temp" {
-                            self.passwordTextField.text = nil
-                            self.endLoginAnmation(withResetPassword: true)
-                            
-                        } else {
-                            self.endLoginAnmation(withResetPassword: false)
-                            self.view.endEditing(true)
-                            self.transitionToApp()
-                            
-                            // Store username in defaults.
-                            NSUserDefaults(suiteName: "group.com.tdx.thedelt")?.setObject(user!.username!, forKey: "Username")
-                        }
-                        
-                    } else {
-                        
-                        print("LOGIN FAILED")
-                        
-                        self.endLoginAnmation(withResetPassword: false)
-                        
-                        if let errorString = error?.userInfo["error"] as? String {
-                            
-                            print("LOGIN ERROR:", errorString)
-                            
-                            switch errorString {
-                            case "Invalid username/password.":
-                                let ac = UIAlertController(title: "Invalid Username or Password", message: "Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
-                                ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                                self.presentViewController(ac, animated: true, completion: nil)
-                            case "Could not connect to the server.":
-                                let ac = UIAlertController(title: "Server Error", message: "Apologies. Please try again later.", preferredStyle: UIAlertControllerStyle.Alert)
-                                ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                                self.presentViewController(ac, animated: true, completion: nil)
-                            default:
-                                let ac = UIAlertController(title: "Unable to Connect", message: "Check your connection and try again.", preferredStyle: UIAlertControllerStyle.Alert)
-                                ac.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
-                                self.presentViewController(ac, animated: true, completion: nil)
-                            }
-                        }
-                    }
-                }
-            }
-            
+        if self.inSignupMode() {
+            self.showSignupMode(false)
         } else {
-            self.showSignup(false)
+            if let username = self.usernameTextField.text, password = self.passwordTextField.text {
+                self.startLoginAnimation(fromResetPasswordMode: false)
+                self.logInUser(username, password: password)
+            }
         }
     }
     
@@ -642,19 +687,8 @@ extension LoginViewController {
         if let password = self.passwordTextField.text, confirmPassword = self.confirmPasswordTextField.text {
             if password.characters.count != 0 && confirmPassword.characters.count != 0 {
                 if password == confirmPassword {
-                    self.startLoginAnimation(fromResetPassword: true)
-                    
-                    PFUser.currentUser()?.password = password
-                    PFUser.currentUser()?.saveInBackgroundWithBlock({ (completed: Bool, error: NSError?) in
-                        if error != nil {
-                            print("Error:", error?.userInfo["error"])
-                        } else {
-                            self.endLoginAnmation(withResetPassword: true)
-                            self.view.endEditing(true)
-                            self.transitionToApp()
-                        }
-                    })
-                    
+                    self.startLoginAnimation(fromResetPasswordMode: true)
+                    self.resetCurrentUserPassword(password)
                 } else {
                     let alert = UIAlertController(title: "Passwords Don't Match", message: "Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
