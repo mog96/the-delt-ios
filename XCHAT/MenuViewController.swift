@@ -95,7 +95,7 @@ extension MenuViewController {
             
         case .Alerts: // ALERTS
             let alertsStoryboard = UIStoryboard(name: "Alerts", bundle: nil)
-            let alertsNavigationController = alertsStoryboard.instantiateViewController(withIdentifier: "AlertsNavigationController") as! UINavigationController
+            let alertsNavigationController = alertsStoryboard.instantiateViewController(withIdentifier: "AlertsNC") as! UINavigationController
             let firstViewController = alertsNavigationController.viewControllers[0] as! AlertsViewController
             firstViewController.menuDelegate = self
             
