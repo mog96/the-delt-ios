@@ -162,7 +162,10 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController {
     fileprivate func logInUser(_ username: String, password: String) {
-        PFUser.logInWithUsername(inBackground: username, password: password) { (user: PFUser?, error: Error?) -> Void in
+        let un = username.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        let pw = password.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        
+        PFUser.logInWithUsername(inBackground: un, password: pw) { (user: PFUser?, error: Error?) -> Void in
             if user != nil {
                 
                 print("LOGIN SUCCESSFUL")

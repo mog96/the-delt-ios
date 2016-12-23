@@ -62,8 +62,14 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
             self.refreshControl!.attributedTitle = NSAttributedString(string: "Welcome to The Delt. It's a little slow...", attributes: [NSForegroundColorAttributeName : UIColor.red])
             UserDefaults.standard.set(true, forKey: self.kWelcomeMessageKey)
         }
-        self.tableView.insertSubview(self.refreshControl!, at: 0)
+        if #available(iOS 10.0, *) {
+            self.tableView.refreshControl = self.refreshControl
+        } else {
+            self.tableView.insertSubview(self.refreshControl!, at: 0)
+        }
         
+        self.tableView.setNeedsLayout()
+        self.tableView.layoutIfNeeded()
         self.refreshData()
         
         self.chooseMediaAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)

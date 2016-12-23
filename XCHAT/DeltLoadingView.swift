@@ -12,10 +12,12 @@ class DeltLoadingView: UIView {
     
     fileprivate var shouldContinue = false
     fileprivate var exemptFrames: [CGRect]?
+    var deltColor: UIColor!
     
     init(frame: CGRect, exemptFrames: CGRect...) {
         super.init(frame: frame)
         self.exemptFrames = exemptFrames
+        self.deltColor = LayoutUtils.greenColor
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -90,7 +92,7 @@ extension DeltLoadingView {
     fileprivate func deltLabel() -> UILabel {
         let deltLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         deltLabel.text = "Δ"
-        deltLabel.textColor = LayoutUtils.greenColor
+        deltLabel.textColor = self.deltColor
         deltLabel.font = UIFont.systemFont(ofSize: 15)
         deltLabel.sizeToFit()
         deltLabel.frame = self.randomFrameWithSize(deltLabel.bounds.size)

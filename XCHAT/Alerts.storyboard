@@ -26,25 +26,34 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </tableView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SHJ-9L-EBB" customClass="DeltLoadingView" customModule="XCHAT" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="3cx-15-3kW" secondAttribute="trailing" id="7T7-TD-IYk"/>
+                            <constraint firstItem="SHJ-9L-EBB" firstAttribute="top" secondItem="Xq0-7u-HKT" secondAttribute="bottom" id="9o4-5b-Mnq"/>
                             <constraint firstItem="3cx-15-3kW" firstAttribute="leading" secondItem="TNd-OO-HuS" secondAttribute="leading" id="Oau-77-wNg"/>
+                            <constraint firstAttribute="trailing" secondItem="SHJ-9L-EBB" secondAttribute="trailing" id="Oio-L5-gJO"/>
                             <constraint firstItem="3ve-fE-vFf" firstAttribute="top" secondItem="3cx-15-3kW" secondAttribute="bottom" id="tai-zs-VVt"/>
                             <constraint firstItem="3cx-15-3kW" firstAttribute="top" secondItem="TNd-OO-HuS" secondAttribute="top" id="w7o-hh-Usf"/>
+                            <constraint firstItem="3ve-fE-vFf" firstAttribute="top" secondItem="SHJ-9L-EBB" secondAttribute="bottom" id="xiJ-rK-M9h"/>
+                            <constraint firstItem="SHJ-9L-EBB" firstAttribute="leading" secondItem="TNd-OO-HuS" secondAttribute="leading" id="xtF-zC-wfn"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="ALERTS" id="HBw-F7-4tv">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Fcv-QS-dbF">
                             <connections>
-                                <segue destination="D1g-LH-xIz" kind="popoverPresentation" popoverAnchorBarButtonItem="Fcv-QS-dbF" id="00c-h4-XDQ">
+                                <segue destination="D1g-LH-xIz" kind="popoverPresentation" identifier="NewAlertSegue" popoverAnchorBarButtonItem="Fcv-QS-dbF" id="00c-h4-XDQ">
                                     <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                 </segue>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="deltLoadingView" destination="SHJ-9L-EBB" id="SuA-Kj-fAT"/>
                         <outlet property="tableView" destination="3cx-15-3kW" id="MCp-eg-uu6"/>
                     </connections>
                 </viewController>

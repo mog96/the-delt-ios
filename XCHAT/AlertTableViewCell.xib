@@ -22,8 +22,9 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="adP-La-KuT">
                         <rect key="frame" x="8" y="4" width="359" height="199.5"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ROONEY" translatesAutoresizingMaskIntoConstraints="NO" id="iWt-b1-dMq">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ROONEY" translatesAutoresizingMaskIntoConstraints="NO" id="iWt-b1-dMq" customClass="ProfileImageView" customModule="XCHAT" customModuleProvider="target">
                                 <rect key="frame" x="10" y="10" width="50" height="50"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="iWt-b1-dMq" secondAttribute="height" multiplier="1:1" id="pkV-C2-sem"/>
                                     <constraint firstAttribute="height" constant="50" id="r1j-hW-ZfY"/>
@@ -32,11 +33,14 @@
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Btw I know that's you Scott. You said that shit was borrowed but I always knew you were lying. Show off." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bwi-5t-7xb">
                                 <rect key="frame" x="10" y="155" width="339" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="b9s-De-YLn"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="749" text="Rooney Pitchford" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VEs-8j-0zd">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="749" text="Rooney Pitchford" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VEs-8j-0zd" customClass="UsernameLabel" customModule="XCHAT" customModuleProvider="target">
                                 <rect key="frame" x="68" y="10" width="116" height="18"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="18" id="zqn-5K-XA2"/>
@@ -56,6 +60,7 @@
                                 <rect key="frame" x="68" y="32" width="280.5" height="115"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="280" id="FYT-FO-psT"/>
+                                    <constraint firstAttribute="height" constant="115" id="u4h-WK-MNL"/>
                                 </constraints>
                                 <string key="text">This is a Public Service Announcment: The owner of the black Ferrari, your car is about to be towed because you are parked in front of a fire hydrant. Please move your car ASAP.</string>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
@@ -90,9 +95,13 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="containerView" destination="adP-La-KuT" id="gxt-Vf-R8C"/>
+                <outlet property="dateLabel" destination="4MO-RP-64b" id="iyB-n4-YOq"/>
                 <outlet property="messageLabel" destination="bwi-5t-7xb" id="bW2-UK-8tv"/>
+                <outlet property="messageLabelHeightConstraint" destination="b9s-De-YLn" id="eR9-aC-Op5"/>
+                <outlet property="nameLabel" destination="VEs-8j-0zd" id="an4-fm-b7J"/>
                 <outlet property="profileImageView" destination="iWt-b1-dMq" id="eAI-Wn-qmB"/>
                 <outlet property="subjectLabel" destination="Jhr-Bh-23I" id="SgH-Vb-OFc"/>
+                <outlet property="subjectLabelHeightConstraint" destination="u4h-WK-MNL" id="8Pb-po-hE9"/>
             </connections>
             <point key="canvasLocation" x="25.5" y="60"/>
         </tableViewCell>

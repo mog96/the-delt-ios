@@ -368,7 +368,6 @@
 			children = (
 				2540A3921C2B9CC7003E4B31 /* Login.storyboard */,
 				25F016051B045882004D78F6 /* LoginViewController.swift */,
-				D5E001121D959FE900ABEFBE /* DeltLoadingView.swift */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -479,6 +478,7 @@
 				D55496061D8A862600090E76 /* ActionButtonTableViewCell.xib */,
 				38F655E41B0D521200C5586A /* ActionButtonTableViewCell.swift */,
 				259A16B71DDFB4C500C23DD0 /* CustomTextView.swift */,
+				D5E001121D959FE900ABEFBE /* DeltLoadingView.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
