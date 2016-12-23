@@ -24,13 +24,14 @@ class MenuViewController: UIViewController {
     let kProfileCellHeight: CGFloat = 172
     let kMenuCellHeight: CGFloat = 55
     
-    let kMinCells = 6
-    let kMaxCells = 7
-    var numCells = 6
+    let kMinCells = 7
+    let kMaxCells = 8
+    var numCells = 7
     
     enum ContentView: String {
         case Profile
         case Reel
+        case Alerts
         case Chat
         case Calendar
         case Members
@@ -91,6 +92,15 @@ extension MenuViewController {
             
             UIApplication.shared.setStatusBarHidden(false, with: .slide)
             self.hamburgerViewController?.contentViewController = reelNavigationController
+            
+        case .Alerts: // ALERTS
+            let alertsStoryboard = UIStoryboard(name: "Alerts", bundle: nil)
+            let alertsNavigationController = alertsStoryboard.instantiateViewController(withIdentifier: "AlertsNavigationController") as! UINavigationController
+            let firstViewController = alertsNavigationController.viewControllers[0] as! AlertsViewController
+            firstViewController.menuDelegate = self
+            
+            UIApplication.shared.setStatusBarHidden(false, with: .slide)
+            self.hamburgerViewController?.contentViewController = alertsNavigationController
             
         case .Chat: // CHAT
             let chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
@@ -165,16 +175,18 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
         case 1:
             cell = tableView.dequeueReusableCell(withIdentifier: "ReelCell")!
         case 2:
+            cell = tableView.dequeueReusableCell(withIdentifier: "AlertsCell")!
+        case 3:
             cell = tableView.dequeueReusableCell(withIdentifier: "ChatCell")!
         /*
-        case 3:
+        case 4:
             cell = tableView.dequeueReusableCellWithIdentifier("AuxCell")!
         */
-        case 3:
-            cell = tableView.dequeueReusableCell(withIdentifier: "CalendarCell")!
         case 4:
+            cell = tableView.dequeueReusableCell(withIdentifier: "CalendarCell")!
+        case 5:
             cell = tableView.dequeueReusableCell(withIdentifier: "MembersCell")!
-        case 6:
+        case 7:
             cell = tableView.dequeueReusableCell(withIdentifier: "AdminCell")!
         default:
             cell = tableView.dequeueReusableCell(withIdentifier: "SettingsCell")!

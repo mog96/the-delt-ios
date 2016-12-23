@@ -9,9 +9,10 @@
 import UIKit
 import Parse
 import Reachability
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
     var hamburgerViewController: HamburgerViewController?
@@ -73,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 /* END DEVELOPMENT ONLY */
                 // */
                 
-                // $0.server = "https://thedelt.herokuapp.com/parse"
+                $0.server = "https://thedelt.herokuapp.com/parse"
             }
             Parse.enableDataSharing(withApplicationGroupIdentifier: "group.com.tdx.thedelt")
             Parse.enableLocalDatastore()
@@ -313,5 +314,8 @@ extension AppDelegate {
             }
         }
     }
+    
+    // @available(iOS 10.0, *)
+    
 }
 
