@@ -71,7 +71,8 @@ extension NewAlertViewController {
                 alert["message"] = self.messageTextView.text
             }
             // alert["createdBy"] = PFUser.current()!.username!
-            // alert["author"] = PFUser.current()!
+            alert["author"] = PFUser.current()!
+            alert["authorName"] = PFUser.current()!["name"]
             
             if self.photo != nil {
                 let imageData = UIImageJPEGRepresentation(self.photo!, 100)

@@ -37,9 +37,9 @@ class AlertTableViewCell: UITableViewCell {
     }
     
     func setUpCell(alert: PFObject) {
-        if let author = alert["user"] as? PFUser {
+        if let author = alert["author"] as? PFUser {
             self.profileImageView.user = author
-            if let _ = author.value(forKey: "photo"){
+            if let _ = author.value(forKey: "photo") {
                 let pfImageView = PFImageView()
                 pfImageView.file = author.value(forKey: "photo") as? PFFile
                 pfImageView.load { (image: UIImage?, error: Error?) -> Void in

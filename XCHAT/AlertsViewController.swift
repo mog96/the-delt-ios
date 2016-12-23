@@ -82,6 +82,7 @@ extension AlertsViewController {
     
     func getAlerts(completion: @escaping (([PFObject]) -> ())) {
         let query = PFQuery(className: "Alert")
+        query.includeKey("author")
         query.order(byDescending: "updatedAt")
         query.findObjectsInBackground { (objects: [PFObject]?, error: Error?) -> Void in
             if let objects = objects {
