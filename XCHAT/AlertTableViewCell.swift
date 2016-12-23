@@ -75,7 +75,7 @@ class AlertTableViewCell: UITableViewCell {
         }
         
         self.subjectLabel.text = alert["subject"] as? String
-        self.subjectLabel.text = alert["message"] as? String
+        self.messageLabel.text = alert["message"] as? String
         
         
         /*

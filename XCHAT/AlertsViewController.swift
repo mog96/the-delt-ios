@@ -138,7 +138,9 @@ extension AlertsViewController: NewAlertViewControllerDelegate {
 
 extension AlertsViewController {
     func onRefresh() {
-        self.refreshAlerts(completion: nil)
+        self.refreshAlerts { 
+            self.refreshControl.endRefreshing()
+        }
     }
 }
 
