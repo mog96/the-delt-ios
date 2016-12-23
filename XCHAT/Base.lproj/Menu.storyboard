@@ -338,6 +338,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="54.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GOLD FLECKS" translatesAutoresizingMaskIntoConstraints="NO" id="cP5-27-GP4">
+                                                    <rect key="frame" x="15" y="0.0" width="229" height="55"/>
+                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ADMIN" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hqp-Gb-dY4">
                                                     <rect key="frame" x="15" y="10" width="125" height="34"/>
                                                     <constraints>
@@ -345,15 +348,19 @@
                                                         <constraint firstAttribute="height" constant="34" id="j3G-GO-l6D"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="thin" pointSize="28"/>
-                                                    <color key="textColor" red="0.40709350649999998" green="0.54860040290000001" blue="0.81752539700000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                     <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                     <size key="shadowOffset" width="-1" height="-1"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="cP5-27-GP4" secondAttribute="bottom" id="0qb-Au-ZAJ"/>
+                                                <constraint firstAttribute="trailing" secondItem="cP5-27-GP4" secondAttribute="trailing" constant="131" id="QzC-bY-quZ"/>
                                                 <constraint firstItem="hqp-Gb-dY4" firstAttribute="centerY" secondItem="LS2-FO-V0E" secondAttribute="centerY" id="YpF-eB-e6V"/>
                                                 <constraint firstItem="hqp-Gb-dY4" firstAttribute="leading" secondItem="LS2-FO-V0E" secondAttribute="leading" constant="15" id="ZjK-jK-GUM"/>
+                                                <constraint firstItem="cP5-27-GP4" firstAttribute="top" secondItem="LS2-FO-V0E" secondAttribute="top" id="caX-0q-HVC"/>
+                                                <constraint firstItem="cP5-27-GP4" firstAttribute="leading" secondItem="LS2-FO-V0E" secondAttribute="leading" constant="15" id="xPm-x1-eCz"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -415,6 +422,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="GOLD FLECKS" width="1181" height="283"/>
         <image name="LOGIN BACKGROUND 1" width="673" height="992"/>
         <image name="MENU BACKGROUND 1" width="500" height="749"/>
     </resources>
