@@ -11,6 +11,8 @@
 		2520DCCE1E0D24F000FAB13B /* Alerts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2520DCCD1E0D24F000FAB13B /* Alerts.storyboard */; };
 		2520DCD41E0D2AC600FAB13B /* AlertsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2520DCD31E0D2AC600FAB13B /* AlertsViewController.swift */; };
 		2520DCD61E0D2B0B00FAB13B /* AlertTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2520DCD51E0D2B0B00FAB13B /* AlertTableViewCell.swift */; };
+		2520DCD81E0D3F6000FAB13B /* AlertTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2520DCD71E0D3F6000FAB13B /* AlertTableViewCell.xib */; };
+		2520DCDB1E0D41AE00FAB13B /* NewAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2520DCDA1E0D41AE00FAB13B /* NewAlertViewController.swift */; };
 		252237751C991AA20077AC77 /* PhotoVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252237741C991AA20077AC77 /* PhotoVideoCell.swift */; };
 		252A6B401C4C950500FA1F75 /* SettingsDescriptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252A6B3F1C4C950500FA1F75 /* SettingsDescriptionTableViewCell.swift */; };
 		252A6B431C4C9BAE00FA1F75 /* SettingsHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 252A6B421C4C9BAE00FA1F75 /* SettingsHeaderView.xib */; };
@@ -148,6 +150,8 @@
 		2520DCCD1E0D24F000FAB13B /* Alerts.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Alerts.storyboard; sourceTree = "<group>"; };
 		2520DCD31E0D2AC600FAB13B /* AlertsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertsViewController.swift; sourceTree = "<group>"; };
 		2520DCD51E0D2B0B00FAB13B /* AlertTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertTableViewCell.swift; sourceTree = "<group>"; };
+		2520DCD71E0D3F6000FAB13B /* AlertTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertTableViewCell.xib; sourceTree = "<group>"; };
+		2520DCDA1E0D41AE00FAB13B /* NewAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewAlertViewController.swift; sourceTree = "<group>"; };
 		252237741C991AA20077AC77 /* PhotoVideoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoVideoCell.swift; sourceTree = "<group>"; };
 		252A6B3F1C4C950500FA1F75 /* SettingsDescriptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsDescriptionTableViewCell.swift; sourceTree = "<group>"; };
 		252A6B421C4C9BAE00FA1F75 /* SettingsHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsHeaderView.xib; sourceTree = "<group>"; };
@@ -312,11 +316,21 @@
 		2520DCCC1E0D24D700FAB13B /* Alerts */ = {
 			isa = PBXGroup;
 			children = (
-				2520DCCD1E0D24F000FAB13B /* Alerts.storyboard */,
+				2520DCD91E0D409800FAB13B /* Layout */,
 				2520DCD31E0D2AC600FAB13B /* AlertsViewController.swift */,
 				2520DCD51E0D2B0B00FAB13B /* AlertTableViewCell.swift */,
+				2520DCDA1E0D41AE00FAB13B /* NewAlertViewController.swift */,
 			);
 			name = Alerts;
+			sourceTree = "<group>";
+		};
+		2520DCD91E0D409800FAB13B /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				2520DCCD1E0D24F000FAB13B /* Alerts.storyboard */,
+				2520DCD71E0D3F6000FAB13B /* AlertTableViewCell.xib */,
+			);
+			name = Layout;
 			sourceTree = "<group>";
 		};
 		252A6B411C4C9B7F00FA1F75 /* Layout */ = {
@@ -777,6 +791,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D55496051D8A5C0A00090E76 /* Calendar.storyboard in Resources */,
+				2520DCD81E0D3F6000FAB13B /* AlertTableViewCell.xib in Resources */,
 				D58252231D839354008313DF /* Admin.storyboard in Resources */,
 				D54E636D1D8E59F20091EBDE /* AuxPlayerView.xib in Resources */,
 				2520DCCE1E0D24F000FAB13B /* Alerts.storyboard in Resources */,
@@ -914,6 +929,7 @@
 				25C6CCDA1B1290C200EADB5B /* CaptionViewController.swift in Sources */,
 				3881235F1B13E864008AA524 /* ProfileTableViewCell.swift in Sources */,
 				385C74561B0ECD42009BAC7A /* EditableProfileViewController.swift in Sources */,
+				2520DCDB1E0D41AE00FAB13B /* NewAlertViewController.swift in Sources */,
 				38D9FB961B1558530030B6D9 /* SpaceCell.swift in Sources */,
 				D5D17CE81D9A610700C645FA /* ProfileImageView.swift in Sources */,
 				3890A1D11B0B17F600B4FF00 /* NewEventViewController.swift in Sources */,

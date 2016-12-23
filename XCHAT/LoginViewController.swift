@@ -56,11 +56,12 @@ class LoginViewController: UIViewController {
     var controlsHiddenOnLogin: [UIControl]!
     
     let loginBackgroundImageNames = ["LOGIN BACKGROUND 1",
-                                     "OUTER SPACE",
-                                     "LOGIN BACKGROUND 4",
-                                     "TORTOISE",
                                      "LOGIN BACKGROUND 2",
-                                     "LOGIN BACKGROUND 3"]
+                                     "LOGIN BACKGROUND 3",
+                                     "LOGIN BACKGROUND 4",
+                                     "LOGIN BACKGROUND 5",
+                                     // "TORTOISE",
+                                     "OUTER SPACE"]
     var loginBackgroundImageIndex = 0
     
     var lastFirstResponder: UITextField?

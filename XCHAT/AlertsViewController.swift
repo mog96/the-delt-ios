@@ -14,11 +14,15 @@ class AlertsViewController: ContentViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setMenuButton(withColor: "white")
+        UIApplication.shared.setStatusBarStyle(.lightContent, animated: true)
 
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.estimatedRowHeight = 16.0
         self.tableView.rowHeight = UITableViewAutomaticDimension
+        
+        self.tableView.register(UINib(nibName: "AlertTableViewCell", bundle: nil), forCellReuseIdentifier: "AlertCell")
     }
 
     override func didReceiveMemoryWarning() {

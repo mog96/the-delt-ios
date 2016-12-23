@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="AlertCell" rowHeight="222" id="IJa-64-sxw" customClass="AlertTableViewCell" customModule="XCHAT" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="208"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IJa-64-sxw" id="Ozf-mU-MRM">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="207"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="adP-La-KuT">
+                        <rect key="frame" x="8" y="4" width="359" height="199.5"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ROONEY" translatesAutoresizingMaskIntoConstraints="NO" id="iWt-b1-dMq">
+                                <rect key="frame" x="10" y="10" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="iWt-b1-dMq" secondAttribute="height" multiplier="1:1" id="pkV-C2-sem"/>
+                                    <constraint firstAttribute="height" constant="50" id="r1j-hW-ZfY"/>
+                                    <constraint firstAttribute="width" constant="50" id="vLx-Sq-31G"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Btw I know that's you Scott. You said that shit was borrowed but I always knew you were lying. Show off." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bwi-5t-7xb">
+                                <rect key="frame" x="10" y="155" width="339" height="34"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="749" text="Rooney Pitchford" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VEs-8j-0zd">
+                                <rect key="frame" x="68" y="10" width="116" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="18" id="zqn-5K-XA2"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="12/23 3:08a" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4MO-RP-64b">
+                                <rect key="frame" x="282" y="13" width="67" height="15"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jhr-Bh-23I">
+                                <rect key="frame" x="68" y="32" width="280.5" height="115"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="280" id="FYT-FO-psT"/>
+                                </constraints>
+                                <string key="text">This is a Public Service Announcment: The owner of the black Ferrari, your car is about to be towed because you are parked in front of a fire hydrant. Please move your car ASAP.</string>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Jhr-Bh-23I" firstAttribute="leading" secondItem="iWt-b1-dMq" secondAttribute="trailing" constant="8" id="E8Y-vr-xwQ"/>
+                            <constraint firstAttribute="bottom" secondItem="bwi-5t-7xb" secondAttribute="bottom" constant="10" id="GEx-Ih-HZp"/>
+                            <constraint firstAttribute="trailing" secondItem="Jhr-Bh-23I" secondAttribute="trailing" constant="10" id="HPJ-3H-LO3"/>
+                            <constraint firstItem="bwi-5t-7xb" firstAttribute="leading" secondItem="adP-La-KuT" secondAttribute="leading" constant="10" id="Jot-lz-qgh"/>
+                            <constraint firstItem="bwi-5t-7xb" firstAttribute="top" secondItem="Jhr-Bh-23I" secondAttribute="bottom" constant="8" id="OMv-xx-Tbr"/>
+                            <constraint firstAttribute="trailing" secondItem="bwi-5t-7xb" secondAttribute="trailing" constant="10" id="QMK-iw-JAb"/>
+                            <constraint firstItem="iWt-b1-dMq" firstAttribute="leading" secondItem="adP-La-KuT" secondAttribute="leading" constant="10" id="TJZ-eE-UTZ"/>
+                            <constraint firstItem="Jhr-Bh-23I" firstAttribute="top" secondItem="VEs-8j-0zd" secondAttribute="bottom" constant="4" id="VYv-vQ-Rn3"/>
+                            <constraint firstItem="iWt-b1-dMq" firstAttribute="top" secondItem="adP-La-KuT" secondAttribute="top" constant="10" id="Yrz-K3-Wtx"/>
+                            <constraint firstItem="VEs-8j-0zd" firstAttribute="top" secondItem="adP-La-KuT" secondAttribute="top" constant="10" id="aEi-d9-Uoo"/>
+                            <constraint firstItem="VEs-8j-0zd" firstAttribute="leading" secondItem="iWt-b1-dMq" secondAttribute="trailing" constant="8" id="rGg-9O-lds"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="adP-La-KuT" secondAttribute="bottom" constant="4" id="299-9H-vcI"/>
+                    <constraint firstAttribute="trailing" secondItem="adP-La-KuT" secondAttribute="trailing" constant="8" id="PYI-NS-fdC"/>
+                    <constraint firstItem="adP-La-KuT" firstAttribute="leading" secondItem="Ozf-mU-MRM" secondAttribute="leading" constant="8" id="Zbd-Rw-pNP"/>
+                    <constraint firstItem="adP-La-KuT" firstAttribute="top" secondItem="Ozf-mU-MRM" secondAttribute="top" constant="4" id="nS0-xs-zkb"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="containerView" destination="adP-La-KuT" id="gxt-Vf-R8C"/>
+                <outlet property="messageLabel" destination="bwi-5t-7xb" id="bW2-UK-8tv"/>
+                <outlet property="profileImageView" destination="iWt-b1-dMq" id="eAI-Wn-qmB"/>
+                <outlet property="subjectLabel" destination="Jhr-Bh-23I" id="SgH-Vb-OFc"/>
+            </connections>
+            <point key="canvasLocation" x="25.5" y="60"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="ROONEY" width="160" height="160"/>
+    </resources>
+</document>

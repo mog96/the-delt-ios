@@ -22,6 +22,8 @@ class AlertTableViewCell: UITableViewCell {
         
         self.containerView.layer.cornerRadius = 4
         self.containerView.clipsToBounds = true
+        self.profileImageView.layer.cornerRadius = 3
+        self.profileImageView.clipsToBounds = true
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
