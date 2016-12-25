@@ -79,9 +79,12 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R9F-fw-NgG">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                         <subviews>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="@momota Damn right, way to call him on some really sucka shit." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vzR-yb-S6o" customClass="CustomTextView" customModule="XCHAT" customModuleProvider="target">
-                                                <rect key="frame" x="13" y="49" width="349" height="356"/>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vzR-yb-S6o" customClass="CustomTextView" customModule="XCHAT" customModuleProvider="target">
+                                                <rect key="frame" x="13" y="44" width="349" height="40"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="80h-Gz-VTm"/>
+                                                </constraints>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -99,20 +102,20 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In reply to Momota Imai" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pww-95-pX4">
                                                 <rect key="frame" x="18" y="18" width="161" height="18"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                         <gestureRecognizers/>
                                         <constraints>
-                                            <constraint firstItem="5d2-w3-qMh" firstAttribute="top" secondItem="vzR-yb-S6o" secondAttribute="bottom" constant="15" id="Bf8-Fw-EDx"/>
+                                            <constraint firstItem="5d2-w3-qMh" firstAttribute="top" relation="greaterThanOrEqual" secondItem="vzR-yb-S6o" secondAttribute="bottom" constant="15" id="Bf8-Fw-EDx"/>
                                             <constraint firstItem="pww-95-pX4" firstAttribute="top" secondItem="R9F-fw-NgG" secondAttribute="top" constant="18" id="KYB-uj-BPI"/>
                                             <constraint firstItem="5d2-w3-qMh" firstAttribute="leading" secondItem="R9F-fw-NgG" secondAttribute="leading" constant="18" id="WO5-C9-mZ8"/>
                                             <constraint firstAttribute="trailing" secondItem="5d2-w3-qMh" secondAttribute="trailing" constant="18" id="ems-iF-PMb"/>
                                             <constraint firstItem="vzR-yb-S6o" firstAttribute="leading" secondItem="R9F-fw-NgG" secondAttribute="leading" constant="13" id="ge3-gI-ryL"/>
                                             <constraint firstItem="pww-95-pX4" firstAttribute="leading" secondItem="R9F-fw-NgG" secondAttribute="leading" constant="18" id="mq9-GS-FzU"/>
-                                            <constraint firstAttribute="height" constant="603" id="p2s-1c-Deg"/>
-                                            <constraint firstItem="vzR-yb-S6o" firstAttribute="top" secondItem="pww-95-pX4" secondAttribute="bottom" constant="13" id="qIO-Zs-UOK"/>
+                                            <constraint firstAttribute="height" constant="603" placeholder="YES" id="p2s-1c-Deg"/>
+                                            <constraint firstItem="vzR-yb-S6o" firstAttribute="top" secondItem="pww-95-pX4" secondAttribute="bottom" constant="8" id="qIO-Zs-UOK"/>
                                             <constraint firstAttribute="bottom" secondItem="5d2-w3-qMh" secondAttribute="bottom" constant="20" id="qSC-Oa-d52"/>
                                             <constraint firstAttribute="trailing" secondItem="vzR-yb-S6o" secondAttribute="trailing" constant="13" id="vpE-HQ-1EI"/>
                                         </constraints>
@@ -218,17 +221,22 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="251" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rQl-Ts-Aq3" customClass="CustomTextView" customModule="XCHAT" customModuleProvider="target">
-                                                <rect key="frame" x="13" y="15" width="349" height="159.5"/>
+                                                <rect key="frame" x="13" y="13" width="349" height="40"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                <string key="text">This is a Public Service Announcment: The owner of the black Ferrari, your car is about to be towed because you are parked in front of a fire hydrant. Please move your car ASAP.</string>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="n2C-Te-09Z"/>
+                                                </constraints>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                             </textView>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Btw I know that's you Scott. You said that shit was borrowed but I always knew you were lying. Show off." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="lji-HC-qrg" customClass="CustomTextView" customModule="XCHAT" customModuleProvider="target">
-                                                <rect key="frame" x="13" y="187.5" width="349" height="217.5"/>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="lji-HC-qrg" customClass="CustomTextView" customModule="XCHAT" customModuleProvider="target">
+                                                <rect key="frame" x="13" y="66" width="349" height="40"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="kBP-Nw-mrD"/>
+                                                </constraints>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -248,12 +256,12 @@
                                         <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="fEd-JM-CDY" secondAttribute="trailing" constant="18" id="3Bn-RH-qYR"/>
-                                            <constraint firstAttribute="height" constant="603" id="66O-bW-0KO"/>
+                                            <constraint firstAttribute="height" constant="603" placeholder="YES" id="66O-bW-0KO"/>
                                             <constraint firstAttribute="trailing" secondItem="rQl-Ts-Aq3" secondAttribute="trailing" constant="13" id="Mkw-I6-qoZ"/>
                                             <constraint firstItem="lji-HC-qrg" firstAttribute="leading" secondItem="S0G-Qy-b0g" secondAttribute="leading" constant="13" id="Q6G-1W-Pct"/>
                                             <constraint firstItem="fEd-JM-CDY" firstAttribute="leading" secondItem="S0G-Qy-b0g" secondAttribute="leading" constant="18" id="b7P-m6-uOX"/>
-                                            <constraint firstItem="fEd-JM-CDY" firstAttribute="top" secondItem="lji-HC-qrg" secondAttribute="bottom" constant="15" id="cHd-yx-T8L"/>
-                                            <constraint firstItem="rQl-Ts-Aq3" firstAttribute="top" secondItem="S0G-Qy-b0g" secondAttribute="top" constant="15" id="fwF-W3-J3n"/>
+                                            <constraint firstItem="fEd-JM-CDY" firstAttribute="top" relation="greaterThanOrEqual" secondItem="lji-HC-qrg" secondAttribute="bottom" constant="15" id="cHd-yx-T8L"/>
+                                            <constraint firstItem="rQl-Ts-Aq3" firstAttribute="top" secondItem="S0G-Qy-b0g" secondAttribute="top" constant="13" id="fwF-W3-J3n"/>
                                             <constraint firstAttribute="trailing" secondItem="lji-HC-qrg" secondAttribute="trailing" constant="13" id="llq-1t-v4f"/>
                                             <constraint firstItem="rQl-Ts-Aq3" firstAttribute="leading" secondItem="S0G-Qy-b0g" secondAttribute="leading" constant="13" id="oic-2A-ZTP"/>
                                             <constraint firstAttribute="bottom" secondItem="fEd-JM-CDY" secondAttribute="bottom" constant="20" id="pRy-rR-sww"/>
@@ -301,8 +309,10 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="containerView" destination="S0G-Qy-b0g" id="JCI-zh-nDT"/>
                         <outlet property="messageTextView" destination="lji-HC-qrg" id="AOA-sc-RFK"/>
                         <outlet property="photoImageView" destination="fEd-JM-CDY" id="z82-ZU-VOP"/>
+                        <outlet property="scrollView" destination="D6m-fp-bVh" id="1Vz-5W-ZxC"/>
                         <outlet property="subjectTextView" destination="rQl-Ts-Aq3" id="xuo-iF-R91"/>
                     </connections>
                 </viewController>

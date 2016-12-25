@@ -195,7 +195,7 @@
                                                         <constraint firstAttribute="height" constant="34" id="Gzb-uP-5fa"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="thin" pointSize="28"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -204,7 +204,7 @@
                                                 <constraint firstItem="mel-qe-dTF" firstAttribute="leading" secondItem="mVt-Dr-iDi" secondAttribute="leading" constant="15" id="kjH-GS-jfZ"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChatCell" rowHeight="55" id="NIj-Wc-AHV">
                                         <rect key="frame" x="0.0" y="304" width="375" height="55"/>

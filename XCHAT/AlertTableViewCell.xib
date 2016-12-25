@@ -78,6 +78,9 @@
                                 </state>
                                 <state key="selected" backgroundImage="FAVE_ON"/>
                                 <state key="highlighted" backgroundImage="FAVE_ON"/>
+                                <connections>
+                                    <action selector="onLikeButtonTapped:" destination="IJa-64-sxw" eventType="touchUpInside" id="RZW-yh-3fi"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D97-RT-gG4">
                                 <rect key="frame" x="328" y="202.5" width="21" height="24"/>
@@ -88,6 +91,9 @@
                                 <state key="normal" image="flag_icon_black"/>
                                 <state key="selected" image="flag_icon_red"/>
                                 <state key="highlighted" image="flag_icon_red"/>
+                                <connections>
+                                    <action selector="onFlagButtonTapped:" destination="IJa-64-sxw" eventType="touchUpInside" id="f58-hF-hP6"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gYo-m3-K2Y">
                                 <rect key="frame" x="164" y="200.5" width="30" height="30"/>
@@ -98,6 +104,9 @@
                                 <state key="normal" backgroundImage="COMMENT">
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="onReplyButtonTapped:" destination="IJa-64-sxw" eventType="touchUpInside" id="lwk-Lc-sIh"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -136,10 +145,13 @@
             <connections>
                 <outlet property="containerView" destination="adP-La-KuT" id="gxt-Vf-R8C"/>
                 <outlet property="dateLabel" destination="4MO-RP-64b" id="iyB-n4-YOq"/>
+                <outlet property="flagButton" destination="D97-RT-gG4" id="e8R-rA-Jwx"/>
+                <outlet property="likeButton" destination="2p4-70-SMz" id="Qb4-sD-acI"/>
                 <outlet property="messageLabel" destination="bwi-5t-7xb" id="bW2-UK-8tv"/>
                 <outlet property="messageLabelHeightConstraint" destination="b9s-De-YLn" id="eR9-aC-Op5"/>
                 <outlet property="nameLabel" destination="VEs-8j-0zd" id="an4-fm-b7J"/>
                 <outlet property="profileImageView" destination="iWt-b1-dMq" id="eAI-Wn-qmB"/>
+                <outlet property="replyButton" destination="gYo-m3-K2Y" id="fYp-mt-osc"/>
                 <outlet property="subjectLabel" destination="Jhr-Bh-23I" id="SgH-Vb-OFc"/>
                 <outlet property="subjectLabelHeightConstraint" destination="u4h-WK-MNL" id="8Pb-po-hE9"/>
             </connections>

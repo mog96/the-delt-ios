@@ -10,6 +10,10 @@ import UIKit
 import Parse
 import ParseUI
 
+@objc protocol AlertTableViewCellDelegate {
+    @objc optional func alertTableViewCell(didTapReplyToAlert alert: PFObject?)
+}
+
 class AlertTableViewCell: UITableViewCell {
 
     @IBOutlet weak var containerView: UIView!
@@ -20,6 +24,14 @@ class AlertTableViewCell: UITableViewCell {
     @IBOutlet weak var subjectLabelHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var messageLabelHeightConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var replyButton: UIButton!
+    @IBOutlet weak var flagButton: UIButton!
+    
+    weak var delegate: AlertTableViewCellDelegate?
+    
+    var alert: PFObject?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -37,6 +49,7 @@ class AlertTableViewCell: UITableViewCell {
     }
     
     func setUpCell(alert: PFObject) {
+        self.alert = alert
         if let author = alert["author"] as? PFUser {
             self.profileImageView.user = author
             if let _ = author.value(forKey: "photo") {
@@ -70,38 +83,25 @@ class AlertTableViewCell: UITableViewCell {
             if comp.minute == 0 {
                 dateFormatter.dateFormat = "ha"
             }
-            var date = dateFormatter.string(from: postedAt)
             self.dateLabel.text = dateFormatter.string(from: postedAt)
         }
         
         self.subjectLabel.text = alert["subject"] as? String
         self.messageLabel.text = alert["message"] as? String
-        
-        
-        /*
-        let query = PFUser.query()
-        query?.whereKey("username", equalTo: alert.value(forKey: "createdBy") as! String)
-        query?.findObjectsInBackground(block: { (users: [PFObject]?, error: Error?) -> Void in
-            if let users = users {
-                let pfImageView = PFImageView()
-                if users.count > 0 {
-                    let user = users[0]
-                    self.profileImageView.user = user as? PFUser
-                    if let _ = user.value(forKey: "photo"){
-                        pfImageView.file = users[0].value(forKey: "photo") as? PFFile
-                        pfImageView.load { (image: UIImage?, error: Error?) -> Void in
-                            if let error = error {
-                                // Log details of the failure
-                                print("Error: \(error) \(error.localizedDescription)")
-                                
-                            } else {
-                                self.profileImageView.image = image
-                            }
-                        }
-                    }
-                }
-            }
-        })
-        */
+    }
+}
+
+
+// MARK: - Actions
+
+extension AlertTableViewCell {
+    @IBAction func onLikeButtonTapped(_ sender: Any) {
+    }
+    
+    @IBAction func onReplyButtonTapped(_ sender: Any) {
+        self.delegate?.alertTableViewCell?(didTapReplyToAlert: self.alert)
+    }
+    
+    @IBAction func onFlagButtonTapped(_ sender: Any) {
     }
 }

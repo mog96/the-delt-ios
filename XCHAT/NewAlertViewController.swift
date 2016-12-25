@@ -18,16 +18,34 @@ import Parse
 
 class NewAlertViewController: AlertComposeViewController {
     
-    @IBOutlet weak var subjectTextView: UITextView!
-    @IBOutlet weak var messageTextView: UITextView!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var subjectTextView: CustomTextView!
+    @IBOutlet weak var messageTextView: CustomTextView!
+    
+    var delegate: NewAlertViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.subjectTextView.placeholder = "Subject"
+        self.subjectTextView.placeholderLabel.textColor = UIColor.lightText
+        self.subjectTextView.nextTextView = self.messageTextView
+        
+        self.messageTextView.placeholder = "Message"
+        self.messageTextView.placeholderLabel.textColor = UIColor.lightText
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.subjectTextView.becomeFirstResponder()
+        
+        let containerViewHeight = UIScreen.main.bounds.height - self.navigationController!.navigationBar.frame.height
+        self.containerView.frame.size = CGSize(width: self.containerView.frame.width, height: containerViewHeight)
     }
 }
 
@@ -90,6 +108,7 @@ extension NewAlertViewController {
 
 extension NewAlertViewController {
     @IBAction func onPostButtonTapped(_ sender: Any) {
+        self.view.endEditing(true)
         self.postAlert()
     }
 }

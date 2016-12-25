@@ -18,12 +18,14 @@ class AlertComposeViewController: ContentViewController, UINavigationControllerD
     
     var chooseMediaAC: UIAlertController!
     
-    var delegate: NewAlertViewControllerDelegate?
     var photo: UIImage?
     var video: PFFile?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.photoImageView.layer.cornerRadius = 3
+        self.photoImageView.clipsToBounds = true
         
         self.chooseMediaAC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         self.chooseMediaAC.addAction(UIAlertAction(title: "CLICK", style: .destructive, handler: { _ in      // FIXME: Using .Destructive to get red text color is a little hacky...
@@ -104,6 +106,7 @@ extension AlertComposeViewController: UIImagePickerControllerDelegate {
 
 extension AlertComposeViewController {
     @IBAction func onCancelButtonTapped(_ sender: Any) {
+        self.view.endEditing(true)
         self.dismiss(animated: true, completion: nil)
     }
     

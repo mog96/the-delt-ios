@@ -8,16 +8,12 @@
 
 import UIKit
 
-// Imitates behavior of UITextField, with same placeholder color and placeholder behavior.
+/**
+ Imitates behavior of UITextField, with same placeholder color and placeholder behavior.
+ NOTE: If text is set programatically, placeholder WILL NOT disappear. (This would require
+       overriding a didSet...)
+ */
 class CustomTextView: UITextView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
     
     var placeholderLabel: UILabel!
     var placeholder = "" {
@@ -46,6 +42,9 @@ class CustomTextView: UITextView {
         self.placeholderLabel.textColor = self.placeholderTextColor
         self.addSubview(self.placeholderLabel)
         self.placeholderLabel.frame.origin = CGPoint(x: 5, y: self.font!.pointSize / 2 + 1)
+        if self.font!.pointSize >= 20 {
+            self.placeholderLabel.frame.origin = CGPoint(x: 5, y: self.font!.pointSize / 2 - 1.5)
+        }
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.textDidChange), name: NSNotification.Name.UITextViewTextDidChange, object: self)
         NotificationCenter.default.addObserver(self, selector: #selector(self.didBeginEditing), name: NSNotification.Name.UITextViewTextDidBeginEditing, object: self)

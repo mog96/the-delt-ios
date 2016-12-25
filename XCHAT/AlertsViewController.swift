@@ -113,13 +113,15 @@ extension AlertsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.nameLabel.profilePresenterDelegate = self
         cell.profileImageView.profilePresenterDelegate = self
         cell.setUpCell(alert: self.alerts[indexPath.row])
-        // cell.delegate = self
+        cell.delegate = self
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
+        /*
+         USE FOR CONVERSATION VC
         if let replyToUser = self.alerts[indexPath.row]["author"] as? PFUser {
             let storyboard = UIStoryboard(name: "Alerts", bundle: nil)
             let alertReplyNC = storyboard.instantiateViewController(withIdentifier: "AlertReplyNC") as! UINavigationController
@@ -127,6 +129,7 @@ extension AlertsViewController: UITableViewDelegate, UITableViewDataSource {
             alertReplyVC.replyToUser = replyToUser
             self.navigationController?.pushViewController(alertReplyVC, animated: true)
         }
+        */
     }
 }
 
@@ -138,6 +141,24 @@ extension AlertsViewController: NewAlertViewControllerDelegate {
         self.refreshAlerts {
             completion()
             self.refreshControl.endRefreshing()
+        }
+    }
+}
+
+
+// MARK: - Alert Table View Cell Delegate
+
+extension AlertsViewController: AlertTableViewCellDelegate {
+    func alertTableViewCell(didTapReplyToAlert alert: PFObject?) {
+        if let alert = alert {
+            if let replyToUser = alert["author"] as? PFUser {
+                let storyboard = UIStoryboard(name: "Alerts", bundle: nil)
+                let alertReplyNC = storyboard.instantiateViewController(withIdentifier: "AlertReplyNC") as! UINavigationController
+                let alertReplyVC = alertReplyNC.viewControllers[0] as! AlertReplyViewController
+                alertReplyVC.alert = alert
+                alertReplyVC.replyToUser = replyToUser
+                self.present(alertReplyNC, animated: true, completion: nil)
+            }
         }
     }
 }

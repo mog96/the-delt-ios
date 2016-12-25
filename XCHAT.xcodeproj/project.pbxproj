@@ -40,6 +40,8 @@
 		2568C8891DEFD47B00C55859 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2568C8881DEFD47B00C55859 /* Keys.plist */; };
 		257293081E0F73DF0044FCED /* AlertReplyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257293071E0F73DF0044FCED /* AlertReplyViewController.swift */; };
 		2572930A1E0FBD080044FCED /* AlertComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257293091E0FBD070044FCED /* AlertComposeViewController.swift */; };
+		2572930C1E0FC59C0044FCED /* AlertConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2572930B1E0FC59C0044FCED /* AlertConversationViewController.swift */; };
+		2572930E1E0FD72E0044FCED /* UITextView+NextTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2572930D1E0FD72E0044FCED /* UITextView+NextTextView.swift */; };
 		257A6B721B056D5B00996A56 /* HamburgerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257A6B711B056D5B00996A56 /* HamburgerViewController.swift */; };
 		258040B21C54DF00002D1F08 /* FeedbackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258040B11C54DF00002D1F08 /* FeedbackTableViewCell.swift */; };
 		258D498A1B15AEB900A632D3 /* MemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258D49891B15AEB900A632D3 /* MemberCell.swift */; };
@@ -186,6 +188,8 @@
 		2568C8881DEFD47B00C55859 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		257293071E0F73DF0044FCED /* AlertReplyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertReplyViewController.swift; sourceTree = "<group>"; };
 		257293091E0FBD070044FCED /* AlertComposeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertComposeViewController.swift; sourceTree = "<group>"; };
+		2572930B1E0FC59C0044FCED /* AlertConversationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertConversationViewController.swift; sourceTree = "<group>"; };
+		2572930D1E0FD72E0044FCED /* UITextView+NextTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+NextTextView.swift"; sourceTree = "<group>"; };
 		257A6B711B056D5B00996A56 /* HamburgerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HamburgerViewController.swift; sourceTree = "<group>"; };
 		258040B11C54DF00002D1F08 /* FeedbackTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackTableViewCell.swift; sourceTree = "<group>"; };
 		258D49891B15AEB900A632D3 /* MemberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberCell.swift; sourceTree = "<group>"; };
@@ -326,6 +330,7 @@
 				257293091E0FBD070044FCED /* AlertComposeViewController.swift */,
 				2520DCDA1E0D41AE00FAB13B /* NewAlertViewController.swift */,
 				257293071E0F73DF0044FCED /* AlertReplyViewController.swift */,
+				2572930B1E0FC59C0044FCED /* AlertConversationViewController.swift */,
 			);
 			name = Alerts;
 			sourceTree = "<group>";
@@ -484,6 +489,7 @@
 				D55496061D8A862600090E76 /* ActionButtonTableViewCell.xib */,
 				38F655E41B0D521200C5586A /* ActionButtonTableViewCell.swift */,
 				259A16B71DDFB4C500C23DD0 /* CustomTextView.swift */,
+				2572930D1E0FD72E0044FCED /* UITextView+NextTextView.swift */,
 				D5E001121D959FE900ABEFBE /* DeltLoadingView.swift */,
 			);
 			name = Utilities;
@@ -966,6 +972,7 @@
 				387866141B047A2100623BC1 /* NotificationTableViewCell.swift in Sources */,
 				D54E636A1D8E4B940091EBDE /* AuxViewController.swift in Sources */,
 				D5AB749C1D8EF06C00E321B4 /* AuxNavigationController.swift in Sources */,
+				2572930C1E0FC59C0044FCED /* AlertConversationViewController.swift in Sources */,
 				2572930A1E0FBD080044FCED /* AlertComposeViewController.swift in Sources */,
 				38F655DF1B0D233400C5586A /* PhotoDetailsViewController.swift in Sources */,
 				2520DCD61E0D2B0B00FAB13B /* AlertTableViewCell.swift in Sources */,
@@ -987,6 +994,7 @@
 				252A6B401C4C950500FA1F75 /* SettingsDescriptionTableViewCell.swift in Sources */,
 				257293081E0F73DF0044FCED /* AlertReplyViewController.swift in Sources */,
 				D525F1B51D86960E0002D8B6 /* EditUserTableViewCell.swift in Sources */,
+				2572930E1E0FD72E0044FCED /* UITextView+NextTextView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
