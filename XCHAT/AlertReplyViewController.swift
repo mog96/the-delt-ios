@@ -1,28 +1,38 @@
 //
-//  NewAlertViewController.swift
+//  AlertReplyViewController.swift
 //  XCHAT
 //
-//  Created by Mateo Garcia on 12/23/16.
+//  Created by Mateo Garcia on 12/24/16.
 //  Copyright © 2016 Mateo Garcia. All rights reserved.
 //
 
 import UIKit
 import MBProgressHUD
-import MediaPlayer
-import MobileCoreServices
 import Parse
 
-@objc protocol NewAlertViewControllerDelegate {
-    func refreshData(completion: @escaping (() -> ()))
-}
-
-class NewAlertViewController: AlertComposeViewController {
+class AlertReplyViewController: AlertComposeViewController {
     
-    @IBOutlet weak var subjectTextView: UITextView!
-    @IBOutlet weak var messageTextView: UITextView!
+    @IBOutlet weak var inReplyToLabel: UILabel!
+    @IBOutlet weak var replyTextView: CustomTextView!
+    
+    let inReplyToPrefix = "In reply to "
+    var replyToUser: PFUser!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let name = self.replyToUser["name"] as? String {
+            self.inReplyToLabel.text = self.inReplyToPrefix + name
+        } else if let username = self.replyToUser.username {
+            self.inReplyToLabel.text = self.inReplyToPrefix +  username
+        } else {
+            self.inReplyToLabel.isHidden = true
+        }
+        
+        self.replyTextView.placeholder = "What do you have to say?"
+        if let username = self.replyToUser.username {
+            self.replyTextView.text = username
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,8 +44,9 @@ class NewAlertViewController: AlertComposeViewController {
 
 // MARK: - Helpers
 
-extension NewAlertViewController {
+extension AlertReplyViewController {
     func postAlert() {
+        /*
         print("POSTING")
         
         // User forgets to enter alert subject.
@@ -82,14 +93,15 @@ extension NewAlertViewController {
                 }
             }
         }
+        */
     }
 }
 
 
 // MARK: - Actions
 
-extension NewAlertViewController {
+extension AlertReplyViewController {
     @IBAction func onPostButtonTapped(_ sender: Any) {
-        self.postAlert()
+        // handle tap
     }
 }

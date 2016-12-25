@@ -63,7 +63,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 $0.applicationId = keys["ParseApplicationID"] as? String
                 $0.clientKey = keys["ParseClientKey"] as? String
                 
-                // /***/
                 /* DEVELOPMENT ONLY */
                 #if TARGET_IPHONE_SIMULATOR
                     $0.server = "http://localhost:1337/parse"
@@ -72,7 +71,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     // $0.server = "http://192.168.1.243:1337/parse"
                 #endif
                 /* END DEVELOPMENT ONLY */
-                // */
                 
                 // $0.server = "https://thedelt.herokuapp.com/parse"
             }

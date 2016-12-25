@@ -61,12 +61,128 @@
             </objects>
             <point key="canvasLocation" x="831.20000000000005" y="10.344827586206897"/>
         </scene>
+        <!--REPLY-->
+        <scene sceneID="BDO-02-KVO">
+            <objects>
+                <viewController storyboardIdentifier="AlertReplyVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5BE-jm-NBi" customClass="AlertReplyViewController" customModule="XCHAT" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Gug-78-D6g"/>
+                        <viewControllerLayoutGuide type="bottom" id="DRB-Xq-y3R"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="p56-MR-iGY">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7cV-Hc-i1Z">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R9F-fw-NgG">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                                        <subviews>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="@momota Damn right, way to call him on some really sucka shit." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vzR-yb-S6o" customClass="CustomTextView" customModule="XCHAT" customModuleProvider="target">
+                                                <rect key="frame" x="13" y="49" width="349" height="356"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LOGIN BACKGROUND 3" translatesAutoresizingMaskIntoConstraints="NO" id="5d2-w3-qMh">
+                                                <rect key="frame" x="18" y="420" width="339" height="163"/>
+                                                <gestureRecognizers/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="163" id="aCc-JH-MCd"/>
+                                                </constraints>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="ISW-nG-gWq" appends="YES" id="M4X-ZN-d79"/>
+                                                </connections>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In reply to Momota Imai" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pww-95-pX4">
+                                                <rect key="frame" x="18" y="18" width="161" height="18"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstItem="5d2-w3-qMh" firstAttribute="top" secondItem="vzR-yb-S6o" secondAttribute="bottom" constant="15" id="Bf8-Fw-EDx"/>
+                                            <constraint firstItem="pww-95-pX4" firstAttribute="top" secondItem="R9F-fw-NgG" secondAttribute="top" constant="18" id="KYB-uj-BPI"/>
+                                            <constraint firstItem="5d2-w3-qMh" firstAttribute="leading" secondItem="R9F-fw-NgG" secondAttribute="leading" constant="18" id="WO5-C9-mZ8"/>
+                                            <constraint firstAttribute="trailing" secondItem="5d2-w3-qMh" secondAttribute="trailing" constant="18" id="ems-iF-PMb"/>
+                                            <constraint firstItem="vzR-yb-S6o" firstAttribute="leading" secondItem="R9F-fw-NgG" secondAttribute="leading" constant="13" id="ge3-gI-ryL"/>
+                                            <constraint firstItem="pww-95-pX4" firstAttribute="leading" secondItem="R9F-fw-NgG" secondAttribute="leading" constant="18" id="mq9-GS-FzU"/>
+                                            <constraint firstAttribute="height" constant="603" id="p2s-1c-Deg"/>
+                                            <constraint firstItem="vzR-yb-S6o" firstAttribute="top" secondItem="pww-95-pX4" secondAttribute="bottom" constant="13" id="qIO-Zs-UOK"/>
+                                            <constraint firstAttribute="bottom" secondItem="5d2-w3-qMh" secondAttribute="bottom" constant="20" id="qSC-Oa-d52"/>
+                                            <constraint firstAttribute="trailing" secondItem="vzR-yb-S6o" secondAttribute="trailing" constant="13" id="vpE-HQ-1EI"/>
+                                        </constraints>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="UK3-J3-4mX" appends="YES" id="xPW-ro-OhK"/>
+                                        </connections>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="R9F-fw-NgG" firstAttribute="leading" secondItem="7cV-Hc-i1Z" secondAttribute="leading" id="Rae-sg-Drz"/>
+                                    <constraint firstItem="R9F-fw-NgG" firstAttribute="top" secondItem="7cV-Hc-i1Z" secondAttribute="top" id="aJZ-6n-IBP"/>
+                                    <constraint firstAttribute="trailing" secondItem="R9F-fw-NgG" secondAttribute="trailing" id="b0c-kk-0Tu"/>
+                                    <constraint firstItem="R9F-fw-NgG" firstAttribute="width" secondItem="7cV-Hc-i1Z" secondAttribute="width" id="nxO-OD-Osp"/>
+                                    <constraint firstAttribute="bottom" secondItem="R9F-fw-NgG" secondAttribute="bottom" id="oV3-px-GQ7"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="7cV-Hc-i1Z" firstAttribute="top" secondItem="p56-MR-iGY" secondAttribute="top" id="PmS-gf-oYw"/>
+                            <constraint firstItem="DRB-Xq-y3R" firstAttribute="top" secondItem="7cV-Hc-i1Z" secondAttribute="bottom" id="REo-fn-u6P"/>
+                            <constraint firstAttribute="trailing" secondItem="7cV-Hc-i1Z" secondAttribute="trailing" id="eEn-zN-LCV"/>
+                            <constraint firstItem="7cV-Hc-i1Z" firstAttribute="leading" secondItem="p56-MR-iGY" secondAttribute="leading" id="hlZ-Ke-5e9"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="REPLY" id="Txk-4h-Mvg">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="dcW-Bv-Gdb">
+                            <connections>
+                                <action selector="onCancelButtonTapped:" destination="5BE-jm-NBi" id="omm-oj-o1G"/>
+                            </connections>
+                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="POST" id="16N-0L-5vT">
+                                <connections>
+                                    <action selector="onPostButtonTapped:" destination="5BE-jm-NBi" id="Dt5-JL-xlk"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="camera" id="pfP-vv-Iuo">
+                                <connections>
+                                    <action selector="onCameraButtonTapped:" destination="5BE-jm-NBi" id="Ynk-8U-Agr"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="inReplyToLabel" destination="pww-95-pX4" id="bvG-xx-c7r"/>
+                        <outlet property="photoImageView" destination="5d2-w3-qMh" id="fLy-XU-ESz"/>
+                        <outlet property="replyTextView" destination="vzR-yb-S6o" id="I8w-Dl-sEa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WSA-dc-dqL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="UK3-J3-4mX" userLabel="Screen Tap Gesture Recognizer">
+                    <connections>
+                        <action selector="onScreenTapped:" destination="5BE-jm-NBi" id="ubR-yZ-TBg"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="ISW-nG-gWq" userLabel="Photo Gesture Recognizer">
+                    <connections>
+                        <action selector="onPhotoTapped:" destination="5BE-jm-NBi" id="eoq-ex-wjy"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="2852" y="794.75262368815595"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="IH9-YD-xy1">
             <objects>
                 <navigationController storyboardIdentifier="AlertsNC" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="enB-qf-uB4" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="blackTranslucent" id="Hsy-FE-xUh">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="blackTranslucent" id="Hsy-FE-xUh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -101,8 +217,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S0G-Qy-b0g">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                         <subviews>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="251" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rQl-Ts-Aq3">
-                                                <rect key="frame" x="18" y="20" width="339" height="159.5"/>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="251" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rQl-Ts-Aq3" customClass="CustomTextView" customModule="XCHAT" customModuleProvider="target">
+                                                <rect key="frame" x="13" y="15" width="349" height="159.5"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <string key="text">This is a Public Service Announcment: The owner of the black Ferrari, your car is about to be towed because you are parked in front of a fire hydrant. Please move your car ASAP.</string>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -110,8 +226,8 @@
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                             </textView>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Btw I know that's you Scott. You said that shit was borrowed but I always knew you were lying. Show off." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="lji-HC-qrg">
-                                                <rect key="frame" x="18" y="197.5" width="339" height="202.5"/>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Btw I know that's you Scott. You said that shit was borrowed but I always knew you were lying. Show off." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="lji-HC-qrg" customClass="CustomTextView" customModule="XCHAT" customModuleProvider="target">
+                                                <rect key="frame" x="13" y="187.5" width="349" height="217.5"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -119,25 +235,33 @@
                                             </textView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LOGIN BACKGROUND 3" translatesAutoresizingMaskIntoConstraints="NO" id="fEd-JM-CDY">
                                                 <rect key="frame" x="18" y="420" width="339" height="163"/>
+                                                <gestureRecognizers/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="163" id="TPd-ab-YEQ"/>
                                                 </constraints>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="Q7v-mE-Vco" appends="YES" id="XMJ-AU-3lN"/>
+                                                </connections>
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="fEd-JM-CDY" secondAttribute="trailing" constant="18" id="3Bn-RH-qYR"/>
                                             <constraint firstAttribute="height" constant="603" id="66O-bW-0KO"/>
-                                            <constraint firstAttribute="trailing" secondItem="rQl-Ts-Aq3" secondAttribute="trailing" constant="18" id="Mkw-I6-qoZ"/>
-                                            <constraint firstItem="lji-HC-qrg" firstAttribute="leading" secondItem="S0G-Qy-b0g" secondAttribute="leading" constant="18" id="Q6G-1W-Pct"/>
+                                            <constraint firstAttribute="trailing" secondItem="rQl-Ts-Aq3" secondAttribute="trailing" constant="13" id="Mkw-I6-qoZ"/>
+                                            <constraint firstItem="lji-HC-qrg" firstAttribute="leading" secondItem="S0G-Qy-b0g" secondAttribute="leading" constant="13" id="Q6G-1W-Pct"/>
                                             <constraint firstItem="fEd-JM-CDY" firstAttribute="leading" secondItem="S0G-Qy-b0g" secondAttribute="leading" constant="18" id="b7P-m6-uOX"/>
-                                            <constraint firstItem="fEd-JM-CDY" firstAttribute="top" secondItem="lji-HC-qrg" secondAttribute="bottom" constant="20" id="cHd-yx-T8L"/>
-                                            <constraint firstItem="rQl-Ts-Aq3" firstAttribute="top" secondItem="S0G-Qy-b0g" secondAttribute="top" constant="20" id="fwF-W3-J3n"/>
-                                            <constraint firstAttribute="trailing" secondItem="lji-HC-qrg" secondAttribute="trailing" constant="18" id="llq-1t-v4f"/>
-                                            <constraint firstItem="rQl-Ts-Aq3" firstAttribute="leading" secondItem="S0G-Qy-b0g" secondAttribute="leading" constant="18" id="oic-2A-ZTP"/>
+                                            <constraint firstItem="fEd-JM-CDY" firstAttribute="top" secondItem="lji-HC-qrg" secondAttribute="bottom" constant="15" id="cHd-yx-T8L"/>
+                                            <constraint firstItem="rQl-Ts-Aq3" firstAttribute="top" secondItem="S0G-Qy-b0g" secondAttribute="top" constant="15" id="fwF-W3-J3n"/>
+                                            <constraint firstAttribute="trailing" secondItem="lji-HC-qrg" secondAttribute="trailing" constant="13" id="llq-1t-v4f"/>
+                                            <constraint firstItem="rQl-Ts-Aq3" firstAttribute="leading" secondItem="S0G-Qy-b0g" secondAttribute="leading" constant="13" id="oic-2A-ZTP"/>
                                             <constraint firstAttribute="bottom" secondItem="fEd-JM-CDY" secondAttribute="bottom" constant="20" id="pRy-rR-sww"/>
-                                            <constraint firstItem="lji-HC-qrg" firstAttribute="top" secondItem="rQl-Ts-Aq3" secondAttribute="bottom" constant="18" id="yid-EF-TJV"/>
+                                            <constraint firstItem="lji-HC-qrg" firstAttribute="top" secondItem="rQl-Ts-Aq3" secondAttribute="bottom" constant="13" id="yid-EF-TJV"/>
                                         </constraints>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="VIs-hV-vld" appends="YES" id="bYV-er-9ic"/>
+                                        </connections>
                                     </view>
                                 </subviews>
                                 <constraints>
@@ -183,6 +307,16 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LkW-tW-Z9C" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="VIs-hV-vld" userLabel="Screen Tap Gesture Recognizer">
+                    <connections>
+                        <action selector="onScreenTapped:" destination="wJ1-hC-EhH" id="Xfb-2H-T3Z"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="Q7v-mE-Vco" userLabel="Photo Tap Gesture Recognizer">
+                    <connections>
+                        <action selector="onPhotoTapped:" destination="wJ1-hC-EhH" id="CdQ-ao-ba3"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2852" y="9.4452773613193415"/>
         </scene>
@@ -191,7 +325,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="D1g-LH-xIz" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" barStyle="blackTranslucent" id="OcS-ma-77A">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="blackTranslucent" id="OcS-ma-77A">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -204,6 +338,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E1K-fJ-Ngk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1913" y="10"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Jgf-29-iIB">
+            <objects>
+                <navigationController storyboardIdentifier="AlertReplyNC" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="w34-Ab-scW" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="blackTranslucent" id="kyb-96-J19">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="5BE-jm-NBi" kind="relationship" relationship="rootViewController" id="1yU-Xb-Dtc"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wdj-7B-gfe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1912.8" y="794.75262368815595"/>
         </scene>
     </scenes>
     <resources>

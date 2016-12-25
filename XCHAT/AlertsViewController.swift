@@ -119,6 +119,14 @@ extension AlertsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        if let replyToUser = self.alerts[indexPath.row]["author"] as? PFUser {
+            let storyboard = UIStoryboard(name: "Alerts", bundle: nil)
+            let alertReplyNC = storyboard.instantiateViewController(withIdentifier: "AlertReplyNC") as! UINavigationController
+            let alertReplyVC = alertReplyNC.viewControllers[0] as! AlertReplyViewController
+            alertReplyVC.replyToUser = replyToUser
+            self.navigationController?.pushViewController(alertReplyVC, animated: true)
+        }
     }
 }
 
