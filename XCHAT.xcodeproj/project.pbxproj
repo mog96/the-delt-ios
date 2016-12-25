@@ -42,6 +42,8 @@
 		2572930A1E0FBD080044FCED /* AlertComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257293091E0FBD070044FCED /* AlertComposeViewController.swift */; };
 		2572930C1E0FC59C0044FCED /* AlertConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2572930B1E0FC59C0044FCED /* AlertConversationViewController.swift */; };
 		2572930E1E0FD72E0044FCED /* UITextView+NextTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2572930D1E0FD72E0044FCED /* UITextView+NextTextView.swift */; };
+		257293171E0FF4DE0044FCED /* AlertDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257293161E0FF4DE0044FCED /* AlertDetailTableViewCell.swift */; };
+		257293191E0FF4EA0044FCED /* ReplyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257293181E0FF4EA0044FCED /* ReplyTableViewCell.swift */; };
 		257A6B721B056D5B00996A56 /* HamburgerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257A6B711B056D5B00996A56 /* HamburgerViewController.swift */; };
 		258040B21C54DF00002D1F08 /* FeedbackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258040B11C54DF00002D1F08 /* FeedbackTableViewCell.swift */; };
 		258D498A1B15AEB900A632D3 /* MemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258D49891B15AEB900A632D3 /* MemberCell.swift */; };
@@ -190,6 +192,8 @@
 		257293091E0FBD070044FCED /* AlertComposeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertComposeViewController.swift; sourceTree = "<group>"; };
 		2572930B1E0FC59C0044FCED /* AlertConversationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertConversationViewController.swift; sourceTree = "<group>"; };
 		2572930D1E0FD72E0044FCED /* UITextView+NextTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITextView+NextTextView.swift"; sourceTree = "<group>"; };
+		257293161E0FF4DE0044FCED /* AlertDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertDetailTableViewCell.swift; sourceTree = "<group>"; };
+		257293181E0FF4EA0044FCED /* ReplyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyTableViewCell.swift; sourceTree = "<group>"; };
 		257A6B711B056D5B00996A56 /* HamburgerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HamburgerViewController.swift; sourceTree = "<group>"; };
 		258040B11C54DF00002D1F08 /* FeedbackTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackTableViewCell.swift; sourceTree = "<group>"; };
 		258D49891B15AEB900A632D3 /* MemberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberCell.swift; sourceTree = "<group>"; };
@@ -325,12 +329,9 @@
 			isa = PBXGroup;
 			children = (
 				2520DCD91E0D409800FAB13B /* Layout */,
-				2520DCD31E0D2AC600FAB13B /* AlertsViewController.swift */,
-				2520DCD51E0D2B0B00FAB13B /* AlertTableViewCell.swift */,
-				257293091E0FBD070044FCED /* AlertComposeViewController.swift */,
-				2520DCDA1E0D41AE00FAB13B /* NewAlertViewController.swift */,
-				257293071E0F73DF0044FCED /* AlertReplyViewController.swift */,
-				2572930B1E0FC59C0044FCED /* AlertConversationViewController.swift */,
+				257293131E0FF4550044FCED /* Alerts */,
+				257293141E0FF46F0044FCED /* Alert Compose */,
+				257293151E0FF4870044FCED /* Alert Conversation */,
 			);
 			name = Alerts;
 			sourceTree = "<group>";
@@ -394,6 +395,35 @@
 				2568C8791DEF8A4800C55859 /* ShareToReel-Bridging-Header.h */,
 			);
 			path = ShareToReel;
+			sourceTree = "<group>";
+		};
+		257293131E0FF4550044FCED /* Alerts */ = {
+			isa = PBXGroup;
+			children = (
+				2520DCD31E0D2AC600FAB13B /* AlertsViewController.swift */,
+				2520DCD51E0D2B0B00FAB13B /* AlertTableViewCell.swift */,
+			);
+			name = Alerts;
+			sourceTree = "<group>";
+		};
+		257293141E0FF46F0044FCED /* Alert Compose */ = {
+			isa = PBXGroup;
+			children = (
+				257293091E0FBD070044FCED /* AlertComposeViewController.swift */,
+				2520DCDA1E0D41AE00FAB13B /* NewAlertViewController.swift */,
+				257293071E0F73DF0044FCED /* AlertReplyViewController.swift */,
+			);
+			name = "Alert Compose";
+			sourceTree = "<group>";
+		};
+		257293151E0FF4870044FCED /* Alert Conversation */ = {
+			isa = PBXGroup;
+			children = (
+				2572930B1E0FC59C0044FCED /* AlertConversationViewController.swift */,
+				257293161E0FF4DE0044FCED /* AlertDetailTableViewCell.swift */,
+				257293181E0FF4EA0044FCED /* ReplyTableViewCell.swift */,
+			);
+			name = "Alert Conversation";
 			sourceTree = "<group>";
 		};
 		25966C211C99976E00D56DFF /* Video Detail */ = {
@@ -935,10 +965,12 @@
 				D5ABCD581D9BB7BD001BA92E /* SignupRequestsViewController.swift in Sources */,
 				2515CDDB1C58BDD40008A2B2 /* LayoutUtils.swift in Sources */,
 				38D9FB921B15583B0030B6D9 /* LocationCell.swift in Sources */,
+				257293171E0FF4DE0044FCED /* AlertDetailTableViewCell.swift in Sources */,
 				25966C251C99978100D56DFF /* VideoDetailViewController.swift in Sources */,
 				D582521F1D839322008313DF /* AdminViewController.swift in Sources */,
 				25F016061B045882004D78F6 /* LoginViewController.swift in Sources */,
 				25C6CCDA1B1290C200EADB5B /* CaptionViewController.swift in Sources */,
+				257293191E0FF4EA0044FCED /* ReplyTableViewCell.swift in Sources */,
 				3881235F1B13E864008AA524 /* ProfileTableViewCell.swift in Sources */,
 				385C74561B0ECD42009BAC7A /* EditableProfileViewController.swift in Sources */,
 				2520DCDB1E0D41AE00FAB13B /* NewAlertViewController.swift in Sources */,

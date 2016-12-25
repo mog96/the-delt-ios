@@ -26,7 +26,7 @@ class AlertsViewController: ContentViewController {
 
         self.tableView.dataSource = self
         self.tableView.delegate = self
-        self.tableView.estimatedRowHeight = 16.0
+        self.tableView.estimatedRowHeight = 10
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.register(UINib(nibName: "AlertTableViewCell", bundle: nil), forCellReuseIdentifier: "AlertCell")
         
@@ -120,16 +120,12 @@ extension AlertsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        /*
-         USE FOR CONVERSATION VC
-        if let replyToUser = self.alerts[indexPath.row]["author"] as? PFUser {
-            let storyboard = UIStoryboard(name: "Alerts", bundle: nil)
-            let alertReplyNC = storyboard.instantiateViewController(withIdentifier: "AlertReplyNC") as! UINavigationController
-            let alertReplyVC = alertReplyNC.viewControllers[0] as! AlertReplyViewController
-            alertReplyVC.replyToUser = replyToUser
-            self.navigationController?.pushViewController(alertReplyVC, animated: true)
-        }
-        */
+        let alert = self.alerts[indexPath.row]
+        let storyboard = UIStoryboard(name: "Alerts", bundle: nil)
+        let alertReplyNC = storyboard.instantiateViewController(withIdentifier: "AlertConversationNC") as! UINavigationController
+        let alertConversationVC = alertReplyNC.viewControllers[0] as! AlertConversationViewController
+        alertConversationVC.alert = alert
+        self.navigationController?.pushViewController(alertConversationVC, animated: true)
     }
 }
 

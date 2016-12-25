@@ -373,7 +373,7 @@
         <!--ALERT-->
         <scene sceneID="BKk-vt-PTB">
             <objects>
-                <viewController storyboardIdentifier="AlertConversationVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3MA-fD-RJw" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AlertConversationVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="3MA-fD-RJw" customClass="AlertConversationViewController" customModule="XCHAT" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JaW-kd-W4V"/>
                         <viewControllerLayoutGuide type="bottom" id="wL1-V0-8DI"/>
@@ -386,7 +386,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="419" id="Edj-5W-eTq">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AlertDetailCell" rowHeight="419" id="Edj-5W-eTq" customClass="AlertDetailTableViewCell" customModule="XCHAT" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="419"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Edj-5W-eTq" id="sGw-Pb-ihW">
@@ -520,7 +520,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="71" id="Pa6-Go-nn7">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReplyCell" rowHeight="71" id="Pa6-Go-nn7" customClass="ReplyTableViewCell" customModule="XCHAT" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="447" width="375" height="71"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pa6-Go-nn7" id="Vv8-4S-Skk">
@@ -591,7 +591,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="ALERT" id="JVc-Cz-5Pt">
-                        <barButtonItem key="rightBarButtonItem" systemItem="reply" id="8Pt-Ao-wQ7"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="reply" id="8Pt-Ao-wQ7">
+                            <connections>
+                                <action selector="onReplyButtonTapped:" destination="3MA-fD-RJw" id="CcG-Du-f2U"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3bX-V6-Vii" userLabel="First Responder" sceneMemberID="firstResponder"/>
