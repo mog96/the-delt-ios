@@ -11,7 +11,7 @@ import Parse
 import ParseUI
 
 @objc protocol AlertReplyTableViewCellDelegate {
-    @objc optional func alertReplyTableViewCell(didTapReplyToAlert alert: PFObject?)
+    @objc optional func alertReplyTableViewCellDidTapReply()
     
     // TODO: COMPLETE PROCOTOLS AND ACTIONS
 }
@@ -30,7 +30,7 @@ class AlertReplyTableViewCell: UITableViewCell {
     @IBOutlet weak var replyCountLabel: UILabel!
     @IBOutlet weak var flagButton: UIButton!
     
-    weak var delegate: AlertDetailTableViewCellDelegate?
+    weak var delegate: AlertReplyTableViewCellDelegate?
     
     var alert: PFObject?
     var reply: PFObject?
@@ -90,20 +90,19 @@ class AlertReplyTableViewCell: UITableViewCell {
         
         self.messageLabel.text = reply["message"] as? String
     }
-    
-    @IBAction func onLikeButtonTapped(_ sender: Any) {
-    }
-    @IBAction func onReplyButtonTapped(_ sender: Any) {
-        self.delegate?.alertDetailTableViewCell?(didTapReplyToAlert: self.alert)
-    }
-    @IBAction func onFlagButtonTapped(_ sender: Any) {
-    }
-    
 }
 
 
 // MARK: - Actions
 
 extension AlertReplyTableViewCell {
+    @IBAction func onLikeButtonTapped(_ sender: Any) {
+    }
     
+    @IBAction func onReplyButtonTapped(_ sender: Any) {
+        self.delegate?.alertReplyTableViewCellDidTapReply?()
+    }
+    
+    @IBAction func onFlagButtonTapped(_ sender: Any) {
+    }
 }

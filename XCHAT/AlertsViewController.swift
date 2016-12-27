@@ -130,9 +130,9 @@ extension AlertsViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 
-// MARK: - New Alert VC Delegate
+// MARK: - Alert Compose VC Delegate
 
-extension AlertsViewController: NewAlertViewControllerDelegate {
+extension AlertsViewController: AlertComposeViewControllerDelegate {
     func refreshData(completion: @escaping (() -> ())) {
         self.refreshAlerts {
             completion()
@@ -153,6 +153,7 @@ extension AlertsViewController: AlertTableViewCellDelegate {
                 let alertReplyVC = alertReplyNC.viewControllers[0] as! AlertReplyViewController
                 alertReplyVC.alert = alert
                 alertReplyVC.replyToUser = replyToUser
+                alertReplyVC.delegate = self
                 self.present(alertReplyNC, animated: true, completion: nil)
             }
         }

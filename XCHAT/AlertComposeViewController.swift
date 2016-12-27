@@ -12,6 +12,10 @@ import MediaPlayer
 import MobileCoreServices
 import Parse
 
+@objc protocol AlertComposeViewControllerDelegate {
+    func refreshData(completion: @escaping (() -> ()))
+}
+
 class AlertComposeViewController: ContentViewController, UINavigationControllerDelegate {
 
     @IBOutlet weak var photoImageView: UIImageView!
@@ -20,6 +24,8 @@ class AlertComposeViewController: ContentViewController, UINavigationControllerD
     
     var photo: UIImage?
     var video: PFFile?
+    
+    var delegate: AlertComposeViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -11,7 +11,7 @@ import Parse
 import ParseUI
 
 @objc protocol AlertDetailTableViewCellDelegate {
-    @objc optional func alertDetailTableViewCell(didTapReplyToAlert alert: PFObject?)
+    @objc optional func alertDetailTableViewCellDidTapReply()
     
     // TODO: COMPLETE PROCOTOLS AND ACTIONS
 }
@@ -103,7 +103,7 @@ extension AlertDetailTableViewCell {
     }
     
     @IBAction func onReplyButtonTapped(_ sender: Any) {
-        self.delegate?.alertDetailTableViewCell?(didTapReplyToAlert: self.alert)
+        self.delegate?.alertDetailTableViewCellDidTapReply?()
     }
     
     @IBAction func onFlagButtonTapped(_ sender: Any) {

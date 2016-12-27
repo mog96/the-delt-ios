@@ -10,9 +10,6 @@ import UIKit
 import Parse
 import ParseUI
 
-
-
-
 // TODO: Incorporates reply view at the bottom.
 
 class AlertConversationViewController: ContentViewController {
@@ -54,7 +51,7 @@ extension AlertConversationViewController {
             self.deltLoadingView.startAnimating()
             self.deltLoadingView.isHidden = false
         }, completion: nil)
-        self.refreshAlerts {
+        self.refreshReplies {
             UIView.transition(with: self.deltLoadingView, duration: animationDuration, options: .transitionCrossDissolve, animations: {
                 self.deltLoadingView.isHidden = true
                 self.deltLoadingView.stopAnimating()
@@ -62,7 +59,7 @@ extension AlertConversationViewController {
         }
     }
     
-    func refreshAlerts(completion: (() -> ())?) {
+    func refreshReplies(completion: (() -> ())?) {
         self.getReplies { (replies: [PFObject]?) in
             if let replies = replies {
                 DispatchQueue.main.async(execute: {
@@ -101,6 +98,23 @@ extension AlertConversationViewController {
 }
 
 
+// MARK: - Reply Helpers
+
+extension AlertConversationViewController {
+    fileprivate func presentAlertReplyViewController() {
+        if let replyToUser = self.alert["author"] as? PFUser {
+            let storyboard = UIStoryboard(name: "Alerts", bundle: nil)
+            let alertReplyNC = storyboard.instantiateViewController(withIdentifier: "AlertReplyNC") as! UINavigationController
+            let alertReplyVC = alertReplyNC.viewControllers[0] as! AlertReplyViewController
+            alertReplyVC.alert = self.alert
+            alertReplyVC.replyToUser = replyToUser
+            alertReplyVC.delegate = self
+            self.present(alertReplyNC, animated: true, completion: nil)
+        }
+    }
+}
+
+
 // MARK: - Table View
 
 extension AlertConversationViewController: UITableViewDelegate, UITableViewDataSource {
@@ -122,12 +136,43 @@ extension AlertConversationViewController: UITableViewDelegate, UITableViewDataS
         case 0:
             let detailCell = tableView.dequeueReusableCell(withIdentifier: "AlertDetailCell", for: indexPath) as! AlertDetailTableViewCell
             detailCell.setUpCell(alert: self.alert)
+            detailCell.delegate = self
             return detailCell
         default:
             let replyCell = tableView.dequeueReusableCell(withIdentifier: "AlertReplyCell", for: indexPath) as! AlertReplyTableViewCell
             replyCell.alert = self.alert
             replyCell.setUpCell(reply: self.replies[indexPath.row])
+            replyCell.delegate = self
             return replyCell
+        }
+    }
+}
+
+
+// MARK: - Alert Detail Cell Delegate
+
+extension AlertConversationViewController: AlertDetailTableViewCellDelegate {
+    func alertDetailTableViewCellDidTapReply() {
+        self.presentAlertReplyViewController()
+    }
+}
+
+
+// MARK: - Alert Reply Cell Delegate
+
+extension AlertConversationViewController: AlertReplyTableViewCellDelegate {
+    func alertReplyTableViewCellDidTapReply() {
+        self.presentAlertReplyViewController()
+    }
+}
+
+
+// MARK: - Alert Compose VC Delegate
+
+extension AlertConversationViewController: AlertComposeViewControllerDelegate {
+    func refreshData(completion: @escaping (() -> ())) {
+        self.refreshReplies { 
+            completion()
         }
     }
 }
@@ -137,5 +182,6 @@ extension AlertConversationViewController: UITableViewDelegate, UITableViewDataS
 
 extension AlertConversationViewController {
     @IBAction func onReplyButtonTapped(_ sender: Any) {
+        self.presentAlertReplyViewController()
     }
 }

@@ -34,7 +34,7 @@ class AlertReplyViewController: AlertComposeViewController {
         self.replyTextView.placeholder = "What do you have to say?"
         self.replyTextView.placeholderLabel.textColor = UIColor.lightText
         if let username = self.replyToUser.username {
-            self.replyTextView.text = "@" + username
+            self.replyTextView.text = "@" + username + " "
             self.replyTextView.placeholderLabel.isHidden = true
         }
     }
@@ -109,9 +109,10 @@ extension AlertReplyViewController {
                                     print(error.localizedDescription)
                                     presentReplyPostErrorAlert()
                                 } else {
-                                    // FIXME: code to refresh conversation list before dismissal.
-                                    currentHUD.hide(animated: true)
-                                    self.dismiss(animated: true, completion: nil)
+                                    self.delegate?.refreshData {
+                                        currentHUD.hide(animated: true)
+                                        self.dismiss(animated: true, completion: nil)
+                                    }
                                 }
                             })
                         }

@@ -12,10 +12,6 @@ import MediaPlayer
 import MobileCoreServices
 import Parse
 
-@objc protocol NewAlertViewControllerDelegate {
-    func refreshData(completion: @escaping (() -> ()))
-}
-
 class NewAlertViewController: AlertComposeViewController {
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -23,8 +19,6 @@ class NewAlertViewController: AlertComposeViewController {
     @IBOutlet weak var subjectTextView: CustomTextView!
     @IBOutlet weak var messageTextView: CustomTextView!
     
-    var delegate: NewAlertViewControllerDelegate?
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
