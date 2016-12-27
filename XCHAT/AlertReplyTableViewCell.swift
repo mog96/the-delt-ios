@@ -1,5 +1,5 @@
 //
-//  AlertDetailTableViewCell.swift
+//  ReplyTableViewCell.swift
 //  XCHAT
 //
 //  Created by Mateo Garcia on 12/25/16.
@@ -10,22 +10,19 @@ import UIKit
 import Parse
 import ParseUI
 
-@objc protocol AlertDetailTableViewCellDelegate {
-    @objc optional func alertDetailTableViewCell(didTapReplyToAlert alert: PFObject?)
+@objc protocol AlertReplyTableViewCellDelegate {
+    @objc optional func alertReplyTableViewCell(didTapReplyToAlert alert: PFObject?)
     
     // TODO: COMPLETE PROCOTOLS AND ACTIONS
 }
 
-class AlertDetailTableViewCell: UITableViewCell {
+class AlertReplyTableViewCell: UITableViewCell {
     
     @IBOutlet weak var profileImageView: ProfileImageView!
     @IBOutlet weak var nameLabel: UsernameLabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var usernameLabel: UsernameLabel!
-    @IBOutlet weak var subjectLabel: UILabel!
-    @IBOutlet weak var subjectLabelHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var messageLabel: UILabel!
-    @IBOutlet weak var messageLabelHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var likeCountLabel: UILabel!
@@ -36,6 +33,7 @@ class AlertDetailTableViewCell: UITableViewCell {
     weak var delegate: AlertDetailTableViewCellDelegate?
     
     var alert: PFObject?
+    var reply: PFObject?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -50,9 +48,9 @@ class AlertDetailTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setUpCell(alert: PFObject) {
-        self.alert = alert
-        if let author = alert["author"] as? PFUser {
+    func setUpCell(reply: PFObject) {
+        self.reply = reply
+        if let author = reply["author"] as? PFUser {
             self.profileImageView.user = author
             if let _ = author.value(forKey: "photo") {
                 let pfImageView = PFImageView()
@@ -74,7 +72,7 @@ class AlertDetailTableViewCell: UITableViewCell {
             self.usernameLabel.text = author.username
         }
         
-        if let postedAt = alert["createdAt"] as? Date {
+        if let postedAt = reply["createdAt"] as? Date {
             let dateFormatter = DateFormatter()
             let calendar = Calendar.current
             //        dateFormatter.dateFormat = "M/d"
@@ -90,22 +88,22 @@ class AlertDetailTableViewCell: UITableViewCell {
             self.dateLabel.text = dateFormatter.string(from: postedAt)
         }
         
-        self.subjectLabel.text = alert["subject"] as? String
-        self.messageLabel.text = alert["message"] as? String
+        self.messageLabel.text = reply["message"] as? String
     }
+    
+    @IBAction func onLikeButtonTapped(_ sender: Any) {
+    }
+    @IBAction func onReplyButtonTapped(_ sender: Any) {
+        self.delegate?.alertDetailTableViewCell?(didTapReplyToAlert: self.alert)
+    }
+    @IBAction func onFlagButtonTapped(_ sender: Any) {
+    }
+    
 }
 
 
 // MARK: - Actions
 
-extension AlertDetailTableViewCell {
-    @IBAction func onLikeButtonTapped(_ sender: Any) {
-    }
+extension AlertReplyTableViewCell {
     
-    @IBAction func onReplyButtonTapped(_ sender: Any) {
-        self.delegate?.alertDetailTableViewCell?(didTapReplyToAlert: self.alert)
-    }
-    
-    @IBAction func onFlagButtonTapped(_ sender: Any) {
-    }
 }
