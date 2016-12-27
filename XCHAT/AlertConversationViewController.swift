@@ -18,8 +18,11 @@ class AlertConversationViewController: ContentViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+        self.tableView.estimatedRowHeight = 10
+        self.tableView.rowHeight = UITableViewAutomaticDimension
     }
 
     override func didReceiveMemoryWarning() {
