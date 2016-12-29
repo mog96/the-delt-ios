@@ -12,8 +12,7 @@ import ParseUI
 
 @objc protocol AlertDetailTableViewCellDelegate {
     @objc optional func alertDetailTableViewCellDidTapReply()
-    
-    // TODO: COMPLETE PROCOTOLS AND ACTIONS
+    @objc optional func alertDetailTableViewCellShouldReload()
 }
 
 class AlertDetailTableViewCell: UITableViewCell {
@@ -35,6 +34,8 @@ class AlertDetailTableViewCell: UITableViewCell {
     weak var delegate: AlertDetailTableViewCellDelegate?
     
     var alert: PFObject?
+    var liked = false
+    var flagged = false
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -101,11 +102,39 @@ class AlertDetailTableViewCell: UITableViewCell {
                 if let error = error {
                     // Log details of the failure
                     print("Error: \(error) \(error.localizedDescription)")
-                    
                 } else {
                     self.photoImageView.image = image
                 }
             }
+        }
+        
+        // Like.
+        if let likedBy = alert["likedBy"] as? [String] {
+            if let username = PFUser.current()?.username {
+                self.liked = likedBy.contains(username)
+                
+                print("SETTING LIKED: \(self.liked)")
+            }
+        }
+        self.likeButton.isSelected = self.liked
+        if let likeCount = alert["likeCount"] as? Int {
+            self.likeCountLabel.text = String(likeCount)
+        } else {
+            self.likeCountLabel.text = ""
+        }
+        
+        // Reply count.
+        if let replies = alert["replies"] as? [PFObject] {
+            self.replyCountLabel.text = String(replies.count)
+        } else {
+            self.replyCountLabel.text = ""
+        }
+        
+        // Reply count.
+        if let replies = alert["replies"] as? [PFObject] {
+            self.replyCountLabel.text = String(replies.count)
+        } else {
+            self.replyCountLabel.text = ""
         }
     }
 }
@@ -115,6 +144,14 @@ class AlertDetailTableViewCell: UITableViewCell {
 
 extension AlertDetailTableViewCell {
     @IBAction func onLikeButtonTapped(_ sender: Any) {
+//        self.alert?.incrementKey("likeCount")
+//        self.alert?.saveInBackground(block: { (completed: Bool, error: Error?) in
+//            if error != nil {
+//                print(error!.localizedDescription)
+//            } else {
+//                self.delegate?.alertDetailTableViewCellShouldReload?()
+//            }
+//        })
     }
     
     @IBAction func onReplyButtonTapped(_ sender: Any) {

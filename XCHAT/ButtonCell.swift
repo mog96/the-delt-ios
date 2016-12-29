@@ -64,10 +64,12 @@ class ButtonCell: UITableViewCell {
         self.faveButton.isSelected = self.faved
         self.flagButton.isSelected = self.flagged
     }
-    
-    
-    // MARK: Actions
+}
 
+
+// MARK: Actions
+
+extension ButtonCell {
     @IBAction func onFaveButtonTapped(_ sender: AnyObject) {
         self.faveButton.isSelected = !self.faved
         delegate?.updateFaved(photo, didUpdateFaved: !self.faved)
@@ -84,5 +86,4 @@ class ButtonCell: UITableViewCell {
         self.flagButton.isSelected = !self.flagged
         self.delegate?.updateFlagged(self.photo, flagged: !self.flagged)
     }
-    
 }

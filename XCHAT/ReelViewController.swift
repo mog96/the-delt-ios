@@ -359,7 +359,7 @@ extension ReelViewController: ButtonCellDelegate {
         let objectId = photo?.value(forKey: "objectId") as! String
         query.getObjectInBackground(withId: objectId) { (photo: PFObject?, error: Error?) -> Void in
             if error != nil {
-                print(error)
+                print(error!.localizedDescription)
             } else if let photo = photo {
                 
                 if let username = PFUser.current()?.username {

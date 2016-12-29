@@ -155,6 +155,18 @@ extension AlertsViewController: AlertTableViewCellDelegate {
             self.present(alertReplyNC, animated: true, completion: nil)
         }
     }
+    
+    func alertTableViewCellWasFlagged(withError: Bool) {
+        if withError {
+            let alert = UIAlertController(title: "Server Error", message: "Please try again.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            let alert = UIAlertController(title: "Post Flagged", message: "Administrators will be notified and this post will be reviewed.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
 }
 
 
