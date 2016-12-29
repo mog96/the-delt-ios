@@ -28,6 +28,8 @@ class AlertTableViewCell: UITableViewCell {
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var replyButton: UIButton!
     @IBOutlet weak var flagButton: UIButton!
+    @IBOutlet weak var likeCount: UILabel!
+    @IBOutlet weak var replyCount: UILabel!
     
     weak var delegate: AlertTableViewCellDelegate?
     
@@ -50,6 +52,8 @@ class AlertTableViewCell: UITableViewCell {
     
     func setUpCell(alert: PFObject) {
         self.alert = alert
+        
+        // Name and profile picture.
         if let author = alert["author"] as? PFUser {
             self.profileImageView.user = author
             if let _ = author.value(forKey: "photo") {
@@ -70,6 +74,7 @@ class AlertTableViewCell: UITableViewCell {
             self.nameLabel.text = author["name"] as? String
         }
         
+        // Date.
         if let postedAt = alert["createdAt"] as? Date {
             let dateFormatter = DateFormatter()
             let calendar = Calendar.current
@@ -86,8 +91,16 @@ class AlertTableViewCell: UITableViewCell {
             self.dateLabel.text = dateFormatter.string(from: postedAt)
         }
         
+        // Subject and message.
         self.subjectLabel.text = alert["subject"] as? String
         self.messageLabel.text = alert["message"] as? String
+        
+        // Reply count.
+        if let replies = alert["replies"] as? [PFObject] {
+            self.replyCount.text = String(replies.count)
+        } else {
+            self.replyCount.text = "0"
+        }
         
         /*
         if let photo = alert["photo"] as? PFFile {
@@ -113,13 +126,7 @@ class AlertTableViewCell: UITableViewCell {
 // MARK: - Actions
 
 extension AlertTableViewCell {
-    @IBAction func onLikeButtonTapped(_ sender: Any) {
-    }
-    
     @IBAction func onReplyButtonTapped(_ sender: Any) {
         self.delegate?.alertTableViewCell?(didTapReplyToAlert: self.alert)
-    }
-    
-    @IBAction func onFlagButtonTapped(_ sender: Any) {
     }
 }

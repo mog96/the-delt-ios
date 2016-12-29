@@ -52,7 +52,7 @@ extension NewAlertViewController {
         
         // User forgets to enter alert subject.
         if self.subjectTextView.text == "" {
-            let alert = UIAlertController(title: "Add Alert Subject", message: "Whatchu tryna say bro.", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Alert Subject Required", message: "Be specific now.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
             

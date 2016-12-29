@@ -25,7 +25,7 @@ class AlertReplyViewController: AlertComposeViewController {
         self.replyTextView.placeholder = "What do you have to say?"
         self.replyTextView.placeholderLabel.textColor = UIColor.lightText
         
-        if let replyToUser = self.replyToAlert["user"] as? PFUser {
+        if let replyToUser = self.replyToAlert["author"] as? PFUser {
             if let name = replyToUser["name"] as? String {
                 self.inReplyToLabel.text = self.kInReplyToPrefix + name
             } else if let username = replyToUser.username {
@@ -61,16 +61,16 @@ extension AlertReplyViewController {
         
         // User forgets to enter alert subject.
         if self.replyTextView.text == "" {
-            let alert = UIAlertController(title: "Empty Reply!", message: "Whatchu tryna say bro.", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Empty Reply!", message: "Whatcha tryna say bro.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
             
         } else {
             let reply = PFObject(className: "AlertReply")
             
+            reply["alert"] = self.replyToAlert
             reply["message"] = self.replyTextView.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
             reply["author"] = PFUser.current()!
-            
             if self.photo != nil {
                 let imageData = UIImageJPEGRepresentation(self.photo!, 100)
                 let imageFile = PFFile(name: "image.jpeg", data: imageData!)
@@ -86,9 +86,9 @@ extension AlertReplyViewController {
                 alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(alertVC, animated: true, completion: nil)
             }
-            
             let currentHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
             currentHUD.label.text = "Posting Reply..."
+            
             reply.saveInBackground { (result: Bool, error: Error?) -> Void in
                 if error != nil {
                     currentHUD.hide(animated: true)
