@@ -63,14 +63,12 @@ extension NewAlertViewController {
             if self.messageTextView.text.characters.count > 0 {
                 alert["message"] = self.messageTextView.text
             }
-            // alert["createdBy"] = PFUser.current()!.username!
             alert["author"] = PFUser.current()!
-            alert["authorName"] = PFUser.current()!["name"]
             
             if self.photo != nil {
                 let imageData = UIImageJPEGRepresentation(self.photo!, 100)
                 let imageFile = PFFile(name: "image.jpeg", data: imageData!)
-                alert["image"] = imageFile
+                alert["photo"] = imageFile
                 
                 if self.video != nil {
                     alert["video"] = self.video

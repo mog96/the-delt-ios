@@ -72,7 +72,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 #endif
                 /* END DEVELOPMENT ONLY */
                 
-                // $0.server = "https://thedelt.herokuapp.com/parse"
+                /*********** ENABLE BEFORE APP DEPLOY ***********/
+                $0.server = "https://thedelt.herokuapp.com/parse"
             }
             Parse.enableDataSharing(withApplicationGroupIdentifier: "group.com.tdx.thedelt")
             Parse.enableLocalDatastore()

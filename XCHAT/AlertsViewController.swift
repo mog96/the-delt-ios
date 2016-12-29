@@ -147,15 +147,12 @@ extension AlertsViewController: AlertComposeViewControllerDelegate {
 extension AlertsViewController: AlertTableViewCellDelegate {
     func alertTableViewCell(didTapReplyToAlert alert: PFObject?) {
         if let alert = alert {
-            if let replyToUser = alert["author"] as? PFUser {
-                let storyboard = UIStoryboard(name: "Alerts", bundle: nil)
-                let alertReplyNC = storyboard.instantiateViewController(withIdentifier: "AlertReplyNC") as! UINavigationController
-                let alertReplyVC = alertReplyNC.viewControllers[0] as! AlertReplyViewController
-                alertReplyVC.alert = alert
-                alertReplyVC.replyToUser = replyToUser
-                alertReplyVC.delegate = self
-                self.present(alertReplyNC, animated: true, completion: nil)
-            }
+            let storyboard = UIStoryboard(name: "Alerts", bundle: nil)
+            let alertReplyNC = storyboard.instantiateViewController(withIdentifier: "AlertReplyNC") as! UINavigationController
+            let alertReplyVC = alertReplyNC.viewControllers[0] as! AlertReplyViewController
+            alertReplyVC.replyToAlert = alert
+            alertReplyVC.delegate = self
+            self.present(alertReplyNC, animated: true, completion: nil)
         }
     }
 }

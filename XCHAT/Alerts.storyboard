@@ -91,7 +91,13 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LOGIN BACKGROUND 3" translatesAutoresizingMaskIntoConstraints="NO" id="5d2-w3-qMh">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[add a photo or video]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ynh-qd-wxB">
+                                                <rect key="frame" x="102" y="491" width="170" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5d2-w3-qMh">
                                                 <rect key="frame" x="18" y="420" width="339" height="163"/>
                                                 <gestureRecognizers/>
                                                 <constraints>
@@ -113,10 +119,12 @@
                                             <constraint firstItem="5d2-w3-qMh" firstAttribute="top" relation="greaterThanOrEqual" secondItem="vzR-yb-S6o" secondAttribute="bottom" constant="15" id="Bf8-Fw-EDx"/>
                                             <constraint firstItem="pww-95-pX4" firstAttribute="top" secondItem="R9F-fw-NgG" secondAttribute="top" constant="18" id="KYB-uj-BPI"/>
                                             <constraint firstItem="5d2-w3-qMh" firstAttribute="leading" secondItem="R9F-fw-NgG" secondAttribute="leading" constant="18" id="WO5-C9-mZ8"/>
+                                            <constraint firstItem="ynh-qd-wxB" firstAttribute="centerY" secondItem="5d2-w3-qMh" secondAttribute="centerY" id="ejA-wI-VGx"/>
                                             <constraint firstAttribute="trailing" secondItem="5d2-w3-qMh" secondAttribute="trailing" constant="18" id="ems-iF-PMb"/>
                                             <constraint firstItem="vzR-yb-S6o" firstAttribute="leading" secondItem="R9F-fw-NgG" secondAttribute="leading" constant="13" id="ge3-gI-ryL"/>
                                             <constraint firstItem="pww-95-pX4" firstAttribute="leading" secondItem="R9F-fw-NgG" secondAttribute="leading" constant="18" id="mq9-GS-FzU"/>
                                             <constraint firstAttribute="height" constant="603" placeholder="YES" id="p2s-1c-Deg"/>
+                                            <constraint firstItem="ynh-qd-wxB" firstAttribute="centerX" secondItem="5d2-w3-qMh" secondAttribute="centerX" id="pc8-1p-7eB"/>
                                             <constraint firstItem="vzR-yb-S6o" firstAttribute="top" secondItem="pww-95-pX4" secondAttribute="bottom" constant="8" id="qIO-Zs-UOK"/>
                                             <constraint firstAttribute="bottom" secondItem="5d2-w3-qMh" secondAttribute="bottom" constant="20" id="qSC-Oa-d52"/>
                                             <constraint firstAttribute="trailing" secondItem="vzR-yb-S6o" secondAttribute="trailing" constant="13" id="vpE-HQ-1EI"/>
@@ -165,7 +173,9 @@
                     <connections>
                         <outlet property="inReplyToLabel" destination="pww-95-pX4" id="bvG-xx-c7r"/>
                         <outlet property="photoImageView" destination="5d2-w3-qMh" id="fLy-XU-ESz"/>
+                        <outlet property="photoTapGestureRecognizer" destination="ISW-nG-gWq" id="UaY-fe-jHi"/>
                         <outlet property="replyTextView" destination="vzR-yb-S6o" id="I8w-Dl-sEa"/>
+                        <outlet property="screenTapGestureRecognizer" destination="UK3-J3-4mX" id="jn2-Yz-oRF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WSA-dc-dqL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -243,7 +253,13 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LOGIN BACKGROUND 3" translatesAutoresizingMaskIntoConstraints="NO" id="fEd-JM-CDY">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[add a photo or video]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9MK-zR-nue">
+                                                <rect key="frame" x="102" y="491" width="170" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fEd-JM-CDY">
                                                 <rect key="frame" x="18" y="420" width="339" height="163"/>
                                                 <gestureRecognizers/>
                                                 <constraints>
@@ -259,8 +275,10 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="fEd-JM-CDY" secondAttribute="trailing" constant="18" id="3Bn-RH-qYR"/>
                                             <constraint firstAttribute="height" constant="603" placeholder="YES" id="66O-bW-0KO"/>
+                                            <constraint firstItem="9MK-zR-nue" firstAttribute="centerY" secondItem="fEd-JM-CDY" secondAttribute="centerY" id="6rx-Ml-gR1"/>
                                             <constraint firstAttribute="trailing" secondItem="rQl-Ts-Aq3" secondAttribute="trailing" constant="13" id="Mkw-I6-qoZ"/>
                                             <constraint firstItem="lji-HC-qrg" firstAttribute="leading" secondItem="S0G-Qy-b0g" secondAttribute="leading" constant="13" id="Q6G-1W-Pct"/>
+                                            <constraint firstItem="9MK-zR-nue" firstAttribute="centerX" secondItem="fEd-JM-CDY" secondAttribute="centerX" id="Zh4-W5-2Vy"/>
                                             <constraint firstItem="fEd-JM-CDY" firstAttribute="leading" secondItem="S0G-Qy-b0g" secondAttribute="leading" constant="18" id="b7P-m6-uOX"/>
                                             <constraint firstItem="fEd-JM-CDY" firstAttribute="top" relation="greaterThanOrEqual" secondItem="lji-HC-qrg" secondAttribute="bottom" constant="15" id="cHd-yx-T8L"/>
                                             <constraint firstItem="rQl-Ts-Aq3" firstAttribute="top" secondItem="S0G-Qy-b0g" secondAttribute="top" constant="13" id="fwF-W3-J3n"/>
@@ -314,6 +332,8 @@
                         <outlet property="containerView" destination="S0G-Qy-b0g" id="JCI-zh-nDT"/>
                         <outlet property="messageTextView" destination="lji-HC-qrg" id="AOA-sc-RFK"/>
                         <outlet property="photoImageView" destination="fEd-JM-CDY" id="z82-ZU-VOP"/>
+                        <outlet property="photoTapGestureRecognizer" destination="Q7v-mE-Vco" id="Irh-hA-UTa"/>
+                        <outlet property="screenTapGestureRecognizer" destination="VIs-hV-vld" id="3bQ-5J-QPi"/>
                         <outlet property="scrollView" destination="D6m-fp-bVh" id="1Vz-5W-ZxC"/>
                         <outlet property="subjectTextView" destination="rQl-Ts-Aq3" id="xuo-iF-R91"/>
                     </connections>
@@ -391,7 +411,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="419"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rCW-Bc-BOp" id="uRo-0c-ORQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="418"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="418.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ROONEY" translatesAutoresizingMaskIntoConstraints="NO" id="FIP-UY-3DA" customClass="ProfileImageView" customModule="XCHAT" customModuleProvider="target">
@@ -469,7 +489,7 @@
                                                         <action selector="onReplyButtonTapped:" destination="rCW-Bc-BOp" eventType="touchUpInside" id="w2d-mz-LWT"/>
                                                     </connections>
                                                 </button>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="248" verticalCompressionResistancePriority="748" image="LOGIN BACKGROUND 3" translatesAutoresizingMaskIntoConstraints="NO" id="X89-kb-q8u">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="248" verticalCompressionResistancePriority="748" translatesAutoresizingMaskIntoConstraints="NO" id="X89-kb-q8u">
                                                     <rect key="frame" x="10" y="235" width="355" height="129"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="300" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qoL-j4-gm7">
@@ -530,6 +550,7 @@
                                             <outlet property="likeCountLabel" destination="qoL-j4-gm7" id="eo2-Kq-E1e"/>
                                             <outlet property="messageLabel" destination="Ukg-x9-raq" id="VX5-F7-WfK"/>
                                             <outlet property="nameLabel" destination="oWG-Fu-PkO" id="GBg-U2-NlW"/>
+                                            <outlet property="photoImageView" destination="X89-kb-q8u" id="gIY-VX-dpN"/>
                                             <outlet property="profileImageView" destination="FIP-UY-3DA" id="3zw-Di-Gyl"/>
                                             <outlet property="replyButton" destination="obY-PX-Oef" id="SXM-dS-4dz"/>
                                             <outlet property="replyCountLabel" destination="YLW-dQ-1aR" id="X12-es-hNX"/>
@@ -541,7 +562,7 @@
                                         <rect key="frame" x="0.0" y="447" width="375" height="97"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KsE-Aw-IHv" id="NQg-ow-a10">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="96.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ROONEY" translatesAutoresizingMaskIntoConstraints="NO" id="GxW-mF-9Dg" customClass="ProfileImageView" customModule="XCHAT" customModuleProvider="target">
@@ -738,7 +759,6 @@
         <image name="COMMENT" width="600" height="600"/>
         <image name="FAVE" width="500" height="500"/>
         <image name="FAVE_ON" width="500" height="500"/>
-        <image name="LOGIN BACKGROUND 3" width="500" height="734"/>
         <image name="ROONEY" width="160" height="160"/>
         <image name="flag_icon_black" width="114" height="128"/>
         <image name="flag_icon_red" width="114" height="128"/>

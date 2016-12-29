@@ -15,27 +15,29 @@ class AlertReplyViewController: AlertComposeViewController {
     @IBOutlet weak var inReplyToLabel: UILabel!
     @IBOutlet weak var replyTextView: CustomTextView!
     
-    var alert: PFObject!
-    var replyToUser: PFUser!
+    var replyToAlert: PFObject!
     
     let kInReplyToPrefix = "In reply to "
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let name = self.replyToUser["name"] as? String {
-            self.inReplyToLabel.text = self.kInReplyToPrefix + name
-        } else if let username = self.replyToUser.username {
-            self.inReplyToLabel.text = self.kInReplyToPrefix +  username
-        } else {
-            self.inReplyToLabel.isHidden = true
-        }
-        
         self.replyTextView.placeholder = "What do you have to say?"
         self.replyTextView.placeholderLabel.textColor = UIColor.lightText
-        if let username = self.replyToUser.username {
-            self.replyTextView.text = "@" + username + " "
-            self.replyTextView.placeholderLabel.isHidden = true
+        
+        if let replyToUser = self.replyToAlert["user"] as? PFUser {
+            if let name = replyToUser["name"] as? String {
+                self.inReplyToLabel.text = self.kInReplyToPrefix + name
+            } else if let username = replyToUser.username {
+                self.inReplyToLabel.text = self.kInReplyToPrefix + username
+            } else {
+                self.inReplyToLabel.isHidden = true
+            }
+            
+            if let username = replyToUser.username {
+                self.replyTextView.text = "@" + username + " "
+                self.replyTextView.placeholderLabel.isHidden = true
+            }
         }
     }
 
@@ -72,10 +74,10 @@ extension AlertReplyViewController {
             if self.photo != nil {
                 let imageData = UIImageJPEGRepresentation(self.photo!, 100)
                 let imageFile = PFFile(name: "image.jpeg", data: imageData!)
-                alert["image"] = imageFile
+                reply["photo"] = imageFile
                 
                 if self.video != nil {
-                    alert["video"] = self.video
+                    reply["video"] = self.video
                 }
             }
             
@@ -93,29 +95,9 @@ extension AlertReplyViewController {
                     print(error!.localizedDescription)
                     presentReplyPostErrorAlert()
                 } else {
-                    let query = PFQuery(className: "Alert")
-                    let objectId = self.alert.value(forKey: "objectId") as! String
-                    query.getObjectInBackground(withId: objectId) { (alert: PFObject?, error: Error?) -> Void in
-                        if error != nil {
-                            currentHUD.hide(animated: true)
-                            print(error!.localizedDescription)
-                            presentReplyPostErrorAlert()
-                        } else if let alert = alert {
-                            alert.add(reply, forKey: "replies") // Add reply to alert's array of replies.
-                            alert.incrementKey("replyCount")
-                            alert.saveInBackground(block: { (completed: Bool, eror: Error?) -> Void in
-                                if let error = error {
-                                    currentHUD.hide(animated: true)
-                                    print(error.localizedDescription)
-                                    presentReplyPostErrorAlert()
-                                } else {
-                                    self.delegate?.refreshData {
-                                        currentHUD.hide(animated: true)
-                                        self.dismiss(animated: true, completion: nil)
-                                    }
-                                }
-                            })
-                        }
+                    self.delegate?.refreshData {
+                        currentHUD.hide(animated: true)
+                        self.dismiss(animated: true, completion: nil)
                     }
                 }
             }

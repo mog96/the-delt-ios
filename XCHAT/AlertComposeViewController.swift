@@ -19,8 +19,11 @@ import Parse
 class AlertComposeViewController: ContentViewController, UINavigationControllerDelegate {
 
     @IBOutlet weak var photoImageView: UIImageView!
+    @IBOutlet var screenTapGestureRecognizer: UITapGestureRecognizer!
+    @IBOutlet var photoTapGestureRecognizer: UITapGestureRecognizer!
     
     var chooseMediaAC: UIAlertController!
+    var imagePickerVC: UIImagePickerController!
     
     var photo: UIImage?
     var video: PFFile?
@@ -33,6 +36,9 @@ class AlertComposeViewController: ContentViewController, UINavigationControllerD
         self.photoImageView.layer.cornerRadius = 3
         self.photoImageView.clipsToBounds = true
         
+        self.screenTapGestureRecognizer.delegate = self
+        self.photoTapGestureRecognizer.delegate = self
+        
         self.chooseMediaAC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         self.chooseMediaAC.addAction(UIAlertAction(title: "CLICK", style: .destructive, handler: { _ in      // FIXME: Using .Destructive to get red text color is a little hacky...
             self.presentImagePicker(usingPhotoLibrary: false)
@@ -43,6 +49,11 @@ class AlertComposeViewController: ContentViewController, UINavigationControllerD
         self.chooseMediaAC.addAction(UIAlertAction(title: "CANCEL", style: .cancel, handler: { _ in
             self.chooseMediaAC.dismiss(animated: true, completion: nil)
         }))
+        
+        self.imagePickerVC = UIImagePickerController()
+        self.imagePickerVC.delegate = self
+        self.imagePickerVC.allowsEditing = true
+        self.imagePickerVC.mediaTypes = [kUTTypeImage as String, kUTTypeMovie as String]
     }
 
     override func didReceiveMemoryWarning() {
@@ -67,18 +78,14 @@ class AlertComposeViewController: ContentViewController, UINavigationControllerD
 
 extension AlertComposeViewController: UIImagePickerControllerDelegate {
     fileprivate func presentImagePicker(usingPhotoLibrary photoLibrary: Bool) {
-        let imagePickerVC = UIImagePickerController()
-        imagePickerVC.delegate = self
-        imagePickerVC.allowsEditing = true
-        imagePickerVC.mediaTypes = [kUTTypeImage as String, kUTTypeMovie as String]
         if photoLibrary {
-            imagePickerVC.sourceType = .photoLibrary
-            imagePickerVC.navigationBar.tintColor = UIColor.red
-            imagePickerVC.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: imagePickerVC, action: nil)
+            self.imagePickerVC.sourceType = .photoLibrary
+            self.imagePickerVC.navigationBar.tintColor = UIColor.red
+            self.imagePickerVC.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: imagePickerVC, action: nil)
         } else {
-            imagePickerVC.sourceType = .camera
+            self.imagePickerVC.sourceType = .camera
         }
-        self.present(imagePickerVC, animated: true, completion: nil)
+        self.present(self.imagePickerVC, animated: true, completion: nil)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -108,6 +115,17 @@ extension AlertComposeViewController: UIImagePickerControllerDelegate {
 }
 
 
+extension AlertComposeViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return true
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+}
+
+
 // MARK: - Actions
 
 extension AlertComposeViewController {
@@ -121,10 +139,12 @@ extension AlertComposeViewController {
     }
     
     @IBAction func onPhotoTapped(_ sender: Any) {
-        // Present image picker again
+        print("PHOTO TAPPED")
+        self.presentImagePicker(usingPhotoLibrary: true)
     }
     
     @IBAction func onScreenTapped(_ sender: Any) {
+        print("SCREEN TAPPED")
         self.view.endEditing(true)
     }
 }

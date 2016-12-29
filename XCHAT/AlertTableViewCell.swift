@@ -23,9 +23,7 @@ class AlertTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UsernameLabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var subjectLabel: UILabel!
-    // @IBOutlet weak var subjectLabelHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var messageLabel: UILabel!
-    // @IBOutlet weak var messageLabelHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var replyButton: UIButton!
@@ -90,6 +88,24 @@ class AlertTableViewCell: UITableViewCell {
         
         self.subjectLabel.text = alert["subject"] as? String
         self.messageLabel.text = alert["message"] as? String
+        
+        /*
+        if let photo = alert["photo"] as? PFFile {
+            print("ALERT PHOTO URL:", photo.url)
+            
+            let pfImageView = PFImageView()
+            pfImageView.file = photo
+            pfImageView.load { (image: UIImage?, error: Error?) -> Void in
+                if let error = error {
+                    // Log details of the failure
+                    print("Error: \(error) \(error.localizedDescription)")
+                    
+                } else {
+                    self.photoImageView.image = image
+                }
+            }
+        }
+        */
     }
 }
 

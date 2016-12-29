@@ -102,15 +102,12 @@ extension AlertConversationViewController {
 
 extension AlertConversationViewController {
     fileprivate func presentAlertReplyViewController() {
-        if let replyToUser = self.alert["author"] as? PFUser {
-            let storyboard = UIStoryboard(name: "Alerts", bundle: nil)
-            let alertReplyNC = storyboard.instantiateViewController(withIdentifier: "AlertReplyNC") as! UINavigationController
-            let alertReplyVC = alertReplyNC.viewControllers[0] as! AlertReplyViewController
-            alertReplyVC.alert = self.alert
-            alertReplyVC.replyToUser = replyToUser
-            alertReplyVC.delegate = self
-            self.present(alertReplyNC, animated: true, completion: nil)
-        }
+        let storyboard = UIStoryboard(name: "Alerts", bundle: nil)
+        let alertReplyNC = storyboard.instantiateViewController(withIdentifier: "AlertReplyNC") as! UINavigationController
+        let alertReplyVC = alertReplyNC.viewControllers[0] as! AlertReplyViewController
+        alertReplyVC.replyToAlert = self.alert
+        alertReplyVC.delegate = self
+        self.present(alertReplyNC, animated: true, completion: nil)
     }
 }
 
@@ -119,7 +116,10 @@ extension AlertConversationViewController {
 
 extension AlertConversationViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        if replies.count > 0 {
+            return 2
+        }
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -145,6 +145,10 @@ extension AlertConversationViewController: UITableViewDelegate, UITableViewDataS
             replyCell.delegate = self
             return replyCell
         }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
     }
 }
 
