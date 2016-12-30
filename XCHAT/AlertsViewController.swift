@@ -114,6 +114,7 @@ extension AlertsViewController: UITableViewDelegate, UITableViewDataSource {
         cell.profileImageView.profilePresenterDelegate = self
         cell.setUpCell(alert: self.alerts[indexPath.row])
         cell.delegate = self
+        cell.indexPath = indexPath
         return cell
     }
     
@@ -145,7 +146,7 @@ extension AlertsViewController: AlertComposeViewControllerDelegate {
 // MARK: - Alert Table View Cell Delegate
 
 extension AlertsViewController: AlertTableViewCellDelegate {
-    func alertTableViewCell(didTapReplyToAlert alert: PFObject?) {
+    func alertTableViewCell(replyToAlert alert: PFObject?) {
         if let alert = alert {
             let storyboard = UIStoryboard(name: "Alerts", bundle: nil)
             let alertReplyNC = storyboard.instantiateViewController(withIdentifier: "AlertReplyNC") as! UINavigationController
@@ -156,7 +157,84 @@ extension AlertsViewController: AlertTableViewCellDelegate {
         }
     }
     
-    func alertTableViewCellWasFlagged(withError: Bool) {
+    func alertTableViewCell(updateLikedForAlert alert: PFObject?, atIndexPath indexPath: IndexPath, liked: Bool) {
+        
+        print("UPDATE LIKED", liked)
+        
+        let query = PFQuery(className: "Alert")
+        if let objectId = alert?.objectId {
+            query.getObjectInBackground(withId: objectId) { (fetchedAlert: PFObject?, error: Error?) -> Void in
+                if error != nil {
+                    print(error!.localizedDescription)
+                } else if let alertToUpdate = fetchedAlert {
+                    if let username = PFUser.current()?.username {
+                        // Increment or decrement fave count accordingly.
+                        if liked {
+                            alertToUpdate.addUniqueObject(username, forKey: "likedBy")
+                        } else {
+                            alertToUpdate.remove(username, forKey: "likedBy")
+                        }
+                    }
+                    alertToUpdate.saveInBackground(block: { (completed: Bool, error: Error?) -> Void in
+                        if let error = error {
+                            // Log details of the failure
+                            print("Error: \(error) \(error.localizedDescription)")
+                            
+                        } else {
+                            
+                            print("LIKE UPDATE COMPLETED FOR ALERT", alertToUpdate)
+                            let cell = self.tableView.cellForRow(at: indexPath) as! AlertTableViewCell
+                            cell.setUpCell(alert: alertToUpdate)
+                            self.tableView.reloadRows(at: [indexPath], with: .none)
+                        }
+                    })
+                }
+            }
+        }
+    }
+    
+    func alertTableViewCell(updateFlaggedForAlert alert: PFObject?, flagged: Bool) {
+        
+        print("UPDATE FLAGGED", flagged)
+        
+        let query = PFQuery(className: "Alert")
+        if let objectId = alert?["objectId"] as? String {
+            query.getObjectInBackground(withId: objectId) { (alert: PFObject?, error: Error?) -> Void in
+                if error != nil {
+                    print(error!.localizedDescription)
+                } else if let alert = alert {
+                    // Mark photo as flagged.
+                    alert["flagged"] = flagged
+                    
+                    print("CURRENT STATE: \(alert["flagged"])")
+                    
+                    // Increment or decrement flag count accordingly.
+                    if flagged {
+                        alert.incrementKey("numFlags")
+                    } else {
+                        alert.incrementKey("numFlags", byAmount: -1)
+                    }
+                    alert.saveInBackground(block: { (completed: Bool, eror: Error?) -> Void in
+                        if let error = error {
+                            // Log details of the failure
+                            self.presentFlaggedAlert(withError: true)
+                            print("Error: \(error) \(error.localizedDescription)")
+                            
+                        } else {
+                            if flagged {
+                                self.presentFlaggedAlert(withError: false)
+                            }
+                            // TODO: RELOAD SPECIFIC CELL
+                        }
+                    })
+                }
+            }
+        } else {
+            self.presentFlaggedAlert(withError: true)
+        }
+    }
+    
+    func presentFlaggedAlert(withError: Bool) {
         if withError {
             let alert = UIAlertController(title: "Server Error", message: "Please try again.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))

@@ -11,9 +11,9 @@ import Parse
 import ParseUI
 
 @objc protocol AlertTableViewCellDelegate {
-    @objc optional func alertTableViewCell(didTapReplyToAlert alert: PFObject?)
-    @objc optional func alertTableViewCellShouldReload()
-    func alertTableViewCellWasFlagged(withError: Bool)
+    @objc optional func alertTableViewCell(updateLikedForAlert alert: PFObject?, atIndexPath indexPath: IndexPath, liked: Bool)
+    @objc optional func alertTableViewCell(replyToAlert alert: PFObject?)
+    @objc optional func alertTableViewCell(updateFlaggedForAlert alert: PFObject?, flagged: Bool)
 }
 
 class AlertTableViewCell: UITableViewCell {
@@ -33,7 +33,7 @@ class AlertTableViewCell: UITableViewCell {
     @IBOutlet weak var replyCountLabel: UILabel!
     
     weak var delegate: AlertTableViewCellDelegate?
-    
+    var indexPath: IndexPath!
     var alert: PFObject?
     var liked = false
     var flagged = false
@@ -51,6 +51,11 @@ class AlertTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    override func prepareForReuse() {
+        self.liked = false
+        self.flagged = false
     }
 }
 
@@ -123,8 +128,7 @@ extension AlertTableViewCell {
         if let likedBy = alert["likedBy"] as? [String] {
             if let username = PFUser.current()?.username {
                 self.liked = likedBy.contains(username)
-                
-                print("SETTING LIKED: \(self.liked)")
+                self.likeButton.isSelected = self.liked
             }
         }
         self.likeButton.isSelected = self.liked
@@ -144,82 +148,9 @@ extension AlertTableViewCell {
         // Flagged.
         if let flagged = alert["flagged"] as? Bool {
             self.flagged = flagged
+            self.flagButton.isSelected = self.flagged
         }
         self.flagButton.isSelected = self.flagged
-    }
-}
-
-
-// MARK: - Helpers
-
-extension AlertTableViewCell {
-    func updateLiked(liked: Bool) {
-        let query = PFQuery(className: "Alert")
-        if let objectId = self.alert?["objectId"] as? String {
-            query.getObjectInBackground(withId: objectId) { (alert: PFObject?, error: Error?) -> Void in
-                if error != nil {
-                    print(error!.localizedDescription)
-                } else if let alert = alert {
-                    if let username = PFUser.current()?.username {
-                        // Increment or decrement fave count accordingly.
-                        if liked {
-                            alert.add(username, forKey: "favedBy")
-                            alert.incrementKey("numFaves")
-                        } else {
-                            alert.remove(username, forKey: "favedBy")
-                            alert.incrementKey("numFaves", byAmount: -1)
-                        }
-                    }
-                    
-                    alert.saveInBackground(block: { (completed: Bool, eror: Error?) -> Void in
-                        if let error = error {
-                            // Log details of the failure
-                            print("Error: \(error) \(error.localizedDescription)")
-                            
-                        } else {
-                            self.delegate?.alertTableViewCellShouldReload?()
-                        }
-                    })
-                }
-            }
-        }
-    }
-    
-    func updateFlagged(flagged: Bool) {
-        let query = PFQuery(className: "Alert")
-        if let objectId = self.alert?["objectId"] as? String {
-            if flagged {
-                self.delegate?.alertTableViewCellWasFlagged(withError: false)
-            }
-            query.getObjectInBackground(withId: objectId) { (alert: PFObject?, error: Error?) -> Void in
-                if error != nil {
-                    print(error!.localizedDescription)
-                } else if let alert = alert {
-                    // Mark photo as flagged.
-                    alert["flagged"] = flagged
-                    
-                    print("ALERT FLAGGED: \(alert["flagged"])")
-                    
-                    // Increment or decrement flag count accordingly.
-                    if flagged {
-                        alert.incrementKey("numFlags")
-                    } else {
-                        alert.incrementKey("numFlags", byAmount: -1)
-                    }
-                    alert.saveInBackground(block: { (completed: Bool, eror: Error?) -> Void in
-                        if let error = error {
-                            // Log details of the failure
-                            print("Error: \(error) \(error.localizedDescription)")
-                            
-                        } else {
-                            self.delegate?.alertTableViewCellShouldReload?()
-                        }
-                    })
-                }
-            }
-        } else {
-            self.delegate?.alertTableViewCellWasFlagged(withError: true)
-        }
     }
 }
 
@@ -229,15 +160,15 @@ extension AlertTableViewCell {
 extension AlertTableViewCell {
     @IBAction func onLikeButtonTapped(_ sender: Any) {
         self.likeButton.isSelected = !self.liked
-        self.updateLiked(liked: !self.liked)
+        self.delegate?.alertTableViewCell?(updateLikedForAlert: self.alert, atIndexPath: self.indexPath, liked: !self.liked)
     }
     
     @IBAction func onReplyButtonTapped(_ sender: Any) {
-        self.delegate?.alertTableViewCell?(didTapReplyToAlert: self.alert)
+        self.delegate?.alertTableViewCell?(replyToAlert: self.alert)
     }
     
     @IBAction func onFlagButtonTapped(_ sender: Any) {
         self.flagButton.isSelected = !self.flagged
-        self.updateFlagged(flagged: !self.flagged)
+        self.delegate?.alertTableViewCell?(updateFlaggedForAlert: self.alert, flagged: !self.flagged)
     }
 }
