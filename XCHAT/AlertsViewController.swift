@@ -18,6 +18,7 @@ class AlertsViewController: ContentViewController {
     var refreshControl = UIRefreshControl()
     
     var alerts = [PFObject]()
+    var selectedAlertIndexPath = IndexPath()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +51,7 @@ class AlertsViewController: ContentViewController {
 }
 
 
-// MARK: - Helpers
+// MARK: - Refresh Helpers
 
 extension AlertsViewController {
     func firstLoad() {
@@ -122,12 +123,14 @@ extension AlertsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        self.selectedAlertIndexPath = indexPath
         
         let storyboard = UIStoryboard(name: "Alerts", bundle: nil)
         let alertReplyNC = storyboard.instantiateViewController(withIdentifier: "AlertConversationNC") as! UINavigationController
         let alertConversationVC = alertReplyNC.viewControllers[0] as! AlertConversationViewController
         let alert = self.alerts[indexPath.row]
         alertConversationVC.alert = alert
+        alertConversationVC.delegate = self
         self.navigationController?.pushViewController(alertConversationVC, animated: true)
     }
 }
@@ -171,11 +174,7 @@ extension AlertsViewController: AlertTableViewCellDelegate {
                     
                     print("FAVE UPDATE COMPLETED FOR ALERT", updatedAlert)
                     
-                    self.alerts[indexPath.row] = updatedAlert
-                    // Check that cell exists (i.e. we are not in the middle of an alerts refresh).
-                    if let _ = self.tableView.cellForRow(at: indexPath) as? AlertTableViewCell {
-                        self.tableView.reloadRows(at: [indexPath], with: .none)
-                    }
+                    self.reloadAlert(alert: updatedAlert, atIndexPath: indexPath)
                 }
             }
         }
@@ -194,20 +193,29 @@ extension AlertsViewController: AlertTableViewCellDelegate {
                     if flagged {
                         self.presentFlaggedAlert(withError: false)
                     }
-                    self.alerts[indexPath.row] = updatedAlert
-                    // Check that cell exists (i.e. we are not in the middle of an alerts refresh).
-                    if let _ = self.tableView.cellForRow(at: indexPath) as? AlertTableViewCell {
-                        self.tableView.reloadRows(at: [indexPath], with: .none)
-                    }
+                    self.reloadAlert(alert: updatedAlert, atIndexPath: indexPath)
                 }
             }
         } else {
             self.presentFlaggedAlert(withError: true)
         }
     }
+}
+
+
+// MARK: - Update Helpers
+
+extension AlertsViewController {
+    fileprivate func reloadAlert(alert: PFObject, atIndexPath indexPath: IndexPath) {
+        self.alerts[indexPath.row] = alert
+        // Check that cell exists (i.e. we are not in the middle of an alerts refresh).
+        if let _ = self.tableView.cellForRow(at: indexPath) as? AlertTableViewCell {
+            self.tableView.reloadRows(at: [indexPath], with: .none)
+        }
+    }
     
-    func presentFlaggedAlert(withError: Bool) {
-        if withError {
+    fileprivate func presentFlaggedAlert(withError error: Bool) {
+        if error {
             let alert = UIAlertController(title: "Server Error", message: "Please try again.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
@@ -216,6 +224,15 @@ extension AlertsViewController: AlertTableViewCellDelegate {
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
+    }
+}
+
+
+// MARK: - Alert Conversation VC Delegate
+
+extension AlertsViewController: AlertConversationViewControllerDelegate {
+    func alertConversationViewController(didUpdateAlert alert: PFObject) {
+        self.reloadAlert(alert: alert, atIndexPath: self.selectedAlertIndexPath)
     }
 }
 

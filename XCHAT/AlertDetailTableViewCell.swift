@@ -58,26 +58,30 @@ class AlertDetailTableViewCell: UITableViewCell {
 extension AlertDetailTableViewCell {
     func setUpCell(alert: PFObject) {
         self.alert = alert
+        
+        // Name and profile picture.
         if let author = alert["author"] as? PFUser {
             self.profileImageView.user = author
-            if let profilePhoto = author["photo"] as? PFFile {
-                let pfImageView = PFImageView()
-                pfImageView.file = profilePhoto
-                pfImageView.load { (image: UIImage?, error: Error?) -> Void in
-                    if let error = error {
-                        // Log details of the failure
-                        print("Error: \(error) \(error.localizedDescription)")
-                        
-                    } else {
-                        self.profileImageView.image = image
+            author.fetchIfNeededInBackground(block: { (fetchedAuthor: PFObject?, error: Error?) in
+                if let usableAuthor = fetchedAuthor as? PFUser {
+                    if let profilePhoto = usableAuthor["photo"] as? PFFile {
+                        let pfImageView = PFImageView()
+                        pfImageView.file = profilePhoto
+                        pfImageView.load { (image: UIImage?, error: Error?) -> Void in
+                            if let error = error {
+                                // Log details of the failure
+                                print("Error: \(error) \(error.localizedDescription)")
+                                
+                            } else {
+                                self.profileImageView.image = image
+                            }
+                        }
                     }
+                    
+                    self.nameLabel.user = usableAuthor
+                    self.nameLabel.text = usableAuthor["name"] as? String
                 }
-            }
-            
-            self.nameLabel.user = author
-            self.nameLabel.text = author["name"] as? String
-            self.usernameLabel.user = author
-            self.usernameLabel.text = author.username
+            })
         }
         
         if let postedAt = alert["createdAt"] as? Date {
@@ -118,7 +122,6 @@ extension AlertDetailTableViewCell {
         if let favedBy = alert["favedBy"] as? [String] {
             if let username = PFUser.current()?.username {
                 self.faved = favedBy.contains(username)
-                self.faveButton.isSelected = self.faved
             }
         }
         self.faveButton.isSelected = self.faved
@@ -144,9 +147,10 @@ extension AlertDetailTableViewCell {
         }
         
         // Flagged.
-        if let flagged = alert["flagged"] as? Bool {
-            self.flagged = flagged
-            self.flagButton.isSelected = self.flagged
+        if let flaggedBy = alert["flaggedBy"] as? [String] {
+            if let username = PFUser.current()?.username {
+                self.flagged = flaggedBy.contains(username)
+            }
         }
         self.flagButton.isSelected = self.flagged
     }
@@ -157,8 +161,11 @@ extension AlertDetailTableViewCell {
 
 extension AlertDetailTableViewCell {
     @IBAction func onFaveButtonTapped(_ sender: Any) {
-        self.faveButton.isSelected = !self.faved
-        self.delegate?.alertDetailTableViewCell?(updateFaved: !self.faved)
+        // Prevent double updating.
+        if self.faveButton.isSelected == self.faved {
+            self.faveButton.isSelected = !self.faved
+            self.delegate?.alertDetailTableViewCell?(updateFaved: !self.faved)
+        }
     }
     
     @IBAction func onReplyButtonTapped(_ sender: Any) {
@@ -166,7 +173,10 @@ extension AlertDetailTableViewCell {
     }
     
     @IBAction func onFlagButtonTapped(_ sender: Any) {
-        self.flagButton.isSelected = !self.flagged
-        self.delegate?.alertDetailTableViewCell?(updateFlagged: !self.flagged)
+        // Prevent double updating.
+        if self.flagButton.isSelected == self.flagged {
+            self.flagButton.isSelected = !self.flagged
+            self.delegate?.alertDetailTableViewCell?(updateFlagged: !self.flagged)
+        }
     }
 }

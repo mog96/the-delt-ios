@@ -6,36 +6,25 @@
 //  Copyright © 2016 Mateo Garcia. All rights reserved.
 //
 
-
-
-
-
-
-// TODO: ADD REPLY TO RELIES ARRAY BEFORE AFTER SAVE UPDATE TO ALERT OBJ GOES THRU
-
-
-
-
-
-
-
-
-
-
 import UIKit
 import Parse
 import ParseUI
 
 // TODO: Incorporates reply view at the bottom.
 
+protocol AlertConversationViewControllerDelegate {
+    func alertConversationViewController(didUpdateAlert alert: PFObject)
+}
+
 class AlertConversationViewController: ContentViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var deltLoadingView: DeltLoadingView!
+    var refreshControl = UIRefreshControl()
     
+    var delegate: AlertConversationViewControllerDelegate?
     var alert: PFObject!
     var replies = [PFObject]()
-    
     var shouldScrollToBottom = false
 
     override func viewDidLoad() {
@@ -70,7 +59,7 @@ class AlertConversationViewController: ContentViewController {
 // In query for AlertReply objects, include key User
 
 
-// MARK: - Helpers
+// MARK: - Refresh Helpers
 
 extension AlertConversationViewController {
     func firstLoad() {
@@ -126,20 +115,6 @@ extension AlertConversationViewController {
 }
 
 
-// MARK: - Reply Helpers
-
-extension AlertConversationViewController {
-    fileprivate func presentAlertReplyViewController() {
-        let storyboard = UIStoryboard(name: "Alerts", bundle: nil)
-        let alertReplyNC = storyboard.instantiateViewController(withIdentifier: "AlertReplyNC") as! UINavigationController
-        let alertReplyVC = alertReplyNC.viewControllers[0] as! AlertReplyViewController
-        alertReplyVC.replyToAlert = self.alert
-        alertReplyVC.delegate = self
-        self.present(alertReplyNC, animated: true, completion: nil)
-    }
-}
-
-
 // MARK: - Table View
 
 extension AlertConversationViewController: UITableViewDelegate, UITableViewDataSource {
@@ -184,8 +159,59 @@ extension AlertConversationViewController: UITableViewDelegate, UITableViewDataS
 // MARK: - Alert Detail Cell Delegate
 
 extension AlertConversationViewController: AlertDetailTableViewCellDelegate {
+    func alertDetailTableViewCell(updateFaved faved: Bool) {
+        AlertUtils.updateFaved(forAlert: self.alert, faved: faved) { (savedAlert: PFObject?, error: Error?) in
+            if let error = error {
+                print("Error: \(error) \(error.localizedDescription)")
+            } else if let updatedAlert = savedAlert {
+                self.updateAlertDetailCell(updatedAlert: updatedAlert)
+                self.delegate?.alertConversationViewController(didUpdateAlert: updatedAlert)
+            }
+        }
+    }
+    
     func alertDetailTableViewCellDidTapReply() {
         self.presentAlertReplyViewController()
+    }
+    
+    func alertDetailTableViewCell(updateFlagged flagged: Bool) {
+        AlertUtils.updateFlagged(forAlert: self.alert, flagged: flagged) { (savedAlert: PFObject?, error: Error?) in
+            if let error = error {
+                self.presentFlaggedAlert(withError: true)
+                print("Error: \(error) \(error.localizedDescription)")
+            } else if let updatedAlert = savedAlert {
+                if flagged {
+                    self.presentFlaggedAlert(withError: false)
+                }
+                self.updateAlertDetailCell(updatedAlert: updatedAlert)
+                self.delegate?.alertConversationViewController(didUpdateAlert: updatedAlert)
+            }
+        }
+    }
+}
+
+
+// MARK: - Alert Detail Helpers
+
+extension AlertConversationViewController {
+    fileprivate func updateAlertDetailCell(updatedAlert: PFObject) {
+        self.alert = updatedAlert
+        let indexPath = IndexPath(row: 0, section: 0)
+        if let _ = self.tableView.cellForRow(at: indexPath) {
+            self.tableView.reloadRows(at: [indexPath], with: .none)
+        }
+    }
+    
+    fileprivate func presentFlaggedAlert(withError error: Bool) {
+        if error {
+            let alert = UIAlertController(title: "Server Error", message: "Please try again.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            let alert = UIAlertController(title: "Post Flagged", message: "Administrators have been notified and this post will be reviewed.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 }
 
@@ -193,16 +219,22 @@ extension AlertConversationViewController: AlertDetailTableViewCellDelegate {
 // MARK: - Alert Reply Cell Delegate
 
 extension AlertConversationViewController: AlertReplyTableViewCellDelegate {
-    func alertDetailTableViewCell(updateFaved faved: Bool) {
-        // USE INSTANCE FACTORY
-    }
-    
     func alertReplyTableViewCellDidTapReply() {
         self.presentAlertReplyViewController()
     }
-    
-    func alertDetailTableViewCell(updateFlagged flagged: Bool) {
-        // USE INSTANCE FACTORY
+}
+
+
+// MARK: - Reply Helpers
+
+extension AlertConversationViewController {
+    fileprivate func presentAlertReplyViewController() {
+        let storyboard = UIStoryboard(name: "Alerts", bundle: nil)
+        let alertReplyNC = storyboard.instantiateViewController(withIdentifier: "AlertReplyNC") as! UINavigationController
+        let alertReplyVC = alertReplyNC.viewControllers[0] as! AlertReplyViewController
+        alertReplyVC.replyToAlert = self.alert
+        alertReplyVC.delegate = self
+        self.present(alertReplyNC, animated: true, completion: nil)
     }
 }
 
@@ -216,6 +248,13 @@ extension AlertConversationViewController: AlertComposeViewControllerDelegate {
             self.replies.append(newReply)
             self.tableView.reloadData()
             self.shouldScrollToBottom = true
+            
+            self.alert["replies"] = self.replies
+            if self.alert["replyCount"] == nil {
+                self.alert["replyCount"] = 0
+            }
+            self.alert["replyCount"] = self.alert["replyCount"] as! Int + 1
+            self.delegate?.alertConversationViewController(didUpdateAlert: self.alert)
         }
         completion()
     }

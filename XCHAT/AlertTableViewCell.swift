@@ -176,8 +176,11 @@ extension AlertTableViewCell {
 
 extension AlertTableViewCell {
     @IBAction func onFaveButtonTapped(_ sender: Any) {
-        self.faveButton.isSelected = !self.faved
-        self.delegate?.alertTableViewCell?(updateFavedForAlert: self.alert, atIndexPath: self.indexPath, faved: !self.faved)
+        // Prevent double updating.
+        if self.faveButton.isSelected == self.faved {
+            self.faveButton.isSelected = !self.faved
+            self.delegate?.alertTableViewCell?(updateFavedForAlert: self.alert, atIndexPath: self.indexPath, faved: !self.faved)
+        }
     }
     
     @IBAction func onReplyButtonTapped(_ sender: Any) {
@@ -185,7 +188,10 @@ extension AlertTableViewCell {
     }
     
     @IBAction func onFlagButtonTapped(_ sender: Any) {
-        self.flagButton.isSelected = !self.flagged
-        self.delegate?.alertTableViewCell?(updateFlaggedForAlert: self.alert, atIndexPath: self.indexPath, flagged: !self.flagged)
+        // Prevent double updating.
+        if self.flagButton.isSelected == self.flagged {
+            self.flagButton.isSelected = !self.flagged
+            self.delegate?.alertTableViewCell?(updateFlaggedForAlert: self.alert, atIndexPath: self.indexPath, flagged: !self.flagged)
+        }
     }
 }
