@@ -128,6 +128,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         /** CHECK IF USER LOGGED IN **/
         
+        /*
+        if #available(iOS 10.0, *) {
+            UNUserNotificationCenter.current().delegate = self
+        }
+        */
+        
         if PFUser.current() == nil {
             let loginStoryboard = UIStoryboard(name: "Login", bundle: nil)
             let loginViewController = loginStoryboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
@@ -236,10 +242,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
 extension AppDelegate {
     static func registerForPushNotifications(_ application: UIApplication) {
-        let notificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-        application.registerUserNotificationSettings(notificationSettings)
-        
-        print("REGISTERED FOR PUSH NOTIFICATIONS")
+        /*
+        if #available(iOS 10.0, *) {
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (granted: Bool, error: Error?) in
+                if error != nil {
+                    print(error!.localizedDescription)
+                } else if granted {
+                    print("HOORAY -- LOCAL UN GRANTED!!")
+                }
+            }
+            
+            print("REGISTERED FOR LOCAL USERNOTIFICATIONS")
+            
+        } else { */
+            let notificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            application.registerUserNotificationSettings(notificationSettings)
+            
+            print("REGISTERED FOR PUSH NOTIFICATIONS")
+        /*} */
     }
     
     /**
@@ -365,4 +385,19 @@ extension AppDelegate {
         completionHandler(.newData)
     }
 }
+
+
+/*
+extension AppDelegate {
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .sound, .badge])
+    }
+    
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        completionHandler()
+    }
+}
+*/
 
