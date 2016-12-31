@@ -317,7 +317,6 @@ extension AppDelegate {
         
         print("NOTIFICATION:", userInfo["aps"])
         
-        /*
         let aps = userInfo["aps"] as! [String: AnyObject]
         if let pushType = aps["pushType"] as? String {
             guard let identifier = PushIdentifier.init(fullIdentifier: pushType) else {
@@ -327,15 +326,21 @@ extension AppDelegate {
             if UIApplication.shared.applicationState == .active {
                 switch identifier {
                 case .Reel:
-                    return
+                    if topVC == nil || !topVC!.isKind(of: ReelViewController.self) {
+                        self.menuViewController?.presentContentView(.Reel)
+                    }
                 case .Alert:
-                    return
+                    if topVC == nil || !topVC!.isKind(of: AlertsViewController.self) {
+                        self.menuViewController?.presentContentView(.Alerts)
+                    }
                 case .Chat:
                     if topVC == nil || !topVC!.isKind(of: ChatViewController.self) {
                         (self.hamburgerViewController?.contentViewController as? ChatViewController)?.fetchMessages()
                     }
                 case .Calendar:
-                    return
+                    if topVC == nil || !topVC!.isKind(of: CalendarViewController.self) {
+                        self.menuViewController?.presentContentView(.Calendar)
+                    }
                 }
             } else {
                 switch identifier {
@@ -358,7 +363,6 @@ extension AppDelegate {
                 }
             }
         }
-        */
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
