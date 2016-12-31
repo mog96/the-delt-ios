@@ -35,6 +35,8 @@ class AlertConversationViewController: ContentViewController {
     
     var alert: PFObject!
     var replies = [PFObject]()
+    
+    var shouldScrollToBottom = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +56,14 @@ class AlertConversationViewController: ContentViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if self.shouldScrollToBottom {
+            let indexPath = IndexPath(row: self.tableView.numberOfRows(inSection: 1) - 1, section: 1)
+            self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+            self.shouldScrollToBottom = false
+        }
     }
 }
 
@@ -145,7 +155,7 @@ extension AlertConversationViewController: UITableViewDelegate, UITableViewDataS
         case 0:
             return 1
         default: // case 1:
-            return replies.count
+            return self.replies.count
         }
     }
     
@@ -182,6 +192,18 @@ extension AlertConversationViewController: AlertDetailTableViewCellDelegate {
 
 // MARK: - Alert Reply Cell Delegate
 
+
+
+
+
+
+// START HERE
+
+
+
+
+
+
 extension AlertConversationViewController: AlertReplyTableViewCellDelegate {
     func alertDetailTableViewCell(updateFaved faved: Bool) {
         // USE INSTANCE FACTORY
@@ -200,10 +222,14 @@ extension AlertConversationViewController: AlertReplyTableViewCellDelegate {
 // MARK: - Alert Compose VC Delegate
 
 extension AlertConversationViewController: AlertComposeViewControllerDelegate {
-    func refreshData(completion: @escaping (() -> ())) {
-        self.refreshReplies { 
-            completion()
+    // Append new reply to bottom of alert conversation.
+    func refreshData(savedObject object: AnyObject?, completion: @escaping (() -> ())) {
+        if let newReply = object as? PFObject {
+            self.replies.append(newReply)
+            self.tableView.reloadData()
+            self.shouldScrollToBottom = true
         }
+        completion()
     }
 }
 

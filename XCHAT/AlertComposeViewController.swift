@@ -13,7 +13,8 @@ import MobileCoreServices
 import Parse
 
 @objc protocol AlertComposeViewControllerDelegate {
-    func refreshData(completion: @escaping (() -> ()))
+    @objc optional func refreshData(completion: @escaping (() -> ()))
+    @objc optional func refreshData(savedObject object: AnyObject?, completion: @escaping (() -> ()))
 }
 
 class AlertComposeViewController: ContentViewController, UINavigationControllerDelegate {

@@ -50,7 +50,6 @@ extension NewAlertViewController {
     func postAlert() {
         print("POSTING")
         
-        // User forgets to enter alert subject.
         if self.subjectTextView.text == "" {
             let alert = UIAlertController(title: "Alert Subject Required", message: "Be specific now.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -58,13 +57,11 @@ extension NewAlertViewController {
             
         } else {
             let alert = PFObject(className: "Alert")
-            
             alert["subject"] = self.subjectTextView.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
             if self.messageTextView.text.characters.count > 0 {
                 alert["message"] = self.messageTextView.text
             }
             alert["author"] = PFUser.current()!
-            
             if self.photo != nil {
                 let imageData = UIImageJPEGRepresentation(self.photo!, 100)
                 let imageFile = PFFile(name: "image.jpeg", data: imageData!)
@@ -85,7 +82,7 @@ extension NewAlertViewController {
                     alertVC.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                     self.present(alertVC, animated: true, completion: nil)
                 } else {
-                    self.delegate?.refreshData(completion: {
+                    self.delegate?.refreshData?(completion: {
                         currentHUD.hide(animated: true)
                         self.dismiss(animated: true, completion: nil)
                     })

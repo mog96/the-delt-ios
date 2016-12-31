@@ -17,11 +17,16 @@ class DeltLoadingView: UIView {
     init(frame: CGRect, exemptFrames: CGRect...) {
         super.init(frame: frame)
         self.exemptFrames = exemptFrames
-        self.deltColor = LayoutUtils.greenColor
+        self.commonInit()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        self.commonInit()
+    }
+    
+    func commonInit() {
+        self.deltColor = LayoutUtils.greenColor
     }
     
     func addExemptFrames(_ exemptFrames: CGRect...) {

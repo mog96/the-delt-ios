@@ -10,6 +10,10 @@ import UIKit
 import MBProgressHUD
 import Parse
 
+@objc protocol AlertReplyViewControllerDelegate {
+    @objc optional func alertReplyViewController(didSaveNewEvent event: PFObject)
+}
+
 class AlertReplyViewController: AlertComposeViewController {
     
     @IBOutlet weak var inReplyToLabel: UILabel!
@@ -95,9 +99,19 @@ extension AlertReplyViewController {
                     print(error!.localizedDescription)
                     presentReplyPostErrorAlert()
                 } else {
-                    self.delegate?.refreshData {
+                    func completion() {
                         currentHUD.hide(animated: true)
                         self.dismiss(animated: true, completion: nil)
+                    }
+                    var executed = false
+                    self.delegate?.refreshData?(savedObject: reply) {
+                        completion()
+                        executed = true
+                    }
+                    if !executed {
+                        self.delegate?.refreshData? {
+                            completion()
+                        }
                     }
                 }
             }
