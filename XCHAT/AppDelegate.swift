@@ -297,13 +297,27 @@ extension AppDelegate {
         
         print("NOTIFICATION:", userInfo["aps"])
         
-        if UIApplication.shared.applicationState != .active {
-            let aps = userInfo["aps"] as! [String: AnyObject]
-            if let pushType = aps["pushType"] as? String {
-                guard let identifier = PushIdentifier.init(fullIdentifier: pushType) else {
+        /*
+        let aps = userInfo["aps"] as! [String: AnyObject]
+        if let pushType = aps["pushType"] as? String {
+            guard let identifier = PushIdentifier.init(fullIdentifier: pushType) else {
+                return
+            }
+            let topVC = (self.hamburgerViewController?.contentViewController as? UINavigationController)?.topViewController
+            if UIApplication.shared.applicationState == .active {
+                switch identifier {
+                case .Reel:
+                    return
+                case .Alert:
+                    return
+                case .Chat:
+                    if topVC == nil || !topVC!.isKind(of: ChatViewController.self) {
+                        (self.hamburgerViewController?.contentViewController as? ChatViewController)?.fetchMessages()
+                    }
+                case .Calendar:
                     return
                 }
-                let topVC = (self.hamburgerViewController?.contentViewController as? UINavigationController)?.topViewController
+            } else {
                 switch identifier {
                 case .Reel:
                     if topVC == nil || !topVC!.isKind(of: ReelViewController.self) {
@@ -324,9 +338,31 @@ extension AppDelegate {
                 }
             }
         }
+        */
     }
     
-    // @available(iOS 10.0, *)
-    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        print("NOTIFICATION:", userInfo["aps"])
+        
+        let aps = userInfo["aps"] as! [String: AnyObject]
+        if let pushType = aps["pushType"] as? String {
+            guard let identifier = PushIdentifier.init(fullIdentifier: pushType) else {
+                return
+            }
+            let topVC = (self.hamburgerViewController?.contentViewController as? UINavigationController)?.topViewController
+            switch identifier {
+            case .Reel:
+                return
+            case .Alert:
+                return
+            case .Chat:
+                NotificationCenter.default.post(name: Notification.Name("ChatViewControllerShouldRefresh"), object: nil)
+            case .Calendar:
+                return
+            }
+        }
+        completionHandler(.newData)
+    }
 }
 
