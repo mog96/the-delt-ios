@@ -17,6 +17,7 @@ import ParseUI
 class ReelViewController: ContentViewController, UINavigationControllerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var deltLoadingView: DeltLoadingView!
     
     var photos = NSMutableArray()
     var uploadPhoto: UIImage?
@@ -68,9 +69,11 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
             self.tableView.insertSubview(self.refreshControl!, at: 0)
         }
         
+        self.deltLoadingView.deltColor = UIColor.red
+        
         self.tableView.setNeedsLayout()
         self.tableView.layoutIfNeeded()
-        self.refreshData()
+        self.firstLoad()
         
         self.chooseMediaAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         self.chooseMediaAlertController.addAction(UIAlertAction(title: "CLICK", style: .destructive, handler: { _ in      // FIXME: Using .Destructive to get red text color is a little hacky...
@@ -274,9 +277,29 @@ extension ReelViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension ReelViewController {
     
-    // TODO: Just pass around PFObject, no need to deserialize...
+    func firstLoad() {
+        let animationDuration = 0.5
+        UIView.transition(with: self.deltLoadingView, duration: animationDuration, options: .transitionCrossDissolve, animations: {
+            self.deltLoadingView.startAnimating()
+            self.deltLoadingView.isHidden = false
+        }, completion: nil)
+        self.refreshData {
+            UIView.transition(with: self.deltLoadingView, duration: animationDuration, options: .transitionCrossDissolve, animations: {
+                self.deltLoadingView.isHidden = true
+                self.deltLoadingView.stopAnimating()
+            }, completion: nil)
+        }
+    }
+    
     func refreshData() {
         self.refreshControl?.beginRefreshing()
+        self.refreshData { 
+            self.refreshControl?.endRefreshing()
+        }
+    }
+    
+    // TODO: Just pass around PFObject, no need to deserialize...
+    func refreshData(completion: (() -> ())?) {
         let query = PFQuery(className: "Photo")
         query.order(byAscending: "createdAt")
         query.findObjectsInBackground { (objects: [PFObject]?, error: Error?) -> Void in
@@ -334,8 +357,8 @@ extension ReelViewController {
                     }
                 }
                 
-                self.refreshControl?.endRefreshing()
                 self.tableView.reloadData()
+                completion?()
             }
         }
     }
@@ -418,7 +441,7 @@ extension ReelViewController: ButtonCellDelegate {
                         print("Error: \(error) \(error.localizedDescription)")
                         
                     } else {
-                        self.refreshData() // FIXME: Makes for glitchy scrolling.
+                        self.refreshData()  // FIXME: Makes for glitchy scrolling.
                     }
                 })
             }
