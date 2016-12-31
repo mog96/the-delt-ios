@@ -68,13 +68,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 #if TARGET_IPHONE_SIMULATOR
                     $0.server = "http://localhost:1337/parse"
                 #else
-                    $0.server = "http://mog.local:1337/parse"
-                    // $0.server = "http://192.168.1.243:1337/parse"
+                    // $0.server = "http://mog.local:1337/parse"
+                    $0.server = "http://192.168.1.84:1337/parse"
                 #endif
                 /* END DEVELOPMENT ONLY */
                 
                 /*********** ENABLE BEFORE APP DEPLOY ***********/
-                $0.server = "https://thedelt.herokuapp.com/parse"
+                // $0.server = "https://thedelt.herokuapp.com/parse"
             }
             Parse.enableDataSharing(withApplicationGroupIdentifier: "group.com.tdx.thedelt")
             Parse.enableLocalDatastore()

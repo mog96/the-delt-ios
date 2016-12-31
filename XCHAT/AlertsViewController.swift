@@ -22,7 +22,7 @@ class AlertsViewController: ContentViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setMenuButton(withColor: "white")
+        self.setMenuButton(withColor: "blue")
         UIApplication.shared.setStatusBarStyle(.lightContent, animated: true)
 
         self.tableView.dataSource = self

@@ -26,6 +26,8 @@ class AlertTableViewCell: UITableViewCell {
     @IBOutlet weak var subjectLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var photoImageView: UIImageView!
+    @IBOutlet weak var photoImageViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var photoImageViewTopSpaceConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var faveButton: UIButton!
     @IBOutlet weak var replyButton: UIButton!
@@ -38,6 +40,9 @@ class AlertTableViewCell: UITableViewCell {
     var alert: PFObject?
     var faved = false
     var flagged = false
+    
+    var kPhotoImageViewHeight: CGFloat = 200
+    var kPhotoImageViewTopSpace: CGFloat = 8
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -61,6 +66,9 @@ class AlertTableViewCell: UITableViewCell {
         self.flagged = false
         self.profileImageView.image = nil
         self.photoImageView.image = nil
+        self.photoImageView.isHidden = false
+        self.photoImageViewHeightConstraint.constant = self.kPhotoImageViewHeight
+        self.photoImageViewTopSpaceConstraint.constant = self.kPhotoImageViewTopSpace
     }
 }
 
@@ -136,6 +144,10 @@ extension AlertTableViewCell {
                     self.photoImageView.image = image
                 }
             }
+        } else {
+            self.photoImageView.isHidden = true
+            self.photoImageViewHeightConstraint.constant = 0
+            self.photoImageViewTopSpaceConstraint.constant = 0
         }
         
         // Faves.

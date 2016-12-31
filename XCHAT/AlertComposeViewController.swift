@@ -86,7 +86,9 @@ extension AlertComposeViewController: UIImagePickerControllerDelegate {
         } else {
             self.imagePickerVC.sourceType = .camera
         }
-        self.present(self.imagePickerVC, animated: true, completion: nil)
+        self.present(self.imagePickerVC, animated: true) {
+            UIApplication.shared.setStatusBarStyle(.default, animated: true)
+        }
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -111,7 +113,9 @@ extension AlertComposeViewController: UIImagePickerControllerDelegate {
         }
         currentHUD.hide(animated: true)
         self.photoImageView.image = self.photo
-        picker.dismiss(animated: true, completion: nil)
+        picker.dismiss(animated: true) {
+            UIApplication.shared.setStatusBarStyle(.lightContent, animated: true)
+        }
     }
 }
 

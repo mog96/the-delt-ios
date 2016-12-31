@@ -359,6 +359,7 @@ extension ReelViewController {
                 
                 self.tableView.reloadData()
                 completion?()
+                self.deltLoadingView.stopAnimating()
             }
         }
     }

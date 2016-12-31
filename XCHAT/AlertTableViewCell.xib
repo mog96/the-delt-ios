@@ -180,6 +180,8 @@
                 <outlet property="messageLabel" destination="bwi-5t-7xb" id="bW2-UK-8tv"/>
                 <outlet property="nameLabel" destination="VEs-8j-0zd" id="an4-fm-b7J"/>
                 <outlet property="photoImageView" destination="24x-lI-v3D" id="CAQ-Im-hLg"/>
+                <outlet property="photoImageViewHeightConstraint" destination="7T1-f5-Ozh" id="Kz9-BQ-zID"/>
+                <outlet property="photoImageViewTopSpaceConstraint" destination="7yz-c4-Fuk" id="0aS-hh-Cyd"/>
                 <outlet property="profileImageView" destination="iWt-b1-dMq" id="eAI-Wn-qmB"/>
                 <outlet property="replyButton" destination="egJ-YN-Qg3" id="dAD-xd-mgP"/>
                 <outlet property="replyCountLabel" destination="K4I-Bp-Elp" id="qYV-6Y-N3x"/>

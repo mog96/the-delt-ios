@@ -176,6 +176,7 @@ extension LoginViewController {
                 UserDefaults(suiteName: "group.com.tdx.thedelt")?.set(user!.username!, forKey: "Username")
                 let installation = PFInstallation.current()!
                 installation["user"] = PFUser.current()!
+                installation["username"] = PFUser.current()!.username!
                 installation.saveInBackground(block: { (completed: Bool, error: Error?) in
                     print("USER SAVED TO INSTALLATION")
                 })
@@ -188,7 +189,6 @@ extension LoginViewController {
                     self.view.endEditing(true)
                     self.transitionToApp()
                 }
-                
             } else {
                 
                 print("LOGIN FAILED")
