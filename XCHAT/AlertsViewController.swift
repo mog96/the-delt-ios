@@ -159,9 +159,11 @@ extension AlertsViewController: AlertTableViewCellDelegate {
         }
     }
     
-    func alertTableViewCell(updateLikedForAlert alert: PFObject?, atIndexPath indexPath: IndexPath, liked: Bool) {
+    func alertTableViewCell(updateFavedForAlert alert: PFObject?, atIndexPath indexPath: IndexPath, faved: Bool) {
         
-        print("UPDATE LIKED", liked)
+        print("UPDATE FAVED", faved)
+        
+        // TODO: PUT INTO SHARED INSTANCE WITH COMPLETION PARAM FOR USE IN DETAIL CELL.
         
         let query = PFQuery(className: "Alert")
         if let objectId = alert?.objectId {
@@ -171,12 +173,12 @@ extension AlertsViewController: AlertTableViewCellDelegate {
                 } else if let alertToUpdate = fetchedAlert {
                     if let username = PFUser.current()?.username {
                         // Increment or decrement fave count accordingly.
-                        if liked {
-                            alertToUpdate.addUniqueObject(username, forKey: "likedBy")
-                            alertToUpdate.incrementKey("likeCount")
+                        if faved {
+                            alertToUpdate.addUniqueObject(username, forKey: "favedBy")
+                            alertToUpdate.incrementKey("faveCount")
                         } else {
-                            alertToUpdate.remove(username, forKey: "likedBy")
-                            alertToUpdate.incrementKey("likeCount", byAmount: -1)
+                            alertToUpdate.remove(username, forKey: "favedBy")
+                            alertToUpdate.incrementKey("faveCount", byAmount: -1)
                         }
                     }
                     alertToUpdate.saveInBackground(block: { (completed: Bool, error: Error?) -> Void in
@@ -186,7 +188,7 @@ extension AlertsViewController: AlertTableViewCellDelegate {
                             
                         } else {
                             
-                            print("LIKE UPDATE COMPLETED FOR ALERT", alertToUpdate)
+                            print("FAVE UPDATE COMPLETED FOR ALERT", alertToUpdate)
                             
                             // Check that cell exists (i.e. we are not in the middle of an alerts refresh).
                             self.alerts[indexPath.row] = alertToUpdate

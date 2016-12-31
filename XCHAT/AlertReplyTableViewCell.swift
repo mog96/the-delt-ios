@@ -24,8 +24,8 @@ class AlertReplyTableViewCell: UITableViewCell {
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var photoImageView: UIImageView!
     
-    @IBOutlet weak var likeButton: UIButton!
-    @IBOutlet weak var likeCountLabel: UILabel!
+    @IBOutlet weak var faveButton: UIButton!
+    @IBOutlet weak var faveCountLabel: UILabel!
     @IBOutlet weak var replyButton: UIButton!
     @IBOutlet weak var flagButton: UIButton!
     
@@ -46,7 +46,12 @@ class AlertReplyTableViewCell: UITableViewCell {
         
         // Configure the view for the selected state
     }
-    
+}
+
+
+// MARK: - Setup
+
+extension AlertReplyTableViewCell {
     func setUpCell(reply: PFObject) {
         self.reply = reply
         if let author = reply["author"] as? PFUser {
@@ -58,7 +63,6 @@ class AlertReplyTableViewCell: UITableViewCell {
                     if let error = error {
                         // Log details of the failure
                         print("Error: \(error) \(error.localizedDescription)")
-                        
                     } else {
                         self.profileImageView.image = image
                     }
@@ -104,11 +108,11 @@ class AlertReplyTableViewCell: UITableViewCell {
             }
         }
         
-        // Like count.
-        if let likeCount = reply["likeCount"] as? Int {
-            self.likeCountLabel.text = String(likeCount)
+        // Fave count.
+        if let faveCount = reply["faveCount"] as? Int {
+            self.faveCountLabel.text = String(faveCount)
         } else {
-            self.likeCountLabel.text = ""
+            self.faveCountLabel.text = ""
         }
     }
 }
@@ -117,15 +121,8 @@ class AlertReplyTableViewCell: UITableViewCell {
 // MARK: - Actions
 
 extension AlertReplyTableViewCell {
-    @IBAction func onLikeButtonTapped(_ sender: Any) {
-//        self.alert?.incrementKey("likeCount")
-//        self.alert?.saveInBackground(block: { (completed: Bool, error: Error?) in
-//            if error != nil {
-//                print(error!.localizedDescription)
-//            } else {
-//                self.delegate?.alertReplyTableViewCellShouldReload?()
-//            }
-//        })
+    @IBAction func onFaveButtonTapped(_ sender: Any) {
+        
     }
     
     @IBAction func onReplyButtonTapped(_ sender: Any) {

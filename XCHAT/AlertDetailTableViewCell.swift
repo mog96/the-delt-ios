@@ -11,8 +11,9 @@ import Parse
 import ParseUI
 
 @objc protocol AlertDetailTableViewCellDelegate {
+    @objc optional func alertDetailTableViewCell(updateFaved faved: Bool)
     @objc optional func alertDetailTableViewCellDidTapReply()
-    @objc optional func alertDetailTableViewCellShouldReload()
+    @objc optional func alertDetailTableViewCell(updateFlagged flagged: Bool)
 }
 
 class AlertDetailTableViewCell: UITableViewCell {
@@ -25,8 +26,8 @@ class AlertDetailTableViewCell: UITableViewCell {
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var photoImageView: UIImageView!
     
-    @IBOutlet weak var likeButton: UIButton!
-    @IBOutlet weak var likeCountLabel: UILabel!
+    @IBOutlet weak var faveButton: UIButton!
+    @IBOutlet weak var faveCountLabel: UILabel!
     @IBOutlet weak var replyButton: UIButton!
     @IBOutlet weak var replyCountLabel: UILabel!
     @IBOutlet weak var flagButton: UIButton!
@@ -34,7 +35,7 @@ class AlertDetailTableViewCell: UITableViewCell {
     weak var delegate: AlertDetailTableViewCellDelegate?
     
     var alert: PFObject?
-    var liked = false
+    var faved = false
     var flagged = false
     
     override func awakeFromNib() {
@@ -49,7 +50,12 @@ class AlertDetailTableViewCell: UITableViewCell {
         
         // Configure the view for the selected state
     }
-    
+}
+
+
+// MARK: - Setup
+
+extension AlertDetailTableViewCell {
     func setUpCell(alert: PFObject) {
         self.alert = alert
         if let author = alert["author"] as? PFUser {
@@ -108,34 +114,41 @@ class AlertDetailTableViewCell: UITableViewCell {
             }
         }
         
-        // Like.
-        if let likedBy = alert["likedBy"] as? [String] {
+        // Faves.
+        if let favedBy = alert["favedBy"] as? [String] {
             if let username = PFUser.current()?.username {
-                self.liked = likedBy.contains(username)
-                
-                print("SETTING LIKED: \(self.liked)")
+                self.faved = favedBy.contains(username)
+                self.faveButton.isSelected = self.faved
             }
         }
-        self.likeButton.isSelected = self.liked
-        if let likeCount = alert["likeCount"] as? Int {
-            self.likeCountLabel.text = String(likeCount)
+        self.faveButton.isSelected = self.faved
+        if let faveCount = alert["faveCount"] as? Int {
+            if faveCount > 0 {
+                self.faveCountLabel.text = String(faveCount)
+            } else {
+                self.faveCountLabel.text = ""
+            }
         } else {
-            self.likeCountLabel.text = ""
+            self.faveCountLabel.text = ""
         }
         
-        // Reply count.
-        if let replies = alert["replies"] as? [PFObject] {
-            self.replyCountLabel.text = String(replies.count)
+        // Replies.
+        if let replyCount = alert["replyCount"] as? Int {
+            if replyCount > 0 {
+                self.replyCountLabel.text = String(replyCount)
+            } else {
+                self.replyCountLabel.text = ""
+            }
         } else {
             self.replyCountLabel.text = ""
         }
         
-        // Reply count.
-        if let replies = alert["replies"] as? [PFObject] {
-            self.replyCountLabel.text = String(replies.count)
-        } else {
-            self.replyCountLabel.text = ""
+        // Flagged.
+        if let flagged = alert["flagged"] as? Bool {
+            self.flagged = flagged
+            self.flagButton.isSelected = self.flagged
         }
+        self.flagButton.isSelected = self.flagged
     }
 }
 
@@ -143,15 +156,9 @@ class AlertDetailTableViewCell: UITableViewCell {
 // MARK: - Actions
 
 extension AlertDetailTableViewCell {
-    @IBAction func onLikeButtonTapped(_ sender: Any) {
-//        self.alert?.incrementKey("likeCount")
-//        self.alert?.saveInBackground(block: { (completed: Bool, error: Error?) in
-//            if error != nil {
-//                print(error!.localizedDescription)
-//            } else {
-//                self.delegate?.alertDetailTableViewCellShouldReload?()
-//            }
-//        })
+    @IBAction func onFaveButtonTapped(_ sender: Any) {
+        self.faveButton.isSelected = !self.faved
+        self.delegate?.alertDetailTableViewCell?(updateFaved: !self.faved)
     }
     
     @IBAction func onReplyButtonTapped(_ sender: Any) {
@@ -159,5 +166,7 @@ extension AlertDetailTableViewCell {
     }
     
     @IBAction func onFlagButtonTapped(_ sender: Any) {
+        self.flagButton.isSelected = !self.flagged
+        self.delegate?.alertDetailTableViewCell?(updateFlagged: !self.flagged)
     }
 }

@@ -6,6 +6,22 @@
 //  Copyright © 2016 Mateo Garcia. All rights reserved.
 //
 
+
+
+
+
+
+// TODO: ADD REPLY TO RELIES ARRAY BEFORE AFTER SAVE UPDATE TO ALERT OBJ GOES THRU
+
+
+
+
+
+
+
+
+
+
 import UIKit
 import Parse
 import ParseUI
@@ -27,6 +43,8 @@ class AlertConversationViewController: ContentViewController {
         self.tableView.delegate = self
         self.tableView.estimatedRowHeight = 10
         self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.register(UINib(nibName: "AlertDetailTableViewCell", bundle: nil), forCellReuseIdentifier: "AlertDetailCell")
+        self.tableView.register(UINib(nibName: "AlertReplyTableViewCell", bundle: nil), forCellReuseIdentifier: "AlertReplyCell")
         
         self.deltLoadingView.deltColor = UIColor.white
         
@@ -165,8 +183,16 @@ extension AlertConversationViewController: AlertDetailTableViewCellDelegate {
 // MARK: - Alert Reply Cell Delegate
 
 extension AlertConversationViewController: AlertReplyTableViewCellDelegate {
+    func alertDetailTableViewCell(updateFaved faved: Bool) {
+        // USE INSTANCE FACTORY
+    }
+    
     func alertReplyTableViewCellDidTapReply() {
         self.presentAlertReplyViewController()
+    }
+    
+    func alertDetailTableViewCell(updateFlagged flagged: Bool) {
+        // USE INSTANCE FACTORY
     }
 }
 

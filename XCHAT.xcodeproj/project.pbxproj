@@ -57,6 +57,8 @@
 		259FBA591B02F5A6006F1650 /* XCHATTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259FBA581B02F5A6006F1650 /* XCHATTests.swift */; };
 		25C6CCDA1B1290C200EADB5B /* CaptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C6CCD91B1290C200EADB5B /* CaptionViewController.swift */; };
 		25C6CCDC1B12FF1600EADB5B /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C6CCDB1B12FF1600EADB5B /* CommentViewController.swift */; };
+		25C6ED561E1734AD0060F6CB /* AlertDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C6ED551E1734AD0060F6CB /* AlertDetailTableViewCell.xib */; };
+		25C6ED581E1734DB0060F6CB /* AlertReplyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C6ED571E1734DB0060F6CB /* AlertReplyTableViewCell.xib */; };
 		25E5252A1C59C8B600477C3D /* GestureUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E525291C59C8B600477C3D /* GestureUtils.swift */; };
 		25F016061B045882004D78F6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F016051B045882004D78F6 /* LoginViewController.swift */; };
 		25F0160A1B045D83004D78F6 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F016091B045D83004D78F6 /* MenuViewController.swift */; };
@@ -210,6 +212,8 @@
 		259FBA581B02F5A6006F1650 /* XCHATTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCHATTests.swift; sourceTree = "<group>"; };
 		25C6CCD91B1290C200EADB5B /* CaptionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptionViewController.swift; sourceTree = "<group>"; };
 		25C6CCDB1B12FF1600EADB5B /* CommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
+		25C6ED551E1734AD0060F6CB /* AlertDetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertDetailTableViewCell.xib; sourceTree = "<group>"; };
+		25C6ED571E1734DB0060F6CB /* AlertReplyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertReplyTableViewCell.xib; sourceTree = "<group>"; };
 		25E525291C59C8B600477C3D /* GestureUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GestureUtils.swift; sourceTree = "<group>"; };
 		25F016051B045882004D78F6 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		25F016091B045D83004D78F6 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -341,6 +345,8 @@
 			children = (
 				2520DCCD1E0D24F000FAB13B /* Alerts.storyboard */,
 				2520DCD71E0D3F6000FAB13B /* AlertTableViewCell.xib */,
+				25C6ED551E1734AD0060F6CB /* AlertDetailTableViewCell.xib */,
+				25C6ED571E1734DB0060F6CB /* AlertReplyTableViewCell.xib */,
 			);
 			name = Layout;
 			sourceTree = "<group>";
@@ -835,10 +841,12 @@
 				D55496051D8A5C0A00090E76 /* Calendar.storyboard in Resources */,
 				2520DCD81E0D3F6000FAB13B /* AlertTableViewCell.xib in Resources */,
 				D58252231D839354008313DF /* Admin.storyboard in Resources */,
+				25C6ED581E1734DB0060F6CB /* AlertReplyTableViewCell.xib in Resources */,
 				D54E636D1D8E59F20091EBDE /* AuxPlayerView.xib in Resources */,
 				2520DCCE1E0D24F000FAB13B /* Alerts.storyboard in Resources */,
 				259FBA481B02F5A5006F1650 /* Menu.storyboard in Resources */,
 				381BD6C81B158C5F005C6D1C /* Members.storyboard in Resources */,
+				25C6ED561E1734AD0060F6CB /* AlertDetailTableViewCell.xib in Resources */,
 				385C74521B0ECB8A009BAC7A /* Profile.storyboard in Resources */,
 				259FBA4D1B02F5A6006F1650 /* LaunchScreen.xib in Resources */,
 				387866101B0478C400623BC1 /* Settings.storyboard in Resources */,

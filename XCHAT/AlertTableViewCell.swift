@@ -11,7 +11,7 @@ import Parse
 import ParseUI
 
 @objc protocol AlertTableViewCellDelegate {
-    @objc optional func alertTableViewCell(updateLikedForAlert alert: PFObject?, atIndexPath indexPath: IndexPath, liked: Bool)
+    @objc optional func alertTableViewCell(updateFavedForAlert alert: PFObject?, atIndexPath indexPath: IndexPath, faved: Bool)
     @objc optional func alertTableViewCell(replyToAlert alert: PFObject?)
     @objc optional func alertTableViewCell(updateFlaggedForAlert alert: PFObject?, flagged: Bool)
 }
@@ -26,16 +26,16 @@ class AlertTableViewCell: UITableViewCell {
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var photoImageView: UIImageView!
     
-    @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var faveButton: UIButton!
     @IBOutlet weak var replyButton: UIButton!
     @IBOutlet weak var flagButton: UIButton!
-    @IBOutlet weak var likeCountLabel: UILabel!
+    @IBOutlet weak var faveCountLabel: UILabel!
     @IBOutlet weak var replyCountLabel: UILabel!
     
     weak var delegate: AlertTableViewCellDelegate?
     var indexPath: IndexPath!
     var alert: PFObject?
-    var liked = false
+    var faved = false
     var flagged = false
     
     override func awakeFromNib() {
@@ -45,6 +45,8 @@ class AlertTableViewCell: UITableViewCell {
         self.containerView.clipsToBounds = true
         self.profileImageView.layer.cornerRadius = 3
         self.profileImageView.clipsToBounds = true
+        self.photoImageView.layer.cornerRadius = 3
+        self.photoImageView.clipsToBounds = true
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -54,8 +56,9 @@ class AlertTableViewCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
-        self.liked = false
+        self.faved = false
         self.flagged = false
+        self.photoImageView.image = nil
     }
 }
 
@@ -130,22 +133,22 @@ extension AlertTableViewCell {
             }
         }
         
-        // Likes.
-        if let likedBy = alert["likedBy"] as? [String] {
+        // Faves.
+        if let favedBy = alert["favedBy"] as? [String] {
             if let username = PFUser.current()?.username {
-                self.liked = likedBy.contains(username)
-                self.likeButton.isSelected = self.liked
+                self.faved = favedBy.contains(username)
+                self.faveButton.isSelected = self.faved
             }
         }
-        self.likeButton.isSelected = self.liked
-        if let likeCount = alert["likeCount"] as? Int {
-            if likeCount > 0 {
-                self.likeCountLabel.text = String(likeCount)
+        self.faveButton.isSelected = self.faved
+        if let faveCount = alert["faveCount"] as? Int {
+            if faveCount > 0 {
+                self.faveCountLabel.text = String(faveCount)
             } else {
-                self.likeCountLabel.text = ""
+                self.faveCountLabel.text = ""
             }
         } else {
-            self.likeCountLabel.text = ""
+            self.faveCountLabel.text = ""
         }
         
         // Replies.
@@ -172,9 +175,9 @@ extension AlertTableViewCell {
 // MARK: - Actions
 
 extension AlertTableViewCell {
-    @IBAction func onLikeButtonTapped(_ sender: Any) {
-        self.likeButton.isSelected = !self.liked
-        self.delegate?.alertTableViewCell?(updateLikedForAlert: self.alert, atIndexPath: self.indexPath, liked: !self.liked)
+    @IBAction func onFaveButtonTapped(_ sender: Any) {
+        self.faveButton.isSelected = !self.faved
+        self.delegate?.alertTableViewCell?(updateFavedForAlert: self.alert, atIndexPath: self.indexPath, faved: !self.faved)
     }
     
     @IBAction func onReplyButtonTapped(_ sender: Any) {

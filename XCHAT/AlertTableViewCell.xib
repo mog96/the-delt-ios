@@ -71,7 +71,7 @@
                                 <state key="selected" backgroundImage="FAVE_ON"/>
                                 <state key="highlighted" backgroundImage="FAVE_ON"/>
                                 <connections>
-                                    <action selector="onLikeButtonTapped:" destination="IJa-64-sxw" eventType="touchUpInside" id="PAd-uz-RS7"/>
+                                    <action selector="onFaveButtonTapped:" destination="IJa-64-sxw" eventType="touchUpInside" id="VFE-0q-Dab"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="swy-Ve-TsX">
@@ -165,9 +165,9 @@
             <connections>
                 <outlet property="containerView" destination="adP-La-KuT" id="gxt-Vf-R8C"/>
                 <outlet property="dateLabel" destination="4MO-RP-64b" id="iyB-n4-YOq"/>
+                <outlet property="faveButton" destination="NV1-nP-nGm" id="Lyb-3Y-opn"/>
+                <outlet property="faveCountLabel" destination="hGX-nm-6W1" id="KMF-Ok-db3"/>
                 <outlet property="flagButton" destination="swy-Ve-TsX" id="qYg-vR-ask"/>
-                <outlet property="likeButton" destination="NV1-nP-nGm" id="Pst-jR-kdp"/>
-                <outlet property="likeCountLabel" destination="hGX-nm-6W1" id="uam-YV-dE4"/>
                 <outlet property="messageLabel" destination="bwi-5t-7xb" id="bW2-UK-8tv"/>
                 <outlet property="nameLabel" destination="VEs-8j-0zd" id="an4-fm-b7J"/>
                 <outlet property="photoImageView" destination="24x-lI-v3D" id="CAQ-Im-hLg"/>
