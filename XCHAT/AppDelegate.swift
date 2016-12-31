@@ -75,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 /* END DEVELOPMENT ONLY */
                 
                 /*********** ENABLE BEFORE APP DEPLOY ***********/
-                // $0.server = "https://thedelt.herokuapp.com/parse"
+                $0.server = "https://thedelt.herokuapp.com/parse"
             }
             Parse.enableDataSharing(withApplicationGroupIdentifier: "group.com.tdx.thedelt")
             Parse.enableLocalDatastore()
@@ -297,27 +297,13 @@ extension AppDelegate {
         
         print("NOTIFICATION:", userInfo["aps"])
         
-        /*
         let aps = userInfo["aps"] as! [String: AnyObject]
         if let pushType = aps["pushType"] as? String {
             guard let identifier = PushIdentifier.init(fullIdentifier: pushType) else {
                 return
             }
             let topVC = (self.hamburgerViewController?.contentViewController as? UINavigationController)?.topViewController
-            if UIApplication.shared.applicationState == .active {
-                switch identifier {
-                case .Reel:
-                    return
-                case .Alert:
-                    return
-                case .Chat:
-                    if topVC == nil || !topVC!.isKind(of: ChatViewController.self) {
-                        (self.hamburgerViewController?.contentViewController as? ChatViewController)?.fetchMessages()
-                    }
-                case .Calendar:
-                    return
-                }
-            } else {
+            if UIApplication.shared.applicationState != .active {
                 switch identifier {
                 case .Reel:
                     if topVC == nil || !topVC!.isKind(of: ReelViewController.self) {
@@ -338,7 +324,6 @@ extension AppDelegate {
                 }
             }
         }
-        */
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
@@ -353,13 +338,22 @@ extension AppDelegate {
             let topVC = (self.hamburgerViewController?.contentViewController as? UINavigationController)?.topViewController
             switch identifier {
             case .Reel:
-                return
+                if topVC == nil || !topVC!.isKind(of: ReelViewController.self) {
+                    self.menuViewController?.presentContentView(.Reel)
+                }
             case .Alert:
-                return
+                if topVC == nil || !topVC!.isKind(of: AlertsViewController.self) {
+                    self.menuViewController?.presentContentView(.Alerts)
+                }
             case .Chat:
+                if topVC == nil || !topVC!.isKind(of: ChatViewController.self) {
+                    self.menuViewController?.presentContentView(.Chat)
+                }
                 NotificationCenter.default.post(name: Notification.Name("ChatViewControllerShouldRefresh"), object: nil)
             case .Calendar:
-                return
+                if topVC == nil || !topVC!.isKind(of: CalendarViewController.self) {
+                    self.menuViewController?.presentContentView(.Calendar)
+                }
             }
         }
         completionHandler(.newData)
