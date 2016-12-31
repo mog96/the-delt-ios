@@ -118,6 +118,12 @@
                                     <constraint firstAttribute="height" constant="200" id="7T1-f5-Ozh"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="749" text="@roon" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAU-EK-xC1" customClass="UsernameLabel" customModule="XCHAT" customModuleProvider="target">
+                                <rect key="frame" x="196" y="12" width="40" height="16"/>
+                                <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="13"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -140,10 +146,13 @@
                             <constraint firstItem="VEs-8j-0zd" firstAttribute="top" secondItem="adP-La-KuT" secondAttribute="top" constant="10" id="aEi-d9-Uoo"/>
                             <constraint firstItem="bwi-5t-7xb" firstAttribute="top" relation="greaterThanOrEqual" secondItem="iWt-b1-dMq" secondAttribute="bottom" constant="8" id="bIR-pt-VAo"/>
                             <constraint firstItem="K4I-Bp-Elp" firstAttribute="bottom" secondItem="egJ-YN-Qg3" secondAttribute="bottom" constant="-1" id="d6r-hJ-slJ"/>
+                            <constraint firstItem="kAU-EK-xC1" firstAttribute="baseline" secondItem="VEs-8j-0zd" secondAttribute="baseline" id="djy-62-HPi"/>
                             <constraint firstItem="egJ-YN-Qg3" firstAttribute="bottom" secondItem="NV1-nP-nGm" secondAttribute="bottom" constant="2" id="emx-Qh-Hkb"/>
                             <constraint firstAttribute="bottom" secondItem="swy-Ve-TsX" secondAttribute="bottom" constant="12" id="fWp-cx-fjs"/>
                             <constraint firstAttribute="trailing" secondItem="swy-Ve-TsX" secondAttribute="trailing" constant="10" id="hRJ-eW-JhG"/>
                             <constraint firstItem="24x-lI-v3D" firstAttribute="leading" secondItem="adP-La-KuT" secondAttribute="leading" constant="10" id="hn3-qs-HYi"/>
+                            <constraint firstItem="Jhr-Bh-23I" firstAttribute="top" secondItem="kAU-EK-xC1" secondAttribute="bottom" constant="4" id="iV2-OO-ePH"/>
+                            <constraint firstItem="kAU-EK-xC1" firstAttribute="leading" secondItem="VEs-8j-0zd" secondAttribute="trailing" constant="4" id="ind-bI-Vfy"/>
                             <constraint firstItem="egJ-YN-Qg3" firstAttribute="top" secondItem="24x-lI-v3D" secondAttribute="bottom" constant="14" id="ohe-5I-zAS"/>
                             <constraint firstAttribute="trailing" secondItem="4MO-RP-64b" secondAttribute="trailing" constant="10" id="qo8-Mq-wU8"/>
                             <constraint firstItem="VEs-8j-0zd" firstAttribute="leading" secondItem="iWt-b1-dMq" secondAttribute="trailing" constant="8" id="rGg-9O-lds"/>
@@ -175,6 +184,7 @@
                 <outlet property="replyButton" destination="egJ-YN-Qg3" id="dAD-xd-mgP"/>
                 <outlet property="replyCountLabel" destination="K4I-Bp-Elp" id="qYV-6Y-N3x"/>
                 <outlet property="subjectLabel" destination="Jhr-Bh-23I" id="SgH-Vb-OFc"/>
+                <outlet property="usernameLabel" destination="kAU-EK-xC1" id="vBo-GX-ICM"/>
             </connections>
             <point key="canvasLocation" x="25.5" y="188.5"/>
         </tableViewCell>

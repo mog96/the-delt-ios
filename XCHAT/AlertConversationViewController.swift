@@ -143,9 +143,9 @@ extension AlertConversationViewController: UITableViewDelegate, UITableViewDataS
             return detailCell
         default:
             let replyCell = tableView.dequeueReusableCell(withIdentifier: "AlertReplyCell", for: indexPath) as! AlertReplyTableViewCell
-            replyCell.alert = self.alert
             replyCell.setUpCell(reply: self.replies[indexPath.row])
             replyCell.delegate = self
+            replyCell.indexPath = indexPath
             return replyCell
         }
     }
@@ -170,7 +170,7 @@ extension AlertConversationViewController: AlertDetailTableViewCellDelegate {
         }
     }
     
-    func alertDetailTableViewCellDidTapReply() {
+    func alertDetailTableViewCellReplyToAlert() {
         self.presentAlertReplyViewController()
     }
     
@@ -191,7 +191,7 @@ extension AlertConversationViewController: AlertDetailTableViewCellDelegate {
 }
 
 
-// MARK: - Alert Detail Helpers
+// MARK: - Alert Update Helpers
 
 extension AlertConversationViewController {
     fileprivate func updateAlertDetailCell(updatedAlert: PFObject) {
@@ -219,13 +219,109 @@ extension AlertConversationViewController {
 // MARK: - Alert Reply Cell Delegate
 
 extension AlertConversationViewController: AlertReplyTableViewCellDelegate {
-    func alertReplyTableViewCellDidTapReply() {
+    func alertReplyTableViewCell(updateFavedForReply reply: PFObject?, atIndexPath indexPath: IndexPath, faved: Bool) {
+        if let reply = reply {
+            self.updateFaved(forReply: reply, faved: faved) { (savedReply: PFObject?, error: Error?) in
+                if let error = error {
+                    print(error.localizedDescription)
+                } else if let updatedReply = savedReply {
+                    self.reloadReplyCell(updatedReply: updatedReply, atIndexPath: indexPath)
+                }
+            }
+        }
+    }
+    
+    func alertReplyTableViewCell(replyToReply reply: PFObject?) {
+        
+        // TODO: @username for reply to user as well
+        
         self.presentAlertReplyViewController()
+    }
+    
+    func alertReplyTableViewCell(updateFlaggedForReply reply: PFObject?, atIndexPath indexPath: IndexPath, flagged: Bool) {
+        if let reply = reply {
+            self.updateFlagged(forReply: reply, flagged: flagged, completion: { (savedReply: PFObject?, error: Error?) in
+                if let error = error {
+                    self.presentFlaggedAlert(withError: true)
+                    print(error.localizedDescription)
+                } else if let updatedReply = savedReply {
+                    if flagged {
+                        self.presentFlaggedAlert(withError: false)
+                    }
+                    self.reloadReplyCell(updatedReply: updatedReply, atIndexPath: indexPath)
+                }
+            })
+        } else {
+            self.presentFlaggedAlert(withError: true)
+        }
     }
 }
 
 
-// MARK: - Reply Helpers
+// MARK: - Reply Update Helpers
+
+extension AlertConversationViewController {
+    fileprivate func reloadReplyCell(updatedReply: PFObject, atIndexPath indexPath: IndexPath) {
+        self.replies[indexPath.row] = updatedReply
+        // Check that cell exists (i.e. we are not in the middle of an alerts refresh).
+        if let _ = self.tableView.cellForRow(at: indexPath) {
+            self.tableView.reloadRows(at: [indexPath], with: .none)
+        }
+    }
+    
+    fileprivate func updateFaved(forReply reply: PFObject, faved: Bool, completion: ((PFObject?, Error?) -> ())?) {
+        let query = PFQuery(className: "AlertReply")
+        if let objectId = reply.objectId {
+            query.getObjectInBackground(withId: objectId) { (fetchedReply: PFObject?, error: Error?) -> Void in
+                if error != nil {
+                    print(error!.localizedDescription)
+                } else if let updatedReply = fetchedReply {
+                    if let username = PFUser.current()?.username {
+                        // Increment or decrement fave count accordingly.
+                        if faved {
+                            updatedReply.addUniqueObject(username, forKey: "favedBy")
+                            updatedReply.incrementKey("faveCount")
+                        } else {
+                            updatedReply.remove(username, forKey: "favedBy")
+                            updatedReply.incrementKey("faveCount", byAmount: -1)
+                        }
+                    }
+                    updatedReply.saveInBackground(block: { (completed: Bool, error: Error?) -> Void in
+                        completion?(updatedReply, error)
+                    })
+                }
+            }
+        }
+    }
+    
+    fileprivate func updateFlagged(forReply reply: PFObject, flagged: Bool, completion: ((PFObject?, Error?) -> ())?) {
+        let query = PFQuery(className: "AlertReply")
+        if let objectId = reply.objectId {
+            query.getObjectInBackground(withId: objectId) { (fetchedReply: PFObject?, error: Error?) -> Void in
+                if error != nil {
+                    print(error!.localizedDescription)
+                } else if let updatedReply = fetchedReply {
+                    if let username = PFUser.current()?.username {
+                        // Increment or decrement fave count accordingly.
+                        if flagged {
+                            updatedReply.addUniqueObject(username, forKey: "flaggedBy")
+                            updatedReply.incrementKey("flagCount")
+                        } else {
+                            updatedReply.remove(username, forKey: "flaggedBy")
+                            updatedReply.incrementKey("flagCount", byAmount: -1)
+                        }
+                    }
+                    updatedReply.saveInBackground(block: { (completed: Bool, error: Error?) -> Void in
+                        completion?(updatedReply, error)
+                    })
+                }
+            }
+        }
+    }
+}
+
+
+// MARK: - Reply
 
 extension AlertConversationViewController {
     fileprivate func presentAlertReplyViewController() {

@@ -11,9 +11,9 @@ import Parse
 import ParseUI
 
 @objc protocol AlertDetailTableViewCellDelegate {
-    @objc optional func alertDetailTableViewCell(updateFaved faved: Bool)
-    @objc optional func alertDetailTableViewCellDidTapReply()
-    @objc optional func alertDetailTableViewCell(updateFlagged flagged: Bool)
+    func alertDetailTableViewCell(updateFaved faved: Bool)
+    func alertDetailTableViewCellReplyToAlert()
+    func alertDetailTableViewCell(updateFlagged flagged: Bool)
 }
 
 class AlertDetailTableViewCell: UITableViewCell {
@@ -33,7 +33,6 @@ class AlertDetailTableViewCell: UITableViewCell {
     @IBOutlet weak var flagButton: UIButton!
     
     weak var delegate: AlertDetailTableViewCellDelegate?
-    
     var alert: PFObject?
     var faved = false
     var flagged = false
@@ -59,7 +58,7 @@ extension AlertDetailTableViewCell {
     func setUpCell(alert: PFObject) {
         self.alert = alert
         
-        // Name and profile picture.
+        // Name, username and profile picture.
         if let author = alert["author"] as? PFUser {
             self.profileImageView.user = author
             author.fetchIfNeededInBackground(block: { (fetchedAuthor: PFObject?, error: Error?) in
@@ -77,9 +76,10 @@ extension AlertDetailTableViewCell {
                             }
                         }
                     }
-                    
-                    self.nameLabel.user = usableAuthor
-                    self.nameLabel.text = usableAuthor["name"] as? String
+                    self.nameLabel.user = author
+                    self.nameLabel.text = author["name"] as? String
+                    self.usernameLabel.user = author
+                    self.usernameLabel.text = author.username
                 }
             })
         }
@@ -164,19 +164,19 @@ extension AlertDetailTableViewCell {
         // Prevent double updating.
         if self.faveButton.isSelected == self.faved {
             self.faveButton.isSelected = !self.faved
-            self.delegate?.alertDetailTableViewCell?(updateFaved: !self.faved)
+            self.delegate?.alertDetailTableViewCell(updateFaved: !self.faved)
         }
     }
     
     @IBAction func onReplyButtonTapped(_ sender: Any) {
-        self.delegate?.alertDetailTableViewCellDidTapReply?()
+        self.delegate?.alertDetailTableViewCellReplyToAlert()
     }
     
     @IBAction func onFlagButtonTapped(_ sender: Any) {
         // Prevent double updating.
         if self.flagButton.isSelected == self.flagged {
             self.flagButton.isSelected = !self.flagged
-            self.delegate?.alertDetailTableViewCell?(updateFlagged: !self.flagged)
+            self.delegate?.alertDetailTableViewCell(updateFlagged: !self.flagged)
         }
     }
 }

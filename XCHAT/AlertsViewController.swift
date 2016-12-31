@@ -203,7 +203,7 @@ extension AlertsViewController: AlertTableViewCellDelegate {
 }
 
 
-// MARK: - Update Helpers
+// MARK: - Alert Update Helpers
 
 extension AlertsViewController {
     fileprivate func reloadAlert(alert: PFObject, atIndexPath indexPath: IndexPath) {
