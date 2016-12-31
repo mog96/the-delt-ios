@@ -20,6 +20,10 @@ import Parse
 class AlertComposeViewController: ContentViewController, UINavigationControllerDelegate {
 
     @IBOutlet weak var photoImageView: UIImageView!
+    @IBOutlet weak var photoImageViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var photoImageViewLeadingHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var photoImageViewTrailingSpaceConstraint: NSLayoutConstraint!
+    
     @IBOutlet var screenTapGestureRecognizer: UITapGestureRecognizer!
     @IBOutlet var photoTapGestureRecognizer: UITapGestureRecognizer!
     
@@ -112,7 +116,13 @@ extension AlertComposeViewController: UIImagePickerControllerDelegate {
             self.photo = UIImage(cgImage: imageRef)
         }
         currentHUD.hide(animated: true)
-        self.photoImageView.image = self.photo
+        
+        let aspectRatio = self.photo!.size.width / self.photo!.size.height
+        let newHeight = (UIScreen.main.bounds.width - (self.photoImageViewLeadingHeightConstraint.constant + self.photoImageViewTrailingSpaceConstraint.constant)) / aspectRatio
+        UIView.animate(withDuration: 1, animations: {
+            self.photoImageView.image = self.photo
+            self.photoImageViewHeightConstraint.constant = newHeight
+        })
         picker.dismiss(animated: true) {
             UIApplication.shared.setStatusBarStyle(.lightContent, animated: true)
         }

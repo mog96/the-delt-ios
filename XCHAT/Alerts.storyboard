@@ -171,6 +171,9 @@
                     <connections>
                         <outlet property="inReplyToLabel" destination="pww-95-pX4" id="bvG-xx-c7r"/>
                         <outlet property="photoImageView" destination="5d2-w3-qMh" id="fLy-XU-ESz"/>
+                        <outlet property="photoImageViewHeightConstraint" destination="aCc-JH-MCd" id="fUK-Qz-Ko1"/>
+                        <outlet property="photoImageViewLeadingHeightConstraint" destination="WO5-C9-mZ8" id="qiC-03-VB1"/>
+                        <outlet property="photoImageViewTrailingSpaceConstraint" destination="ems-iF-PMb" id="l9b-21-v3f"/>
                         <outlet property="photoTapGestureRecognizer" destination="ISW-nG-gWq" id="UaY-fe-jHi"/>
                         <outlet property="replyTextView" destination="vzR-yb-S6o" id="I8w-Dl-sEa"/>
                         <outlet property="screenTapGestureRecognizer" destination="UK3-J3-4mX" id="jn2-Yz-oRF"/>
@@ -330,6 +333,9 @@
                         <outlet property="containerView" destination="S0G-Qy-b0g" id="JCI-zh-nDT"/>
                         <outlet property="messageTextView" destination="lji-HC-qrg" id="AOA-sc-RFK"/>
                         <outlet property="photoImageView" destination="fEd-JM-CDY" id="z82-ZU-VOP"/>
+                        <outlet property="photoImageViewHeightConstraint" destination="TPd-ab-YEQ" id="R0K-pa-982"/>
+                        <outlet property="photoImageViewLeadingHeightConstraint" destination="b7P-m6-uOX" id="hFQ-Fb-Ect"/>
+                        <outlet property="photoImageViewTrailingSpaceConstraint" destination="3Bn-RH-qYR" id="Hbw-al-CaZ"/>
                         <outlet property="photoTapGestureRecognizer" destination="Q7v-mE-Vco" id="Irh-hA-UTa"/>
                         <outlet property="screenTapGestureRecognizer" destination="VIs-hV-vld" id="3bQ-5J-QPi"/>
                         <outlet property="scrollView" destination="D6m-fp-bVh" id="1Vz-5W-ZxC"/>
