@@ -13,7 +13,7 @@ import ParseUI
 @objc protocol AlertTableViewCellDelegate {
     @objc optional func alertTableViewCell(updateFavedForAlert alert: PFObject?, atIndexPath indexPath: IndexPath, faved: Bool)
     @objc optional func alertTableViewCell(replyToAlert alert: PFObject?)
-    @objc optional func alertTableViewCell(updateFlaggedForAlert alert: PFObject?, flagged: Bool)
+    @objc optional func alertTableViewCell(updateFlaggedForAlert alert: PFObject?, atIndexPath indexPath: IndexPath, flagged: Bool)
 }
 
 class AlertTableViewCell: UITableViewCell {
@@ -137,7 +137,6 @@ extension AlertTableViewCell {
         if let favedBy = alert["favedBy"] as? [String] {
             if let username = PFUser.current()?.username {
                 self.faved = favedBy.contains(username)
-                self.faveButton.isSelected = self.faved
             }
         }
         self.faveButton.isSelected = self.faved
@@ -163,9 +162,10 @@ extension AlertTableViewCell {
         }
         
         // Flagged.
-        if let flagged = alert["flagged"] as? Bool {
-            self.flagged = flagged
-            self.flagButton.isSelected = self.flagged
+        if let flaggedBy = alert["flaggedBy"] as? [String] {
+            if let username = PFUser.current()?.username {
+                self.flagged = flaggedBy.contains(username)
+            }
         }
         self.flagButton.isSelected = self.flagged
     }
@@ -186,6 +186,6 @@ extension AlertTableViewCell {
     
     @IBAction func onFlagButtonTapped(_ sender: Any) {
         self.flagButton.isSelected = !self.flagged
-        self.delegate?.alertTableViewCell?(updateFlaggedForAlert: self.alert, flagged: !self.flagged)
+        self.delegate?.alertTableViewCell?(updateFlaggedForAlert: self.alert, atIndexPath: self.indexPath, flagged: !self.flagged)
     }
 }

@@ -59,6 +59,7 @@
 		25C6CCDC1B12FF1600EADB5B /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C6CCDB1B12FF1600EADB5B /* CommentViewController.swift */; };
 		25C6ED561E1734AD0060F6CB /* AlertDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C6ED551E1734AD0060F6CB /* AlertDetailTableViewCell.xib */; };
 		25C6ED581E1734DB0060F6CB /* AlertReplyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C6ED571E1734DB0060F6CB /* AlertReplyTableViewCell.xib */; };
+		25C6ED5A1E176BE00060F6CB /* AlertUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C6ED591E176BE00060F6CB /* AlertUtils.swift */; };
 		25E5252A1C59C8B600477C3D /* GestureUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E525291C59C8B600477C3D /* GestureUtils.swift */; };
 		25F016061B045882004D78F6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F016051B045882004D78F6 /* LoginViewController.swift */; };
 		25F0160A1B045D83004D78F6 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F016091B045D83004D78F6 /* MenuViewController.swift */; };
@@ -214,6 +215,7 @@
 		25C6CCDB1B12FF1600EADB5B /* CommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		25C6ED551E1734AD0060F6CB /* AlertDetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertDetailTableViewCell.xib; sourceTree = "<group>"; };
 		25C6ED571E1734DB0060F6CB /* AlertReplyTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertReplyTableViewCell.xib; sourceTree = "<group>"; };
+		25C6ED591E176BE00060F6CB /* AlertUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertUtils.swift; sourceTree = "<group>"; };
 		25E525291C59C8B600477C3D /* GestureUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GestureUtils.swift; sourceTree = "<group>"; };
 		25F016051B045882004D78F6 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		25F016091B045D83004D78F6 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -406,6 +408,7 @@
 		257293131E0FF4550044FCED /* Alerts */ = {
 			isa = PBXGroup;
 			children = (
+				25C6ED591E176BE00060F6CB /* AlertUtils.swift */,
 				2520DCD31E0D2AC600FAB13B /* AlertsViewController.swift */,
 				2520DCD51E0D2B0B00FAB13B /* AlertTableViewCell.swift */,
 			);
@@ -1032,6 +1035,7 @@
 				259FBA431B02F5A5006F1650 /* AppDelegate.swift in Sources */,
 				25518A411B0ED03B00550DE9 /* CommentCell.swift in Sources */,
 				252A6B401C4C950500FA1F75 /* SettingsDescriptionTableViewCell.swift in Sources */,
+				25C6ED5A1E176BE00060F6CB /* AlertUtils.swift in Sources */,
 				257293081E0F73DF0044FCED /* AlertReplyViewController.swift in Sources */,
 				D525F1B51D86960E0002D8B6 /* EditUserTableViewCell.swift in Sources */,
 				2572930E1E0FD72E0044FCED /* UITextView+NextTextView.swift in Sources */,

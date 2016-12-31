@@ -163,79 +163,42 @@ extension AlertsViewController: AlertTableViewCellDelegate {
         
         print("UPDATE FAVED", faved)
         
-        // TODO: PUT INTO SHARED INSTANCE WITH COMPLETION PARAM FOR USE IN DETAIL CELL.
-        
-        let query = PFQuery(className: "Alert")
-        if let objectId = alert?.objectId {
-            query.getObjectInBackground(withId: objectId) { (fetchedAlert: PFObject?, error: Error?) -> Void in
-                if error != nil {
-                    print(error!.localizedDescription)
-                } else if let alertToUpdate = fetchedAlert {
-                    if let username = PFUser.current()?.username {
-                        // Increment or decrement fave count accordingly.
-                        if faved {
-                            alertToUpdate.addUniqueObject(username, forKey: "favedBy")
-                            alertToUpdate.incrementKey("faveCount")
-                        } else {
-                            alertToUpdate.remove(username, forKey: "favedBy")
-                            alertToUpdate.incrementKey("faveCount", byAmount: -1)
-                        }
+        if let alert = alert {
+            AlertUtils.updateFaved(forAlert: alert, faved: faved) { (savedAlert: PFObject?, error: Error?) in
+                if let error = error {
+                    print("Error: \(error) \(error.localizedDescription)")
+                } else if let updatedAlert = savedAlert {
+                    
+                    print("FAVE UPDATE COMPLETED FOR ALERT", updatedAlert)
+                    
+                    self.alerts[indexPath.row] = updatedAlert
+                    // Check that cell exists (i.e. we are not in the middle of an alerts refresh).
+                    if let _ = self.tableView.cellForRow(at: indexPath) as? AlertTableViewCell {
+                        self.tableView.reloadRows(at: [indexPath], with: .none)
                     }
-                    alertToUpdate.saveInBackground(block: { (completed: Bool, error: Error?) -> Void in
-                        if let error = error {
-                            // Log details of the failure
-                            print("Error: \(error) \(error.localizedDescription)")
-                            
-                        } else {
-                            
-                            print("FAVE UPDATE COMPLETED FOR ALERT", alertToUpdate)
-                            
-                            // Check that cell exists (i.e. we are not in the middle of an alerts refresh).
-                            self.alerts[indexPath.row] = alertToUpdate
-                            if let _ = self.tableView.cellForRow(at: indexPath) as? AlertTableViewCell {
-                                self.tableView.reloadRows(at: [indexPath], with: .none)
-                            }
-                        }
-                    })
                 }
             }
         }
     }
     
-    func alertTableViewCell(updateFlaggedForAlert alert: PFObject?, flagged: Bool) {
+    func alertTableViewCell(updateFlaggedForAlert alert: PFObject?, atIndexPath indexPath: IndexPath, flagged: Bool) {
         
         print("UPDATE FLAGGED", flagged)
         
-        let query = PFQuery(className: "Alert")
-        if let objectId = alert?["objectId"] as? String {
-            query.getObjectInBackground(withId: objectId) { (alert: PFObject?, error: Error?) -> Void in
-                if error != nil {
-                    print(error!.localizedDescription)
-                } else if let alert = alert {
-                    // Mark photo as flagged.
-                    alert["flagged"] = flagged
-                    
-                    print("CURRENT STATE: \(alert["flagged"])")
-                    
-                    // Increment or decrement flag count accordingly.
+        if let alert = alert {
+            AlertUtils.updateFlagged(forAlert: alert, flagged: flagged) { (savedAlert: PFObject?, error: Error?) in
+                if let error = error {
+                    self.presentFlaggedAlert(withError: true)
+                    print("Error: \(error) \(error.localizedDescription)")
+                } else if let updatedAlert = savedAlert {
                     if flagged {
-                        alert.incrementKey("numFlags")
-                    } else {
-                        alert.incrementKey("numFlags", byAmount: -1)
+                        self.presentFlaggedAlert(withError: false)
                     }
-                    alert.saveInBackground(block: { (completed: Bool, eror: Error?) -> Void in
-                        if let error = error {
-                            // Log details of the failure
-                            self.presentFlaggedAlert(withError: true)
-                            print("Error: \(error) \(error.localizedDescription)")
-                            
-                        } else {
-                            if flagged {
-                                self.presentFlaggedAlert(withError: false)
-                            }
-                            // TODO: RELOAD SPECIFIC CELL
-                        }
-                    })
+                    self.alerts[indexPath.row] = updatedAlert
+                    // Check that cell exists (i.e. we are not in the middle of an alerts refresh).
+                    if let _ = self.tableView.cellForRow(at: indexPath) as? AlertTableViewCell {
+                        self.tableView.reloadRows(at: [indexPath], with: .none)
+                    }
                 }
             }
         } else {
@@ -249,7 +212,7 @@ extension AlertsViewController: AlertTableViewCellDelegate {
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else {
-            let alert = UIAlertController(title: "Post Flagged", message: "Administrators will be notified and this post will be reviewed.", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Post Flagged", message: "Administrators have been notified and this post will be reviewed.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }

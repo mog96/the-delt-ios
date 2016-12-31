@@ -192,18 +192,6 @@ extension AlertConversationViewController: AlertDetailTableViewCellDelegate {
 
 // MARK: - Alert Reply Cell Delegate
 
-
-
-
-
-
-// START HERE
-
-
-
-
-
-
 extension AlertConversationViewController: AlertReplyTableViewCellDelegate {
     func alertDetailTableViewCell(updateFaved faved: Bool) {
         // USE INSTANCE FACTORY

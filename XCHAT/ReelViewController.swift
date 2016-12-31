@@ -388,7 +388,7 @@ extension ReelViewController: ButtonCellDelegate {
     
     func updateFlagged(_ photo: NSMutableDictionary?, flagged: Bool) {
         if flagged {
-            let alert = UIAlertController(title: "Post Flagged", message: "Administrators will be notified and this post will be reviewed.", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Post Flagged", message: "Administrators have been notified and this post will be reviewed.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
