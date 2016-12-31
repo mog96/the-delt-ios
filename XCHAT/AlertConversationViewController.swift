@@ -233,9 +233,7 @@ extension AlertConversationViewController: AlertReplyTableViewCellDelegate {
     
     func alertReplyTableViewCell(replyToReply reply: PFObject?) {
         
-        // TODO: @username for reply to user as well
-        
-        self.presentAlertReplyViewController()
+        self.presentAlertReplyViewController(forReply: reply)
     }
     
     func alertReplyTableViewCell(updateFlaggedForReply reply: PFObject?, atIndexPath indexPath: IndexPath, flagged: Bool) {
@@ -325,10 +323,15 @@ extension AlertConversationViewController {
 
 extension AlertConversationViewController {
     fileprivate func presentAlertReplyViewController() {
+        self.presentAlertReplyViewController(forReply: nil)
+    }
+    
+    fileprivate func presentAlertReplyViewController(forReply reply: PFObject?) {
         let storyboard = UIStoryboard(name: "Alerts", bundle: nil)
         let alertReplyNC = storyboard.instantiateViewController(withIdentifier: "AlertReplyNC") as! UINavigationController
         let alertReplyVC = alertReplyNC.viewControllers[0] as! AlertReplyViewController
         alertReplyVC.replyToAlert = self.alert
+        alertReplyVC.replyToReply = reply
         alertReplyVC.delegate = self
         self.present(alertReplyNC, animated: true, completion: nil)
     }

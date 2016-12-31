@@ -59,6 +59,7 @@ class AlertTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         self.faved = false
         self.flagged = false
+        self.profileImageView.image = nil
         self.photoImageView.image = nil
     }
 }
@@ -93,13 +94,15 @@ extension AlertTableViewCell {
                     self.nameLabel.user = author
                     self.nameLabel.text = author["name"] as? String
                     self.usernameLabel.user = author
-                    self.usernameLabel.text = author.username
+                    if let username = author.username {
+                        self.usernameLabel.text = "@" + username
+                    }
                 }
             })
         }
         
         // Date.
-        if let postedAt = alert["createdAt"] as? Date {
+        if let postedAt = alert.createdAt {
             let dateFormatter = DateFormatter()
             let calendar = Calendar.current
             //        dateFormatter.dateFormat = "M/d"

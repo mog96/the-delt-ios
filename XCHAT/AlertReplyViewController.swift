@@ -20,7 +20,8 @@ class AlertReplyViewController: AlertComposeViewController {
     @IBOutlet weak var replyTextView: CustomTextView!
     
     var replyToAlert: PFObject!
-    
+    var replyToReply: PFObject?
+    var additionalTag: String?
     let kInReplyToPrefix = "In reply to "
 
     override func viewDidLoad() {
@@ -29,19 +30,41 @@ class AlertReplyViewController: AlertComposeViewController {
         self.replyTextView.placeholder = "What do you have to say?"
         self.replyTextView.placeholderLabel.textColor = UIColor.lightText
         
-        if let replyToUser = self.replyToAlert["author"] as? PFUser {
-            if let name = replyToUser["name"] as? String {
+        let replyToReplyAuthor = self.replyToReply?["author"] as? PFUser
+        let replyToUser = self.replyToAlert["author"] as? PFUser
+        
+        var replyingToReplyAuthor = false
+        
+        // If replying to a reply, add information of author of said reply.
+        if replyToReplyAuthor != nil && (replyToUser == nil || replyToReplyAuthor!.objectId != replyToUser!.objectId) {
+            replyingToReplyAuthor = true
+            if let name = replyToReplyAuthor!["name"] as? String {
                 self.inReplyToLabel.text = self.kInReplyToPrefix + name
-            } else if let username = replyToUser.username {
-                self.inReplyToLabel.text = self.kInReplyToPrefix + username
+            } else if let username = replyToReplyAuthor!.username {
+                self.inReplyToLabel.text = self.kInReplyToPrefix + "@" + username
             } else {
                 self.inReplyToLabel.isHidden = true
             }
-            
-            if let username = replyToUser.username {
-                self.replyTextView.text = "@" + username + " "
+            if let username = replyToReplyAuthor!.username {
+                self.replyTextView.text = self.replyTextView.text + "@" + username + " "
                 self.replyTextView.placeholderLabel.isHidden = true
             }
+        } else if replyToUser != nil {
+            if let name = replyToUser!["name"] as? String {
+                self.inReplyToLabel.text = self.kInReplyToPrefix + name
+            } else if let username = replyToUser!.username {
+                self.inReplyToLabel.text = self.kInReplyToPrefix + "@" + username
+            } else {
+                self.inReplyToLabel.isHidden = true
+            }
+        }
+        if let username = replyToUser!.username {
+            let placeholder = "@" + username + " "
+            if replyingToReplyAuthor {
+                self.additionalTag = placeholder
+            }
+            self.replyTextView.text = self.replyTextView.text + placeholder
+            self.replyTextView.placeholderLabel.isHidden = true
         }
     }
 
@@ -52,6 +75,10 @@ class AlertReplyViewController: AlertComposeViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         self.replyTextView.becomeFirstResponder()
+        if self.additionalTag != nil {
+            let rangeOfTag = (self.replyTextView.text as NSString).range(of: self.additionalTag!)
+            self.replyTextView.selectedRange = rangeOfTag
+        }
     }
 }
 

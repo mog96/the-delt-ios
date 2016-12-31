@@ -48,6 +48,13 @@ class AlertReplyTableViewCell: UITableViewCell {
         
         // Configure the view for the selected state
     }
+    
+    override func prepareForReuse() {
+        self.faved = false
+        self.flagged = false
+        self.profileImageView.image = nil
+        self.photoImageView.image = nil
+    }
 }
 
 
@@ -76,12 +83,14 @@ extension AlertReplyTableViewCell {
                     self.nameLabel.user = author
                     self.nameLabel.text = author["name"] as? String
                     self.usernameLabel.user = author
-                    self.usernameLabel.text = author.username
+                    if let username = author.username {
+                        self.usernameLabel.text = "@" + username
+                    }
                 }
             })
         }
         
-        if let postedAt = reply["createdAt"] as? Date {
+        if let postedAt = reply.createdAt {
             let dateFormatter = DateFormatter()
             let calendar = Calendar.current
             //        dateFormatter.dateFormat = "M/d"

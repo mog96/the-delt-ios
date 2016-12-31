@@ -80,10 +80,10 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="vzR-yb-S6o" customClass="CustomTextView" customModule="XCHAT" customModuleProvider="target">
-                                                <rect key="frame" x="13" y="44" width="349" height="40"/>
+                                                <rect key="frame" x="13" y="44" width="349" height="45"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="80h-Gz-VTm"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="80h-Gz-VTm"/>
                                                 </constraints>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -231,10 +231,10 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                         <subviews>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="251" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rQl-Ts-Aq3" customClass="CustomTextView" customModule="XCHAT" customModuleProvider="target">
-                                                <rect key="frame" x="13" y="13" width="349" height="40"/>
+                                                <rect key="frame" x="13" y="13" width="349" height="45"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="n2C-Te-09Z"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="n2C-Te-09Z"/>
                                                 </constraints>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="20"/>
@@ -242,10 +242,10 @@
                                                 <dataDetectorType key="dataDetectorTypes" lookupSuggestion="YES"/>
                                             </textView>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="lji-HC-qrg" customClass="CustomTextView" customModule="XCHAT" customModuleProvider="target">
-                                                <rect key="frame" x="13" y="66" width="349" height="40"/>
+                                                <rect key="frame" x="13" y="71" width="349" height="45"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="kBP-Nw-mrD"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="kBP-Nw-mrD"/>
                                                 </constraints>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
