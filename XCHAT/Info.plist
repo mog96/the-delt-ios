@@ -63,6 +63,12 @@
 		</dict>
 		<dict>
 			<key>UIApplicationShortcutItemType</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER).Alert</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>alert.</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemType</key>
 			<string>$(PRODUCT_BUNDLE_IDENTIFIER).Chat</string>
 			<key>UIApplicationShortcutItemTitle</key>
 			<string>chat.</string>
@@ -71,7 +77,7 @@
 			<key>UIApplicationShortcutItemType</key>
 			<string>$(PRODUCT_BUNDLE_IDENTIFIER).Calendar</string>
 			<key>UIApplicationShortcutItemTitle</key>
-			<string>calendar.</string>
+			<string>check calendar.</string>
 		</dict>
 	</array>
 </dict>

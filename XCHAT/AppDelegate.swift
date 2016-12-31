@@ -29,7 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     enum ShortcutIdentifier: String {
         case Post
         case Chat
-        case Calendar // case Alert
+        case Alert
+        case Calendar
         init?(fullIdentifier: String) {
             guard let suffix = fullIdentifier.components(separatedBy: ".").last else {
                 return nil
@@ -218,6 +219,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             self.menuViewController?.presentContentView(.Reel)
             let reelVC = (self.hamburgerViewController?.contentViewController as! UINavigationController).viewControllers[0] as! ReelViewController
             reelVC.presentImagePicker(usingPhotoLibrary: false)
+        case .Alert:
+            self.menuViewController?.presentContentView(.Alerts)
+            let alertsVC = (self.hamburgerViewController?.contentViewController as! UINavigationController).viewControllers[0] as! AlertsViewController
+            alertsVC.performSegue(withIdentifier: "NewAlertSegue", sender: alertsVC)
         case .Chat:
             self.menuViewController?.presentContentView(.Chat)
         case .Calendar:
