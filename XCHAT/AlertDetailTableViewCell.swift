@@ -25,6 +25,10 @@ class AlertDetailTableViewCell: UITableViewCell {
     @IBOutlet weak var subjectLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var photoImageView: UIImageView!
+    @IBOutlet weak var photoImageViewTopSpaceConstraint: NSLayoutConstraint!
+    @IBOutlet weak var photoImageViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var photoImageViewLeadingSpaceConstraint: NSLayoutConstraint!
+    @IBOutlet weak var photoImageViewTrailingSpaceConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var faveButton: UIButton!
     @IBOutlet weak var faveCountLabel: UILabel!
@@ -36,6 +40,9 @@ class AlertDetailTableViewCell: UITableViewCell {
     var alert: PFObject?
     var faved = false
     var flagged = false
+    
+    let kPhotoImageViewHeight: CGFloat = 8
+    let kPhotoImageViewTopSpace: CGFloat = 200
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -55,6 +62,9 @@ class AlertDetailTableViewCell: UITableViewCell {
         self.flagged = false
         self.profileImageView.image = nil
         self.photoImageView.image = nil
+        self.photoImageView.isHidden = false
+        self.photoImageViewHeightConstraint.constant = self.kPhotoImageViewHeight
+        self.photoImageViewTopSpaceConstraint.constant = self.kPhotoImageViewTopSpace
     }
 }
 
@@ -121,10 +131,18 @@ extension AlertDetailTableViewCell {
                 if let error = error {
                     // Log details of the failure
                     print("Error: \(error) \(error.localizedDescription)")
-                } else {
-                    self.photoImageView.image = image
+                } else if let image = image {
+                    let aspectRatio = image.size.width / image.size.height
+                    let newHeight = (UIScreen.main.bounds.width - (self.photoImageViewLeadingSpaceConstraint.constant + self.photoImageViewTrailingSpaceConstraint.constant)) / aspectRatio
+                    UIView.animate(withDuration: 1, animations: {
+                        self.photoImageView.image = image
+                        self.photoImageViewHeightConstraint.constant = newHeight
+                    })
                 }
             }
+        } else {
+            self.photoImageView.isHidden = true
+            self.photoImageViewTopSpaceConstraint.constant = 0
         }
         
         // Faves.

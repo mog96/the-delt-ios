@@ -53,7 +53,7 @@ class AlertComposeViewController: ContentViewController, UINavigationControllerD
         
         self.imagePickerVC = UIImagePickerController()
         self.imagePickerVC.delegate = self
-        self.imagePickerVC.allowsEditing = true
+        // self.imagePickerVC.allowsEditing = true
         self.imagePickerVC.mediaTypes = [kUTTypeImage as String, kUTTypeMovie as String]
     }
 
@@ -96,7 +96,7 @@ extension AlertComposeViewController: UIImagePickerControllerDelegate {
         // Photo.
         if info[UIImagePickerControllerMediaType] as! String == kUTTypeImage as String {
             currentHUD.label.text = "Loading Photo..."
-            self.photo = info[UIImagePickerControllerEditedImage] as? UIImage
+            self.photo = info[UIImagePickerControllerOriginalImage] as? UIImage // UIImagePickerControllerEditedImage
             // Video.
         } else {
             currentHUD.label.text = "Rendering Video..."
