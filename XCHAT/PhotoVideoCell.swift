@@ -14,6 +14,7 @@ import ParseUI
 
 @objc protocol PhotoVideoCellDelegate {
     func presentVideoDetailViewController(videoFile file: PFFile)
+    func updateFaved(_ photo: NSMutableDictionary?, didUpdateFaved faved: Bool)
 }
 
 class PhotoVideoCell: UITableViewCell {
@@ -21,9 +22,14 @@ class PhotoVideoCell: UITableViewCell {
     @IBOutlet weak var controlsView: UIView!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var videoPlayerView: UIView!
+    var doubleTapGestureRecognizer: UITapGestureRecognizer!
+    @IBOutlet weak var playButton: UIButton!
     
+    var photo: NSMutableDictionary?
     var videoPlayer: MPMoviePlayerController?
     var videoUrl: URL?
+    var faved = false
+    var doubleTapped = false
     
     weak var delegate: PhotoVideoCellDelegate?
     
@@ -41,10 +47,25 @@ class PhotoVideoCell: UITableViewCell {
     
     override func prepareForReuse() {
         self.photoImageView.image = nil
-    }
-    
-    func setUpCell(_ photo: NSMutableDictionary?) {
         self.videoPlayer = nil
+        self.faved = false
+        self.doubleTapped = false
+        self.playButton.isHidden = true
+    }
+}
+
+
+// MARK: - Setup
+
+extension PhotoVideoCell {
+    func setUpCell(_ photo: NSMutableDictionary?) {
+        self.photo = photo
+        self.videoPlayer = nil
+        
+        self.doubleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(PhotoVideoCell.onControlsViewDoubleTapped))
+        self.doubleTapGestureRecognizer.numberOfTapsRequired = 2
+        self.doubleTapGestureRecognizer.delegate = self
+        self.controlsView.addGestureRecognizer(self.doubleTapGestureRecognizer)
         
         if let photo = photo {
             
@@ -67,13 +88,16 @@ class PhotoVideoCell: UITableViewCell {
                     }
                 }
                 
-                self.videoUrl = URL(string: file.url!)!
-                
                 // Enable cell tap.
                 let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(PhotoVideoCell.onControlsViewTapped))
+                tapGestureRecognizer.delegate = self
+                tapGestureRecognizer.require(toFail: self.doubleTapGestureRecognizer)
                 self.controlsView.addGestureRecognizer(tapGestureRecognizer)
                 
-            // Photo.
+                self.videoUrl = URL(string: file.url!)!
+                self.playButton.isHidden = false
+                
+                // Photo.
             } else if let file = photo.value(forKey: "imageFile") as? PFFile {
                 print("IMAGE URL:", file.url)
                 
@@ -94,35 +118,29 @@ class PhotoVideoCell: UITableViewCell {
                 }
             }
             
+            if let favedBy = photo.value(forKey: "favedBy") as? [String] {
+                if let username = PFUser.current()?.username {
+                    
+                    print("IS FAVED: \(favedBy.contains(username))")
+                    
+                    self.faved = favedBy.contains(username)
+                    
+                    print("SETTING FAVED: \(self.faved)")
+                }
+            }
+            
         } else {
             
             // Error.
             self.photoImageView.backgroundColor = UIColor.red
         }
     }
-    
-    
-    // MARK: - Actions
-    
-    func onControlsViewTapped() {
-        if self.photoImageView.isHidden {
-            self.videoFinished()
-            
-        } else {
-            if self.videoPlayer == nil {
-                self.addVideoPlayer(contentUrl: self.videoUrl!, containerView: self.videoPlayerView, preview: self.photoImageView)
-            }
-            
-            print("PLAYING VIDEO WITH URL", self.videoUrl!)
-            
-            self.videoPlayer?.play()
-            self.photoImageView.isHidden = true
-        }
-    }
-    
-    
-    // MARK: - Video Player
-    
+}
+
+
+// MARK: - Video Player
+
+extension PhotoVideoCell {
     func addVideoPlayer(contentUrl: URL, containerView: UIView, preview: UIImageView?) {
         self.videoPlayer = MPMoviePlayerController(contentURL: contentUrl)
         self.videoPlayer!.view.frame = CGRect(x: 0, y: 0, width: containerView.frame.width, height: containerView.frame.height)
@@ -170,6 +188,46 @@ class PhotoVideoCell: UITableViewCell {
         self.photoImageView.isHidden = false
         self.videoPlayer?.stop()
         self.videoPlayer?.currentPlaybackTime = 0
+        self.playButton.isHidden = false
+        self.playButton.isSelected = false
+    }
+}
+
+
+// MARK: - Actions
+
+extension PhotoVideoCell {
+    @IBAction func onPlayButtonTapped(_ sender: Any) {
+        self.onControlsViewTapped()
     }
     
+    func onControlsViewTapped() {
+        if self.photoImageView.isHidden {
+            self.videoFinished()
+            
+        } else {
+            self.playButton.isSelected = true
+            UIView.transition(with: self.playButton, duration: 1, options: .transitionCrossDissolve, animations: { 
+                self.playButton.isHidden = true
+            }) { _ in
+                
+            }
+            if self.videoPlayer == nil {
+                self.addVideoPlayer(contentUrl: self.videoUrl!, containerView: self.videoPlayerView, preview: self.photoImageView)
+            }
+            
+            print("PLAYING VIDEO WITH URL", self.videoUrl!)
+            
+            self.videoPlayer?.play()
+            self.photoImageView.isHidden = true
+        }
+    }
+    
+    func onControlsViewDoubleTapped() {
+        print("COOL")
+        if !self.doubleTapped {
+            self.delegate?.updateFaved(self.photo, didUpdateFaved: !self.faved)
+            doubleTapped = true
+        }
+    }
 }
