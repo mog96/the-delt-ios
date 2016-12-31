@@ -378,6 +378,26 @@ extension AppDelegate {
                 return
             case .Chat:
                 NotificationCenter.default.post(name: Notification.Name("ChatViewControllerShouldRefresh"), object: nil)
+                /*
+                if #available(iOS 10.0, *) {
+                    if let alert = aps["alert"] as? [String: AnyObject] {
+                        let content = UNMutableNotificationContent()
+                        content.title = alert["title"] as! String
+                        content.body = alert["body"] as! String
+                        content.sound = UNNotificationSound.default()
+                        let date = Date()
+                        let calendar = Calendar(identifier: .gregorian)
+                        let components = calendar.dateComponents([.day, .hour, .minute, .second], from: date)
+                        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+                        let request = UNNotificationRequest(identifier: "ChatNotification", content: content, trigger: trigger)
+                        UNUserNotificationCenter.current().add(request) { (error : Error?) in
+                            if let theError = error {
+                                print(theError.localizedDescription)
+                            }
+                        }
+                    }
+                }
+                */
             case .Calendar:
                 return
             }
