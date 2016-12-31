@@ -51,9 +51,9 @@ class AlertReplyTableViewCell: UITableViewCell {
         self.reply = reply
         if let author = reply["author"] as? PFUser {
             self.profileImageView.user = author
-            if let _ = author.value(forKey: "photo") {
+            if let profilePhoto = author["photo"] as? PFFile {
                 let pfImageView = PFImageView()
-                pfImageView.file = author.value(forKey: "photo") as? PFFile
+                pfImageView.file = profilePhoto
                 pfImageView.load { (image: UIImage?, error: Error?) -> Void in
                     if let error = error {
                         // Log details of the failure

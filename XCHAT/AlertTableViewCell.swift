@@ -66,25 +66,31 @@ extension AlertTableViewCell {
     func setUpCell(alert: PFObject) {
         self.alert = alert
         
+        print("SETTING UP CELL WITH ALERT", alert)
+        
         // Name and profile picture.
         if let author = alert["author"] as? PFUser {
             self.profileImageView.user = author
-            if let _ = author.value(forKey: "photo") {
-                let pfImageView = PFImageView()
-                pfImageView.file = author.value(forKey: "photo") as? PFFile
-                pfImageView.load { (image: UIImage?, error: Error?) -> Void in
-                    if let error = error {
-                        // Log details of the failure
-                        print("Error: \(error) \(error.localizedDescription)")
-                        
-                    } else {
-                        self.profileImageView.image = image
+            author.fetchIfNeededInBackground(block: { (fetchedAuthor: PFObject?, error: Error?) in
+                if let usableAuthor = fetchedAuthor as? PFUser {
+                    if let profilePhoto = usableAuthor["photo"] as? PFFile {
+                        let pfImageView = PFImageView()
+                        pfImageView.file = profilePhoto
+                        pfImageView.load { (image: UIImage?, error: Error?) -> Void in
+                            if let error = error {
+                                // Log details of the failure
+                                print("Error: \(error) \(error.localizedDescription)")
+                                
+                            } else {
+                                self.profileImageView.image = image
+                            }
+                        }
                     }
+                    
+                    self.nameLabel.user = usableAuthor
+                    self.nameLabel.text = usableAuthor["name"] as? String
                 }
-            }
-            
-            self.nameLabel.user = author
-            self.nameLabel.text = author["name"] as? String
+            })
         }
         
         // Date.
@@ -124,7 +130,7 @@ extension AlertTableViewCell {
             }
         }
         
-        // Like.
+        // Likes.
         if let likedBy = alert["likedBy"] as? [String] {
             if let username = PFUser.current()?.username {
                 self.liked = likedBy.contains(username)
@@ -133,14 +139,22 @@ extension AlertTableViewCell {
         }
         self.likeButton.isSelected = self.liked
         if let likeCount = alert["likeCount"] as? Int {
-            self.likeCountLabel.text = String(likeCount)
+            if likeCount > 0 {
+                self.likeCountLabel.text = String(likeCount)
+            } else {
+                self.likeCountLabel.text = ""
+            }
         } else {
             self.likeCountLabel.text = ""
         }
         
-        // Reply count.
-        if let replies = alert["replies"] as? [PFObject] {
-            self.replyCountLabel.text = String(replies.count)
+        // Replies.
+        if let replyCount = alert["replyCount"] as? Int {
+            if replyCount > 0 {
+                self.replyCountLabel.text = String(replyCount)
+            } else {
+                self.replyCountLabel.text = ""
+            }
         } else {
             self.replyCountLabel.text = ""
         }

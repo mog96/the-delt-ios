@@ -83,7 +83,9 @@ extension AlertsViewController {
     func getAlerts(completion: @escaping (([PFObject]) -> ())) {
         let query = PFQuery(className: "Alert")
         query.includeKey("author")
-        query.order(byDescending: "updatedAt")
+        query.includeKey("photo")
+        query.includeKey("author.photo")
+        query.order(byDescending: "createdAt")
         query.findObjectsInBackground { (objects: [PFObject]?, error: Error?) -> Void in
             if let objects = objects {
                 completion(objects)
@@ -121,10 +123,10 @@ extension AlertsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let alert = self.alerts[indexPath.row]
         let storyboard = UIStoryboard(name: "Alerts", bundle: nil)
         let alertReplyNC = storyboard.instantiateViewController(withIdentifier: "AlertConversationNC") as! UINavigationController
         let alertConversationVC = alertReplyNC.viewControllers[0] as! AlertConversationViewController
+        let alert = self.alerts[indexPath.row]
         alertConversationVC.alert = alert
         self.navigationController?.pushViewController(alertConversationVC, animated: true)
     }
@@ -171,8 +173,10 @@ extension AlertsViewController: AlertTableViewCellDelegate {
                         // Increment or decrement fave count accordingly.
                         if liked {
                             alertToUpdate.addUniqueObject(username, forKey: "likedBy")
+                            alertToUpdate.incrementKey("likeCount")
                         } else {
                             alertToUpdate.remove(username, forKey: "likedBy")
+                            alertToUpdate.incrementKey("likeCount", byAmount: -1)
                         }
                     }
                     alertToUpdate.saveInBackground(block: { (completed: Bool, error: Error?) -> Void in
@@ -183,9 +187,12 @@ extension AlertsViewController: AlertTableViewCellDelegate {
                         } else {
                             
                             print("LIKE UPDATE COMPLETED FOR ALERT", alertToUpdate)
-                            let cell = self.tableView.cellForRow(at: indexPath) as! AlertTableViewCell
-                            cell.setUpCell(alert: alertToUpdate)
-                            self.tableView.reloadRows(at: [indexPath], with: .none)
+                            
+                            // Check that cell exists (i.e. we are not in the middle of an alerts refresh).
+                            self.alerts[indexPath.row] = alertToUpdate
+                            if let _ = self.tableView.cellForRow(at: indexPath) as? AlertTableViewCell {
+                                self.tableView.reloadRows(at: [indexPath], with: .none)
+                            }
                         }
                     })
                 }
