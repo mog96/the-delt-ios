@@ -139,7 +139,16 @@ extension AlertsViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - Alert Compose VC Delegate
 
 extension AlertsViewController: AlertComposeViewControllerDelegate {
-    func refreshData(completion: @escaping (() -> ())) {
+    func refreshData(savedObject object: AnyObject?, completion: @escaping (() -> ())) {
+        /*
+        if let updatedAlert = object as? PFObject {
+            if updatedAlert["replyCount"] == nil {
+                updatedAlert["replyCount"] = 0
+            }
+            updatedAlert["replyCount"] = updatedAlert["replyCount"] as! Int + 1
+            self.reloadAlert(alert: updatedAlert, atIndexPath: self.selectedAlertIndexPath)
+        }
+        */
         self.refreshAlerts {
             completion()
             self.refreshControl.endRefreshing()
@@ -151,13 +160,14 @@ extension AlertsViewController: AlertComposeViewControllerDelegate {
 // MARK: - Alert Table View Cell Delegate
 
 extension AlertsViewController: AlertTableViewCellDelegate {
-    func alertTableViewCell(replyToAlert alert: PFObject?) {
+    func alertTableViewCell(replyToAlert alert: PFObject?, atIndexPath indexPath: IndexPath) {
         if let alert = alert {
             let storyboard = UIStoryboard(name: "Alerts", bundle: nil)
             let alertReplyNC = storyboard.instantiateViewController(withIdentifier: "AlertReplyNC") as! UINavigationController
             let alertReplyVC = alertReplyNC.viewControllers[0] as! AlertReplyViewController
             alertReplyVC.replyToAlert = alert
             alertReplyVC.delegate = self
+            self.selectedAlertIndexPath = indexPath
             self.present(alertReplyNC, animated: true, completion: nil)
         }
     }

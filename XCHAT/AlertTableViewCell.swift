@@ -12,7 +12,7 @@ import ParseUI
 
 @objc protocol AlertTableViewCellDelegate {
     func alertTableViewCell(updateFavedForAlert alert: PFObject?, atIndexPath indexPath: IndexPath, faved: Bool)
-    func alertTableViewCell(replyToAlert alert: PFObject?)
+    func alertTableViewCell(replyToAlert alert: PFObject?, atIndexPath indexPath: IndexPath)
     func alertTableViewCell(updateFlaggedForAlert alert: PFObject?, atIndexPath indexPath: IndexPath, flagged: Bool)
 }
 
@@ -201,7 +201,7 @@ extension AlertTableViewCell {
     }
     
     @IBAction func onReplyButtonTapped(_ sender: Any) {
-        self.delegate?.alertTableViewCell(replyToAlert: self.alert)
+        self.delegate?.alertTableViewCell(replyToAlert: self.alert, atIndexPath: self.indexPath)
     }
     
     @IBAction func onFlagButtonTapped(_ sender: Any) {
