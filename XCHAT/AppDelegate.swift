@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     enum ShortcutIdentifier: String {
         case Post
         case Chat
-        case Calendar
+        case Calendar // case Alert
         init?(fullIdentifier: String) {
             guard let suffix = fullIdentifier.components(separatedBy: ".").last else {
                 return nil
@@ -39,6 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     enum PushIdentifier: String {
         case Reel
+        case Alert
         case Chat
         case Calendar
         init?(fullIdentifier: String) {
@@ -158,6 +159,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         switch identifier {
                         case .Reel:
                             break
+                        case .Alert:
+                            self.menuViewController?.presentContentView(.Alerts)
                         case .Chat:
                             self.menuViewController?.presentContentView(.Chat)
                         case .Calendar:
@@ -300,6 +303,10 @@ extension AppDelegate {
                 case .Reel:
                     if topVC == nil || !topVC!.isKind(of: ReelViewController.self) {
                         self.menuViewController?.presentContentView(.Reel)
+                    }
+                case .Alert:
+                    if topVC == nil || !topVC!.isKind(of: AlertsViewController.self) {
+                        self.menuViewController?.presentContentView(.Alerts)
                     }
                 case .Chat:
                     if topVC == nil || !topVC!.isKind(of: ChatViewController.self) {
