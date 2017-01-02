@@ -254,6 +254,9 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cg7-9u-SpT" customClass="PushPermissionWarningView" customModule="XCHAT" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
@@ -261,10 +264,14 @@
                             <constraint firstAttribute="trailing" secondItem="DWp-4s-K0I" secondAttribute="trailing" id="6Wn-QQ-PYY"/>
                             <constraint firstAttribute="trailing" secondItem="NmH-Mm-goi" secondAttribute="trailing" id="Gzb-fS-i6A"/>
                             <constraint firstItem="DWp-4s-K0I" firstAttribute="leading" secondItem="JQ7-ru-9sq" secondAttribute="leading" id="LzQ-JR-TrI"/>
+                            <constraint firstAttribute="trailing" secondItem="cg7-9u-SpT" secondAttribute="trailing" id="NDu-1F-utb"/>
+                            <constraint firstItem="cg7-9u-SpT" firstAttribute="leading" secondItem="JQ7-ru-9sq" secondAttribute="leading" id="P62-J7-d90"/>
                             <constraint firstItem="DWp-4s-K0I" firstAttribute="top" secondItem="JQ7-ru-9sq" secondAttribute="top" id="UO1-F6-hkJ"/>
                             <constraint firstItem="NmH-Mm-goi" firstAttribute="top" secondItem="cMk-Gv-UuD" secondAttribute="bottom" id="Yl0-u2-bmh"/>
                             <constraint firstItem="Ska-zm-wOa" firstAttribute="top" secondItem="NmH-Mm-goi" secondAttribute="bottom" id="ZJW-sf-18f"/>
                             <constraint firstItem="NmH-Mm-goi" firstAttribute="leading" secondItem="JQ7-ru-9sq" secondAttribute="leading" id="aHd-0j-QgC"/>
+                            <constraint firstAttribute="bottom" secondItem="cg7-9u-SpT" secondAttribute="bottom" id="iQI-gz-tEj"/>
+                            <constraint firstItem="cg7-9u-SpT" firstAttribute="top" secondItem="JQ7-ru-9sq" secondAttribute="top" id="qe5-pm-j6h"/>
                             <constraint firstItem="Ska-zm-wOa" firstAttribute="top" secondItem="DWp-4s-K0I" secondAttribute="bottom" id="zCF-hO-MTx"/>
                         </constraints>
                     </view>
@@ -278,6 +285,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="deltLoadingView" destination="NmH-Mm-goi" id="3nX-Y7-sSd"/>
+                        <outlet property="pushPermissionWarningView" destination="cg7-9u-SpT" id="1BR-r3-meA"/>
                         <outlet property="tableView" destination="DWp-4s-K0I" id="aFT-Nh-Irn"/>
                         <segue destination="rgg-3g-vIM" kind="modal" identifier="addCommentSegue" id="6Nx-LW-Mbn"/>
                     </connections>

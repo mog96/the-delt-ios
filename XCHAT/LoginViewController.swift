@@ -46,7 +46,7 @@ class LoginViewController: UIViewController {
     var loginButtonOriginalColor: UIColor!
     var signupButtonOriginalColor: UIColor!
     
-    var loginViewLoginHeight: CGFloat!
+    var kLoginViewLoginHeight: CGFloat = 200
     
     var textFieldOriginalHeight: CGFloat!
     
@@ -132,7 +132,6 @@ class LoginViewController: UIViewController {
         self.loginView.layer.masksToBounds = true
         self.loginView.setNeedsLayout()
         self.loginView.layoutIfNeeded()
-        self.loginViewLoginHeight = self.loginView.frame.height
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -327,7 +326,7 @@ extension LoginViewController {
 
 extension LoginViewController {
     fileprivate func inSignupMode() -> Bool {
-        return !(self.loginView.frame.height == self.loginViewLoginHeight)
+        return !(self.loginView.frame.height == self.kLoginViewLoginHeight)
     }
     
     fileprivate func showSignupMode(_ show: Bool) {
@@ -651,6 +650,17 @@ extension LoginViewController {
         }
     }
     
+    @IBAction func onLoginButtonTapped(_ sender: Any) {
+        if self.inSignupMode() {
+            self.showSignupMode(false)
+        } else {
+            if let username = self.usernameTextField.text, let password = self.passwordTextField.text {
+                self.startLoginAnimation(fromResetPasswordMode: false)
+                self.logInUser(username, password: password)
+            }
+        }
+    }
+    
     @IBAction func signupPressed(_ sender: AnyObject) {
         self.view.endEditing(true)
         if self.inSignupMode() {
@@ -668,17 +678,6 @@ extension LoginViewController {
             }
         } else {
             self.showSignupMode(true)
-        }
-    }
-    
-    @IBAction func loginPressed(_ sender: AnyObject) {
-        if self.inSignupMode() {
-            self.showSignupMode(false)
-        } else {
-            if let username = self.usernameTextField.text, let password = self.passwordTextField.text {
-                self.startLoginAnimation(fromResetPasswordMode: false)
-                self.logInUser(username, password: password)
-            }
         }
     }
     

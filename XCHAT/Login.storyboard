@@ -59,7 +59,7 @@
                                         </state>
                                         <state key="disabled" title="LOGGING IN..."/>
                                         <connections>
-                                            <action selector="loginPressed:" destination="a7e-my-ce2" eventType="touchUpInside" id="efn-Nu-uYG"/>
+                                            <action selector="onLoginButtonTapped:" destination="a7e-my-ce2" eventType="touchUpInside" id="CkN-Xo-aR9"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="25y-XK-twG">
@@ -167,7 +167,7 @@
                         <outlet property="emailTextField" destination="L0C-9y-iPw" id="WPa-2h-ar6"/>
                         <outlet property="emailTextFieldBottomSpacing" destination="nlH-Md-T39" id="gyo-tW-1ob"/>
                         <outlet property="emailTextFieldHeight" destination="1uk-S6-H2s" id="yxw-L5-vrw"/>
-                        <outlet property="loginButton" destination="tpU-FH-LpV" id="RRg-iC-zOO"/>
+                        <outlet property="loginButton" destination="tpU-FH-LpV" id="yKL-H4-npR"/>
                         <outlet property="loginView" destination="BaS-R6-wbi" id="z9z-da-mcY"/>
                         <outlet property="nameTextField" destination="9gY-nU-tqn" id="43j-2b-B1s"/>
                         <outlet property="nameTextFieldBottomSpacing" destination="NMq-Js-L4j" id="nyL-Re-jna"/>

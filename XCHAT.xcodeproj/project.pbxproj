@@ -27,6 +27,7 @@
 		2540A3951C2B9ED6003E4B31 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2540A3941C2B9ED6003E4B31 /* Main.storyboard */; };
 		254A19AA1B18768E0030F316 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 254A19A91B18768E0030F316 /* Keys.plist */; };
 		254FBE231E1A661C009F83F7 /* PushPermissionWarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 254FBE221E1A661C009F83F7 /* PushPermissionWarningView.xib */; };
+		254FBE251E1A6BB3009F83F7 /* PushPermissionWarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254FBE241E1A6BB3009F83F7 /* PushPermissionWarningView.swift */; };
 		25518A3F1B0ECFF200550DE9 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25518A3E1B0ECFF200550DE9 /* ButtonCell.swift */; };
 		25518A411B0ED03B00550DE9 /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25518A401B0ED03B00550DE9 /* CommentCell.swift */; };
 		25518A451B0ED06300550DE9 /* FavesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25518A441B0ED06300550DE9 /* FavesCell.swift */; };
@@ -177,6 +178,7 @@
 		2540A3941C2B9ED6003E4B31 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		254A19A91B18768E0030F316 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		254FBE221E1A661C009F83F7 /* PushPermissionWarningView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PushPermissionWarningView.xib; sourceTree = "<group>"; };
+		254FBE241E1A6BB3009F83F7 /* PushPermissionWarningView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushPermissionWarningView.swift; sourceTree = "<group>"; };
 		25518A3E1B0ECFF200550DE9 /* ButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
 		25518A401B0ED03B00550DE9 /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
 		25518A441B0ED06300550DE9 /* FavesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavesCell.swift; sourceTree = "<group>"; };
@@ -429,6 +431,7 @@
 			children = (
 				381125B21B0C1DB400DBBAD2 /* Reel.storyboard */,
 				254FBE221E1A661C009F83F7 /* PushPermissionWarningView.xib */,
+				254FBE241E1A6BB3009F83F7 /* PushPermissionWarningView.swift */,
 			);
 			name = Layout;
 			sourceTree = "<group>";
@@ -1048,6 +1051,7 @@
 				252A6B591C4CF80D00FA1F75 /* EndDatePickerTableViewCell.swift in Sources */,
 				255BE9811B170E9C0001B160 /* ChatViewController.swift in Sources */,
 				252A6B5B1C4CF8AC00FA1F75 /* StartDatePickerTableViewCell.swift in Sources */,
+				254FBE251E1A6BB3009F83F7 /* PushPermissionWarningView.swift in Sources */,
 				387866141B047A2100623BC1 /* NotificationTableViewCell.swift in Sources */,
 				D54E636A1D8E4B940091EBDE /* AuxViewController.swift in Sources */,
 				D5AB749C1D8EF06C00E321B4 /* AuxNavigationController.swift in Sources */,

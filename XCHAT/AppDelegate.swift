@@ -249,6 +249,7 @@ extension AppDelegate {
         if notificationSettings.types != UIUserNotificationType() {
             application.registerForRemoteNotifications()
         }
+        NotificationCenter.default.post(name: Notification.Name("PushNotificationPermissionRequestDismissed"), object: nil)
     }
     
     /**

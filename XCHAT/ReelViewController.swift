@@ -18,6 +18,7 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var deltLoadingView: DeltLoadingView!
+    @IBOutlet weak var pushPermissionWarningView: PushPermissionWarningView!
     
     var photos = NSMutableArray()
     var uploadPhoto: UIImage?
@@ -89,7 +90,9 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
     
     override func viewDidAppear(_ animated: Bool) {
         if !UIApplication.shared.isRegisteredForRemoteNotifications {
-            AppDelegate.registerForPushNotifications(UIApplication.shared)
+            UIView.transition(with: self.pushPermissionWarningView, duration: 1, options: .transitionCrossDissolve, animations: { 
+                self.pushPermissionWarningView.isHidden = false
+            }, completion: nil)
         }
     }
     

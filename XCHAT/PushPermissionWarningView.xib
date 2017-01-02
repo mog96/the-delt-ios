@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="PushPermissionWarningView" customModule="XCHAT" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -41,6 +41,9 @@
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="46"/>
                     <state key="normal" title="OK"/>
+                    <connections>
+                        <action selector="okButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="8lG-Sj-9AD"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -55,6 +58,9 @@
                 <constraint firstAttribute="trailing" secondItem="n3Q-bd-pru" secondAttribute="trailing" constant="98" id="xpU-b5-fWQ"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+            <connections>
+                <outlet property="okButton" destination="3iL-eS-QDh" id="MgI-ng-sG4"/>
+            </connections>
             <point key="canvasLocation" x="34.5" y="53.5"/>
         </view>
     </objects>
