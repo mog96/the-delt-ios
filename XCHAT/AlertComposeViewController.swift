@@ -37,6 +37,7 @@ class AlertComposeViewController: ContentViewController, UINavigationControllerD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIApplication.shared.setStatusBarStyle(.lightContent, animated: true)
         
         self.photoImageView.layer.cornerRadius = 3
         self.photoImageView.clipsToBounds = true

@@ -29,6 +29,7 @@ class AlertConversationViewController: ContentViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIApplication.shared.setStatusBarStyle(.lightContent, animated: true)
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
