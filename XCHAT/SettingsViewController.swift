@@ -199,6 +199,9 @@ extension SettingsViewController: ActionButtonCellDelegate {
             let currentHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
             currentHUD.label.text = "Logging Out..."
             PFUser.logOutInBackground(block: { (error: Error?) in
+                if let error = error {
+                    print("LOG OUT ERROR ", error._code,":", error.localizedDescription)
+                }
                 MBProgressHUD.hideAllHUDs(for: self.view, animated: true)
                 let loginStoryboard = UIStoryboard(name: "Login", bundle: nil)
                 let loginViewController = loginStoryboard.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController

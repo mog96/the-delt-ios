@@ -166,14 +166,32 @@ extension LoginViewController {
         let pw = password.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         
         PFUser.logInWithUsername(inBackground: un, password: pw) { (user: PFUser?, error: Error?) -> Void in
-            if user != nil {
+            if let error = error {
+                
+                print("LOGIN FAILED")
+                
+                self.endLoginAnmation(inResetPasswordMode: false)
+                
+                print("LOGIN ERROR:", error._code)
+                
+                switch error._code {
+                case 101:
+                    let ac = UIAlertController(title: "Invalid Username or Password", message: "Please try again.", preferredStyle: UIAlertControllerStyle.alert)
+                    ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(ac, animated: true, completion: nil)
+                default:
+                    let ac = UIAlertController(title: "Could not Connect", message: "Check your Internet connection and try again.", preferredStyle: UIAlertControllerStyle.alert)
+                    ac.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                    self.present(ac, animated: true, completion: nil)
+                }
+            } else if let user = user {
                 
                 print("LOGIN SUCCESSFUL")
                 
                 /** SAVE DEVICE INSTALLATION **/
                 
                 // Save username to NSUserDefaults in case PFUser.currentUser() fails in share extension.
-                UserDefaults(suiteName: "group.com.tdx.thedelt")?.set(user!.username!, forKey: "Username")
+                UserDefaults(suiteName: "group.com.tdx.thedelt")?.set(user.username!, forKey: "Username")
                 let installation = PFInstallation.current()!
                 installation["user"] = PFUser.current()!
                 installation["username"] = PFUser.current()!.username!
@@ -188,30 +206,6 @@ extension LoginViewController {
                     self.endLoginAnmation(inResetPasswordMode: false)
                     self.view.endEditing(true)
                     self.transitionToApp()
-                }
-            } else {
-                
-                print("LOGIN FAILED")
-                
-                self.endLoginAnmation(inResetPasswordMode: false)
-                if let errorCode = error?._code {
-                    
-                    print("LOGIN ERROR:", errorCode)
-                    
-                    switch errorCode {
-                    case 101:
-                        let ac = UIAlertController(title: "Invalid Username or Password", message: "Please try again.", preferredStyle: UIAlertControllerStyle.alert)
-                        ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                        self.present(ac, animated: true, completion: nil)
-                    case 100:
-                        let ac = UIAlertController(title: "Server Error", message: "Apologies. Please try again later.", preferredStyle: UIAlertControllerStyle.alert)
-                        ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                        self.present(ac, animated: true, completion: nil)
-                    default:
-                        let ac = UIAlertController(title: "Unable to Connect", message: "Check your connection and try again.", preferredStyle: UIAlertControllerStyle.alert)
-                        ac.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-                        self.present(ac, animated: true, completion: nil)
-                    }
                 }
             }
         }
@@ -436,9 +430,10 @@ extension LoginViewController {
         
         UIApplication.shared.setStatusBarHidden(true, with: .fade)
         UIView.transition(with: self.backgroundImageView, duration: animationDuration, options: .transitionCrossDissolve, animations: {
-            self.backgroundImageView.isHidden = true
+            self.backgroundImageView.alpha = 0
+            self.loginBackgroundImageIndex = (self.loginBackgroundImageIndex + 1) % self.loginBackgroundImageNames.count
             }, completion: { _ in
-                self.loginBackgroundImageIndex = (self.loginBackgroundImageIndex + 1) % self.loginBackgroundImageNames.count
+//                self.loginBackgroundImageIndex = (self.loginBackgroundImageIndex + 1) % self.loginBackgroundImageNames.count
                 self.backgroundImageView.image = UIImage(named: self.loginBackgroundImageNames[self.loginBackgroundImageIndex])
         })
         var controlsToHide: [UIControl]!
@@ -530,7 +525,7 @@ extension LoginViewController {
         
         UIApplication.shared.setStatusBarHidden(false, with: .fade)
         UIView.transition(with: self.backgroundImageView, duration: animationDuration, options: .transitionCrossDissolve, animations: {
-            self.backgroundImageView.isHidden = false
+            self.backgroundImageView.alpha = 1
             }, completion: nil)
         UIView.transition(with: self.deltLoadingView, duration: animationDuration, options: .transitionCrossDissolve, animations: {
             self.deltLoadingView.isHidden = true
