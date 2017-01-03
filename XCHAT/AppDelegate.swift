@@ -128,27 +128,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         /** CHECK IF USER LOGGED IN **/
         
-        if PFUser.current() == nil {
-            let loginStoryboard = UIStoryboard(name: "Login", bundle: nil)
-            let loginViewController = loginStoryboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
-            
-            // Does exactly the same as arrow in storyboard. ("100% parity." --Tim Lee)
-            window?.rootViewController = loginViewController
-            // Will register for push after successful login.
-            
-        } else {
+//        if PFUser.current() == nil {
+//            let loginStoryboard = UIStoryboard(name: "Login", bundle: nil)
+//            let loginViewController = loginStoryboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+//            
+//            // Does exactly the same as arrow in storyboard. ("100% parity." --Tim Lee)
+//            window?.rootViewController = loginViewController
+//            // Will register for push after successful login.
+//            
+//        } else {
             // Register for push.
-            AppDelegate.registerForPushNotifications(application)
+//            AppDelegate.registerForPushNotifications(application)
             
             // Save username to NSUserDefaults in case PFUser.currentUser() fails in share extension.
-            UserDefaults(suiteName: "group.com.tdx.thedelt")?.set(PFUser.current()!.username!, forKey: "Username")
-            
-            if let isAdmin = PFUser.current()!.object(forKey: "is_admin") as? Bool {
-                AppDelegate.isAdmin = isAdmin
-            } else {
-                AppDelegate.isAdmin = false
-            }
-            
+//            UserDefaults(suiteName: "group.com.tdx.thedelt")?.set(PFUser.current()!.username!, forKey: "Username")
+//            
+//            if let isAdmin = PFUser.current()!.object(forKey: "is_admin") as? Bool {
+//                AppDelegate.isAdmin = isAdmin
+//            } else {
+//                AppDelegate.isAdmin = false
+//            }
+        
             /** HANDLE APP LAUNCH FROM NOTIFICATION **/
             
             if let notification = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? [String: AnyObject] {
@@ -170,10 +170,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     }
                 }
             }
-            
+        
             // Does exactly the same as arrow in storyboard. ("100% parity." --Tim Lee)
             window?.rootViewController = self.hamburgerViewController
-        }
+//        }
         
         return true
     }
