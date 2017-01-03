@@ -11,18 +11,13 @@ import UIKit
 class PushPermissionWarningView: UIView {
 
     @IBOutlet weak var okButton: UIButton!
+    
     init(frame: CGRect, exemptFrames: CGRect...) {
         super.init(frame: frame)
-        self.commonInit()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.commonInit()
-    }
-    
-    func commonInit() {
-        return
     }
     
     override func awakeFromNib() {

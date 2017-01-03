@@ -90,9 +90,7 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
     
     override func viewDidAppear(_ animated: Bool) {
         if !UIApplication.shared.isRegisteredForRemoteNotifications {
-            UIView.transition(with: self.pushPermissionWarningView, duration: 1, options: .transitionCrossDissolve, animations: { 
-                self.pushPermissionWarningView.isHidden = false
-            }, completion: nil)
+            self.pushPermissionWarningView.isHidden = false
         }
     }
     
