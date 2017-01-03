@@ -132,6 +132,9 @@ class LoginViewController: UIViewController {
         self.loginView.layer.masksToBounds = true
         self.loginView.setNeedsLayout()
         self.loginView.layoutIfNeeded()
+        self.kLoginViewLoginHeight = self.loginView.frame.height
+        
+        print("LOGIN VIEW HEIGHT:", self.kLoginViewLoginHeight)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -326,7 +329,7 @@ extension LoginViewController {
 
 extension LoginViewController {
     fileprivate func inSignupMode() -> Bool {
-        return !(self.loginView.frame.height == self.kLoginViewLoginHeight)
+        return !(round(self.loginView.frame.height) == round(self.kLoginViewLoginHeight))
     }
     
     fileprivate func showSignupMode(_ show: Bool) {
@@ -639,7 +642,7 @@ extension LoginViewController: MFMailComposeViewControllerDelegate {
 
 extension LoginViewController {
     func goKeyPressed() {
-        if self.loginView.frame.height == self.loginViewLoginHeight {
+        if self.loginView.frame.height == self.kLoginViewLoginHeight {
             self.loginButton.sendActions(for: .touchUpInside)
         } else {
             if !resetPasswordButton.isHidden {
