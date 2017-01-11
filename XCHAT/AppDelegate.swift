@@ -238,6 +238,7 @@ extension AppDelegate {
     static func registerForPushNotifications(_ application: UIApplication) {
         let notificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
         application.registerUserNotificationSettings(notificationSettings)
+        UserDefaults(suiteName: "group.com.tdx.thedelt")?.set(true, forKey: "DidSetPushNotifications")
         
         print("REGISTERED FOR PUSH NOTIFICATIONS")
     }

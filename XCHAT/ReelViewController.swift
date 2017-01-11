@@ -88,9 +88,11 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if !UIApplication.shared.isRegisteredForRemoteNotifications {
+        if UserDefaults(suiteName: "group.com.tdx.thedelt")?.object(forKey: "DidSetPushNotifications") == nil {
             let alert = UIAlertController(title: "Welcome", message: "You're about to be asked to enable push notifications for the delt. We use these for alerts, chats, and calendar events.", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                AppDelegate.registerForPushNotifications(UIApplication.shared)
+            })
             self.present(alert, animated: true, completion: nil)
         }
     }
