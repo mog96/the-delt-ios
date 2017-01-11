@@ -14,11 +14,26 @@ class AlertsViewController: ContentViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var deltLoadingView: DeltLoadingView!
+    @IBOutlet weak var blueModeButton: UIBarButtonItem!
     
     var refreshControl = UIRefreshControl()
     
     var alerts = [PFObject]()
     var selectedAlertIndexPath = IndexPath()
+    
+    var blueMode = false {
+        didSet {
+            if self.blueMode {
+                self.blueModeButton.title = "red mode"
+                self.blueModeButton.tintColor = .red
+                self.navigationController?.navigationBar.backgroundColor = .blue
+            } else {
+                self.blueModeButton.title = "blue mode"
+                self.blueModeButton.tintColor = .blue
+                self.navigationController?.navigationBar.backgroundColor = .red
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -244,6 +259,10 @@ extension AlertsViewController {
         self.refreshAlerts { 
             self.refreshControl.endRefreshing()
         }
+    }
+    
+    @IBAction func toggleColorScheme(_ sender: Any) {
+        self.blueMode = !self.blueMode
     }
 }
 

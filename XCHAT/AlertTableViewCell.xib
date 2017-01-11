@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="465"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IJa-64-sxw" id="Ozf-mU-MRM">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="464.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="464"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="adP-La-KuT">
@@ -162,7 +162,6 @@
                         </constraints>
                     </view>
                 </subviews>
-                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="adP-La-KuT" secondAttribute="bottom" constant="4" id="299-9H-vcI"/>
                     <constraint firstAttribute="trailing" secondItem="adP-La-KuT" secondAttribute="trailing" constant="8" id="PYI-NS-fdC"/>

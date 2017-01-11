@@ -24,7 +24,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="329" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="3cx-15-3kW">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </tableView>
                             <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SHJ-9L-EBB" customClass="DeltLoadingView" customModule="XCHAT" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
@@ -44,15 +44,23 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="ALERTS" id="HBw-F7-4tv">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Fcv-QS-dbF">
-                            <connections>
-                                <segue destination="D1g-LH-xIz" kind="popoverPresentation" identifier="NewAlertSegue" popoverAnchorBarButtonItem="Fcv-QS-dbF" id="00c-h4-XDQ">
-                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                                </segue>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="Fcv-QS-dbF">
+                                <connections>
+                                    <segue destination="D1g-LH-xIz" kind="popoverPresentation" identifier="NewAlertSegue" popoverAnchorBarButtonItem="Fcv-QS-dbF" id="00c-h4-XDQ">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="blue mode" style="plain" id="fah-Yc-PPd">
+                                <connections>
+                                    <action selector="toggleColorScheme:" destination="fXX-B1-T0c" id="x47-Ld-O3y"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="blueModeButton" destination="fah-Yc-PPd" id="asf-1p-fWD"/>
                         <outlet property="deltLoadingView" destination="SHJ-9L-EBB" id="SuA-Kj-fAT"/>
                         <outlet property="tableView" destination="3cx-15-3kW" id="MCp-eg-uu6"/>
                     </connections>

@@ -18,7 +18,6 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var deltLoadingView: DeltLoadingView!
-    @IBOutlet weak var pushPermissionWarningView: PushPermissionWarningView!
     
     var photos = NSMutableArray()
     var uploadPhoto: UIImage?
@@ -90,7 +89,9 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
     
     override func viewDidAppear(_ animated: Bool) {
         if !UIApplication.shared.isRegisteredForRemoteNotifications {
-            self.pushPermissionWarningView.isHidden = false
+            let alert = UIAlertController(title: "Welcome", message: "You're about to be asked to enable push notifications for the delt. We use these for alerts, chats, and calendar events.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
