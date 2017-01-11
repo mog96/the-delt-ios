@@ -26,11 +26,13 @@ class AlertsViewController: ContentViewController {
             if self.blueMode {
                 self.blueModeButton.title = "red mode"
                 self.blueModeButton.tintColor = .red
-                self.navigationController?.navigationBar.backgroundColor = .blue
+                self.navigationController?.navigationBar.barTintColor = .blue
+                self.view.backgroundColor = .blue
             } else {
                 self.blueModeButton.title = "blue mode"
                 self.blueModeButton.tintColor = .blue
-                self.navigationController?.navigationBar.backgroundColor = .red
+                self.navigationController?.navigationBar.barTintColor = .red
+                self.view.backgroundColor = .red
             }
         }
     }
