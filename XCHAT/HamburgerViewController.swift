@@ -31,7 +31,11 @@ class HamburgerViewController: UIViewController {
         self.configureContentViewController()
         self.configureMenuViewController()
         
-        self.deltView.repeatInterval = 0.05
+        self.deltView.deltColor = UIColor.black
+        self.deltView.deltColorSet = [.black, .white, .red, .blue]
+        self.deltView.deltRepeatInterval = 0.05
+        self.deltView.deltFadeDuration = 0.3
+        self.deltView.isHidden = true
     }
     
     override func didReceiveMemoryWarning() {

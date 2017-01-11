@@ -214,10 +214,31 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
         
         print(indexPath.row)
         
-        let cellType = tableView.cellForRow(at: indexPath)!.reuseIdentifier!.replacingOccurrences(of: "Cell", with: "")
-        self.presentContentView(ContentView.init(rawValue: cellType)!)
+        let cellType = ContentView.init(rawValue: tableView.cellForRow(at: indexPath)!.reuseIdentifier!.replacingOccurrences(of: "Cell", with: ""))!
         
+        var deltLoadingViewDeltColor = UIColor.black
+        switch cellType {
+        case .Profile:
+            deltLoadingViewDeltColor = .white
+        case .Reel:
+            deltLoadingViewDeltColor = .red
+        case .Alerts:
+            deltLoadingViewDeltColor = .blue
+        case .Chat:
+            deltLoadingViewDeltColor = .blue
+        case .Calendar:
+            deltLoadingViewDeltColor = .red
+        case .Members:
+            deltLoadingViewDeltColor = .white
+        case .Admin:
+            deltLoadingViewDeltColor = .white
+        case .Settings:
+            deltLoadingViewDeltColor = .white
+        }
+        
+        self.hamburgerViewController?.deltView.deltColor = deltLoadingViewDeltColor
         self.hamburgerViewController?.deltView.startAnimating()
+        self.presentContentView(cellType)
     }
 }
 

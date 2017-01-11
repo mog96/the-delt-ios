@@ -12,8 +12,15 @@ class DeltLoadingView: UIView {
     
     fileprivate var shouldContinue = false
     fileprivate var exemptFrames: [CGRect]?
-    var deltColor: UIColor!
-    var repeatInterval: TimeInterval = 0.3
+    var deltColor: UIColor! {
+        didSet {
+            self.deltColorSet = [self.deltColor]
+        }
+    }
+    var deltColorSet: [UIColor]!
+    
+    var deltRepeatInterval: TimeInterval = 0.3
+    var deltFadeDuration: TimeInterval = 0.5
     
     init(frame: CGRect, exemptFrames: CGRect...) {
         super.init(frame: frame)
@@ -41,6 +48,7 @@ class DeltLoadingView: UIView {
     }
     
     func startAnimating() {
+        self.isHidden = false
         self.shouldContinue = true
         self.animateDelts()
     }
@@ -56,24 +64,26 @@ class DeltLoadingView: UIView {
 extension DeltLoadingView {
     fileprivate func animateDelts() {
         DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
+            var colorIndex = 0
             while self.shouldContinue {
                 DispatchQueue.main.async(execute: {
-                    self.addDeltLabel()
+                    self.addDeltLabel(color: self.deltColorSet[colorIndex])
                 })
                 // let interval = 0.4 + Double(arc4random()) / Double(UInt32.max) * 0.1
-                Thread.sleep(forTimeInterval: self.repeatInterval)
+                Thread.sleep(forTimeInterval: self.deltRepeatInterval)
+                colorIndex = colorIndex % self.deltColorSet.count
             }
         }
     }
     
-    fileprivate func addDeltLabel() {
+    fileprivate func addDeltLabel(color: UIColor) {
         
         print("ADD DELT LABEL")
         
-        let delt = self.deltLabel()
+        let delt = self.deltLabel(color: color)
         delt.alpha = 0
         self.addSubview(delt)
-        let fadeDuration: TimeInterval = 0.5
+        let fadeDuration: TimeInterval = self.deltFadeDuration
         UIView.animate(withDuration: fadeDuration, animations: { 
             delt.alpha = 1
             }, completion: { _ in
@@ -82,23 +92,14 @@ extension DeltLoadingView {
                 }, completion: { _ in
                     delt.removeFromSuperview()
                 }) 
-        }) 
-//        UIView.transitionWithView(delt, duration: fadeDuration, options: [.ShowHideTransitionViews, .TransitionCrossDissolve], animations: {
-//            delt.hidden = true
-//            }, completion: { _ in
-//                UIView.transitionWithView(delt, duration: fadeDuration, options: [.ShowHideTransitionViews, .TransitionCrossDissolve], animations: {
-//                    delt.hidden = true
-//                    }, completion: { _ in
-//                        delt.removeFromSuperview()
-//                })
-//        })
+        })
     }
     
     // Returns ∆ label with random origin within this view's bounds.
-    fileprivate func deltLabel() -> UILabel {
+    fileprivate func deltLabel(color: UIColor) -> UILabel {
         let deltLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         deltLabel.text = "Δ"
-        deltLabel.textColor = self.deltColor
+        deltLabel.textColor = color
         deltLabel.font = UIFont.systemFont(ofSize: 15)
         deltLabel.sizeToFit()
         deltLabel.frame = self.randomFrameWithSize(deltLabel.bounds.size)
