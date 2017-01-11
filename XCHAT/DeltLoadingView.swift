@@ -13,6 +13,7 @@ class DeltLoadingView: UIView {
     fileprivate var shouldContinue = false
     fileprivate var exemptFrames: [CGRect]?
     var deltColor: UIColor!
+    var repeatInterval: TimeInterval = 0.3
     
     init(frame: CGRect, exemptFrames: CGRect...) {
         super.init(frame: frame)
@@ -60,7 +61,7 @@ extension DeltLoadingView {
                     self.addDeltLabel()
                 })
                 // let interval = 0.4 + Double(arc4random()) / Double(UInt32.max) * 0.1
-                Thread.sleep(forTimeInterval: 0.3)
+                Thread.sleep(forTimeInterval: self.repeatInterval)
             }
         }
     }

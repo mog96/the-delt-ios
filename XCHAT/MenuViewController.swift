@@ -211,9 +211,13 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
         print(indexPath.row)
+        
         let cellType = tableView.cellForRow(at: indexPath)!.reuseIdentifier!.replacingOccurrences(of: "Cell", with: "")
         self.presentContentView(ContentView.init(rawValue: cellType)!)
+        
+        self.hamburgerViewController?.deltView.startAnimating()
     }
 }
 
