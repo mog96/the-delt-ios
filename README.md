@@ -1,4 +1,4 @@
-# the delt.
+# the delt
 Members only. Private chat, calendar, and camera reel for your group of friends. For iOS.
 
 ### Walkthrough
