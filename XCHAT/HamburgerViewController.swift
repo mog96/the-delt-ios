@@ -12,6 +12,8 @@ class HamburgerViewController: UIViewController {
     
     @IBOutlet weak var menuView: UIView!
     @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var deltView: DeltLoadingView!
+    
     @IBOutlet var panGestureRecognizer: UIPanGestureRecognizer!
     @IBOutlet var tapGestureRecognizer: UITapGestureRecognizer!
     
@@ -24,12 +26,16 @@ class HamburgerViewController: UIViewController {
         super.viewDidLoad()
         
         // FOR SCREEN SIZE-DEPENDENT MENU WIDTH
-        screenSize = UIScreen.main.bounds
+        self.screenSize = UIScreen.main.bounds
         
         self.configureContentViewController()
         self.configureMenuViewController()
         
-        // self.tapGestureRecognizer.delegate = self
+        self.deltView.deltColor = UIColor.black
+        self.deltView.deltColorSet = [.black, .white, .red, .blue]
+        self.deltView.deltRepeatInterval = 0.05
+        self.deltView.deltFadeDuration = 0.3
+        self.deltView.isHidden = true
     }
     
     override func didReceiveMemoryWarning() {
@@ -110,6 +116,7 @@ extension HamburgerViewController {
                 for subview in self.contentView.subviews {
                     subview.isUserInteractionEnabled = true
                 }
+                self.deltView.stopAnimating()
         })
     }
     

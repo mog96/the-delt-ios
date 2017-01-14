@@ -9,9 +9,10 @@
 import UIKit
 import Parse
 import Reachability
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
     var hamburgerViewController: HamburgerViewController?
@@ -28,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     enum ShortcutIdentifier: String {
         case Post
         case Chat
+        case Alert
         case Calendar
         init?(fullIdentifier: String) {
             guard let suffix = fullIdentifier.components(separatedBy: ".").last else {
@@ -38,6 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     enum PushIdentifier: String {
         case Reel
+        case Alert
         case Chat
         case Calendar
         init?(fullIdentifier: String) {
@@ -62,18 +65,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 $0.applicationId = keys["ParseApplicationID"] as? String
                 $0.clientKey = keys["ParseClientKey"] as? String
                 
-                // /***/
                 /* DEVELOPMENT ONLY */
                 #if TARGET_IPHONE_SIMULATOR
                     $0.server = "http://localhost:1337/parse"
                 #else
-                    $0.server = "http://mog.local:1337/parse"
-                    // $0.server = "http://192.168.1.243:1337/parse"
+                    // $0.server = "http://mog.local:1337/parse"
+                    $0.server = "http://192.168.1.84:1337/parse"
                 #endif
                 /* END DEVELOPMENT ONLY */
-                // */
                 
-                // $0.server = "https://thedelt.herokuapp.com/parse"
+                /*********** ENABLE BEFORE APP DEPLOY ***********/
+                $0.server = "https://thedelt.herokuapp.com/parse"
             }
             Parse.enableDataSharing(withApplicationGroupIdentifier: "group.com.tdx.thedelt")
             Parse.enableLocalDatastore()
@@ -146,7 +148,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             } else {
                 AppDelegate.isAdmin = false
             }
-            
+        
             /** HANDLE APP LAUNCH FROM NOTIFICATION **/
             
             if let notification = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? [String: AnyObject] {
@@ -158,6 +160,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         switch identifier {
                         case .Reel:
                             break
+                        case .Alert:
+                            self.menuViewController?.presentContentView(.Alerts)
                         case .Chat:
                             self.menuViewController?.presentContentView(.Chat)
                         case .Calendar:
@@ -166,7 +170,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     }
                 }
             }
-            
+        
             // Does exactly the same as arrow in storyboard. ("100% parity." --Tim Lee)
             window?.rootViewController = self.hamburgerViewController
         }
@@ -215,6 +219,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.menuViewController?.presentContentView(.Reel)
             let reelVC = (self.hamburgerViewController?.contentViewController as! UINavigationController).viewControllers[0] as! ReelViewController
             reelVC.presentImagePicker(usingPhotoLibrary: false)
+        case .Alert:
+            self.menuViewController?.presentContentView(.Alerts)
+            let alertsVC = (self.hamburgerViewController?.contentViewController as! UINavigationController).viewControllers[0] as! AlertsViewController
+            alertsVC.performSegue(withIdentifier: "NewAlertSegue", sender: alertsVC)
         case .Chat:
             self.menuViewController?.presentContentView(.Chat)
         case .Calendar:
@@ -230,6 +238,7 @@ extension AppDelegate {
     static func registerForPushNotifications(_ application: UIApplication) {
         let notificationSettings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
         application.registerUserNotificationSettings(notificationSettings)
+        UserDefaults.standard.setValue(true, forKey: "DidSetPushNotifications")
         
         print("REGISTERED FOR PUSH NOTIFICATIONS")
     }
@@ -241,22 +250,22 @@ extension AppDelegate {
         if notificationSettings.types != UIUserNotificationType() {
             application.registerForRemoteNotifications()
         }
+        NotificationCenter.default.post(name: Notification.Name("PushNotificationPermissionRequestDismissed"), object: nil)
     }
     
     /**
      Push notification registration successful.
      */
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        /***/
+        
+        /*** FOR DEBUGGING **/
+        
         let tokenChars = (deviceToken as NSData).bytes.bindMemory(to: CChar.self, capacity: deviceToken.count)
         var tokenString = ""
-        
         for i in 0..<deviceToken.count {
             tokenString += String(format: "%02.2hhx", arguments: [tokenChars[i]])
         }
-        
         print("PUSH DEVICE TOKEN:", tokenString)
-        /***/
         
         /** SET INSTALLATION PUSH TOKEN **/
         
@@ -289,17 +298,21 @@ extension AppDelegate {
         
         print("NOTIFICATION:", userInfo["aps"])
         
-        if UIApplication.shared.applicationState != .active {
-            let aps = userInfo["aps"] as! [String: AnyObject]
-            if let pushType = aps["pushType"] as? String {
-                guard let identifier = PushIdentifier.init(fullIdentifier: pushType) else {
-                    return
-                }
-                let topVC = (self.hamburgerViewController?.contentViewController as? UINavigationController)?.topViewController
+        let aps = userInfo["aps"] as! [String: AnyObject]
+        if let pushType = aps["pushType"] as? String {
+            guard let identifier = PushIdentifier.init(fullIdentifier: pushType) else {
+                return
+            }
+            let topVC = (self.hamburgerViewController?.contentViewController as? UINavigationController)?.topViewController
+            if UIApplication.shared.applicationState != .active {
                 switch identifier {
                 case .Reel:
                     if topVC == nil || !topVC!.isKind(of: ReelViewController.self) {
                         self.menuViewController?.presentContentView(.Reel)
+                    }
+                case .Alert:
+                    if topVC == nil || !topVC!.isKind(of: AlertsViewController.self) {
+                        self.menuViewController?.presentContentView(.Alerts)
                     }
                 case .Chat:
                     if topVC == nil || !topVC!.isKind(of: ChatViewController.self) {
@@ -312,6 +325,39 @@ extension AppDelegate {
                 }
             }
         }
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        print("NOTIFICATION:", userInfo["aps"])
+        
+        let aps = userInfo["aps"] as! [String: AnyObject]
+        if let pushType = aps["pushType"] as? String {
+            guard let identifier = PushIdentifier.init(fullIdentifier: pushType) else {
+                return
+            }
+            let topVC = (self.hamburgerViewController?.contentViewController as? UINavigationController)?.topViewController
+            switch identifier {
+            case .Reel:
+                if topVC == nil || !topVC!.isKind(of: ReelViewController.self) {
+                    self.menuViewController?.presentContentView(.Reel)
+                }
+            case .Alert:
+                if topVC == nil || !topVC!.isKind(of: AlertsViewController.self) {
+                    self.menuViewController?.presentContentView(.Alerts)
+                }
+            case .Chat:
+                if topVC == nil || !topVC!.isKind(of: ChatViewController.self) {
+                    self.menuViewController?.presentContentView(.Chat)
+                }
+                NotificationCenter.default.post(name: Notification.Name("ChatViewControllerShouldRefresh"), object: nil)
+            case .Calendar:
+                if topVC == nil || !topVC!.isKind(of: CalendarViewController.self) {
+                    self.menuViewController?.presentContentView(.Calendar)
+                }
+            }
+        }
+        completionHandler(.newData)
     }
 }
 

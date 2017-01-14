@@ -8,6 +8,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 import Parse
 import ParseUI
 
@@ -35,7 +36,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
     
     var uploadPhoto: UIImage?
     var choosingBackgroundPhoto = false
-    let yearPrefix = "Class of "
+    let kYearPrefix = "Class of "
     
     let kBioDescriptionString = "Tell the house a little bit about yourself."
     
@@ -44,6 +45,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
     var editable = true
     var user: PFUser?
     var username: String?
+    var currentHUD = MBProgressHUD()
     
     let kYearLength = 4
     
@@ -154,10 +156,8 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
             self.usernameTextField.text = "@" + username
         }
         
-        if let year = user?.object(forKey: "class") as? String {
-            self.yearTextField.text = "Class of " + year
-        } else if !self.editable {
-            self.yearTextField.text = "Class of 6969"
+        if let year = user?["classYear"] as? Int {
+            self.yearTextField.text = self.kYearPrefix + String(year)
         }
         
         if let bio = user?.object(forKey: "quote") as? String {
@@ -223,9 +223,6 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
     // MARK: TextField Delegate
 
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if !(self.yearTextField.text!.hasPrefix(self.yearPrefix) && self.yearTextField.text!.characters.count == self.yearPrefix.characters.count + kYearLength) {
-            self.yearTextField.text = ""
-        }
         textField.resignFirstResponder()
         self.saveData()
     }
@@ -313,6 +310,8 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
     // show the "Location selection" screen (WRITTEN BY NICK TROCCOLI)
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         // UIApplication.sharedApplication().setStatusBarHidden(true, withAnimation: .Slide)
+        self.currentHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
+        self.currentHUD.label.text = "Saving..."
         
         self.uploadPhoto = info[self.choosingBackgroundPhoto ? UIImagePickerControllerOriginalImage : UIImagePickerControllerEditedImage] as? UIImage
         dismiss(animated: true, completion: { () -> Void in
@@ -331,6 +330,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
                 // Save current user.
                 PFUser.current()?.setObject(imageFile!, forKey: "backgroundPhoto")
                 PFUser.current()?.saveInBackground(block: { (success: Bool, error: Error?) -> Void in
+                    self.currentHUD.hide(animated: true)
                     if error == nil {
                         self.saveData()
                     } else {
@@ -350,6 +350,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
                 // Save current user.
                 PFUser.current()?.setObject(imageFile!, forKey: "photo")
                 PFUser.current()?.saveInBackground(block: { (success: Bool, error: Error?) -> Void in
+                    self.currentHUD.hide(animated: true)
                     if error == nil {
                         self.saveData()
                     } else {
@@ -363,18 +364,18 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
     
     // MARK: Save Data
     
-    // TODO: Save user bios to a separate table, so that people can change other people's bios...
-    
     // Saves data (not photos) and updates view.
     func saveData() {
         if self.editable {
+            self.currentHUD = MBProgressHUD.showAdded(to: self.view, animated: true)
+            self.currentHUD.label.text = "Saving..."
+            
             // Set name.
             if self.nameTextField.text!.characters.count > 0 {
                 PFUser.current()?.setObject(self.nameTextField.text!, forKey: "name")
             } else {
                 PFUser.current()?.remove(forKey: "name")
             }
-            
             // Set username.
             if self.usernameTextField.text!.characters.count > 0 && self.usernameTextField.text! != "@" {
                 let username = self.usernameTextField.text!.substring(from: self.usernameTextField.text!.characters.index(self.usernameTextField.text!.startIndex, offsetBy: 1))
@@ -383,14 +384,12 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
                 PFUser.current()?.remove(forKey: "username")
             }
             
-            // Set year. Strictly requires Class of XXXX format.
-            if self.yearTextField.text!.hasPrefix(self.yearPrefix) && self.yearTextField.text!.characters.count == self.yearPrefix.characters.count + kYearLength {
-                if let year = Int(self.yearTextField.text!.substring(from: self.yearTextField.text!.characters.index(self.yearTextField.text!.startIndex, offsetBy: self.yearPrefix.characters.count))) {
-                    
-                    PFUser.current()?.setObject(year, forKey: "year")
+            // Set class year.
+            if self.yearTextField.text!.characters.count >= 4 {
+                let classYear = self.yearTextField.text!.substring(from: self.yearTextField.text!.index(self.yearTextField.text!.endIndex, offsetBy: -4))
+                if let year = Int(classYear) {
+                    PFUser.current()?["classYear"] = classYear
                 }
-            } else {
-                PFUser.current()?.setObject(6969, forKey: "year")
             }
             
             // Set phone number.
@@ -419,11 +418,9 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
         PFUser.current()?.saveInBackground(block: { (result: Bool, error: Error?) -> Void in
             if error != nil {
                 print(error!.localizedDescription)
-                
             } else {
                 PFUser.current()?.fetchIfNeededInBackground(block: { (object: PFObject?, error: Error?) -> Void in
                     if error == nil {
-                        
                         // Reload profile view.
                         self.viewDidLoad()
                         self.view.setNeedsLayout()
@@ -431,10 +428,10 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
                         
                         // Reload menu.
                         self.appDelegate.menuViewController?.tableView.reloadData()
-                        
                     } else {
                         print(error!.localizedDescription)
                     }
+                    self.currentHUD.hide(animated: true)
                 })
             }
         })

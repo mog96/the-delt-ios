@@ -17,6 +17,7 @@ import ParseUI
 class ReelViewController: ContentViewController, UINavigationControllerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var deltLoadingView: DeltLoadingView!
     
     var photos = NSMutableArray()
     var uploadPhoto: UIImage?
@@ -62,9 +63,17 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
             self.refreshControl!.attributedTitle = NSAttributedString(string: "Welcome to The Delt. It's a little slow...", attributes: [NSForegroundColorAttributeName : UIColor.red])
             UserDefaults.standard.set(true, forKey: self.kWelcomeMessageKey)
         }
-        self.tableView.insertSubview(self.refreshControl!, at: 0)
+        if #available(iOS 10.0, *) {
+            self.tableView.refreshControl = self.refreshControl
+        } else {
+            self.tableView.insertSubview(self.refreshControl!, at: 0)
+        }
         
-        self.refreshData()
+        self.deltLoadingView.deltColor = UIColor.red
+        
+        self.tableView.setNeedsLayout()
+        self.tableView.layoutIfNeeded()
+        self.firstLoad()
         
         self.chooseMediaAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         self.chooseMediaAlertController.addAction(UIAlertAction(title: "CLICK", style: .destructive, handler: { _ in      // FIXME: Using .Destructive to get red text color is a little hacky...
@@ -79,8 +88,12 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if !UIApplication.shared.isRegisteredForRemoteNotifications {
-            AppDelegate.registerForPushNotifications(UIApplication.shared)
+        if UserDefaults.standard.value(forKey: "DidSetPushNotifications") == nil {
+            let alert = UIAlertController(title: "Welcome", message: "You're about to be asked to enable push notifications for the delt. We use these for alerts, chats, and calendar events.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
+                AppDelegate.registerForPushNotifications(UIApplication.shared)
+            })
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
@@ -268,9 +281,29 @@ extension ReelViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension ReelViewController {
     
-    // TODO: Just pass around PFObject, no need to deserialize...
+    func firstLoad() {
+        let animationDuration = 0.5
+        UIView.transition(with: self.deltLoadingView, duration: animationDuration, options: .transitionCrossDissolve, animations: {
+            self.deltLoadingView.startAnimating()
+            self.deltLoadingView.isHidden = false
+        }, completion: nil)
+        self.refreshData {
+            UIView.transition(with: self.deltLoadingView, duration: animationDuration, options: .transitionCrossDissolve, animations: {
+                self.deltLoadingView.isHidden = true
+                self.deltLoadingView.stopAnimating()
+            }, completion: nil)
+        }
+    }
+    
     func refreshData() {
         self.refreshControl?.beginRefreshing()
+        self.refreshData { 
+            self.refreshControl?.endRefreshing()
+        }
+    }
+    
+    // TODO: Just pass around PFObject, no need to deserialize...
+    func refreshData(completion: (() -> ())?) {
         let query = PFQuery(className: "Photo")
         query.order(byAscending: "createdAt")
         query.findObjectsInBackground { (objects: [PFObject]?, error: Error?) -> Void in
@@ -328,8 +361,9 @@ extension ReelViewController {
                     }
                 }
                 
-                self.refreshControl?.endRefreshing()
                 self.tableView.reloadData()
+                completion?()
+                self.deltLoadingView.stopAnimating()
             }
         }
     }
@@ -353,7 +387,7 @@ extension ReelViewController: ButtonCellDelegate {
         let objectId = photo?.value(forKey: "objectId") as! String
         query.getObjectInBackground(withId: objectId) { (photo: PFObject?, error: Error?) -> Void in
             if error != nil {
-                print(error)
+                print(error!.localizedDescription)
             } else if let photo = photo {
                 
                 if let username = PFUser.current()?.username {
@@ -382,7 +416,7 @@ extension ReelViewController: ButtonCellDelegate {
     
     func updateFlagged(_ photo: NSMutableDictionary?, flagged: Bool) {
         if flagged {
-            let alert = UIAlertController(title: "Post Flagged", message: "Administrators will be notified and this post will be reviewed.", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Post Flagged", message: "Administrators have been notified and this post will be reviewed.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
@@ -412,7 +446,7 @@ extension ReelViewController: ButtonCellDelegate {
                         print("Error: \(error) \(error.localizedDescription)")
                         
                     } else {
-                        self.refreshData() // FIXME: Makes for glitchy scrolling.
+                        self.refreshData()  // FIXME: Makes for glitchy scrolling.
                     }
                 })
             }
@@ -574,6 +608,8 @@ extension ReelViewController: PhotoVideoCellDelegate {
     func presentVideoDetailViewController(videoFile file: PFFile) {
         print("PRESENTING VIDEO DETAIL")
     }
+    
+    // did update faved implemented in Button Cell Delegate
 }
 
 

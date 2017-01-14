@@ -25,7 +25,7 @@ class ChatViewController: ContentViewController {
     var numOfMessagesToLoad: Int = 20
     var numOfTotalMessages: Int?
     
-    var refreshTimer: Timer!
+    // var refreshTimer: Timer!
     var presentedConnectionError = false
     
     // This should be changed if we want to allow thread selection
@@ -68,13 +68,14 @@ class ChatViewController: ContentViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.willEnterForeground), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.willEnterForeground), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.fetchMessages), name: Notification.Name("ChatViewControllerShouldRefresh"), object: nil)
         
         // Fetch messages.
         self.fetchMessages()
         
         // SET MESSAGE REFRESH
         // Refetch messages every 15 seconds. 
-        self.refreshTimer = Timer.scheduledTimer(timeInterval: 15, target: self, selector: #selector(ChatViewController.fetchMessages), userInfo: nil, repeats: true)
+        // self.refreshTimer = Timer.scheduledTimer(timeInterval: 15, target: self, selector: #selector(ChatViewController.fetchMessages), userInfo: nil, repeats: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -189,7 +190,7 @@ extension ChatViewController {
                 print("Error fetching Chat messages:", error?.localizedDescription)
                 if let errorString = error?.localizedDescription {
                     if errorString == "Could not connect to the server." && !self.presentedConnectionError {
-                        self.refreshTimer.invalidate()
+                        // self.refreshTimer.invalidate()
                         
                         self.view.endEditing(true)
                         let alertVC = UIAlertController(title: "Unable to Connect", message: "Please try again later.", preferredStyle: UIAlertControllerStyle.alert)
