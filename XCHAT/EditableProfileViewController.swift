@@ -36,7 +36,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
     
     var uploadPhoto: UIImage?
     var choosingBackgroundPhoto = false
-    let yearPrefix = "Class of "
+    let kYearPrefix = "Class of "
     
     let kBioDescriptionString = "Tell the house a little bit about yourself."
     
@@ -156,10 +156,8 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
             self.usernameTextField.text = "@" + username
         }
         
-        if let year = user?.object(forKey: "class") as? String {
-            self.yearTextField.text = "Class of " + year
-        } else if !self.editable {
-            self.yearTextField.text = "Class of 6969"
+        if let year = user?["classYear"] as? Int {
+            self.yearTextField.text = self.kYearPrefix + String(year)
         }
         
         if let bio = user?.object(forKey: "quote") as? String {
@@ -225,9 +223,6 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
     // MARK: TextField Delegate
 
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if !(self.yearTextField.text!.hasPrefix(self.yearPrefix) && self.yearTextField.text!.characters.count == self.yearPrefix.characters.count + kYearLength) {
-            self.yearTextField.text = ""
-        }
         textField.resignFirstResponder()
         self.saveData()
     }
@@ -388,26 +383,29 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
             } else {
                 PFUser.current()?.remove(forKey: "username")
             }
-            // Set year. Strictly requires Class of XXXX format.
-            if self.yearTextField.text!.hasPrefix(self.yearPrefix) && self.yearTextField.text!.characters.count == self.yearPrefix.characters.count + kYearLength {
-                if let year = Int(self.yearTextField.text!.substring(from: self.yearTextField.text!.characters.index(self.yearTextField.text!.startIndex, offsetBy: self.yearPrefix.characters.count))) {
-                    PFUser.current()?.setObject(year, forKey: "year")
+            
+            // Set class year.
+            if self.yearTextField.text!.characters.count >= 4 {
+                let classYear = self.yearTextField.text!.substring(from: self.yearTextField.text!.index(self.yearTextField.text!.endIndex, offsetBy: -4))
+                if let year = Int(classYear) {
+                    PFUser.current()?["classYear"] = classYear
                 }
-            } else {
-                PFUser.current()?.setObject(6969, forKey: "year")
             }
+            
             // Set phone number.
             if phoneNumberTextField.text!.characters.count > 0 {
                 PFUser.current()?.setObject(phoneNumberTextField.text!, forKey: "phone")
             } else {
                 PFUser.current()?.remove(forKey: "phone")
             }
+            
             // Set email.
             if emailTextField.text!.characters.count > 0 {
                 PFUser.current()?.setObject(emailTextField.text!, forKey: "email")
             } else {
                 PFUser.current()?.remove(forKey: "email")
             }
+            
             // Set bio.
             if self.bioTextView.text.characters.count > 0 && bioTextView.text != self.bioTextViewPlaceholder {
                 PFUser.current()?.setObject(bioTextView.text, forKey: "quote")

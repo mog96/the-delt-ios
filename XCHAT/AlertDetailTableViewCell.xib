@@ -17,10 +17,10 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="490"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mQx-3b-boV" id="tU5-XB-2fa">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="489.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="489"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ROONEY" translatesAutoresizingMaskIntoConstraints="NO" id="jEZ-lt-z1b" customClass="ProfileImageView" customModule="XCHAT" customModuleProvider="target">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jEZ-lt-z1b" customClass="ProfileImageView" customModule="XCHAT" customModuleProvider="target">
                         <rect key="frame" x="10" y="10" width="50" height="50"/>
                         <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -187,7 +187,6 @@
         <image name="COMMENT" width="600" height="600"/>
         <image name="FAVE" width="500" height="500"/>
         <image name="FAVE_ON" width="500" height="500"/>
-        <image name="ROONEY" width="160" height="160"/>
         <image name="flag_icon_black" width="114" height="128"/>
         <image name="flag_icon_red" width="114" height="128"/>
     </resources>

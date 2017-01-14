@@ -20,17 +20,20 @@ class AlertsViewController: ContentViewController {
     
     var alerts = [PFObject]()
     var selectedAlertIndexPath = IndexPath()
+    var navgationBarOriginalTintColor: UIColor?
     
     var blueMode = false {
         didSet {
             if self.blueMode {
                 self.blueModeButton.title = "red mode"
                 self.blueModeButton.tintColor = .red
-                self.navigationController?.navigationBar.barTintColor = .blue
-                self.view.backgroundColor = .blue
+                self.setMenuButton(withColor: "red")
+                self.navigationController?.navigationBar.barTintColor = self.navgationBarOriginalTintColor
+                self.view.backgroundColor = self.navgationBarOriginalTintColor
             } else {
                 self.blueModeButton.title = "blue mode"
-                self.blueModeButton.tintColor = .blue
+                self.blueModeButton.tintColor = self.navgationBarOriginalTintColor
+                self.setMenuButton(withColor: "blue")
                 self.navigationController?.navigationBar.barTintColor = .red
                 self.view.backgroundColor = .red
             }
@@ -41,6 +44,8 @@ class AlertsViewController: ContentViewController {
         super.viewDidLoad()
         self.setMenuButton(withColor: "blue")
         UIApplication.shared.setStatusBarStyle(.lightContent, animated: true)
+        
+        self.navgationBarOriginalTintColor = self.blueModeButton.tintColor
 
         self.tableView.dataSource = self
         self.tableView.delegate = self
