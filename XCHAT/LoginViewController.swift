@@ -49,10 +49,11 @@ class LoginViewController: UIViewController {
     var kLoginViewLoginHeight: CGFloat = 200
     
     var textFieldOriginalHeight: CGFloat!
+    var textFieldOriginalBottomSpacing: CGFloat!
     
     var textFields: [UITextField]!
-    var signupTextFieldConstraints: [NSLayoutConstraint]!
-    var loginTextFieldConstraints: [NSLayoutConstraint]!
+    var signupTextFieldHeightConstraints: [NSLayoutConstraint]!
+    var signupTextFieldBottomSpacingConstraints: [NSLayoutConstraint]!
     var controlsHiddenOnLogin: [UIControl]!
     
     let loginBackgroundImageNames = ["LOGIN BACKGROUND 1",
@@ -75,6 +76,9 @@ class LoginViewController: UIViewController {
         
         self.deltLoadingView.isHidden = true
         self.resetPasswordButton.isHidden = true
+        
+        self.textFieldOriginalHeight = self.nameTextFieldHeight.constant
+        self.textFieldOriginalBottomSpacing = self.nameTextFieldBottomSpacing.constant
         
         // Name text field.
         self.nameTextField.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [NSForegroundColorAttributeName : UIColor.lightText])
@@ -115,10 +119,9 @@ class LoginViewController: UIViewController {
         self.confirmPasswordTextField.isHidden = true
         
         // Group buttons and text fields for animations.
-        self.textFieldOriginalHeight = self.nameTextFieldHeight.constant
         self.textFields = [self.nameTextField, self.emailTextField, self.usernameTextField, self.passwordTextField]
-        self.signupTextFieldConstraints = [self.nameTextFieldHeight, self.nameTextFieldBottomSpacing, self.emailTextFieldHeight, self.emailTextFieldBottomSpacing]
-        self.loginTextFieldConstraints = [self.passwordTextFieldHeight, self.passwordTextFieldBottomSpacing]
+        self.signupTextFieldHeightConstraints = [self.nameTextFieldHeight, self.emailTextFieldHeight]
+        self.signupTextFieldBottomSpacingConstraints = [self.nameTextFieldBottomSpacing, self.emailTextFieldBottomSpacing]
         self.controlsHiddenOnLogin = [self.usernameTextField, self.passwordTextField, self.signupButton]
         
         // Login and sign up button colors.
@@ -338,13 +341,17 @@ extension LoginViewController {
         let animationDuration = 0.35
         
         if show {
-            self.signupTextFieldConstraints.forEach({ $0.constant = self.textFieldOriginalHeight })
-            self.loginTextFieldConstraints.forEach({ $0.constant = 0 })
+            self.signupTextFieldHeightConstraints.forEach({ $0.constant = self.textFieldOriginalHeight })
+            self.signupTextFieldBottomSpacingConstraints.forEach({ $0.constant = self.textFieldOriginalBottomSpacing })
+            self.passwordTextFieldHeight.constant = 0
+            self.passwordTextFieldBottomSpacing.constant = 0
             self.usernameTextField.returnKeyType = .go
             
         } else {
-            self.signupTextFieldConstraints.forEach({ $0.constant = 0 })
-            self.loginTextFieldConstraints.forEach({ $0.constant = self.textFieldOriginalHeight })
+            self.signupTextFieldHeightConstraints.forEach({ $0.constant = 0 })
+            self.signupTextFieldBottomSpacingConstraints.forEach({ $0.constant = 0 })
+            self.passwordTextFieldHeight.constant = self.textFieldOriginalHeight
+            self.passwordTextFieldBottomSpacing.constant = self.textFieldOriginalBottomSpacing
             self.usernameTextField.returnKeyType = .next
         }
         

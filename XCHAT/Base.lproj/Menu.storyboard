@@ -196,20 +196,20 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="54.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ALERTS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mel-qe-dTF">
-                                                    <rect key="frame" x="15" y="10.5" width="94" height="34"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ALERTS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IVR-SF-8Sq">
+                                                    <rect key="frame" x="14" y="10.5" width="94" height="34"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="94" id="FmM-F1-n2X"/>
-                                                        <constraint firstAttribute="height" constant="34" id="Gzb-uP-5fa"/>
+                                                        <constraint firstAttribute="width" constant="94" id="ctO-z9-yZ2"/>
+                                                        <constraint firstAttribute="height" constant="34" id="zXb-OI-YGE"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="thin" pointSize="28"/>
-                                                    <color key="textColor" red="0.40709350649999998" green="0.54860040290000001" blue="0.81752539700000004" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.40784313729999999" green="0.54901960780000003" blue="0.81568627449999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="mel-qe-dTF" firstAttribute="centerY" secondItem="mVt-Dr-iDi" secondAttribute="centerY" id="7SK-ey-gT7"/>
-                                                <constraint firstItem="mel-qe-dTF" firstAttribute="leading" secondItem="mVt-Dr-iDi" secondAttribute="leading" constant="15" id="kjH-GS-jfZ"/>
+                                                <constraint firstItem="IVR-SF-8Sq" firstAttribute="leading" secondItem="mVt-Dr-iDi" secondAttribute="leading" constant="14" id="O68-ih-Iw7"/>
+                                                <constraint firstItem="IVR-SF-8Sq" firstAttribute="centerY" secondItem="mVt-Dr-iDi" secondAttribute="centerY" id="tfN-de-H75"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -228,7 +228,7 @@
                                                         <constraint firstAttribute="height" constant="34" id="Xth-hy-DQc"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="thin" pointSize="28"/>
-                                                    <color key="textColor" red="0.40709350648501558" green="0.5486004028608974" blue="0.81752539704544369" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="textColor" red="0.40784313725490196" green="0.5490196078431373" blue="0.81568627450980391" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
