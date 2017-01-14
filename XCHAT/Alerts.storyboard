@@ -52,7 +52,7 @@
                                     </segue>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="blue mode" style="plain" id="fah-Yc-PPd">
+                            <barButtonItem enabled="NO" title="blue mode" style="plain" id="fah-Yc-PPd">
                                 <connections>
                                     <action selector="toggleColorScheme:" destination="fXX-B1-T0c" id="x47-Ld-O3y"/>
                                 </connections>

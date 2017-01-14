@@ -88,7 +88,7 @@ class ReelViewController: ContentViewController, UINavigationControllerDelegate 
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        if UserDefaults(suiteName: "group.com.tdx.thedelt")?.object(forKey: "DidSetPushNotifications") == nil {
+        if UserDefaults.standard.value(forKey: "DidSetPushNotifications") == nil {
             let alert = UIAlertController(title: "Welcome", message: "You're about to be asked to enable push notifications for the delt. We use these for alerts, chats, and calendar events.", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in
                 AppDelegate.registerForPushNotifications(UIApplication.shared)

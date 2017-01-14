@@ -28,11 +28,11 @@ class AlertsViewController: ContentViewController {
                 self.blueModeButton.title = "red mode"
                 self.blueModeButton.tintColor = .red
                 self.setMenuButton(withColor: "red")
-                self.navigationController?.navigationBar.barTintColor = self.navgationBarOriginalTintColor
-                self.view.backgroundColor = self.navgationBarOriginalTintColor
+                self.navigationController?.navigationBar.barTintColor = self.view.tintColor
+                self.view.backgroundColor = self.view.tintColor
             } else {
                 self.blueModeButton.title = "blue mode"
-                self.blueModeButton.tintColor = self.navgationBarOriginalTintColor
+                self.blueModeButton.tintColor = nil
                 self.setMenuButton(withColor: "blue")
                 self.navigationController?.navigationBar.barTintColor = .red
                 self.view.backgroundColor = .red
@@ -45,7 +45,7 @@ class AlertsViewController: ContentViewController {
         self.setMenuButton(withColor: "blue")
         UIApplication.shared.setStatusBarStyle(.lightContent, animated: true)
         
-        self.navgationBarOriginalTintColor = self.blueModeButton.tintColor
+        self.blueModeButton.tintColor = .clear
 
         self.tableView.dataSource = self
         self.tableView.delegate = self
