@@ -156,7 +156,7 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
             self.usernameTextField.text = "@" + username
         }
         
-        if let year = user?["classYear"] as? Int {
+        if let year = user?["classOf"] as? Int {
             self.yearTextField.text = self.kYearPrefix + String(year)
         }
         
@@ -386,9 +386,9 @@ class EditableProfileViewController: UIViewController, UITextFieldDelegate, UITe
             
             // Set class year.
             if self.yearTextField.text!.characters.count >= 4 {
-                let classYear = self.yearTextField.text!.substring(from: self.yearTextField.text!.index(self.yearTextField.text!.endIndex, offsetBy: -4))
-                if let year = Int(classYear) {
-                    PFUser.current()?["classYear"] = classYear
+                let classOf = self.yearTextField.text!.substring(from: self.yearTextField.text!.index(self.yearTextField.text!.endIndex, offsetBy: -4))
+                if let year = Int(classOf) {
+                    PFUser.current()?["classOf"] = year
                 }
             }
             
