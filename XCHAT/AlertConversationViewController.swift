@@ -103,11 +103,11 @@ extension AlertConversationViewController {
                     
                     print("REPLIES:", replies)
                     
-                    completion(replies)
                 } else {
                     print("object is nil")
                     print(error!.localizedDescription)
                 }
+                completion(replies)
             }
         } else {
             print("ALERT OBJECT ID NOT FOUND")
