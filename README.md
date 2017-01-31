@@ -6,7 +6,7 @@ This app is a concept implementation of the future of mobile communication betwe
 
 ### Walkthrough
 ![login](https://github.com/mog96/the-delt/blob/master/Walkthroughs/f1_login.gif)
-#### Edit profile
+Login.
 ![profile](https://github.com/mog96/the-delt/blob/master/Walkthroughs/f2_profile.gif)
 #### Alerts
 ![alerts](https://github.com/mog96/the-delt/blob/master/Walkthroughs/f3_alerts.gif)
