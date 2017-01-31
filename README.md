@@ -5,7 +5,7 @@ Live in the [App Store](https://appsto.re/us/9yAjab.i). Private chat, calendar, 
 This app is a concept implementation of the future of mobile communication between members of a small community. Designed for groups of 60-100 members, who share a common interest, living space, or other mutual involvement worth communicating about via a private app.
 
 ### Walkthrough
-![login](https://github.com/mog96/the-delt/blob/master/Walkthroughs/f1_login.gif)
+[login](https://github.com/mog96/the-delt/blob/master/Walkthroughs/f1_login.gif)
 Login.
 ![profile](https://github.com/mog96/the-delt/blob/master/Walkthroughs/f2_profile.gif)
 #### Alerts
