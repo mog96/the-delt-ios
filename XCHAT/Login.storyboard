@@ -35,7 +35,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BaS-R6-wbi">
                                 <rect key="frame" x="105" y="89" width="165" height="214"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" minimumFontSize="5" translatesAutoresizingMaskIntoConstraints="NO" id="Nd2-rA-6qv">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" translatesAutoresizingMaskIntoConstraints="NO" id="Nd2-rA-6qv">
                                         <rect key="frame" x="24" y="83" width="117" height="22"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -82,7 +82,7 @@
                                             <action selector="signupPressed:" destination="a7e-my-ce2" eventType="touchUpInside" id="dpn-9K-BvQ"/>
                                         </connections>
                                     </button>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lYD-C2-sIs">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" translatesAutoresizingMaskIntoConstraints="NO" id="lYD-C2-sIs">
                                         <rect key="frame" x="24" y="112" width="117" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="22" id="Agp-Xj-IVf"/>
@@ -91,7 +91,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9gY-nU-tqn">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" translatesAutoresizingMaskIntoConstraints="NO" id="9gY-nU-tqn">
                                         <rect key="frame" x="24" y="25" width="117" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="22" id="kT5-EK-vF1"/>
@@ -100,7 +100,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="words" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="L0C-9y-iPw">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" translatesAutoresizingMaskIntoConstraints="NO" id="L0C-9y-iPw">
                                         <rect key="frame" x="24" y="54" width="117" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="22" id="1uk-S6-H2s"/>
@@ -109,7 +109,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hLt-IU-v9i">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" translatesAutoresizingMaskIntoConstraints="NO" id="hLt-IU-v9i">
                                         <rect key="frame" x="24" y="141" width="117" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="22" id="RnS-6K-a9O"/>

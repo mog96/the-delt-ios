@@ -30,6 +30,7 @@ class ChatViewController: ContentViewController {
     
     // This should be changed if we want to allow thread selection
     var threadId: String = "AtsDDF0sUK"
+    // var refreshTimer: Timer?
     
     let kMessageDraftKey = "ChatMessageDraft"
     let kLastSentMessageKey = "ChatLastSentMessage"
@@ -73,9 +74,10 @@ class ChatViewController: ContentViewController {
         // Fetch messages.
         self.fetchMessages()
         
-        // SET MESSAGE REFRESH
-        // Refetch messages every 15 seconds. 
-        // self.refreshTimer = Timer.scheduledTimer(timeInterval: 15, target: self, selector: #selector(ChatViewController.fetchMessages), userInfo: nil, repeats: true)
+        /* DEVELOPMENT ONLY */
+        // SET MESSAGE REFRESH. Refetch messages every 15 seconds.
+        // self.refreshTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(ChatViewController.fetchMessages), userInfo: nil, repeats: true)
+        /* END DEVELOPMENT ONLY */
     }
     
     override func viewDidAppear(_ animated: Bool) {
