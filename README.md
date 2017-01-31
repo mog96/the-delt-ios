@@ -8,10 +8,15 @@ This app is a concept implementation of the future of mobile communication betwe
 ![login](https://github.com/mog96/the-delt/blob/master/Walkthroughs/f1_login.gif)
 ####
 ![profile](https://github.com/mog96/the-delt/blob/master/Walkthroughs/f2_profile.gif)
+####
 ![alerts](https://github.com/mog96/the-delt/blob/master/Walkthroughs/f3_alerts.gif)
+####
 ![chat](https://github.com/mog96/the-delt/blob/master/Walkthroughs/f4_chat.gif)
+####
 ![calendar](https://github.com/mog96/the-delt/blob/master/Walkthroughs/f5_calendar.gif)
 #### User Onboarding
 ![signup](https://github.com/mog96/the-delt/blob/master/Walkthroughs/f7_signup.gif)
+####
 ![approve](https://github.com/mog96/the-delt/blob/master/Walkthroughs/f8_approve.gif)
+####
 ![onboard](https://github.com/mog96/the-delt/blob/master/Walkthroughs/f9_onboard.gif)
